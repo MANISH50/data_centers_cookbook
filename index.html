@@ -42,8 +42,9 @@ button{font:inherit;color:inherit;cursor:pointer}
 /* ============ TOP BAR, PROGRESS, MENU ============ */
 .topbar{position:fixed;inset:0 0 auto 0;z-index:50;height:56px;display:flex;align-items:center;gap:12px;padding:0 var(--gutter);
   background:rgba(13,17,23,.82);backdrop-filter:saturate(1.4) blur(10px);-webkit-backdrop-filter:saturate(1.4) blur(10px);color:#fff;
-  transform:translateY(-100%);transition:transform .35s ease}
-.topbar.show{transform:none}
+  transition:background .35s ease}
+.topbar.top{background:linear-gradient(180deg,rgba(0,0,0,.45),rgba(0,0,0,0));backdrop-filter:none;-webkit-backdrop-filter:none}
+.topbar.top .now{visibility:hidden}
 .topbar .brand{font-family:var(--serif);font-weight:800;font-size:1.05rem;white-space:nowrap;text-decoration:none}
 .topbar .brand b{color:var(--accent)}
 .topbar .now{flex:1;min-width:0;font-size:.85rem;color:#c9d1d9;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -176,7 +177,7 @@ figcaption b{color:var(--ink-2);font-weight:600}
 .btn:hover{filter:brightness(1.1)}.btn:active{transform:scale(.97)}
 .btn[disabled]{opacity:.45;cursor:not-allowed}
 .btn.ghost{background:transparent;border:1px solid #484f58;color:#e6edf3}
-.seg{display:inline-flex;background:var(--night-3);border-radius:999px;padding:4px;gap:4px;flex-wrap:wrap}
+.seg{display:inline-flex;background:var(--night-3);border-radius:18px;padding:4px;gap:4px;flex-wrap:wrap}
 .seg button{border:0;background:transparent;color:#c9d1d9;padding:8px 14px;border-radius:999px;font-weight:600;font-size:.9rem;min-height:40px}
 .seg button[aria-pressed="true"],.seg button[aria-selected="true"]{background:var(--accent);color:#fff}
 .panel{background:var(--night-2);border:1px solid var(--line-dark);border-radius:12px;padding:16px 18px}
@@ -276,7 +277,9 @@ table.cmp td:first-child{font-weight:700;color:#fff;white-space:nowrap}
 .plan .zone.on .rows rect{fill:color-mix(in srgb,var(--accent) 60%,#2d333b)}
 .plan-info{min-height:200px}
 .rack{background:#1c2128;border:6px solid #2d333b;border-radius:8px;padding:6px;display:flex;flex-direction:column;gap:2px;position:relative}
-.rack button{display:flex;align-items:center;gap:8px;border:1px solid #30363d;background:#0d1117;color:#9aa4af;font-size:.72rem;text-align:left;padding:0 8px;border-radius:3px;transition:.15s;min-height:0}
+.rack button{display:flex;align-items:center;gap:8px;border:1px solid #30363d;background:#0d1117;color:#9aa4af;font-size:.7rem;line-height:1;text-align:left;padding:0 8px;border-radius:3px;transition:.15s;min-height:0;overflow:hidden;white-space:nowrap}
+.rack button.multi{background-image:repeating-linear-gradient(180deg,transparent 0 calc(var(--u) - 1px),#30363d calc(var(--u) - 1px) var(--u))}
+.rack button span:last-child{background:#0d1117;padding:1px 4px;border-radius:3px}
 .rack button:hover,.rack button[aria-pressed="true"]{border-color:var(--accent);color:#fff;background:color-mix(in srgb,var(--accent) 18%,#0d1117)}
 .rack button .led{width:6px;height:6px;border-radius:50%;background:#3fb950;box-shadow:0 0 6px #3fb950;flex:none}
 .rack button .led.amber{background:#d29922;box-shadow:0 0 6px #d29922}
@@ -294,6 +297,8 @@ table.cmp td:first-child{font-weight:700;color:#fff;white-space:nowrap}
 
 
 .shape-ic{width:100%;height:90px;margin-bottom:8px}
+.tallfig img{max-height:80vh;width:auto;max-width:100%;margin:0 auto}
+.tallfig figcaption{text-align:center}
 .shape-ic rect{fill:#2d333b;stroke:var(--accent);stroke-width:2}
 .shape-ic .d,.shape-ic .d rect{fill:#14161a;stroke:none}
 .shape-ic .led{fill:#3fb950}
@@ -382,15 +387,15 @@ table.cmp td:first-child{font-weight:700;color:#fff;white-space:nowrap}
 .pwr-grid{display:grid;gap:16px;grid-template-columns:1fr}
 @media(min-width:900px){.pwr-grid{grid-template-columns:1.6fr 1fr}}
 .pwr-svg{width:100%;height:auto;background:#0b0f14;border-radius:12px;border:1px solid #30363d}
-.pwr-svg .wire{fill:none;stroke:#30363d;stroke-width:6;stroke-linecap:round;transition:stroke .3s}
+.pwr-svg .wire{fill:none;stroke:#30363d;stroke-width:8;stroke-linecap:round;transition:stroke .3s}
 .pwr-svg .wire.live{stroke:#3fb950;stroke-dasharray:10 8;animation:flow .6s linear infinite}
 .pwr-svg .wire.bat{stroke:#d29922;stroke-dasharray:10 8;animation:flow .6s linear infinite}
 .pwr-svg .wire.gen{stroke:#58a6ff;stroke-dasharray:10 8;animation:flow .6s linear infinite}
 .pwr-svg .wire.charge{stroke:#3fb950;stroke-dasharray:4 10;animation:flow 1.4s linear infinite reverse}
 @keyframes flow{to{stroke-dashoffset:-18}}
 .pnode rect{fill:#161b22;stroke:#484f58;stroke-width:2;transition:.3s}
-.pnode text{fill:#fff;font:22px var(--sans);text-anchor:middle}
-.pnode text.s{font:700 14px var(--sans);fill:#c9d1d9}
+.pnode text{fill:#fff;font:30px var(--sans);text-anchor:middle}
+.pnode text.s{font:700 21px var(--sans);fill:#e6edf3}
 .pnode.ok rect{stroke:#3fb950}.pnode.bad rect{stroke:#ef4444;fill:#2a1215}.pnode.warn rect{stroke:#d29922;fill:#2a2112}.pnode.gen rect{stroke:#58a6ff;fill:#0f1d33}
 .pwr-side{display:flex;flex-direction:column;gap:12px}
 .pwr-clock{background:#161b22;border:1px solid #30363d;border-radius:12px;padding:12px 16px}
@@ -426,6 +431,7 @@ table.cmp td:first-child{font-weight:700;color:#fff;white-space:nowrap}
 .cool-out small{display:block;color:#9aa4af;font-size:.75rem}
 .cool-out b{font:800 1.4rem var(--serif);color:#fff}
 .cool-verdict{font-size:.92rem}
+.cool-out .cool-verdict b{font:700 .95rem var(--sans)}
 .cool-verdict.ok{border-color:#2ea043;background:#0f2a18}.cool-verdict.warn{border-color:#d29922;background:#2a2112}.cool-verdict.bad{border-color:#ef4444;background:#2a1215}
 
 
@@ -1148,7 +1154,17 @@ table.mx td{font-size:.85rem}
     <span class="src">Source: NVIDIA and Supermicro specifications</span>
   </div>
 
-  <figure class="reveal"><img src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 10%22%3E%3Crect width=%2216%22 height=%2210%22 fill=%22%23445%22/%3E%3C/svg%3E" alt="NVIDIA GB200 rack with stacked compute trays" data-missing="ch3-gpurack" width="1600" height="1000"><figcaption>Photo: [pending ch3-gpurack]</figcaption></figure>
+  <div class="section tight">
+    <div class="wrap split rev">
+      <figure class="reveal tallfig"><img src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 10%22%3E%3Crect width=%2216%22 height=%2210%22 fill=%22%23445%22/%3E%3C/svg%3E" alt="An NVIDIA GB200 NVL72 rack: a tall cabinet filled with stacked GPU compute trays" data-missing="ch3-gpurack" width="1600" height="1000"><figcaption>Photo: [pending ch3-gpurack]</figcaption></figure>
+      <div class="copy reveal">
+        <span class="kicker">Rack-scale AI</span>
+        <h3>When the whole rack is one computer</h3>
+        <p>This is an NVIDIA GB200 NVL72 rack. It holds trays of GPUs and Grace CPUs stacked from top to bottom, with NVLink switch trays in the middle tying all 72 GPUs together.</p>
+        <p>It weighs well over a tonne, draws more than 100 kW, and is cooled by liquid flowing through every tray. Its successor, the GB300 NVL72, works the same way and draws about 132–140 kW.</p>
+      </div>
+    </div>
+  </div>
 
   <!-- COMPARISON -->
   <div class="section dark">
@@ -1365,7 +1381,7 @@ table.mx td{font-size:.85rem}
 
   <div class="section">
     <div class="wrap split rev">
-      <figure class="reveal"><img src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 10%22%3E%3Crect width=%2216%22 height=%2210%22 fill=%22%23445%22/%3E%3C/svg%3E" alt="Rows of UPS cabinets in a data center power room" data-missing="ch5-ups" width="1600" height="1000"><figcaption>Photo: [pending ch5-ups]</figcaption></figure>
+      <figure class="reveal"><img src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 10%22%3E%3Crect width=%2216%22 height=%2210%22 fill=%22%23445%22/%3E%3C/svg%3E" alt="Long rows of backup batteries in a data center" data-missing="ch5-ups" width="1600" height="1000"><figcaption>Photo: [pending ch5-ups]</figcaption></figure>
       <div class="copy reveal">
         <span class="kicker">Backup #1</span>
         <h3>The UPS: zero-second backup</h3>
@@ -1396,21 +1412,21 @@ table.mx td{font-size:.85rem}
       </div>
       <label class="pwr-opt"><input type="checkbox" id="pwrFail"> Make generator 1 fail to start (what does the spare do?)</label>
       <div class="pwr-grid">
-        <svg viewBox="0 0 640 320" class="pwr-svg" role="img" aria-label="Live power diagram">
-          <path id="wGrid" class="wire" d="M110 80 H230"/>
-          <path id="wAts" class="wire" d="M310 80 H400"/>
-          <path id="wSrv" class="wire" d="M480 80 H540"/>
-          <path id="wGen1" class="wire" d="M200 250 H240 V120"/>
-          <path id="wGen2" class="wire" d="M380 250 H340 V120"/>
-          <path id="wBat" class="wire" d="M440 210 V120"/>
-          <g class="pnode" id="nGrid"><rect x="20" y="45" width="90" height="70" rx="10"/><text x="65" y="76">⚡</text><text x="65" y="100" class="s">Grid</text></g>
-          <g class="pnode" id="nAts"><rect x="230" y="45" width="80" height="70" rx="10"/><text x="270" y="76">🔀</text><text x="270" y="100" class="s">ATS</text></g>
-          <g class="pnode" id="nUps"><rect x="400" y="45" width="80" height="70" rx="10"/><text x="440" y="76">🔋</text><text x="440" y="100" class="s">UPS</text></g>
-          <g class="pnode" id="nSrv"><rect x="540" y="45" width="90" height="70" rx="10"/><text x="585" y="76">🖥️</text><text x="585" y="100" class="s">Servers</text></g>
-          <g class="pnode" id="nGen1"><rect x="110" y="215" width="90" height="70" rx="10"/><text x="155" y="246">⛽</text><text x="155" y="270" class="s">Gen 1</text></g>
-          <g class="pnode" id="nGen2b"><rect x="290" y="215" width="90" height="70" rx="10"/><text x="335" y="246">⛽</text><text x="335" y="270" class="s">Gen 2 (spare)</text></g>
-          <g class="pnode" id="nBat"><rect x="400" y="210" width="80" height="70" rx="10"/><text x="440" y="241">🔋</text><text x="440" y="265" class="s">Batteries</text></g>
-        </svg>
+        <svg viewBox="0 0 640 330" class="pwr-svg" role="img" aria-label="Live power diagram: grid, transfer switch, UPS with batteries, servers, and two generators">
+          <path id="wGrid" class="wire" d="M120 80 H215"/>
+          <path id="wAts" class="wire" d="M315 80 H385"/>
+          <path id="wSrv" class="wire" d="M485 80 H530"/>
+          <path id="wGen1" class="wire" d="M120 255 V200 H245 V125"/>
+          <path id="wGen2" class="wire" d="M300 230 V125"/>
+          <path id="wBat" class="wire" d="M435 230 V125"/>
+          <g class="pnode" id="nGrid"><rect x="10" y="35" width="110" height="90" rx="12"/><text x="65" y="76">⚡</text><text x="65" y="108" class="s">Grid</text></g>
+          <g class="pnode" id="nAts"><rect x="215" y="35" width="100" height="90" rx="12"/><text x="265" y="76">🔀</text><text x="265" y="108" class="s">ATS</text></g>
+          <g class="pnode" id="nUps"><rect x="385" y="35" width="100" height="90" rx="12"/><text x="435" y="76">🔋</text><text x="435" y="108" class="s">UPS</text></g>
+          <g class="pnode" id="nSrv"><rect x="530" y="35" width="100" height="90" rx="12"/><text x="580" y="76">🖥️</text><text x="580" y="108" class="s">Servers</text></g>
+          <g class="pnode" id="nGen1"><rect x="65" y="230" width="110" height="90" rx="12"/><text x="120" y="271">⛽</text><text x="120" y="303" class="s">Gen 1</text></g>
+          <g class="pnode" id="nGen2b"><rect x="245" y="230" width="110" height="90" rx="12"/><text x="300" y="271">⛽</text><text x="300" y="303" class="s">Gen 2</text></g>
+          <g class="pnode" id="nBat"><rect x="380" y="230" width="110" height="90" rx="12"/><text x="435" y="271">🔋</text><text x="435" y="303" class="s">Batteries</text></g>
+                  </svg>
         <div class="pwr-side">
           <div class="pwr-clock"><small>Time since power cut</small><span id="pwrT">–</span></div>
           <div class="pwr-meter"><span>Battery</span><div class="meter"><i id="pwrBat" style="width:100%"></i></div><b id="pwrBatT">100%</b></div>
@@ -1694,7 +1710,29 @@ table.mx td{font-size:.85rem}
 
   <div class="section">
     <div class="wrap split">
-      <figure class="reveal"><img src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 10%22%3E%3Crect width=%2216%22 height=%2210%22 fill=%22%23445%22/%3E%3C/svg%3E" alt="A network operations control room with large monitoring screens" data-missing="ch7-noc" width="1600" height="1000"><figcaption>Photo: [pending ch7-noc]</figcaption></figure>
+      <figure class="reveal svgfig">
+        <svg viewBox="0 0 480 320" role="img" aria-label="Illustration of a data center control room: a wall of screens showing temperatures, power and alerts, with operators at desks">
+          <rect width="480" height="320" fill="#0d1117"/>
+          <rect x="20" y="20" width="440" height="170" rx="8" fill="#161b22" stroke="#30363d"/>
+          <g>
+            <rect x="32" y="32" width="132" height="70" rx="4" fill="#0b2a1a"/><text x="40" y="48" fill="#3fb950" font-size="10" font-family="Inter,sans-serif" font-weight="700">HALL TEMPERATURES</text>
+            <g fill="#3fb950"><rect x="42" y="78" width="10" height="16"/><rect x="58" y="72" width="10" height="22"/><rect x="74" y="76" width="10" height="18"/><rect x="90" y="70" width="10" height="24"/><rect x="106" y="74" width="10" height="20"/></g><rect x="122" y="60" width="10" height="34" fill="#ef4444"/>
+            <rect x="174" y="32" width="132" height="70" rx="4" fill="#0f1d33"/><text x="182" y="48" fill="#58a6ff" font-size="10" font-family="Inter,sans-serif" font-weight="700">POWER (MW)</text>
+            <polyline points="182,90 200,82 218,86 236,74 254,78 272,70 296,72" fill="none" stroke="#58a6ff" stroke-width="2.5"/>
+            <rect x="316" y="32" width="132" height="70" rx="4" fill="#2a1215"/><text x="324" y="48" fill="#ff7b72" font-size="10" font-family="Inter,sans-serif" font-weight="700">ALERTS</text>
+            <text x="324" y="66" fill="#ffa198" font-size="9" font-family="Inter,sans-serif">● Row 14 inlet 29.8 °C</text><text x="324" y="80" fill="#e3b341" font-size="9" font-family="Inter,sans-serif">● CRAH-07 filter due</text><text x="324" y="94" fill="#8b949e" font-size="9" font-family="Inter,sans-serif">● Door 3 badge OK</text>
+            <rect x="32" y="110" width="274" height="70" rx="4" fill="#161b22" stroke="#30363d"/><text x="40" y="126" fill="#c9d1d9" font-size="10" font-family="Inter,sans-serif" font-weight="700">FLOOR MAP</text>
+            <g fill="#2d333b"><rect x="44" y="136" width="250" height="7"/><rect x="44" y="150" width="250" height="7"/><rect x="44" y="164" width="250" height="7"/></g><rect x="214" y="150" width="14" height="7" fill="#ef4444"/>
+            <rect x="316" y="110" width="132" height="70" rx="4" fill="#161b22" stroke="#30363d"/><text x="324" y="126" fill="#c9d1d9" font-size="10" font-family="Inter,sans-serif" font-weight="700">CAMERAS</text>
+            <g fill="#21262d"><rect x="324" y="132" width="56" height="20"/><rect x="384" y="132" width="56" height="20"/><rect x="324" y="156" width="56" height="20"/><rect x="384" y="156" width="56" height="20"/></g>
+          </g>
+          <rect x="40" y="250" width="400" height="16" rx="4" fill="#30363d"/>
+          <g fill="#8b949e"><circle cx="130" cy="225" r="14"/><rect x="114" y="238" width="32" height="14" rx="6"/><circle cx="330" cy="225" r="14"/><rect x="314" y="238" width="32" height="14" rx="6"/></g>
+          <g fill="#21262d" stroke="#484f58"><rect x="90" y="214" width="20" height="30" rx="2"/><rect x="290" y="214" width="20" height="30" rx="2"/></g>
+          <text x="240" y="300" fill="#9aa4af" font-size="12" text-anchor="middle" font-family="Inter,sans-serif">Operators watch every sensor, 24 hours a day</text>
+        </svg>
+        <figcaption>Illustration drawn for this story: a typical data center control room (NOC).</figcaption>
+      </figure>
       <div class="copy reveal">
         <span class="kicker">Monitoring</span>
         <h3>The room that watches everything</h3>
@@ -2372,13 +2410,13 @@ table.mx td{font-size:.85rem}
       <h3>Who took the pictures</h3>
       <p class="muted" style="font-size:.9rem">All photos are from Wikimedia Commons under the free licences shown. Photos were resized and compressed for the web; some were cropped. Diagrams and animations were drawn for this story.</p>
       <ol class="credits-list">
-<li><b>Cover</b>: “Wikimedia Foundation Servers-8055 35” by Victor Grigas, <a href="https://commons.wikimedia.org/wiki/File:Wikimedia_Foundation_Servers-8055_35.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, <a href="https://creativecommons.org/licenses/by-sa/3.0" target="_blank" rel="noopener">CC BY-SA 3.0</a>. Resized from the original.</li>
-<li><b>Chapter 1 opening: Google data center, The Dalles, Oregon</b>: “Google Datacenter - The Dalles, Oregon (17832143871)” by Tony Webster from Minneapolis, Minnesota, United States, <a href="https://commons.wikimedia.org/wiki/File:Google_Datacenter_-_The_Dalles,_Oregon_(17832143871).jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, <a href="https://creativecommons.org/licenses/by/2.0" target="_blank" rel="noopener">CC BY 2.0</a>. Resized from the original.</li>
-<li><b>Chapter 3 opening: Wikimedia Foundation servers</b>: “Wikimedia Foundation Servers-8055 13” by Victorgrigas, <a href="https://commons.wikimedia.org/wiki/File:Wikimedia_Foundation_Servers-8055_13.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, <a href="https://creativecommons.org/licenses/by-sa/3.0" target="_blank" rel="noopener">CC BY-SA 3.0</a>. Resized from the original.</li>
-<li><b>Inside a 1U web server</b>: “Inside and Rear of Webserver” by Rodzilla at English Wikipedia, <a href="https://commons.wikimedia.org/wiki/File:Inside_and_Rear_of_Webserver.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, <a href="https://creativecommons.org/licenses/by/2.5" target="_blank" rel="noopener">CC BY 2.5</a>. Resized from the original.</li>
-<li><b>NVIDIA HGX B200 GPU board</b>: “Nvidia DGX-B200-HGX” by Pokiiri, <a href="https://commons.wikimedia.org/wiki/File:Nvidia_DGX-B200-HGX.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0" target="_blank" rel="noopener">CC BY-SA 4.0</a>. Resized from the original.</li>
-<li><b>AI server type</b>: “Nvidia DGX-B200-HGX” by Pokiiri, <a href="https://commons.wikimedia.org/wiki/File:Nvidia_DGX-B200-HGX.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0" target="_blank" rel="noopener">CC BY-SA 4.0</a>. Resized and cropped from the original.</li>
-<li><b>Chapter 4 opening: fibre optics</b>: “Fiber optic illuminated” by Hustvedt, <a href="https://commons.wikimedia.org/wiki/File:Fiber_optic_illuminated.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, <a href="https://creativecommons.org/licenses/by-sa/3.0" target="_blank" rel="noopener">CC BY-SA 3.0</a>. Resized from the original.</li>
+<li><b>Cover: Wikimedia Foundation server racks</b>: “Wikimedia Foundation Servers-8055 35” by Victor Grigas, <a href="https://commons.wikimedia.org/wiki/File:Wikimedia_Foundation_Servers-8055_35.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, <a href="https://creativecommons.org/licenses/by-sa/3.0" target="_blank" rel="noopener">CC BY-SA 3.0</a>. Resized from the original.</li>
+<li><b>Ch 1 opening: Google data center, The Dalles, Oregon</b>: “Google Datacenter - The Dalles, Oregon (17832143871)” by Tony Webster from Minneapolis, Minnesota, United States, <a href="https://commons.wikimedia.org/wiki/File:Google_Datacenter_-_The_Dalles,_Oregon_(17832143871).jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, <a href="https://creativecommons.org/licenses/by/2.0" target="_blank" rel="noopener">CC BY 2.0</a>. Resized from the original.</li>
+<li><b>Ch 3 opening: Wikimedia Foundation servers</b>: “Wikimedia Foundation Servers-8055 13” by Victorgrigas, <a href="https://commons.wikimedia.org/wiki/File:Wikimedia_Foundation_Servers-8055_13.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, <a href="https://creativecommons.org/licenses/by-sa/3.0" target="_blank" rel="noopener">CC BY-SA 3.0</a>. Resized from the original.</li>
+<li><b>Ch 3: AI server type</b>: “Nvidia DGX-B200-HGX” by Pokiiri, <a href="https://commons.wikimedia.org/wiki/File:Nvidia_DGX-B200-HGX.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0" target="_blank" rel="noopener">CC BY-SA 4.0</a>. Resized and cropped from the original.</li>
+<li><b>Ch 3: inside a 1U web server (Dell PowerEdge 850)</b>: “Inside and Rear of Webserver” by Rodzilla at English Wikipedia, <a href="https://commons.wikimedia.org/wiki/File:Inside_and_Rear_of_Webserver.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, <a href="https://creativecommons.org/licenses/by/2.5" target="_blank" rel="noopener">CC BY 2.5</a>. Resized from the original.</li>
+<li><b>Ch 3: NVIDIA HGX B200 GPU board</b>: “Nvidia DGX-B200-HGX” by Pokiiri, <a href="https://commons.wikimedia.org/wiki/File:Nvidia_DGX-B200-HGX.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0" target="_blank" rel="noopener">CC BY-SA 4.0</a>. Resized from the original.</li>
+<li><b>Ch 4 opening: illuminated optical fibres</b>: “Fiber optic illuminated” by Hustvedt, <a href="https://commons.wikimedia.org/wiki/File:Fiber_optic_illuminated.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, <a href="https://creativecommons.org/licenses/by-sa/3.0" target="_blank" rel="noopener">CC BY-SA 3.0</a>. Resized from the original.</li>
 </ol>
       <p class="muted" style="font-size:.8rem;margin-top:30px">Made as an educational story for curious beginners. Figures were checked against the sources above in November 2026 and may change.</p>
     </div>
@@ -2502,7 +2540,7 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
   const onScroll = () => {
     const h = document.documentElement.scrollHeight - innerHeight;
     prog.style.width = (scrollY / h * 100) + '%';
-    bar.classList.toggle('show', scrollY > innerHeight * .6);
+    bar.classList.toggle('top', scrollY < innerHeight * .6);
     toTop.classList.toggle('show', scrollY > innerHeight * 1.5);
     let cur = null;
     for (const ch of chapters) { if (ch.getBoundingClientRect().top < innerHeight * .4) cur = ch; }
@@ -2554,7 +2592,7 @@ function showTip(el){
 function hideTip(){ tip.classList.remove('show'); if (tipFor) tipFor.removeAttribute('aria-describedby'); tipFor = null; }
 document.addEventListener('click', e => {
   const t = e.target.closest('.term');
-  if (t) { e.preventDefault(); if (tipFor === t) hideTip(); else showTip(t); return; }
+  if (t) { e.preventDefault(); showTip(t); return; }
   if (!e.target.closest('#tip')) hideTip();
 });
 document.addEventListener('mouseover', e => { const t = e.target.closest('.term'); if (t && matchMedia('(hover:hover)').matches) showTip(t); });
@@ -2674,13 +2712,14 @@ const R = [
   ["Rack PDUs (both sides)",2,"pdu","Long power strips run down the back of the rack, an A side and a B side. Each server plugs into both, so one feed can fail.","amber"]
 ];
 const rack = document.getElementById('rack');
-const unitH = () => matchMedia('(min-width:860px)').matches ? 10 : 9;
+const unitH = () => matchMedia('(min-width:860px)').matches ? 14 : 12;
 let u = 42;
 R.forEach((r, i) => {
   const b = document.createElement('button');
   const top = u, bot = u - r[1] + 1; u -= r[1];
   b.style.height = (r[1] * unitH()) + 'px';
-  b.className = r[2] === 'blank' ? 'blank' : '';
+  b.className = r[2] === 'blank' ? 'blank' : (r[1] > 1 && r[2] !== 'pdu' ? 'multi' : '');
+  b.style.setProperty('--u', (r[2] === 'srv' && r[0].includes('2U') ? 2 : r[2] === 'srv' ? 1 : r[1]) * unitH() + 'px');
   b.innerHTML = (r[4] !== undefined && r[2] !== 'blank' ? `<span class="led ${r[4]}"></span>` : '') + `<span>${r[0]}</span>`;
   b.dataset.i = i; b.dataset.u = r[1] > 1 ? `U${top}–U${bot}` : `U${top}`;
   b.onclick = () => pickRack(i);
@@ -2794,7 +2833,8 @@ window.Journey = function(root, cfg){
       if (my !== token) return;
       moveDot(id); node(id).classList.add('on');
       if (animate && s.path.length > 1) await sleep(reduceMotion ? 0 : 520);
-      if (s.path.length > 1 && id !== s.path[s.path.length - 1]) node(id).classList.remove('on');
+      if (my !== token) return;
+      if (s.path.length > 1 && id !== s.path[s.path.length - 1]) node(id)?.classList.remove('on');
     }
   }
   async function play(){

@@ -2,7 +2,7 @@
  {
   "file": "images/cover-lg.jpg",
   "small": "images/cover-sm.jpg",
-  "what": "Cover",
+  "what": "Cover: Wikimedia Foundation server racks",
   "title": "Wikimedia Foundation Servers-8055 35",
   "artist": "Victor Grigas",
   "license": "CC BY-SA 3.0",
@@ -13,7 +13,7 @@
  {
   "file": "images/ch1-hero-lg.jpg",
   "small": "images/ch1-hero-sm.jpg",
-  "what": "Chapter 1 opening: Google data center, The Dalles, Oregon",
+  "what": "Ch 1 opening: Google data center, The Dalles, Oregon",
   "title": "Google Datacenter - The Dalles, Oregon (17832143871)",
   "artist": "Tony Webster from Minneapolis, Minnesota, United States",
   "license": "CC BY 2.0",
@@ -24,7 +24,7 @@
  {
   "file": "images/ch3-hero-lg.jpg",
   "small": "images/ch3-hero-sm.jpg",
-  "what": "Chapter 3 opening: Wikimedia Foundation servers",
+  "what": "Ch 3 opening: Wikimedia Foundation servers",
   "title": "Wikimedia Foundation Servers-8055 13",
   "artist": "Victorgrigas",
   "license": "CC BY-SA 3.0",
@@ -33,9 +33,20 @@
   "source": "Wikimedia Commons"
  },
  {
+  "file": "images/srv-gpu-lg.jpg",
+  "small": "images/srv-gpu-sm.jpg",
+  "what": "Ch 3: AI server type",
+  "title": "Nvidia DGX-B200-HGX",
+  "artist": "Pokiiri",
+  "license": "CC BY-SA 4.0",
+  "licurl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Nvidia_DGX-B200-HGX.jpg",
+  "source": "Wikimedia Commons"
+ },
+ {
   "file": "images/in-rack-lg.jpg",
   "small": "images/in-rack-sm.jpg",
-  "what": "Inside a 1U web server",
+  "what": "Ch 3: inside a 1U web server (Dell PowerEdge 850)",
   "title": "Inside and Rear of Webserver",
   "artist": "Rodzilla at English Wikipedia",
   "license": "CC BY 2.5",
@@ -46,18 +57,7 @@
  {
   "file": "images/in-gpu-lg.jpg",
   "small": "images/in-gpu-sm.jpg",
-  "what": "NVIDIA HGX B200 GPU board",
-  "title": "Nvidia DGX-B200-HGX",
-  "artist": "Pokiiri",
-  "license": "CC BY-SA 4.0",
-  "licurl": "https://creativecommons.org/licenses/by-sa/4.0",
-  "page": "https://commons.wikimedia.org/wiki/File:Nvidia_DGX-B200-HGX.jpg",
-  "source": "Wikimedia Commons"
- },
- {
-  "file": "images/srv-gpu-lg.jpg",
-  "small": "images/srv-gpu-sm.jpg",
-  "what": "AI server type",
+  "what": "Ch 3: NVIDIA HGX B200 GPU board",
   "title": "Nvidia DGX-B200-HGX",
   "artist": "Pokiiri",
   "license": "CC BY-SA 4.0",
@@ -68,7 +68,7 @@
  {
   "file": "images/ch4-hero-lg.jpg",
   "small": "images/ch4-hero-sm.jpg",
-  "what": "Chapter 4 opening: fibre optics",
+  "what": "Ch 4 opening: illuminated optical fibres",
   "title": "Fiber optic illuminated",
   "artist": "Hustvedt",
   "license": "CC BY-SA 3.0",
