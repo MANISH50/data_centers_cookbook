@@ -84,6 +84,8 @@ button{font:inherit;color:inherit;cursor:pointer}
 .hero{position:relative;min-height:100svh;display:flex;align-items:flex-end;color:#fff;overflow:hidden;background:#000}
 .hero>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(1.04);transition:transform 6s ease-out}
 .hero.in>img{transform:none}
+#ch1 .hero>img{object-position:55% 78%}#ch4 .hero>img{object-position:28% 50%}#ch11 .hero>img{object-position:50% 85%}
+#ch12 .hero>img{object-position:50% 70%}#ch5 .hero>img{object-position:30% 50%}
 .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.15) 0%,rgba(0,0,0,.05) 30%,rgba(0,0,0,.55) 62%,rgba(0,0,0,.88) 100%)}
 .hero .hero-in{position:relative;z-index:2;width:100%;max-width:var(--w-wide);margin:0 auto;padding:0 var(--gutter) clamp(48px,9vh,96px)}
 .hero .num{font:800 clamp(4rem,12vw,9rem)/.8 var(--serif);color:var(--accent);opacity:.95;display:block;margin-bottom:.12em;text-shadow:0 4px 30px rgba(0,0,0,.4)}
@@ -571,9 +573,9 @@ table.mx td{font-size:.85rem}
 #siteWhy .btn{margin-top:10px}
 .day{list-style:none;padding:0;margin:24px auto 0;max-width:46rem;position:relative}
 .day::before{content:"";position:absolute;left:62px;top:6px;bottom:6px;width:2px;background:var(--line)}
-.day li{display:grid;grid-template-columns:62px 1fr;gap:22px;padding:10px 0;position:relative}
+.day li{display:block;padding:10px 0 10px 86px;position:relative}
 .day li::before{content:"";position:absolute;left:56px;top:18px;width:14px;height:14px;border-radius:50%;background:var(--accent);border:3px solid var(--paper-2)}
-.day time{font:800 1rem var(--sans);color:var(--accent);padding-top:6px}
+.day time{position:absolute;left:0;top:12px;font:800 1rem var(--sans);color:var(--accent)}
 .day li b{display:block}
 .journey-recap{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
 .journey-recap a{display:block;text-decoration:none;background:#161b22;border:1px solid #30363d;border-radius:14px;padding:16px;border-top:4px solid var(--c)}
@@ -649,7 +651,7 @@ table.mx td{font-size:.85rem}
 
   <div class="section tight">
     <div class="wrap split">
-      <figure class="reveal"><img src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 10%22%3E%3Crect width=%2216%22 height=%2210%22 fill=%22%23445%22/%3E%3C/svg%3E" alt="Rows of tall black server cabinets in a brightly lit data center hall" data-missing="ch1-hall" width="1600" height="1000"><figcaption>Photo: [pending ch1-hall]</figcaption></figure>
+      <figure class="reveal"><img src="images/ch1-hall-lg.jpg" srcset="images/ch1-hall-sm.jpg 720w, images/ch1-hall-lg.jpg 1280w" sizes="(min-width: 860px) 50vw, 100vw" width="1280" height="853" alt="Rows of tall black server cabinets in a brightly lit data center hall" loading="lazy" decoding="async"><figcaption>Photo: <b>Florian Hirzinger - www.fh-ap.com</b> · <a href="https://commons.wikimedia.org/wiki/File:CERN_Server_03.jpg" target="_blank" rel="noopener">Wikimedia Commons</a> · <a href="https://creativecommons.org/licenses/by-sa/3.0" target="_blank" rel="noopener">CC BY-SA 3.0</a></figcaption></figure>
       <div class="copy reveal">
         <span class="kicker">The big idea</span>
         <h3>A factory for information</h3>
@@ -701,7 +703,7 @@ table.mx td{font-size:.85rem}
 
   <div class="section">
     <div class="wrap split rev">
-      <figure class="reveal"><img src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 10%22%3E%3Crect width=%2216%22 height=%2210%22 fill=%22%23445%22/%3E%3C/svg%3E" alt="A very large data center campus seen from outside" data-missing="ch1-scale" width="1600" height="1000"><figcaption>Photo: [pending ch1-scale]</figcaption></figure>
+      <figure class="reveal"><img src="images/ch1-scale-lg.jpg" srcset="images/ch1-scale-sm.jpg 720w, images/ch1-scale-lg.jpg 1280w" sizes="(min-width: 860px) 50vw, 100vw" width="1280" height="960" alt="The outside of CERN&#x27;s data centre near Geneva, a large science data center" loading="lazy" decoding="async"><figcaption>Photo: <b>Unnerving duck</b> · <a href="https://commons.wikimedia.org/wiki/File:CERN_data_centre.jpg" target="_blank" rel="noopener">Wikimedia Commons</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0" target="_blank" rel="noopener">CC BY-SA 4.0</a></figcaption></figure>
       <div class="copy reveal">
         <span class="kicker">Small to gigantic</span>
         <h3>Not all data centers are the same size</h3>
@@ -722,6 +724,7 @@ table.mx td{font-size:.85rem}
   </div>
 
   <div class="section tight">
+    <div class="text reveal" style="margin-bottom:28px"><figure class="reveal"><img src="images/ch1-history-lg.jpg" srcset="images/ch1-history-sm.jpg 720w, images/ch1-history-lg.jpg 1280w" sizes="(min-width: 860px) 40rem, 100vw" width="1280" height="877" alt="An older computer room: a technician at a terminal beside cabinets of computer equipment" loading="lazy" decoding="async"><figcaption>Photo: <b>University of St. Gallen</b> · <a href="https://commons.wikimedia.org/wiki/File:Blick_in_einen_Raum_des_HSG-Rechenzentrums_HSGH_022-001118.jpg" target="_blank" rel="noopener">Wikimedia Commons</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0" target="_blank" rel="noopener">CC BY-SA 4.0</a></figcaption></figure></div>
     <div class="dyk reveal">
       <p>One of the first big computers, ENIAC (1945), filled a room of about 167 m² and used around 150 kW of power. Today a phone in your pocket is millions of times faster. Data centers are what you get when you fill a building with today's computers.</p>
     </div>
@@ -756,13 +759,13 @@ table.mx td{font-size:.85rem}
 
 <section class="chapter" id="ch2" data-accent="2" data-num="02" data-title="The guided tour">
   <header class="hero">
-    <img src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 10%22%3E%3Crect width=%2216%22 height=%2210%22 fill=%22%23445%22/%3E%3C/svg%3E" alt="A long aisle between two rows of server racks, cables neatly bundled overhead" data-missing="ch2-hero" width="1600" height="1000">
+    <img src="images/ch2-hero-lg.jpg" srcset="images/ch2-hero-sm.jpg 960w, images/ch2-hero-lg.jpg 1920w" sizes="100vw" width="1920" height="1275" alt="Rows of servers on metal shelves, glowing blue in a dark data center" loading="lazy" decoding="async">
     <div class="hero-in">
       <span class="num">02</span>
       <h2>A football field of humming boxes</h2>
       <p class="dek">Racks, storage and networks: a walk through the building, room by room.</p>
     </div>
-    <div class="credit">Photo: [pending ch2-hero]</div>
+    <div class="credit">Photo: <b>BalticServers.com</b> · <a href="https://commons.wikimedia.org/wiki/File:BalticServers_data_center.jpg" target="_blank" rel="noopener">Wikimedia Commons</a> · <a href="https://creativecommons.org/licenses/by-sa/3.0" target="_blank" rel="noopener">CC BY-SA 3.0</a></div>
   </header>
 
   <div class="section">
@@ -801,12 +804,12 @@ table.mx td{font-size:.85rem}
 
   <div class="section">
     <div class="wrap split">
-      <figure class="reveal"><img src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 10%22%3E%3Crect width=%2216%22 height=%2210%22 fill=%22%23445%22/%3E%3C/svg%3E" alt="Front of a server rack filled with stacked servers and blinking status lights" data-missing="ch2-rack" width="1600" height="1000"><figcaption>Photo: [pending ch2-rack]</figcaption></figure>
+      <figure class="reveal"><img src="images/ch2-rack-lg.jpg" srcset="images/ch2-rack-sm.jpg 720w, images/ch2-rack-lg.jpg 1280w" sizes="(min-width: 860px) 50vw, 100vw" width="1280" height="853" alt="Dell rack servers stacked in a rack, with the rack-unit numbers 33 to 36 marked on the left edge" loading="lazy" decoding="async"><figcaption>Photo: <b>Victor Grigas</b> · <a href="https://commons.wikimedia.org/wiki/File:Wikimedia_Foundation_Servers-8055_43.jpg" target="_blank" rel="noopener">Wikimedia Commons</a> · <a href="https://creativecommons.org/licenses/by-sa/3.0" target="_blank" rel="noopener">CC BY-SA 3.0</a></figcaption></figure>
       <div class="copy reveal">
         <span class="kicker">The rack</span>
         <h3>A bookshelf for computers</h3>
         <p>Servers don't sit on desks. They slide into a <button class="term" data-t="rack">rack</button>: a steel cabinet about 2 metres tall and 60 cm wide. Servers stack inside it like books on a shelf.</p>
-        <p>Height is measured in <button class="term" data-t="rack unit">rack units, or "U"</button>. One U is 4.45 cm, and a standard rack has 42 of them. A slim server takes 1U; a big AI server might take 8U or more.</p>
+        <p>Height is measured in <button class="term" data-t="rack unit">rack units, or "U"</button>. One U is 4.45 cm, and a standard rack has 42 of them. A slim server takes 1U; a big AI server might take 8U or more. In the photo, you can see the unit numbers 33–36 printed on the rack's edge.</p>
       </div>
     </div>
   </div>
@@ -839,7 +842,7 @@ table.mx td{font-size:.85rem}
       </div>
     </div>
     <div class="wrap split rev" style="margin-top:56px">
-      <figure class="reveal"><img src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 10%22%3E%3Crect width=%2216%22 height=%2210%22 fill=%22%23445%22/%3E%3C/svg%3E" alt="A storage system with many drive bays in a data center" data-missing="ch2-storage" width="1600" height="1000"><figcaption>Photo: [pending ch2-storage]</figcaption></figure>
+      <figure class="reveal"><img src="images/ch2-storage-lg.jpg" srcset="images/ch2-storage-sm.jpg 720w, images/ch2-storage-lg.jpg 1280w" sizes="(min-width: 860px) 50vw, 100vw" width="1280" height="853" alt="A storage system with many drive bays in a data center" loading="lazy" decoding="async"><figcaption>Photo: <b>Gregory Rocher / Ifremer</b> · <a href="https://commons.wikimedia.org/wiki/File:Le_Centre_Datarmor,_les_coulisses_(Ifremer_00957-106840_-_54953).jpg" target="_blank" rel="noopener">Wikimedia Commons</a> · <a href="https://creativecommons.org/licenses/by/4.0" target="_blank" rel="noopener">CC BY 4.0</a></figcaption></figure>
       <div class="copy reveal">
         <h3>Never just one copy</h3>
         <p>Drives fail. Every day, somewhere in a large data center, a drive dies. So your data is always stored more than once: on several drives (called <button class="term" data-t="raid">RAID</button>), on several servers, and often in another building too.</p>
@@ -850,7 +853,7 @@ table.mx td{font-size:.85rem}
 
   <div class="section tint">
     <div class="wrap split">
-      <figure class="reveal"><img src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 10%22%3E%3Crect width=%2216%22 height=%2210%22 fill=%22%23445%22/%3E%3C/svg%3E" alt="Bundles of colourful network cables plugged into the back of switches" data-missing="ch2-cables" width="1600" height="1000"><figcaption>Photo: [pending ch2-cables]</figcaption></figure>
+      <figure class="reveal"><img src="images/ch2-cables-lg.jpg" srcset="images/ch2-cables-sm.jpg 720w, images/ch2-cables-lg.jpg 1280w" sizes="(min-width: 860px) 50vw, 100vw" width="1280" height="851" alt="Bundles of colourful network cables plugged into the back of switches" loading="lazy" decoding="async"><figcaption>Photo: <b>ShakataGaNai</b> · <a href="https://commons.wikimedia.org/wiki/File:Network_switches.jpg" target="_blank" rel="noopener">Wikimedia Commons</a> · <a href="https://creativecommons.org/licenses/by-sa/3.0" target="_blank" rel="noopener">CC BY-SA 3.0</a></figcaption></figure>
       <div class="copy reveal">
         <span class="kicker">Networking</span>
         <h3>The roads between the computers</h3>
@@ -910,7 +913,7 @@ table.mx td{font-size:.85rem}
       <h2>Computers that never sleep</h2>
       <p class="dek">Rack, blade, tower, database, storage, AI, edge: meet every kind of server, then look inside.</p>
     </div>
-    <div class="credit">Photo: <b>Victorgrigas</b> · <a href="https://commons.wikimedia.org/wiki/File:Wikimedia_Foundation_Servers-8055_13.jpg" target="_blank" rel="noopener">Wikimedia Commons</a> · <a href="https://creativecommons.org/licenses/by-sa/3.0" target="_blank" rel="noopener">CC BY-SA 3.0</a></div>
+    <div class="credit">Photo: <b>Victor Grigas</b> · <a href="https://commons.wikimedia.org/wiki/File:Wikimedia_Foundation_Servers-8055_13.jpg" target="_blank" rel="noopener">Wikimedia Commons</a> · <a href="https://creativecommons.org/licenses/by-sa/3.0" target="_blank" rel="noopener">CC BY-SA 3.0</a></div>
   </header>
 
   <div class="section">
@@ -950,37 +953,37 @@ table.mx td{font-size:.85rem}
       </div>
 
       <div class="srv-panel" data-panel="rack">
-        <figure class="reveal"><img src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 10%22%3E%3Crect width=%2216%22 height=%2210%22 fill=%22%23445%22/%3E%3C/svg%3E" alt="A 1U rack server seen from the front" data-missing="srv-rack" width="1600" height="1000"><figcaption>Photo: [pending srv-rack]</figcaption></figure>
+        <figure class="reveal"><img src="images/srv-rack-lg.jpg" srcset="images/srv-rack-sm.jpg 720w, images/srv-rack-lg.jpg 960w" sizes="(min-width: 860px) 40rem, 100vw" width="960" height="720" alt="A 1U rack server seen from the front" loading="lazy" decoding="async"><figcaption>Photo: <b>Dsv</b> · <a href="https://commons.wikimedia.org/wiki/File:Dell_PowerEdge_Servers.jpg" target="_blank" rel="noopener">Wikimedia Commons</a> · Public domain</figcaption></figure>
         <div><h4>Rack server</h4><p class="srv-what">The all-rounder. Flat, stackable, and easy to swap out.</p>
           <dl class="facts"><dt>Built for</dt><dd>Almost anything: websites, apps, small databases, virtual machines.</dd><dt>Where</dt><dd>Every kind of data center, from a company server room to a hyperscale hall.</dd><dt>Key parts</dt><dd>1–2 CPUs, 64 GB–2 TB of RAM, a few SSDs, 2 power supplies, a row of fans.</dd><dt>Typical power</dt><dd>About 300–800 W while working (similar to a microwave oven).</dd><dt>Cooling &amp; water</dt><dd>💧 Air-cooled by its own fans. Water is used <i>indirectly</i>: the building's cooling towers may evaporate water to carry the heat outside.</dd><dt>Everyday example</dt><dd>The server that sends you your bank's login page.</dd></dl></div>
       </div>
       <div class="srv-panel" data-panel="blade" hidden>
-        <figure class="reveal"><img src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 10%22%3E%3Crect width=%2216%22 height=%2210%22 fill=%22%23445%22/%3E%3C/svg%3E" alt="A blade server chassis filled with vertical blade servers" data-missing="srv-blade" width="1600" height="1000"><figcaption>Photo: [pending srv-blade]</figcaption></figure>
+        <figure class="reveal"><img src="images/srv-blade-lg.jpg" srcset="images/srv-blade-sm.jpg 720w, images/srv-blade-lg.jpg 1280w" sizes="(min-width: 860px) 40rem, 100vw" width="1280" height="1089" alt="A blade server chassis filled with vertical blade servers" loading="lazy" decoding="async"><figcaption>Photo: <b>Redline</b> · <a href="https://commons.wikimedia.org/wiki/File:HP_c7000-1.jpg" target="_blank" rel="noopener">Wikimedia Commons</a> · <a href="https://creativecommons.org/licenses/by-sa/3.0" target="_blank" rel="noopener">CC BY-SA 3.0</a></figcaption></figure>
         <div><h4>Blade server</h4><p class="srv-what">Many thin computers sharing one box.</p>
           <dl class="facts"><dt>Built for</dt><dd>Packing lots of computing into a small space, with less cabling.</dd><dt>Where</dt><dd>Banks, telecom companies and large company data centers.</dd><dt>Key parts</dt><dd>Each blade: CPUs, RAM, maybe one or two drives. The chassis: shared power supplies, fans and network switches.</dd><dt>Typical power</dt><dd>A full chassis of 8–16 blades can draw several kilowatts.</dd><dt>Cooling &amp; water</dt><dd>💧 Air-cooled through shared fans. Packing more computing into less space concentrates the heat, so the building's cooling (and any water it uses) works harder per rack.</dd><dt>Everyday example</dt><dd>A mobile operator's billing system, crunching millions of call records.</dd></dl></div>
       </div>
       <div class="srv-panel" data-panel="tower" hidden>
-        <figure class="reveal"><img src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 10%22%3E%3Crect width=%2216%22 height=%2210%22 fill=%22%23445%22/%3E%3C/svg%3E" alt="A tower server standing upright" data-missing="srv-tower" width="1600" height="1000"><figcaption>Photo: [pending srv-tower]</figcaption></figure>
+        <figure class="reveal"><img src="images/srv-tower-lg.jpg" srcset="images/srv-tower-sm.jpg 720w, images/srv-tower-lg.jpg 1056w" sizes="(min-width: 860px) 40rem, 100vw" width="1056" height="1148" alt="Tower-style servers standing side by side on metal shelves, lit blue" loading="lazy" decoding="async"><figcaption>Photo: <b>BalticServers.com</b> · <a href="https://commons.wikimedia.org/wiki/File:BalticServers_data_center.jpg" target="_blank" rel="noopener">Wikimedia Commons</a> · <a href="https://creativecommons.org/licenses/by-sa/3.0" target="_blank" rel="noopener">CC BY-SA 3.0</a></figcaption></figure>
         <div><h4>Tower server</h4><p class="srv-what">A server that looks like a PC, for places without racks.</p>
           <dl class="facts"><dt>Built for</dt><dd>Small offices, shops, clinics and schools.</dd><dt>Where</dt><dd>Under a desk or in a cupboard, not usually in big data centers.</dd><dt>Key parts</dt><dd>1 CPU, modest RAM, a few hard disks, often just one power supply.</dd><dt>Typical power</dt><dd>About 150–500 W.</dd><dt>Cooling &amp; water</dt><dd>💧 Cooled by room air or an office AC. Almost no water on site.</dd><dt>Everyday example</dt><dd>The machine running a pharmacy's stock and billing software.</dd></dl></div>
       </div>
       <div class="srv-panel" data-panel="web" hidden>
-        <figure class="reveal"><img src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 10%22%3E%3Crect width=%2216%22 height=%2210%22 fill=%22%23445%22/%3E%3C/svg%3E" alt="Rows of rack servers that serve web pages" data-missing="srv-web" width="1600" height="1000"><figcaption>Photo: [pending srv-web]</figcaption></figure>
+        <figure class="reveal"><img src="images/srv-web-lg.jpg" srcset="images/srv-web-sm.jpg 720w, images/srv-web-lg.jpg 1280w" sizes="(min-width: 860px) 40rem, 100vw" width="1280" height="853" alt="Rows of rack servers that serve web pages" loading="lazy" decoding="async"><figcaption>Photo: <b>Victor Grigas</b> · <a href="https://commons.wikimedia.org/wiki/File:Wikimedia_Foundation_Servers-8055_17.jpg" target="_blank" rel="noopener">Wikimedia Commons</a> · <a href="https://creativecommons.org/licenses/by-sa/3.0" target="_blank" rel="noopener">CC BY-SA 3.0</a></figcaption></figure>
         <div><h4>Web &amp; application servers</h4><p class="srv-what">The front counter and the kitchen of every app.</p>
           <dl class="facts"><dt>Built for</dt><dd>A <b>web server</b> receives your request and sends back pages and pictures. An <b>application server</b> runs the business logic: "is this seat free?", "apply the coupon".</dd><dt>Where</dt><dd>Hundreds or thousands of identical rack servers behind a <button class="term" data-t="load balancer">load balancer</button>.</dd><dt>Key parts</dt><dd>Strong CPUs and plenty of RAM. Little storage: they keep data in databases.</dd><dt>Typical power</dt><dd>About 300–600 W each.</dd><dt>Cooling &amp; water</dt><dd>💧 Air-cooled. Its water footprint comes from the building's cooling system and from the power station that makes its electricity.</dd><dt>Everyday example</dt><dd>When you open a shopping app, a web server sends the page and an app server works out your cart total.</dd></dl></div>
       </div>
       <div class="srv-panel" data-panel="db" hidden>
-        <figure class="reveal"><img src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 10%22%3E%3Crect width=%2216%22 height=%2210%22 fill=%22%23445%22/%3E%3C/svg%3E" alt="A powerful database server in a rack" data-missing="srv-db" width="1600" height="1000"><figcaption>Photo: [pending srv-db]</figcaption></figure>
+        <figure class="reveal"><img src="images/srv-db-lg.jpg" srcset="images/srv-db-sm.jpg 720w, images/srv-db-lg.jpg 1280w" sizes="(min-width: 860px) 40rem, 100vw" width="1280" height="1219" alt="Rows of rack servers, the kind that run big databases" loading="lazy" decoding="async"><figcaption>Photo: <b>Victor Grigas</b> · <a href="https://commons.wikimedia.org/wiki/File:Wikimedia_Foundation_Servers-8055_08.jpg" target="_blank" rel="noopener">Wikimedia Commons</a> · <a href="https://creativecommons.org/licenses/by-sa/3.0" target="_blank" rel="noopener">CC BY-SA 3.0</a></figcaption></figure>
         <div><h4>Database server</h4><p class="srv-what">The memory of the business. Never forgets, never mixes up.</p>
           <dl class="facts"><dt>Built for</dt><dd>Storing records and answering questions like "what is Priya's balance?" thousands of times a second, without mistakes.</dd><dt>Where</dt><dd>Banks, shops, hospitals, airlines: anywhere records matter. Usually in pairs, with a live copy ready to take over.</dd><dt>Key parts</dt><dd>Lots of RAM (often 1 TB or more), very fast SSDs, strong CPUs.</dd><dt>Typical power</dt><dd>About 600–1,500 W.</dd><dt>Cooling &amp; water</dt><dd>💧 Air-cooled. Busy around the clock, so it keeps the cooling system (and its water use) busy too.</dd><dt>Everyday example</dt><dd>Your UPI payment ends with a database writing "₹20 moved from A to B".</dd></dl></div>
       </div>
       <div class="srv-panel" data-panel="stor" hidden>
-        <figure class="reveal"><img src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 10%22%3E%3Crect width=%2216%22 height=%2210%22 fill=%22%23445%22/%3E%3C/svg%3E" alt="A storage server or disk shelf with many drives" data-missing="srv-storage" width="1600" height="1000"><figcaption>Photo: [pending srv-storage]</figcaption></figure>
+        <figure class="reveal"><img src="images/srv-storage-lg.jpg" srcset="images/srv-storage-sm.jpg 720w, images/srv-storage-lg.jpg 1280w" sizes="(min-width: 860px) 40rem, 100vw" width="1280" height="1067" alt="A storage server or disk shelf with many drives" loading="lazy" decoding="async"><figcaption>Photo: <b>Gregory Rocher / Ifremer</b> · <a href="https://commons.wikimedia.org/wiki/File:Le_Centre_Datarmor,_les_coulisses_(Ifremer_00957-106840_-_54953).jpg" target="_blank" rel="noopener">Wikimedia Commons</a> · <a href="https://creativecommons.org/licenses/by/4.0" target="_blank" rel="noopener">CC BY 4.0</a></figcaption></figure>
         <div><h4>Storage server</h4><p class="srv-what">A server that is mostly drives.</p>
           <dl class="facts"><dt>Built for</dt><dd>Holding huge amounts of files: photos, videos, backups, data lakes.</dd><dt>Where</dt><dd>Cloud storage (like Google Drive or Amazon S3), video platforms, backup systems.</dd><dt>Key parts</dt><dd>Dozens of hard disks or SSDs (some boxes hold 60 or more), modest CPUs, fast network cards.</dd><dt>Typical power</dt><dd>About 500–1,500 W, mostly from the spinning disks.</dd><dt>Cooling &amp; water</dt><dd>💧 Air-cooled. Disks need steady, moderate temperatures; their heat ends up in the building's cooling system.</dd><dt>Everyday example</dt><dd>Where your phone's photo backup actually ends up.</dd></dl></div>
       </div>
       <div class="srv-panel" data-panel="gpu" hidden>
-        <figure class="reveal"><img src="images/srv-gpu-lg.jpg" srcset="images/srv-gpu-sm.jpg 720w, images/srv-gpu-lg.jpg 1400w" sizes="(min-width: 860px) 40rem, 100vw" width="1400" height="1136" alt="An NVIDIA HGX board with eight large GPU heatsinks" loading="lazy" decoding="async"><figcaption>Photo: <b>Pokiiri</b> · <a href="https://commons.wikimedia.org/wiki/File:Nvidia_DGX-B200-HGX.jpg" target="_blank" rel="noopener">Wikimedia Commons</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0" target="_blank" rel="noopener">CC BY-SA 4.0</a></figcaption></figure>
+        <figure class="reveal"><img src="images/srv-gpu-lg.jpg" srcset="images/srv-gpu-sm.jpg 720w, images/srv-gpu-lg.jpg 1280w" sizes="(min-width: 860px) 40rem, 100vw" width="1280" height="1039" alt="An NVIDIA HGX board with eight large GPU heatsinks" loading="lazy" decoding="async"><figcaption>Photo: <b>Pokiiri</b> · <a href="https://commons.wikimedia.org/wiki/File:Nvidia_DGX-B200-HGX.jpg" target="_blank" rel="noopener">Wikimedia Commons</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0" target="_blank" rel="noopener">CC BY-SA 4.0</a></figcaption></figure>
         <div><h4>AI server (GPU server)</h4><p class="srv-what">A heavy-duty machine built around 8 powerful GPUs.</p>
           <dl class="facts"><dt>Built for</dt><dd>Training AI models and answering AI questions (<button class="term" data-t="inference">inference</button>).</dd><dt>Where</dt><dd>AI clusters at cloud providers and AI companies, often thousands of these linked together.</dd><dt>Key parts</dt><dd>8 <button class="term" data-t="gpu">GPUs</button>, each with its own super-fast memory; 2 CPUs; terabytes of RAM; one very fast network link per GPU; many large power supplies.</dd><dt>Typical power</dt><dd><b>About 10–15 kW.</b> NVIDIA's DGX B300 is rated at about 14.5 kW, as much as 20 to 30 normal servers.</dd><dt>Cooling &amp; water</dt><dd>💧 Newer AI servers are often <b>liquid-cooled</b> with a closed loop: the same coolant goes round and round. Water is only <i>used up</i> if the building gets rid of the heat with evaporative cooling towers.</dd><dt>Everyday example</dt><dd>The machine that writes a chatbot's reply to you, word by word.</dd></dl></div>
       </div>
@@ -1002,7 +1005,7 @@ table.mx td{font-size:.85rem}
           <dl class="facts"><dt>Built for</dt><dd>Jobs that need very fast answers or save long trips: video caches, factory robots, shop cameras, 5G networks.</dd><dt>Where</dt><dd>At phone towers, inside internet providers' buildings, in factories and shops. Many are rugged, short and quiet.</dd><dt>Key parts</dt><dd>Compact CPU (sometimes a small GPU), SSDs, network cards; built to handle dust and heat.</dd><dt>Typical power</dt><dd>About 100–500 W.</dd><dt>Cooling &amp; water</dt><dd>💧 Usually cooled by fans and outside air in a sealed box. Uses almost no water.</dd><dt>Everyday example</dt><dd>The <button class="term" data-t="cdn">CDN</button> cache near you that starts your YouTube video in a blink.</dd></dl></div>
       </div>
       <div class="srv-panel" data-panel="mf" hidden>
-        <figure class="reveal"><img src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 10%22%3E%3Crect width=%2216%22 height=%2210%22 fill=%22%23445%22/%3E%3C/svg%3E" alt="An IBM mainframe computer cabinet" data-missing="srv-mainframe" width="1600" height="1000"><figcaption>Photo: [pending srv-mainframe]</figcaption></figure>
+        <figure class="reveal"><img src="images/srv-mainframe-lg.jpg" srcset="images/srv-mainframe-sm.jpg 675w, images/srv-mainframe-lg.jpg 1125w" sizes="(min-width: 860px) 40rem, 100vw" width="1125" height="1500" alt="An IBM mainframe computer cabinet" loading="lazy" decoding="async"><figcaption>Photo: <b>Roberto Berlim from Brazil</b> · <a href="https://commons.wikimedia.org/wiki/File:IBM_System_z10.jpg" target="_blank" rel="noopener">Wikimedia Commons</a> · <a href="https://creativecommons.org/licenses/by-sa/2.0" target="_blank" rel="noopener">CC BY-SA 2.0</a></figcaption></figure>
         <div><h4>Mainframe</h4><p class="srv-what">The armoured truck of computing: huge, ultra-reliable, very secure.</p>
           <dl class="facts"><dt>Built for</dt><dd>Massive numbers of small, critical transactions, with almost zero downtime.</dd><dt>Where</dt><dd>Big banks, insurers, airlines and governments.</dd><dt>Key parts</dt><dd>Many special processors, enormous memory, spare parts built in for every component, so faulty parts can be replaced while it runs.</dd><dt>Typical power</dt><dd>Several kW to tens of kW, depending on size: a fridge-sized cabinet doing the work of many servers.</dd><dt>Cooling &amp; water</dt><dd>💧 Air-cooled, or cooled with a closed water loop connected to the building's chilled water.</dd><dt>Everyday example</dt><dd>Card payments and airline bookings often end up on a mainframe.</dd></dl></div>
       </div>
@@ -1020,7 +1023,7 @@ table.mx td{font-size:.85rem}
     <div class="wrap hs-wrap reveal" style="margin-top:28px">
       <div class="hs-media">
         <div class="hotspots">
-          <img src="images/in-rack-lg.jpg" srcset="images/in-rack-sm.jpg 720w, images/in-rack-lg.jpg 1400w" sizes="(min-width: 860px) 50vw, 100vw" width="1400" height="933" alt="A 1U rack server with its lid removed, showing the motherboard, fans and power supply" loading="lazy" decoding="async">
+          <img src="images/in-rack-lg.jpg" srcset="images/in-rack-sm.jpg 720w, images/in-rack-lg.jpg 1280w" sizes="(min-width: 860px) 50vw, 100vw" width="1280" height="853" alt="A 1U rack server with its lid removed, showing the motherboard, fans and power supply" loading="lazy" decoding="async">
           <button class="hs" data-i="cpu" style="left:44%;top:42%">1</button>
           <button class="hs" data-i="ram" style="left:55%;top:29%">2</button>
           <button class="hs" data-i="drv" style="left:87%;top:55%">3</button>
@@ -1048,7 +1051,7 @@ table.mx td{font-size:.85rem}
     <div class="wrap hs-wrap reveal" style="margin-top:72px">
       <div class="hs-media">
         <div class="hotspots">
-          <img src="images/in-gpu-lg.jpg" srcset="images/in-gpu-sm.jpg 720w, images/in-gpu-lg.jpg 1400w" sizes="(min-width: 860px) 50vw, 100vw" width="1400" height="1420" alt="An NVIDIA DGX B200 HGX board showing eight GPU modules under tall heatsinks" loading="lazy" decoding="async">
+          <img src="images/in-gpu-lg.jpg" srcset="images/in-gpu-sm.jpg 720w, images/in-gpu-lg.jpg 1280w" sizes="(min-width: 860px) 50vw, 100vw" width="1280" height="1299" alt="An NVIDIA DGX B200 HGX board showing eight GPU modules under tall heatsinks" loading="lazy" decoding="async">
           <button class="hs" data-i="g1" style="left:44%;top:30%">1</button>
           <button class="hs" data-i="g2" style="left:28%;top:50%">2</button>
           <button class="hs" data-i="g3" style="left:62%;top:19%">3</button>
@@ -1156,7 +1159,7 @@ table.mx td{font-size:.85rem}
 
   <div class="section tight">
     <div class="wrap split rev">
-      <figure class="reveal tallfig"><img src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 10%22%3E%3Crect width=%2216%22 height=%2210%22 fill=%22%23445%22/%3E%3C/svg%3E" alt="An NVIDIA GB200 NVL72 rack: a tall cabinet filled with stacked GPU compute trays" data-missing="ch3-gpurack" width="1600" height="1000"><figcaption>Photo: [pending ch3-gpurack]</figcaption></figure>
+      <figure class="reveal tallfig"><img src="images/ch3-gpurack-lg.jpg" srcset="images/ch3-gpurack-sm.jpg 313w, images/ch3-gpurack-lg.jpg 522w" sizes="(min-width: 860px) 50vw, 100vw" width="522" height="1500" alt="An NVIDIA GB200 NVL72 rack: a tall cabinet filled with stacked GPU compute trays" loading="lazy" decoding="async"><figcaption>Photo: <b>Pokiiri</b> · <a href="https://commons.wikimedia.org/wiki/File:Nvidia_DGX_GB200.jpg" target="_blank" rel="noopener">Wikimedia Commons</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0" target="_blank" rel="noopener">CC BY-SA 4.0</a></figcaption></figure>
       <div class="copy reveal">
         <span class="kicker">Rack-scale AI</span>
         <h3>When the whole rack is one computer</h3>
@@ -1277,7 +1280,7 @@ table.mx td{font-size:.85rem}
 
   <div class="section">
     <div class="wrap split">
-      <figure class="reveal"><img src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 10%22%3E%3Crect width=%2216%22 height=%2210%22 fill=%22%23445%22/%3E%3C/svg%3E" alt="Fibre patch cables plugged into a network panel in a data center" data-missing="ch4-mmr" width="1600" height="1000"><figcaption>Photo: [pending ch4-mmr]</figcaption></figure>
+      <figure class="reveal"><img src="images/ch4-mmr-lg.jpg" srcset="images/ch4-mmr-sm.jpg 720w, images/ch4-mmr-lg.jpg 1280w" sizes="(min-width: 860px) 50vw, 100vw" width="1280" height="853" alt="Blue and green network cables plugged into rows of servers" loading="lazy" decoding="async"><figcaption>Photo: <b>Victor Grigas</b> · <a href="https://commons.wikimedia.org/wiki/File:Wikimedia_Foundation_Servers-8055_24.jpg" target="_blank" rel="noopener">Wikimedia Commons</a> · <a href="https://creativecommons.org/licenses/by-sa/3.0" target="_blank" rel="noopener">CC BY-SA 3.0</a></figcaption></figure>
       <div class="copy reveal">
         <span class="kicker">What changes for AI?</span>
         <h3>A website <i>looks things up</i>. A chatbot <i>works things out</i>.</h3>
@@ -1319,13 +1322,13 @@ table.mx td{font-size:.85rem}
 
 <section class="chapter" id="ch5" data-accent="5" data-num="05" data-title="Power">
   <header class="hero">
-    <img src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 10%22%3E%3Crect width=%2216%22 height=%2210%22 fill=%22%23445%22/%3E%3C/svg%3E" alt="A row of large backup power units in a data center power room" data-missing="ch5-hero" width="1600" height="1000">
+    <img src="images/ch5-hero-lg.jpg" srcset="images/ch5-hero-sm.jpg 960w, images/ch5-hero-lg.jpg 1920w" sizes="100vw" width="1920" height="1440" alt="A row of large backup power units in a data center power room" loading="lazy" decoding="async">
     <div class="hero-in">
       <span class="num">05</span>
       <h2>Never, ever switch off</h2>
       <p class="dek">Grid, batteries, generators: the relay race that keeps every server running through a blackout.</p>
     </div>
-    <div class="credit">Photo: [pending ch5-hero]</div>
+    <div class="credit">Photo: <b>Robert.Harker</b> · <a href="https://commons.wikimedia.org/wiki/File:EPS_6000_Row_B.jpg" target="_blank" rel="noopener">Wikimedia Commons</a> · <a href="https://creativecommons.org/licenses/by-sa/3.0" target="_blank" rel="noopener">CC BY-SA 3.0</a></div>
   </header>
 
   <div class="section">
@@ -1381,7 +1384,7 @@ table.mx td{font-size:.85rem}
 
   <div class="section">
     <div class="wrap split rev">
-      <figure class="reveal"><img src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 10%22%3E%3Crect width=%2216%22 height=%2210%22 fill=%22%23445%22/%3E%3C/svg%3E" alt="Long rows of backup batteries in a data center" data-missing="ch5-ups" width="1600" height="1000"><figcaption>Photo: [pending ch5-ups]</figcaption></figure>
+      <figure class="reveal"><img src="images/ch5-ups-lg.jpg" srcset="images/ch5-ups-sm.jpg 720w, images/ch5-ups-lg.jpg 1280w" sizes="(min-width: 860px) 50vw, 100vw" width="1280" height="1277" alt="Long rows of backup batteries in a data center" loading="lazy" decoding="async"><figcaption>Photo: <b>Jelson25</b> · <a href="https://commons.wikimedia.org/wiki/File:Datacenter_Backup_Batteries.jpg" target="_blank" rel="noopener">Wikimedia Commons</a> · <a href="https://creativecommons.org/licenses/by/3.0" target="_blank" rel="noopener">CC BY 3.0</a></figcaption></figure>
       <div class="copy reveal">
         <span class="kicker">Backup #1</span>
         <h3>The UPS: zero-second backup</h3>
@@ -1390,7 +1393,7 @@ table.mx td{font-size:.85rem}
       </div>
     </div>
     <div class="wrap split" style="margin-top:56px">
-      <figure class="reveal"><img src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 10%22%3E%3Crect width=%2216%22 height=%2210%22 fill=%22%23445%22/%3E%3C/svg%3E" alt="Large diesel generators that provide backup power to a data center" data-missing="ch5-gen" width="1600" height="1000"><figcaption>Photo: [pending ch5-gen]</figcaption></figure>
+      <figure class="reveal"><img src="images/ch5-gen-lg.jpg" srcset="images/ch5-gen-sm.jpg 720w, images/ch5-gen-lg.jpg 1280w" sizes="(min-width: 860px) 50vw, 100vw" width="1280" height="960" alt="Large diesel generators that provide backup power to a data center" loading="lazy" decoding="async"><figcaption>Photo: <b>Mikael Häggström</b> · <a href="https://commons.wikimedia.org/wiki/File:Power_generator_of_a_hospital_data_center.jpg" target="_blank" rel="noopener">Wikimedia Commons</a> · <a href="http://creativecommons.org/publicdomain/zero/1.0/deed.en" target="_blank" rel="noopener">CC0</a></figcaption></figure>
       <div class="copy reveal">
         <span class="kicker">Backup #2</span>
         <h3>Generators: the marathon runners</h3>
@@ -1472,13 +1475,13 @@ table.mx td{font-size:.85rem}
 
 <section class="chapter" id="ch6" data-accent="6" data-num="06" data-title="Cooling">
   <header class="hero">
-    <img src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 10%22%3E%3Crect width=%2216%22 height=%2210%22 fill=%22%23445%22/%3E%3C/svg%3E" alt="Large cooling units inside a data center" data-missing="ch6-hero" width="1600" height="1000">
+    <img src="images/ch6-hero-lg.jpg" srcset="images/ch6-hero-sm.jpg 960w, images/ch6-hero-lg.jpg 1920w" sizes="100vw" width="1920" height="1440" alt="Large cooling units inside a data center" loading="lazy" decoding="async">
     <div class="hero-in">
       <span class="num">06</span>
       <h2>A room full of hair-dryers</h2>
       <p class="dek">Hot aisles, cold aisles and liquid: how data centers stop their computers from cooking.</p>
     </div>
-    <div class="credit">Photo: [pending ch6-hero]</div>
+    <div class="credit">Photo: <b>Robert.Harker</b> · <a href="https://commons.wikimedia.org/wiki/File:CRAC_Cabinets_2.jpg" target="_blank" rel="noopener">Wikimedia Commons</a> · <a href="https://creativecommons.org/licenses/by-sa/3.0" target="_blank" rel="noopener">CC BY-SA 3.0</a></div>
   </header>
 
   <div class="section">
@@ -1490,7 +1493,7 @@ table.mx td{font-size:.85rem}
 
   <div class="section tight">
     <div class="wrap split">
-      <figure class="reveal"><img src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 10%22%3E%3Crect width=%2216%22 height=%2210%22 fill=%22%23445%22/%3E%3C/svg%3E" alt="A cold aisle between two rows of server cabinets" data-missing="ch6-aisle" width="1600" height="1000"><figcaption>Photo: [pending ch6-aisle]</figcaption></figure>
+      <figure class="reveal"><img src="images/ch6-aisle-lg.jpg" srcset="images/ch6-aisle-sm.jpg 675w, images/ch6-aisle-lg.jpg 1125w" sizes="(min-width: 860px) 50vw, 100vw" width="1125" height="1500" alt="A cold aisle between two rows of server cabinets" loading="lazy" decoding="async"><figcaption>Photo: <b>Robert.Harker</b> · <a href="https://commons.wikimedia.org/wiki/File:Cabinet_Asile.jpg" target="_blank" rel="noopener">Wikimedia Commons</a> · <a href="https://creativecommons.org/licenses/by-sa/3.0" target="_blank" rel="noopener">CC BY-SA 3.0</a></figcaption></figure>
       <div class="copy reveal">
         <span class="kicker">The basic trick</span>
         <h3>Hot aisle, cold aisle</h3>
@@ -1499,7 +1502,7 @@ table.mx td{font-size:.85rem}
       </div>
     </div>
     <div class="wrap split rev" style="margin-top:56px">
-      <figure class="reveal"><img src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 10%22%3E%3Crect width=%2216%22 height=%2210%22 fill=%22%23445%22/%3E%3C/svg%3E" alt="A perforated raised-floor tile that lets cold air rise into the cold aisle" data-missing="ch6-floor" width="1600" height="1000"><figcaption>Photo: [pending ch6-floor]</figcaption></figure>
+      <figure class="reveal"><img src="images/ch6-floor-lg.jpg" srcset="images/ch6-floor-sm.jpg 720w, images/ch6-floor-lg.jpg 1280w" sizes="(min-width: 860px) 50vw, 100vw" width="1280" height="960" alt="A perforated raised-floor tile that lets cold air rise into the cold aisle" loading="lazy" decoding="async"><figcaption>Photo: <b>LP Floor Group</b> · <a href="https://commons.wikimedia.org/wiki/File:All-steel_perforated_ventilation_raised_floor_panel_28_percent_open_area.jpg" target="_blank" rel="noopener">Wikimedia Commons</a> · <a href="https://creativecommons.org/licenses/by/4.0" target="_blank" rel="noopener">CC BY 4.0</a></figcaption></figure>
       <div class="copy reveal">
         <h3>The floor that breathes</h3>
         <p>In many older halls, the floor is raised about half a metre. Cold air from big air conditioners (<button class="term" data-t="crah">CRAH units</button>) is pushed into the space underneath. Tiles full of holes in the cold aisle let it rise right in front of the servers.</p>
@@ -1544,7 +1547,7 @@ table.mx td{font-size:.85rem}
       </ol>
       <p class="reveal">In cool places, data centers use cold outside air or water directly for much of the year and barely run the chillers. That's called <b>free cooling</b>.</p>
     </div>
-    <div class="wrap" style="margin-top:36px"><figure class="reveal"><img src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 10%22%3E%3Crect width=%2216%22 height=%2210%22 fill=%22%23445%22/%3E%3C/svg%3E" alt="A cooling tower on the roof of a data center" data-missing="ch6-towers" width="1600" height="1000"><figcaption>Photo: [pending ch6-towers]</figcaption></figure></div>
+    <div class="wrap" style="margin-top:36px"><figure class="reveal"><img src="images/ch6-towers-lg.jpg" srcset="images/ch6-towers-sm.jpg 720w, images/ch6-towers-lg.jpg 1280w" sizes="100vw" width="1280" height="960" alt="A cooling tower on the roof of a data center" loading="lazy" decoding="async"><figcaption>Photo: <b>Rsparks3</b> · <a href="https://commons.wikimedia.org/wiki/File:Data_center_cooling_tower.jpg" target="_blank" rel="noopener">Wikimedia Commons</a> · <a href="http://creativecommons.org/publicdomain/zero/1.0/deed.en" target="_blank" rel="noopener">CC0</a></figcaption></figure></div>
   </div>
 
   <div class="section water">
@@ -1574,7 +1577,7 @@ table.mx td{font-size:.85rem}
 
   <div class="section tint">
     <div class="wrap split">
-      <figure class="reveal"><img src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 10%22%3E%3Crect width=%2216%22 height=%2210%22 fill=%22%23445%22/%3E%3C/svg%3E" alt="An immersion cooling tank where servers sit in a special liquid" data-missing="ch6-immersion" width="1600" height="1000"><figcaption>Photo: [pending ch6-immersion]</figcaption></figure>
+      <figure class="reveal"><img src="images/ch6-immersion-lg.jpg" srcset="images/ch6-immersion-sm.jpg 720w, images/ch6-immersion-lg.jpg 1280w" sizes="(min-width: 860px) 50vw, 100vw" width="1280" height="853" alt="An immersion cooling tank where servers sit in a special liquid" loading="lazy" decoding="async"><figcaption>Photo: <b>Rolf Brink</b> · <a href="https://commons.wikimedia.org/wiki/File:Asperitas_AIC24_Immersion_system.jpg" target="_blank" rel="noopener">Wikimedia Commons</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0" target="_blank" rel="noopener">CC BY-SA 4.0</a></figcaption></figure>
       <div class="copy reveal">
         <span class="kicker">The AI era</span>
         <h3>When air isn't enough: liquid</h3>
@@ -1618,13 +1621,13 @@ table.mx td{font-size:.85rem}
 
 <section class="chapter" id="ch7" data-accent="7" data-num="07" data-title="Security, fire and monitoring">
   <header class="hero">
-    <img src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 10%22%3E%3Crect width=%2216%22 height=%2210%22 fill=%22%23445%22/%3E%3C/svg%3E" alt="A locked cage of server racks behind metal mesh walls" data-missing="ch7-hero" width="1600" height="1000">
+    <img src="images/ch7-hero-lg.jpg" srcset="images/ch7-hero-sm.jpg 960w, images/ch7-hero-lg.jpg 1920w" sizes="100vw" width="1920" height="1278" alt="A locked cage of server racks behind metal mesh walls" loading="lazy" decoding="async">
     <div class="hero-in">
       <span class="num">07</span>
       <h2>Harder to enter than an airport</h2>
       <p class="dek">Fences, fingerprints, fire that's fought with gas, and the room that watches everything.</p>
     </div>
-    <div class="credit">Photo: [pending ch7-hero]</div>
+    <div class="credit">Photo: <b>Virtuo Doc</b> · <a href="https://commons.wikimedia.org/wiki/File:Cage_Quelle_EMC_HostCo_GmbH.jpg" target="_blank" rel="noopener">Wikimedia Commons</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0" target="_blank" rel="noopener">CC BY-SA 4.0</a></div>
   </header>
 
   <div class="section">
@@ -1658,7 +1661,7 @@ table.mx td{font-size:.85rem}
 
   <div class="section">
     <div class="wrap split">
-      <figure class="reveal"><img src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 10%22%3E%3Crect width=%2216%22 height=%2210%22 fill=%22%23445%22/%3E%3C/svg%3E" alt="Server racks inside a locked mesh cage in a colocation data center" data-missing="ch7-cage" width="1600" height="1000"><figcaption>Photo: [pending ch7-cage]</figcaption></figure>
+      <figure class="reveal"><img src="images/ch7-cage-lg.jpg" srcset="images/ch7-cage-sm.jpg 720w, images/ch7-cage-lg.jpg 1280w" sizes="(min-width: 860px) 50vw, 100vw" width="1280" height="1280" alt="Server racks inside a locked mesh cage in a colocation data center" loading="lazy" decoding="async"><figcaption>Photo: <b>International Gemini Observatory/NOIRLab/NSF/AURA/Manuel Paredes</b> · <a href="https://commons.wikimedia.org/wiki/File:Data_Center_Fish_Eye_View_(noirlab-racks-155).jpg" target="_blank" rel="noopener">Wikimedia Commons</a> · <a href="https://creativecommons.org/licenses/by/4.0" target="_blank" rel="noopener">CC BY 4.0</a></figcaption></figure>
       <div class="copy reveal">
         <span class="kicker">Even inside</span>
         <h3>Locked cages and destroyed drives</h3>
@@ -1670,7 +1673,7 @@ table.mx td{font-size:.85rem}
 
   <div class="section tint">
     <div class="wrap split rev">
-      <figure class="reveal"><img src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 10%22%3E%3Crect width=%2216%22 height=%2210%22 fill=%22%23445%22/%3E%3C/svg%3E" alt="A gas fire suppression system discharging in a server room" data-missing="ch7-fire" width="1600" height="1000"><figcaption>Photo: [pending ch7-fire]</figcaption></figure>
+      <figure class="reveal"><img src="images/ch7-fire-lg.jpg" srcset="images/ch7-fire-sm.jpg 720w, images/ch7-fire-lg.jpg 1280w" sizes="(min-width: 860px) 50vw, 100vw" width="1280" height="960" alt="A gas fire suppression system discharging in a server room" loading="lazy" decoding="async"><figcaption>Photo: <b>Keith4048</b> · <a href="https://commons.wikimedia.org/wiki/File:COMPUTER_ROOM_DISCHARGE.JPG" target="_blank" rel="noopener">Wikimedia Commons</a> · Public domain</figcaption></figure>
       <div class="copy reveal">
         <span class="kicker">Fire</span>
         <h3>Fighting fire without water</h3>
@@ -1793,13 +1796,13 @@ table.mx td{font-size:.85rem}
 
 <section class="chapter" id="ch8" data-accent="8" data-num="08" data-title="Redundancy, uptime and tiers">
   <header class="hero">
-    <img src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 10%22%3E%3Crect width=%2216%22 height=%2210%22 fill=%22%23445%22/%3E%3C/svg%3E" alt="Rows of identical servers and network equipment, each with spares" data-missing="ch8-hero" width="1600" height="1000">
+    <img src="images/ch8-hero-lg.jpg" srcset="images/ch8-hero-sm.jpg 960w, images/ch8-hero-lg.jpg 1920w" sizes="100vw" width="1920" height="1280" alt="Rows of identical servers and network equipment, each with spares" loading="lazy" decoding="async">
     <div class="hero-in">
       <span class="num">08</span>
       <h2>A spare for everything</h2>
       <p class="dek">N+1, 2N, "five nines" and the Tier I–IV ratings: how data centers plan for things to break.</p>
     </div>
-    <div class="credit">Photo: [pending ch8-hero]</div>
+    <div class="credit">Photo: <b>Victor Grigas</b> · <a href="https://commons.wikimedia.org/wiki/File:Wikimedia_Foundation_Servers-8055_08.jpg" target="_blank" rel="noopener">Wikimedia Commons</a> · <a href="https://creativecommons.org/licenses/by-sa/3.0" target="_blank" rel="noopener">CC BY-SA 3.0</a></div>
   </header>
 
   <div class="section">
@@ -1902,13 +1905,13 @@ table.mx td{font-size:.85rem}
 
 <section class="chapter" id="ch9" data-accent="9" data-num="09" data-title="Virtualization and the cloud">
   <header class="hero">
-    <img src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 10%22%3E%3Crect width=%2216%22 height=%2210%22 fill=%22%23445%22/%3E%3C/svg%3E" alt="Long rows of identical server racks in a large computing hall" data-missing="ch9-hero" width="1600" height="1000">
+    <img src="images/ch9-hero-lg.jpg" srcset="images/ch9-hero-sm.jpg 960w, images/ch9-hero-lg.jpg 1920w" sizes="100vw" width="1920" height="1272" alt="Long rows of identical server racks in a large computing hall" loading="lazy" decoding="async">
     <div class="hero-in">
       <span class="num">09</span>
       <h2>One machine, many tenants</h2>
       <p class="dek">How one physical server becomes dozens of "virtual" ones, and how that turned data centers into the cloud.</p>
     </div>
-    <div class="credit">Photo: [pending ch9-hero]</div>
+    <div class="credit">Photo: <b>Argonne National Laboratory</b> · <a href="https://commons.wikimedia.org/wiki/File:IBM_Blue_Gene_P_supercomputer.jpg" target="_blank" rel="noopener">Wikimedia Commons</a> · <a href="https://creativecommons.org/licenses/by-sa/2.0" target="_blank" rel="noopener">CC BY-SA 2.0</a></div>
   </header>
 
   <div class="section">
@@ -2039,13 +2042,13 @@ table.mx td{font-size:.85rem}
 
 <section class="chapter" id="ch10" data-accent="10" data-num="10" data-title="Real life, traced">
   <header class="hero">
-    <img src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 10%22%3E%3Crect width=%2216%22 height=%2210%22 fill=%22%23445%22/%3E%3C/svg%3E" alt="A dense rack of AI computing hardware with glowing lights" data-missing="ch10-hero" width="1600" height="1000">
+    <img src="images/ch10-hero-lg.jpg" srcset="images/ch10-hero-sm.jpg 960w, images/ch10-hero-lg.jpg 1280w" sizes="100vw" width="1280" height="994" alt="Close-up of the stacked compute trays in an NVIDIA GB200 AI rack" loading="lazy" decoding="async">
     <div class="hero-in">
       <span class="num">10</span>
       <h2>Real life, traced</h2>
       <p class="dek">Coding with Claude Code, running a Spark job, streaming, paying, chatting: follow each one through the data center.</p>
     </div>
-    <div class="credit">Photo: [pending ch10-hero]</div>
+    <div class="credit">Photo: <b>Pokiiri</b> · <a href="https://commons.wikimedia.org/wiki/File:Nvidia_DGX_GB200.jpg" target="_blank" rel="noopener">Wikimedia Commons</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0" target="_blank" rel="noopener">CC BY-SA 4.0</a></div>
   </header>
 
   <div class="section">
@@ -2133,13 +2136,13 @@ table.mx td{font-size:.85rem}
 
 <section class="chapter" id="ch11" data-accent="11" data-num="11" data-title="Energy, water and the planet">
   <header class="hero">
-    <img src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 10%22%3E%3Crect width=%2216%22 height=%2210%22 fill=%22%23445%22/%3E%3C/svg%3E" alt="A data center building with cooling equipment on its roof" data-missing="ch11-hero" width="1600" height="1000">
+    <img src="images/ch11-hero-lg.jpg" srcset="images/ch11-hero-sm.jpg 960w, images/ch11-hero-lg.jpg 1920w" sizes="100vw" width="1920" height="927" alt="Wind turbines and high-voltage power lines in the English countryside" loading="lazy" decoding="async">
     <div class="hero-in">
       <span class="num">11</span>
       <h2>Every watt, every drop</h2>
       <p class="dek">PUE, WUE, clean power and waste heat: how efficient data centers are, and how they're getting greener.</p>
     </div>
-    <div class="credit">Photo: [pending ch11-hero]</div>
+    <div class="credit">Photo: <b>Diliff</b> · <a href="https://commons.wikimedia.org/wiki/File:Wind_Turbines_and_Power_Lines,_East_Sussex,_England_-_April_2009.jpg" target="_blank" rel="noopener">Wikimedia Commons</a> · <a href="https://creativecommons.org/licenses/by-sa/3.0" target="_blank" rel="noopener">CC BY-SA 3.0</a></div>
   </header>
 
   <div class="section">
@@ -2189,11 +2192,11 @@ table.mx td{font-size:.85rem}
 
   <div class="section">
     <div class="wrap split">
-      <figure class="reveal"><img src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 10%22%3E%3Crect width=%2216%22 height=%2210%22 fill=%22%23445%22/%3E%3C/svg%3E" alt="Wind turbines generating clean electricity" data-missing="ch11-wind" width="1600" height="1000"><figcaption>Photo: [pending ch11-wind]</figcaption></figure>
+      <figure class="reveal"><img src="images/ch11-wind-lg.jpg" srcset="images/ch11-wind-sm.jpg 720w, images/ch11-wind-lg.jpg 1280w" sizes="(min-width: 860px) 50vw, 100vw" width="1280" height="647" alt="Aerial view of Google&#x27;s data center campus in Mayes County, Oklahoma, surrounded by farmland" loading="lazy" decoding="async"><figcaption>Photo: <b>Xpda</b> · <a href="https://commons.wikimedia.org/wiki/File:Google_Mayes_County_P0004974a.jpg" target="_blank" rel="noopener">Wikimedia Commons</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0" target="_blank" rel="noopener">CC BY-SA 4.0</a></figcaption></figure>
       <div class="copy reveal">
         <span class="kicker">Clean power</span>
         <h3>Buying the wind and the sun</h3>
-        <p>Big operators sign long contracts to buy power from new wind and solar farms, often in the same region as their data centers. Some aim higher: Google's goal is to run on carbon-free energy <b>every hour of every day</b> by 2030, not just on average over a year.</p>
+        <p>Big operators sign long contracts to buy power from new wind and solar farms, often in the same region as their data centers. Google's campus in Oklahoma (pictured), for example, buys power from wind farms in the same state. Some aim higher: Google's goal is to run on carbon-free energy <b>every hour of every day</b> by 2030, not just on average over a year.</p>
         <p>That's hard, because the wind doesn't always blow when servers are busy. So the next steps are batteries, smart scheduling (running flexible jobs when clean power is plentiful) and new sources like geothermal and nuclear.</p>
       </div>
     </div>
@@ -2201,7 +2204,7 @@ table.mx td{font-size:.85rem}
 
   <div class="section tint">
     <div class="wrap split rev">
-      <figure class="reveal"><img src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 10%22%3E%3Crect width=%2216%22 height=%2210%22 fill=%22%23445%22/%3E%3C/svg%3E" alt="District heating pipes that carry hot water to homes" data-missing="ch11-heat" width="1600" height="1000"><figcaption>Photo: [pending ch11-heat]</figcaption></figure>
+      <figure class="reveal"><img src="images/ch11-heat-lg.jpg" srcset="images/ch11-heat-sm.jpg 720w, images/ch11-heat-lg.jpg 1280w" sizes="(min-width: 860px) 50vw, 100vw" width="1280" height="960" alt="District heating pipes that carry hot water to homes" loading="lazy" decoding="async"><figcaption>Photo: <b>Antti Leppänen</b> · <a href="https://commons.wikimedia.org/wiki/File:District_heating_pipes_in_Jyv%C3%A4skyl%C3%A4.jpg" target="_blank" rel="noopener">Wikimedia Commons</a> · <a href="https://creativecommons.org/licenses/by-sa/3.0" target="_blank" rel="noopener">CC BY-SA 3.0</a></figcaption></figure>
       <div class="copy reveal">
         <span class="kicker">Waste heat</span>
         <h3>Heating homes with servers</h3>
@@ -2256,13 +2259,13 @@ table.mx td{font-size:.85rem}
 
 <section class="chapter" id="ch12" data-accent="12" data-num="12" data-title="Planning, building and running">
   <header class="hero">
-    <img src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 10%22%3E%3Crect width=%2216%22 height=%2210%22 fill=%22%23445%22/%3E%3C/svg%3E" alt="Engineers testing a large generator with a load bank before a data center opens" data-missing="ch12-hero" width="1600" height="1000">
+    <img src="images/ch12-hero-lg.jpg" srcset="images/ch12-hero-sm.jpg 960w, images/ch12-hero-lg.jpg 1280w" sizes="100vw" width="1280" height="720" alt="A nearly finished data center building with its generator deck, on a construction site" loading="lazy" decoding="async">
     <div class="hero-in">
       <span class="num">12</span>
       <h2>Years before the first server</h2>
       <p class="dek">Choosing the land, building the shell, testing everything, then running it 24 hours a day.</p>
     </div>
-    <div class="credit">Photo: [pending ch12-hero]</div>
+    <div class="credit">Photo: <b>Lapalmauz</b> · <a href="https://commons.wikimedia.org/wiki/File:Una_batteria_di_grossi_generatori_alimentati_a_gasolio_in_un_Data_Center_in_via_di_ultimazione.jpg" target="_blank" rel="noopener">Wikimedia Commons</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0" target="_blank" rel="noopener">CC BY-SA 4.0</a></div>
   </header>
 
   <div class="section">
@@ -2311,7 +2314,7 @@ table.mx td{font-size:.85rem}
       </ol>
     </div>
     <div class="wrap split" style="margin-top:40px">
-      <figure class="reveal"><img src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 10%22%3E%3Crect width=%2216%22 height=%2210%22 fill=%22%23445%22/%3E%3C/svg%3E" alt="An air-cooled load bank used to test a large standby generator" data-missing="ch12-loadbank" width="1600" height="1000"><figcaption>Photo: [pending ch12-loadbank]</figcaption></figure>
+      <figure class="reveal"><img src="images/ch12-loadbank-lg.jpg" srcset="images/ch12-loadbank-sm.jpg 720w, images/ch12-loadbank-lg.jpg 1280w" sizes="(min-width: 860px) 50vw, 100vw" width="1280" height="960" alt="An air-cooled load bank used to test a large standby generator" loading="lazy" decoding="async"><figcaption>Photo: <b>Wtshymanski</b> · <a href="https://commons.wikimedia.org/wiki/File:Air_cooled_load_bank.jpg" target="_blank" rel="noopener">Wikimedia Commons</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0" target="_blank" rel="noopener">CC BY-SA 4.0</a></figcaption></figure>
       <div class="copy reveal">
         <span class="kicker">Commissioning</span>
         <h3>Testing with fake servers</h3>
@@ -2328,6 +2331,7 @@ table.mx td{font-size:.85rem}
       <p class="reveal">A big data center runs every minute of every year with a surprisingly small team: facility engineers (electrical and mechanical), security officers, technicians, and control-room operators. Here's a typical day.</p>
     </div>
     <div class="wrap">
+      <div class="text" style="padding:0;margin:20px auto 0"><figure class="reveal"><img src="images/ch12-tech-lg.jpg" srcset="images/ch12-tech-sm.jpg 720w, images/ch12-tech-lg.jpg 1280w" sizes="(min-width: 860px) 40rem, 100vw" width="1280" height="834" alt="An IT technician checking network equipment in a rack" loading="lazy" decoding="async"><figcaption>Photo: <b>Bill Branson (Photographer)</b> · <a href="https://commons.wikimedia.org/wiki/File:Network_server_and_technician.jpg" target="_blank" rel="noopener">Wikimedia Commons</a> · Public domain</figcaption></figure></div>
       <ol class="day reveal">
         <li><time>07:00</time><b>Shift handover.</b> The night team briefs the day team: any alarms, open tickets, planned work.</li>
         <li><time>08:00</time><b>Walk-around.</b> Engineers walk every hall and plant room: checking temperatures and gauges, listening for odd noises, looking for leaks.</li>
@@ -2362,12 +2366,12 @@ table.mx td{font-size:.85rem}
 
 <section class="chapter dark" id="end" data-accent="0" data-num="★" data-title="Journey's end">
   <header class="hero">
-    <img src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 10%22%3E%3Crect width=%2216%22 height=%2210%22 fill=%22%23445%22/%3E%3C/svg%3E" alt="Server racks glowing in a dark data center aisle" data-missing="end-hero" width="1600" height="1000">
+    <img src="images/end-hero-lg.jpg" srcset="images/end-hero-sm.jpg 960w, images/end-hero-lg.jpg 1920w" sizes="100vw" width="1920" height="1280" alt="A high-performance computing rack seen through a fisheye lens, with glowing green lights and bundled cables" loading="lazy" decoding="async">
     <div class="hero-in">
       <h2>Now you've been inside</h2>
       <p class="dek">Next time a video starts instantly, a payment beeps or an AI answers in seconds, you'll know the building that made it happen.</p>
     </div>
-    <div class="credit">Photo: [pending end-hero]</div>
+    <div class="credit">Photo: <b>Gregory Rocher / Ifremer</b> · <a href="https://commons.wikimedia.org/wiki/File:Le_Centre_Datarmor,_les_coulisses_(Ifremer_00957-106840_-_54954).jpg" target="_blank" rel="noopener">Wikimedia Commons</a> · <a href="https://creativecommons.org/licenses/by/4.0" target="_blank" rel="noopener">CC BY 4.0</a></div>
   </header>
   <div class="section">
     <div class="wrap">
@@ -2412,11 +2416,48 @@ table.mx td{font-size:.85rem}
       <ol class="credits-list">
 <li><b>Cover: Wikimedia Foundation server racks</b>: “Wikimedia Foundation Servers-8055 35” by Victor Grigas, <a href="https://commons.wikimedia.org/wiki/File:Wikimedia_Foundation_Servers-8055_35.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, <a href="https://creativecommons.org/licenses/by-sa/3.0" target="_blank" rel="noopener">CC BY-SA 3.0</a>. Resized from the original.</li>
 <li><b>Ch 1 opening: Google data center, The Dalles, Oregon</b>: “Google Datacenter - The Dalles, Oregon (17832143871)” by Tony Webster from Minneapolis, Minnesota, United States, <a href="https://commons.wikimedia.org/wiki/File:Google_Datacenter_-_The_Dalles,_Oregon_(17832143871).jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, <a href="https://creativecommons.org/licenses/by/2.0" target="_blank" rel="noopener">CC BY 2.0</a>. Resized from the original.</li>
-<li><b>Ch 3 opening: Wikimedia Foundation servers</b>: “Wikimedia Foundation Servers-8055 13” by Victorgrigas, <a href="https://commons.wikimedia.org/wiki/File:Wikimedia_Foundation_Servers-8055_13.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, <a href="https://creativecommons.org/licenses/by-sa/3.0" target="_blank" rel="noopener">CC BY-SA 3.0</a>. Resized from the original.</li>
+<li><b>Ch 1: server hall at CERN</b>: “CERN Server 03” by Florian Hirzinger - www.fh-ap.com, <a href="https://commons.wikimedia.org/wiki/File:CERN_Server_03.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, <a href="https://creativecommons.org/licenses/by-sa/3.0" target="_blank" rel="noopener">CC BY-SA 3.0</a>. Resized from the original.</li>
+<li><b>Ch 1: CERN data centre building, Geneva</b>: “CERN data centre” by Unnerving duck, <a href="https://commons.wikimedia.org/wiki/File:CERN_data_centre.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0" target="_blank" rel="noopener">CC BY-SA 4.0</a>. Resized from the original.</li>
+<li><b>Ch 2 opening: data center aisle</b>: “BalticServers data center” by BalticServers.com, <a href="https://commons.wikimedia.org/wiki/File:BalticServers_data_center.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, <a href="https://creativecommons.org/licenses/by-sa/3.0" target="_blank" rel="noopener">CC BY-SA 3.0</a>. Resized from the original.</li>
+<li><b>Ch 2: Dell servers in a rack, with rack-unit numbers (Wikimedia)</b>: “Wikimedia Foundation Servers-8055 43” by Victor Grigas, <a href="https://commons.wikimedia.org/wiki/File:Wikimedia_Foundation_Servers-8055_43.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, <a href="https://creativecommons.org/licenses/by-sa/3.0" target="_blank" rel="noopener">CC BY-SA 3.0</a>. Resized from the original.</li>
+<li><b>Ch 2: storage system at Ifremer&#x27;s Datarmor centre</b>: “Le Centre Datarmor, les coulisses (Ifremer 00957-106840 - 54953)” by Gregory Rocher / Ifremer, <a href="https://commons.wikimedia.org/wiki/File:Le_Centre_Datarmor,_les_coulisses_(Ifremer_00957-106840_-_54953).jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, <a href="https://creativecommons.org/licenses/by/4.0" target="_blank" rel="noopener">CC BY 4.0</a>. Resized from the original.</li>
+<li><b>Ch 2: network switches and cables</b>: “Network switches” by ShakataGaNai, <a href="https://commons.wikimedia.org/wiki/File:Network_switches.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, <a href="https://creativecommons.org/licenses/by-sa/3.0" target="_blank" rel="noopener">CC BY-SA 3.0</a>. Resized from the original.</li>
+<li><b>Ch 3 opening: Wikimedia Foundation servers</b>: “Wikimedia Foundation Servers-8055 13” by Victor Grigas, <a href="https://commons.wikimedia.org/wiki/File:Wikimedia_Foundation_Servers-8055_13.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, <a href="https://creativecommons.org/licenses/by-sa/3.0" target="_blank" rel="noopener">CC BY-SA 3.0</a>. Resized from the original.</li>
+<li><b>Ch 3: rack servers</b>: “Dell PowerEdge Servers” by Dsv, <a href="https://commons.wikimedia.org/wiki/File:Dell_PowerEdge_Servers.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, Public domain. Resized from the original.</li>
+<li><b>Ch 3: HP BladeSystem c7000 blade chassis</b>: “HP c7000-1” by Redline, <a href="https://commons.wikimedia.org/wiki/File:HP_c7000-1.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, <a href="https://creativecommons.org/licenses/by-sa/3.0" target="_blank" rel="noopener">CC BY-SA 3.0</a>. Resized from the original.</li>
+<li><b>Ch 3: tower-style servers on shelves (BalticServers)</b>: “BalticServers data center” by BalticServers.com, <a href="https://commons.wikimedia.org/wiki/File:BalticServers_data_center.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, <a href="https://creativecommons.org/licenses/by-sa/3.0" target="_blank" rel="noopener">CC BY-SA 3.0</a>. Resized and cropped from the original.</li>
+<li><b>Ch 3: web and application servers (Wikimedia)</b>: “Wikimedia Foundation Servers-8055 17” by Victor Grigas, <a href="https://commons.wikimedia.org/wiki/File:Wikimedia_Foundation_Servers-8055_17.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, <a href="https://creativecommons.org/licenses/by-sa/3.0" target="_blank" rel="noopener">CC BY-SA 3.0</a>. Resized from the original.</li>
+<li><b>Ch 3: rack servers (Wikimedia)</b>: “Wikimedia Foundation Servers-8055 08” by Victor Grigas, <a href="https://commons.wikimedia.org/wiki/File:Wikimedia_Foundation_Servers-8055_08.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, <a href="https://creativecommons.org/licenses/by-sa/3.0" target="_blank" rel="noopener">CC BY-SA 3.0</a>. Resized and cropped from the original.</li>
+<li><b>Ch 3: storage server type</b>: “Le Centre Datarmor, les coulisses (Ifremer 00957-106840 - 54953)” by Gregory Rocher / Ifremer, <a href="https://commons.wikimedia.org/wiki/File:Le_Centre_Datarmor,_les_coulisses_(Ifremer_00957-106840_-_54953).jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, <a href="https://creativecommons.org/licenses/by/4.0" target="_blank" rel="noopener">CC BY 4.0</a>. Resized and cropped from the original.</li>
 <li><b>Ch 3: AI server type</b>: “Nvidia DGX-B200-HGX” by Pokiiri, <a href="https://commons.wikimedia.org/wiki/File:Nvidia_DGX-B200-HGX.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0" target="_blank" rel="noopener">CC BY-SA 4.0</a>. Resized and cropped from the original.</li>
+<li><b>Ch 3: IBM System z10 mainframe</b>: “IBM System z10” by Roberto Berlim from Brazil, <a href="https://commons.wikimedia.org/wiki/File:IBM_System_z10.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, <a href="https://creativecommons.org/licenses/by-sa/2.0" target="_blank" rel="noopener">CC BY-SA 2.0</a>. Resized from the original.</li>
 <li><b>Ch 3: inside a 1U web server (Dell PowerEdge 850)</b>: “Inside and Rear of Webserver” by Rodzilla at English Wikipedia, <a href="https://commons.wikimedia.org/wiki/File:Inside_and_Rear_of_Webserver.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, <a href="https://creativecommons.org/licenses/by/2.5" target="_blank" rel="noopener">CC BY 2.5</a>. Resized from the original.</li>
 <li><b>Ch 3: NVIDIA HGX B200 GPU board</b>: “Nvidia DGX-B200-HGX” by Pokiiri, <a href="https://commons.wikimedia.org/wiki/File:Nvidia_DGX-B200-HGX.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0" target="_blank" rel="noopener">CC BY-SA 4.0</a>. Resized from the original.</li>
+<li><b>Ch 3: NVIDIA GB200 NVL72 rack</b>: “Nvidia DGX GB200” by Pokiiri, <a href="https://commons.wikimedia.org/wiki/File:Nvidia_DGX_GB200.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0" target="_blank" rel="noopener">CC BY-SA 4.0</a>. Resized from the original.</li>
 <li><b>Ch 4 opening: illuminated optical fibres</b>: “Fiber optic illuminated” by Hustvedt, <a href="https://commons.wikimedia.org/wiki/File:Fiber_optic_illuminated.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, <a href="https://creativecommons.org/licenses/by-sa/3.0" target="_blank" rel="noopener">CC BY-SA 3.0</a>. Resized from the original.</li>
+<li><b>Ch 4: network cables plugged into servers (Wikimedia)</b>: “Wikimedia Foundation Servers-8055 24” by Victor Grigas, <a href="https://commons.wikimedia.org/wiki/File:Wikimedia_Foundation_Servers-8055_24.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, <a href="https://creativecommons.org/licenses/by-sa/3.0" target="_blank" rel="noopener">CC BY-SA 3.0</a>. Resized from the original.</li>
+<li><b>Ch 5 opening: UPS cabinet row</b>: “EPS 6000 Row B” by Robert.Harker, <a href="https://commons.wikimedia.org/wiki/File:EPS_6000_Row_B.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, <a href="https://creativecommons.org/licenses/by-sa/3.0" target="_blank" rel="noopener">CC BY-SA 3.0</a>. Resized from the original.</li>
+<li><b>Ch 5: data center backup batteries</b>: “Datacenter Backup Batteries” by Jelson25, <a href="https://commons.wikimedia.org/wiki/File:Datacenter_Backup_Batteries.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, <a href="https://creativecommons.org/licenses/by/3.0" target="_blank" rel="noopener">CC BY 3.0</a>. Resized from the original.</li>
+<li><b>Ch 5: diesel generator of a hospital data center</b>: “Power generator of a hospital data center” by Mikael Häggström, <a href="https://commons.wikimedia.org/wiki/File:Power_generator_of_a_hospital_data_center.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, <a href="http://creativecommons.org/publicdomain/zero/1.0/deed.en" target="_blank" rel="noopener">CC0</a>. Resized from the original.</li>
+<li><b>Ch 6 opening: CRAC cooling units</b>: “CRAC Cabinets 2” by Robert.Harker, <a href="https://commons.wikimedia.org/wiki/File:CRAC_Cabinets_2.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, <a href="https://creativecommons.org/licenses/by-sa/3.0" target="_blank" rel="noopener">CC BY-SA 3.0</a>. Resized from the original.</li>
+<li><b>Ch 6: aisle between server cabinets</b>: “Cabinet Asile” by Robert.Harker, <a href="https://commons.wikimedia.org/wiki/File:Cabinet_Asile.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, <a href="https://creativecommons.org/licenses/by-sa/3.0" target="_blank" rel="noopener">CC BY-SA 3.0</a>. Resized from the original.</li>
+<li><b>Ch 6: perforated raised-floor panel</b>: “All-steel perforated ventilation raised floor panel 28 percent open area” by LP Floor Group, <a href="https://commons.wikimedia.org/wiki/File:All-steel_perforated_ventilation_raised_floor_panel_28_percent_open_area.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, <a href="https://creativecommons.org/licenses/by/4.0" target="_blank" rel="noopener">CC BY 4.0</a>. Resized from the original.</li>
+<li><b>Ch 6: cooling tower on a data center, Mesa, Arizona</b>: “Data center cooling tower” by Rsparks3, <a href="https://commons.wikimedia.org/wiki/File:Data_center_cooling_tower.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, <a href="http://creativecommons.org/publicdomain/zero/1.0/deed.en" target="_blank" rel="noopener">CC0</a>. Resized from the original.</li>
+<li><b>Ch 6: Asperitas immersion cooling system</b>: “Asperitas AIC24 Immersion system” by Rolf Brink, <a href="https://commons.wikimedia.org/wiki/File:Asperitas_AIC24_Immersion_system.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0" target="_blank" rel="noopener">CC BY-SA 4.0</a>. Resized from the original.</li>
+<li><b>Ch 7 opening: locked customer cage</b>: “Cage Quelle EMC HostCo GmbH” by Virtuo Doc, <a href="https://commons.wikimedia.org/wiki/File:Cage_Quelle_EMC_HostCo_GmbH.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0" target="_blank" rel="noopener">CC BY-SA 4.0</a>. Resized from the original.</li>
+<li><b>Ch 7: racks seen through protective enclosure (NOIRLab)</b>: “Data Center Fish Eye View (noirlab-racks-155)” by International Gemini Observatory/NOIRLab/NSF/AURA/Manuel Paredes, <a href="https://commons.wikimedia.org/wiki/File:Data_Center_Fish_Eye_View_(noirlab-racks-155).jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, <a href="https://creativecommons.org/licenses/by/4.0" target="_blank" rel="noopener">CC BY 4.0</a>. Resized from the original.</li>
+<li><b>Ch 7: gas fire-suppression discharge in a server room</b>: “COMPUTER ROOM DISCHARGE” by Keith4048, <a href="https://commons.wikimedia.org/wiki/File:COMPUTER_ROOM_DISCHARGE.JPG" target="_blank" rel="noopener">Wikimedia Commons</a>, Public domain. Resized from the original.</li>
+<li><b>Ch 8 opening: rows of Wikimedia Foundation servers</b>: “Wikimedia Foundation Servers-8055 08” by Victor Grigas, <a href="https://commons.wikimedia.org/wiki/File:Wikimedia_Foundation_Servers-8055_08.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, <a href="https://creativecommons.org/licenses/by-sa/3.0" target="_blank" rel="noopener">CC BY-SA 3.0</a>. Resized from the original.</li>
+<li><b>Ch 9 opening: IBM Blue Gene/P supercomputer, Argonne</b>: “IBM Blue Gene P supercomputer” by Argonne National Laboratory, <a href="https://commons.wikimedia.org/wiki/File:IBM_Blue_Gene_P_supercomputer.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, <a href="https://creativecommons.org/licenses/by-sa/2.0" target="_blank" rel="noopener">CC BY-SA 2.0</a>. Resized from the original.</li>
+<li><b>Ch 10 opening: compute trays of an NVIDIA GB200 rack</b>: “Nvidia DGX GB200” by Pokiiri, <a href="https://commons.wikimedia.org/wiki/File:Nvidia_DGX_GB200.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0" target="_blank" rel="noopener">CC BY-SA 4.0</a>. Resized and cropped from the original.</li>
+<li><b>Ch 11 opening: wind turbines and power lines, East Sussex</b>: “Wind Turbines and Power Lines, East Sussex, England - April 2009” by Diliff, <a href="https://commons.wikimedia.org/wiki/File:Wind_Turbines_and_Power_Lines,_East_Sussex,_England_-_April_2009.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, <a href="https://creativecommons.org/licenses/by-sa/3.0" target="_blank" rel="noopener">CC BY-SA 3.0</a>. Resized from the original.</li>
+<li><b>Ch 11: Google data center campus, Mayes County, Oklahoma</b>: “Google Mayes County P0004974a” by Xpda, <a href="https://commons.wikimedia.org/wiki/File:Google_Mayes_County_P0004974a.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0" target="_blank" rel="noopener">CC BY-SA 4.0</a>. Resized from the original.</li>
+<li><b>Ch 11: district heating pipes, Jyväskylä, Finland</b>: “District heating pipes in Jyväskylä” by Antti Leppänen, <a href="https://commons.wikimedia.org/wiki/File:District_heating_pipes_in_Jyv%C3%A4skyl%C3%A4.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, <a href="https://creativecommons.org/licenses/by-sa/3.0" target="_blank" rel="noopener">CC BY-SA 3.0</a>. Resized from the original.</li>
+<li><b>Ch 12 opening: generators at a nearly finished data center</b>: “Una batteria di grossi generatori alimentati a gasolio in un Data Center in via di ultimazione” by Lapalmauz, <a href="https://commons.wikimedia.org/wiki/File:Una_batteria_di_grossi_generatori_alimentati_a_gasolio_in_un_Data_Center_in_via_di_ultimazione.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0" target="_blank" rel="noopener">CC BY-SA 4.0</a>. Resized from the original.</li>
+<li><b>Ch 12: load bank testing a standby generator</b>: “Air cooled load bank” by Wtshymanski, <a href="https://commons.wikimedia.org/wiki/File:Air_cooled_load_bank.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0" target="_blank" rel="noopener">CC BY-SA 4.0</a>. Resized from the original.</li>
+<li><b>Finale: computing rack at Ifremer&#x27;s Datarmor centre</b>: “Le Centre Datarmor, les coulisses (Ifremer 00957-106840 - 54954)” by Gregory Rocher / Ifremer, <a href="https://commons.wikimedia.org/wiki/File:Le_Centre_Datarmor,_les_coulisses_(Ifremer_00957-106840_-_54954).jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, <a href="https://creativecommons.org/licenses/by/4.0" target="_blank" rel="noopener">CC BY 4.0</a>. Resized from the original.</li>
+<li><b>Ch 1: computer room, University of St. Gallen (historic)</b>: “Blick in einen Raum des HSG-Rechenzentrums HSGH 022-001118” by University of St. Gallen, <a href="https://commons.wikimedia.org/wiki/File:Blick_in_einen_Raum_des_HSG-Rechenzentrums_HSGH_022-001118.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0" target="_blank" rel="noopener">CC BY-SA 4.0</a>. Resized from the original.</li>
+<li><b>Ch 12: technician working on network equipment</b>: “Network server and technician” by Bill Branson (Photographer), <a href="https://commons.wikimedia.org/wiki/File:Network_server_and_technician.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, Public domain. Resized from the original.</li>
 </ol>
       <p class="muted" style="font-size:.8rem;margin-top:30px">Made as an educational story for curious beginners. Figures were checked against the sources above in November 2026 and may change.</p>
     </div>

@@ -22,14 +22,146 @@
   "source": "Wikimedia Commons"
  },
  {
+  "file": "images/ch1-hall-lg.jpg",
+  "small": "images/ch1-hall-sm.jpg",
+  "what": "Ch 1: server hall at CERN",
+  "title": "CERN Server 03",
+  "artist": "Florian Hirzinger - www.fh-ap.com",
+  "license": "CC BY-SA 3.0",
+  "licurl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "page": "https://commons.wikimedia.org/wiki/File:CERN_Server_03.jpg",
+  "source": "Wikimedia Commons"
+ },
+ {
+  "file": "images/ch1-scale-lg.jpg",
+  "small": "images/ch1-scale-sm.jpg",
+  "what": "Ch 1: CERN data centre building, Geneva",
+  "title": "CERN data centre",
+  "artist": "Unnerving duck",
+  "license": "CC BY-SA 4.0",
+  "licurl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:CERN_data_centre.jpg",
+  "source": "Wikimedia Commons"
+ },
+ {
+  "file": "images/ch2-hero-lg.jpg",
+  "small": "images/ch2-hero-sm.jpg",
+  "what": "Ch 2 opening: data center aisle",
+  "title": "BalticServers data center",
+  "artist": "BalticServers.com",
+  "license": "CC BY-SA 3.0",
+  "licurl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "page": "https://commons.wikimedia.org/wiki/File:BalticServers_data_center.jpg",
+  "source": "Wikimedia Commons"
+ },
+ {
+  "file": "images/ch2-rack-lg.jpg",
+  "small": "images/ch2-rack-sm.jpg",
+  "what": "Ch 2: Dell servers in a rack, with rack-unit numbers (Wikimedia)",
+  "title": "Wikimedia Foundation Servers-8055 43",
+  "artist": "Victor Grigas",
+  "license": "CC BY-SA 3.0",
+  "licurl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Wikimedia_Foundation_Servers-8055_43.jpg",
+  "source": "Wikimedia Commons"
+ },
+ {
+  "file": "images/ch2-storage-lg.jpg",
+  "small": "images/ch2-storage-sm.jpg",
+  "what": "Ch 2: storage system at Ifremer's Datarmor centre",
+  "title": "Le Centre Datarmor, les coulisses (Ifremer 00957-106840 - 54953)",
+  "artist": "Gregory Rocher / Ifremer",
+  "license": "CC BY 4.0",
+  "licurl": "https://creativecommons.org/licenses/by/4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Le_Centre_Datarmor,_les_coulisses_(Ifremer_00957-106840_-_54953).jpg",
+  "source": "Wikimedia Commons"
+ },
+ {
+  "file": "images/ch2-cables-lg.jpg",
+  "small": "images/ch2-cables-sm.jpg",
+  "what": "Ch 2: network switches and cables",
+  "title": "Network switches",
+  "artist": "ShakataGaNai",
+  "license": "CC BY-SA 3.0",
+  "licurl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Network_switches.jpg",
+  "source": "Wikimedia Commons"
+ },
+ {
   "file": "images/ch3-hero-lg.jpg",
   "small": "images/ch3-hero-sm.jpg",
   "what": "Ch 3 opening: Wikimedia Foundation servers",
   "title": "Wikimedia Foundation Servers-8055 13",
-  "artist": "Victorgrigas",
+  "artist": "Victor Grigas",
   "license": "CC BY-SA 3.0",
   "licurl": "https://creativecommons.org/licenses/by-sa/3.0",
   "page": "https://commons.wikimedia.org/wiki/File:Wikimedia_Foundation_Servers-8055_13.jpg",
+  "source": "Wikimedia Commons"
+ },
+ {
+  "file": "images/srv-rack-lg.jpg",
+  "small": "images/srv-rack-sm.jpg",
+  "what": "Ch 3: rack servers",
+  "title": "Dell PowerEdge Servers",
+  "artist": "Dsv",
+  "license": "Public domain",
+  "licurl": "",
+  "page": "https://commons.wikimedia.org/wiki/File:Dell_PowerEdge_Servers.jpg",
+  "source": "Wikimedia Commons"
+ },
+ {
+  "file": "images/srv-blade-lg.jpg",
+  "small": "images/srv-blade-sm.jpg",
+  "what": "Ch 3: HP BladeSystem c7000 blade chassis",
+  "title": "HP c7000-1",
+  "artist": "Redline",
+  "license": "CC BY-SA 3.0",
+  "licurl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "page": "https://commons.wikimedia.org/wiki/File:HP_c7000-1.jpg",
+  "source": "Wikimedia Commons"
+ },
+ {
+  "file": "images/srv-tower-lg.jpg",
+  "small": "images/srv-tower-sm.jpg",
+  "what": "Ch 3: tower-style servers on shelves (BalticServers)",
+  "title": "BalticServers data center",
+  "artist": "BalticServers.com",
+  "license": "CC BY-SA 3.0",
+  "licurl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "page": "https://commons.wikimedia.org/wiki/File:BalticServers_data_center.jpg",
+  "source": "Wikimedia Commons"
+ },
+ {
+  "file": "images/srv-web-lg.jpg",
+  "small": "images/srv-web-sm.jpg",
+  "what": "Ch 3: web and application servers (Wikimedia)",
+  "title": "Wikimedia Foundation Servers-8055 17",
+  "artist": "Victor Grigas",
+  "license": "CC BY-SA 3.0",
+  "licurl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Wikimedia_Foundation_Servers-8055_17.jpg",
+  "source": "Wikimedia Commons"
+ },
+ {
+  "file": "images/srv-db-lg.jpg",
+  "small": "images/srv-db-sm.jpg",
+  "what": "Ch 3: rack servers (Wikimedia)",
+  "title": "Wikimedia Foundation Servers-8055 08",
+  "artist": "Victor Grigas",
+  "license": "CC BY-SA 3.0",
+  "licurl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Wikimedia_Foundation_Servers-8055_08.jpg",
+  "source": "Wikimedia Commons"
+ },
+ {
+  "file": "images/srv-storage-lg.jpg",
+  "small": "images/srv-storage-sm.jpg",
+  "what": "Ch 3: storage server type",
+  "title": "Le Centre Datarmor, les coulisses (Ifremer 00957-106840 - 54953)",
+  "artist": "Gregory Rocher / Ifremer",
+  "license": "CC BY 4.0",
+  "licurl": "https://creativecommons.org/licenses/by/4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Le_Centre_Datarmor,_les_coulisses_(Ifremer_00957-106840_-_54953).jpg",
   "source": "Wikimedia Commons"
  },
  {
@@ -41,6 +173,17 @@
   "license": "CC BY-SA 4.0",
   "licurl": "https://creativecommons.org/licenses/by-sa/4.0",
   "page": "https://commons.wikimedia.org/wiki/File:Nvidia_DGX-B200-HGX.jpg",
+  "source": "Wikimedia Commons"
+ },
+ {
+  "file": "images/srv-mainframe-lg.jpg",
+  "small": "images/srv-mainframe-sm.jpg",
+  "what": "Ch 3: IBM System z10 mainframe",
+  "title": "IBM System z10",
+  "artist": "Roberto Berlim from Brazil",
+  "license": "CC BY-SA 2.0",
+  "licurl": "https://creativecommons.org/licenses/by-sa/2.0",
+  "page": "https://commons.wikimedia.org/wiki/File:IBM_System_z10.jpg",
   "source": "Wikimedia Commons"
  },
  {
@@ -66,6 +209,17 @@
   "source": "Wikimedia Commons"
  },
  {
+  "file": "images/ch3-gpurack-lg.jpg",
+  "small": "images/ch3-gpurack-sm.jpg",
+  "what": "Ch 3: NVIDIA GB200 NVL72 rack",
+  "title": "Nvidia DGX GB200",
+  "artist": "Pokiiri",
+  "license": "CC BY-SA 4.0",
+  "licurl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Nvidia_DGX_GB200.jpg",
+  "source": "Wikimedia Commons"
+ },
+ {
   "file": "images/ch4-hero-lg.jpg",
   "small": "images/ch4-hero-sm.jpg",
   "what": "Ch 4 opening: illuminated optical fibres",
@@ -74,6 +228,259 @@
   "license": "CC BY-SA 3.0",
   "licurl": "https://creativecommons.org/licenses/by-sa/3.0",
   "page": "https://commons.wikimedia.org/wiki/File:Fiber_optic_illuminated.jpg",
+  "source": "Wikimedia Commons"
+ },
+ {
+  "file": "images/ch4-mmr-lg.jpg",
+  "small": "images/ch4-mmr-sm.jpg",
+  "what": "Ch 4: network cables plugged into servers (Wikimedia)",
+  "title": "Wikimedia Foundation Servers-8055 24",
+  "artist": "Victor Grigas",
+  "license": "CC BY-SA 3.0",
+  "licurl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Wikimedia_Foundation_Servers-8055_24.jpg",
+  "source": "Wikimedia Commons"
+ },
+ {
+  "file": "images/ch5-hero-lg.jpg",
+  "small": "images/ch5-hero-sm.jpg",
+  "what": "Ch 5 opening: UPS cabinet row",
+  "title": "EPS 6000 Row B",
+  "artist": "Robert.Harker",
+  "license": "CC BY-SA 3.0",
+  "licurl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "page": "https://commons.wikimedia.org/wiki/File:EPS_6000_Row_B.jpg",
+  "source": "Wikimedia Commons"
+ },
+ {
+  "file": "images/ch5-ups-lg.jpg",
+  "small": "images/ch5-ups-sm.jpg",
+  "what": "Ch 5: data center backup batteries",
+  "title": "Datacenter Backup Batteries",
+  "artist": "Jelson25",
+  "license": "CC BY 3.0",
+  "licurl": "https://creativecommons.org/licenses/by/3.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Datacenter_Backup_Batteries.jpg",
+  "source": "Wikimedia Commons"
+ },
+ {
+  "file": "images/ch5-gen-lg.jpg",
+  "small": "images/ch5-gen-sm.jpg",
+  "what": "Ch 5: diesel generator of a hospital data center",
+  "title": "Power generator of a hospital data center",
+  "artist": "Mikael Häggström",
+  "license": "CC0",
+  "licurl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "page": "https://commons.wikimedia.org/wiki/File:Power_generator_of_a_hospital_data_center.jpg",
+  "source": "Wikimedia Commons"
+ },
+ {
+  "file": "images/ch6-hero-lg.jpg",
+  "small": "images/ch6-hero-sm.jpg",
+  "what": "Ch 6 opening: CRAC cooling units",
+  "title": "CRAC Cabinets 2",
+  "artist": "Robert.Harker",
+  "license": "CC BY-SA 3.0",
+  "licurl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "page": "https://commons.wikimedia.org/wiki/File:CRAC_Cabinets_2.jpg",
+  "source": "Wikimedia Commons"
+ },
+ {
+  "file": "images/ch6-aisle-lg.jpg",
+  "small": "images/ch6-aisle-sm.jpg",
+  "what": "Ch 6: aisle between server cabinets",
+  "title": "Cabinet Asile",
+  "artist": "Robert.Harker",
+  "license": "CC BY-SA 3.0",
+  "licurl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Cabinet_Asile.jpg",
+  "source": "Wikimedia Commons"
+ },
+ {
+  "file": "images/ch6-floor-lg.jpg",
+  "small": "images/ch6-floor-sm.jpg",
+  "what": "Ch 6: perforated raised-floor panel",
+  "title": "All-steel perforated ventilation raised floor panel 28 percent open area",
+  "artist": "LP Floor Group",
+  "license": "CC BY 4.0",
+  "licurl": "https://creativecommons.org/licenses/by/4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:All-steel_perforated_ventilation_raised_floor_panel_28_percent_open_area.jpg",
+  "source": "Wikimedia Commons"
+ },
+ {
+  "file": "images/ch6-towers-lg.jpg",
+  "small": "images/ch6-towers-sm.jpg",
+  "what": "Ch 6: cooling tower on a data center, Mesa, Arizona",
+  "title": "Data center cooling tower",
+  "artist": "Rsparks3",
+  "license": "CC0",
+  "licurl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "page": "https://commons.wikimedia.org/wiki/File:Data_center_cooling_tower.jpg",
+  "source": "Wikimedia Commons"
+ },
+ {
+  "file": "images/ch6-immersion-lg.jpg",
+  "small": "images/ch6-immersion-sm.jpg",
+  "what": "Ch 6: Asperitas immersion cooling system",
+  "title": "Asperitas AIC24 Immersion system",
+  "artist": "Rolf Brink",
+  "license": "CC BY-SA 4.0",
+  "licurl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Asperitas_AIC24_Immersion_system.jpg",
+  "source": "Wikimedia Commons"
+ },
+ {
+  "file": "images/ch7-hero-lg.jpg",
+  "small": "images/ch7-hero-sm.jpg",
+  "what": "Ch 7 opening: locked customer cage",
+  "title": "Cage Quelle EMC HostCo GmbH",
+  "artist": "Virtuo Doc",
+  "license": "CC BY-SA 4.0",
+  "licurl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Cage_Quelle_EMC_HostCo_GmbH.jpg",
+  "source": "Wikimedia Commons"
+ },
+ {
+  "file": "images/ch7-cage-lg.jpg",
+  "small": "images/ch7-cage-sm.jpg",
+  "what": "Ch 7: racks seen through protective enclosure (NOIRLab)",
+  "title": "Data Center Fish Eye View (noirlab-racks-155)",
+  "artist": "International Gemini Observatory/NOIRLab/NSF/AURA/Manuel Paredes",
+  "license": "CC BY 4.0",
+  "licurl": "https://creativecommons.org/licenses/by/4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Data_Center_Fish_Eye_View_(noirlab-racks-155).jpg",
+  "source": "Wikimedia Commons"
+ },
+ {
+  "file": "images/ch7-fire-lg.jpg",
+  "small": "images/ch7-fire-sm.jpg",
+  "what": "Ch 7: gas fire-suppression discharge in a server room",
+  "title": "COMPUTER ROOM DISCHARGE",
+  "artist": "Keith4048",
+  "license": "Public domain",
+  "licurl": "",
+  "page": "https://commons.wikimedia.org/wiki/File:COMPUTER_ROOM_DISCHARGE.JPG",
+  "source": "Wikimedia Commons"
+ },
+ {
+  "file": "images/ch8-hero-lg.jpg",
+  "small": "images/ch8-hero-sm.jpg",
+  "what": "Ch 8 opening: rows of Wikimedia Foundation servers",
+  "title": "Wikimedia Foundation Servers-8055 08",
+  "artist": "Victor Grigas",
+  "license": "CC BY-SA 3.0",
+  "licurl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Wikimedia_Foundation_Servers-8055_08.jpg",
+  "source": "Wikimedia Commons"
+ },
+ {
+  "file": "images/ch9-hero-lg.jpg",
+  "small": "images/ch9-hero-sm.jpg",
+  "what": "Ch 9 opening: IBM Blue Gene/P supercomputer, Argonne",
+  "title": "IBM Blue Gene P supercomputer",
+  "artist": "Argonne National Laboratory",
+  "license": "CC BY-SA 2.0",
+  "licurl": "https://creativecommons.org/licenses/by-sa/2.0",
+  "page": "https://commons.wikimedia.org/wiki/File:IBM_Blue_Gene_P_supercomputer.jpg",
+  "source": "Wikimedia Commons"
+ },
+ {
+  "file": "images/ch10-hero-lg.jpg",
+  "small": "images/ch10-hero-sm.jpg",
+  "what": "Ch 10 opening: compute trays of an NVIDIA GB200 rack",
+  "title": "Nvidia DGX GB200",
+  "artist": "Pokiiri",
+  "license": "CC BY-SA 4.0",
+  "licurl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Nvidia_DGX_GB200.jpg",
+  "source": "Wikimedia Commons"
+ },
+ {
+  "file": "images/ch11-hero-lg.jpg",
+  "small": "images/ch11-hero-sm.jpg",
+  "what": "Ch 11 opening: wind turbines and power lines, East Sussex",
+  "title": "Wind Turbines and Power Lines, East Sussex, England - April 2009",
+  "artist": "Diliff",
+  "license": "CC BY-SA 3.0",
+  "licurl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Wind_Turbines_and_Power_Lines,_East_Sussex,_England_-_April_2009.jpg",
+  "source": "Wikimedia Commons"
+ },
+ {
+  "file": "images/ch11-wind-lg.jpg",
+  "small": "images/ch11-wind-sm.jpg",
+  "what": "Ch 11: Google data center campus, Mayes County, Oklahoma",
+  "title": "Google Mayes County P0004974a",
+  "artist": "Xpda",
+  "license": "CC BY-SA 4.0",
+  "licurl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Google_Mayes_County_P0004974a.jpg",
+  "source": "Wikimedia Commons"
+ },
+ {
+  "file": "images/ch11-heat-lg.jpg",
+  "small": "images/ch11-heat-sm.jpg",
+  "what": "Ch 11: district heating pipes, Jyväskylä, Finland",
+  "title": "District heating pipes in Jyväskylä",
+  "artist": "Antti Leppänen",
+  "license": "CC BY-SA 3.0",
+  "licurl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "page": "https://commons.wikimedia.org/wiki/File:District_heating_pipes_in_Jyv%C3%A4skyl%C3%A4.jpg",
+  "source": "Wikimedia Commons"
+ },
+ {
+  "file": "images/ch12-hero-lg.jpg",
+  "small": "images/ch12-hero-sm.jpg",
+  "what": "Ch 12 opening: generators at a nearly finished data center",
+  "title": "Una batteria di grossi generatori alimentati a gasolio in un Data Center in via di ultimazione",
+  "artist": "Lapalmauz",
+  "license": "CC BY-SA 4.0",
+  "licurl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Una_batteria_di_grossi_generatori_alimentati_a_gasolio_in_un_Data_Center_in_via_di_ultimazione.jpg",
+  "source": "Wikimedia Commons"
+ },
+ {
+  "file": "images/ch12-loadbank-lg.jpg",
+  "small": "images/ch12-loadbank-sm.jpg",
+  "what": "Ch 12: load bank testing a standby generator",
+  "title": "Air cooled load bank",
+  "artist": "Wtshymanski",
+  "license": "CC BY-SA 4.0",
+  "licurl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Air_cooled_load_bank.jpg",
+  "source": "Wikimedia Commons"
+ },
+ {
+  "file": "images/end-hero-lg.jpg",
+  "small": "images/end-hero-sm.jpg",
+  "what": "Finale: computing rack at Ifremer's Datarmor centre",
+  "title": "Le Centre Datarmor, les coulisses (Ifremer 00957-106840 - 54954)",
+  "artist": "Gregory Rocher / Ifremer",
+  "license": "CC BY 4.0",
+  "licurl": "https://creativecommons.org/licenses/by/4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Le_Centre_Datarmor,_les_coulisses_(Ifremer_00957-106840_-_54954).jpg",
+  "source": "Wikimedia Commons"
+ },
+ {
+  "file": "images/ch1-history-lg.jpg",
+  "small": "images/ch1-history-sm.jpg",
+  "what": "Ch 1: computer room, University of St. Gallen (historic)",
+  "title": "Blick in einen Raum des HSG-Rechenzentrums HSGH 022-001118",
+  "artist": "University of St. Gallen",
+  "license": "CC BY-SA 4.0",
+  "licurl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Blick_in_einen_Raum_des_HSG-Rechenzentrums_HSGH_022-001118.jpg",
+  "source": "Wikimedia Commons"
+ },
+ {
+  "file": "images/ch12-tech-lg.jpg",
+  "small": "images/ch12-tech-sm.jpg",
+  "what": "Ch 12: technician working on network equipment",
+  "title": "Network server and technician",
+  "artist": "Bill Branson (Photographer)",
+  "license": "Public domain",
+  "licurl": "",
+  "page": "https://commons.wikimedia.org/wiki/File:Network_server_and_technician.jpg",
   "source": "Wikimedia Commons"
  }
 ]
