@@ -45,6 +45,9 @@ button{font:inherit;color:inherit;cursor:pointer}
   transition:background .35s ease}
 .topbar.top{background:linear-gradient(180deg,rgba(0,0,0,.45),rgba(0,0,0,0));backdrop-filter:none;-webkit-backdrop-filter:none}
 .topbar.top .now{visibility:hidden}
+.lib-link{display:inline-flex;align-items:center;gap:4px;font-size:.78rem;font-weight:600;color:#c9d1d9;text-decoration:none;border-right:1px solid rgba(255,255,255,.2);padding-right:12px;white-space:nowrap}
+.lib-link:hover{color:#fff}
+@media(max-width:480px){.lib-link span{display:none}.lib-link{padding-right:8px}}
 .topbar .brand{font-family:var(--serif);font-weight:800;font-size:1.05rem;white-space:nowrap;text-decoration:none}
 .topbar .brand b{color:var(--accent)}
 .topbar .now{flex:1;min-width:0;font-size:.85rem;color:#c9d1d9;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -591,6 +594,7 @@ table.mx td{font-size:.85rem}
 <a class="sr-only" href="#ch1">Skip to the story</a>
 
 <header class="topbar" id="topbar" data-accent="0">
+  <a class="lib-link" href="../" aria-label="All magazines (library home)"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M9 2 4 7l5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>All magazines</span></a>
   <a class="brand" href="#top">Inside the <b>Cloud</b></a>
   <div class="now" id="nowReading" aria-live="polite"></div>
   <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="menu">
@@ -2557,6 +2561,8 @@ const TERMS = {
 };
 
 /* ===================== CORE ===================== */
+const MAG_SLUG = 'data-centers'; // used by the library home page's "Continue reading"
+function saveProgress(ch){ try { localStorage.setItem('cookbook:' + MAG_SLUG, JSON.stringify({id: ch.id, num: ch.dataset.num, title: ch.dataset.title, at: Date.now()})); } catch (e) { /* storage unavailable: fine */ } }
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -2577,7 +2583,7 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
   list.addEventListener('click', e => { if (e.target.closest('a')) open(false); });
   addEventListener('keydown', e => { if (e.key === 'Escape') { open(false); hideTip(); } });
   const prog = $('#progress'), toTop = $('#toTop');
-  let ticking = false;
+  let ticking = false, lastSaved = null;
   const onScroll = () => {
     const h = document.documentElement.scrollHeight - innerHeight;
     prog.style.width = (scrollY / h * 100) + '%';
@@ -2586,6 +2592,7 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
     let cur = null;
     for (const ch of chapters) { if (ch.getBoundingClientRect().top < innerHeight * .4) cur = ch; }
     if (cur) {
+      if (cur !== lastSaved) { lastSaved = cur; saveProgress(cur); }
       bar.dataset.accent = cur.dataset.accent;
       now.innerHTML = `<span>${cur.dataset.num || ''}</span>${cur.dataset.title}`;
     } else { now.textContent = ''; }
