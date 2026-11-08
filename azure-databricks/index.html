@@ -308,6 +308,7 @@ table.cmp td:first-child{font-weight:700;color:#fff;white-space:nowrap}
 .track a:hover{background:color-mix(in srgb,var(--accent) 25%,transparent)}
 .track a small{color:var(--accent);font-weight:800;min-width:1.6em}
 .noc-score{font-weight:700;color:var(--accent)}
+.pwr-btns{display:flex;gap:8px;flex-wrap:wrap}
 .split>*,.cards>*,.persona-grid>*,.arch-grid>*,.in-grid>*{min-width:0}
 .code{max-width:min(var(--w-text),100%)}
 /* ============ CHAPTER-SPECIFIC CSS ============ */
@@ -400,6 +401,137 @@ table.cmp td:first-child{font-weight:700;color:#fff;white-space:nowrap}
 @media(min-width:800px){.sp-out{grid-template-columns:repeat(4,1fr)}}
 .sp-out small{display:block;color:#8fa3c7;font-size:.72rem}
 .sp-out b{font:800 1.4rem var(--serif);color:#fff}
+.sp-total{border-color:var(--accent)!important}.sp-total b{color:var(--accent)}
+
+
+.tt-ticks{display:flex;justify-content:space-between;font-size:.75rem;color:#8fa3c7;margin:-4px 2px 12px}
+.tt-grid{display:grid;gap:16px;grid-template-columns:1fr}
+@media(min-width:900px){.tt-grid{grid-template-columns:1.4fr 1fr}}
+.tt-grid>*{min-width:0}
+.tt-op{font-size:.92rem;background:var(--night-2);border-left:4px solid var(--accent);border-radius:8px;padding:10px 14px;margin-bottom:10px;color:#e6edf3}
+.tt-tbl{width:100%;border-collapse:collapse;font-size:.9rem}
+.tt-tbl th{text-align:left;font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:#8fa3c7;padding:8px;border-bottom:1px solid var(--line-dark)}
+.tt-tbl td{padding:8px;border-bottom:1px solid #16294a;color:#e6edf3;transition:background .4s}
+.tt-tbl tr.new td{background:rgba(46,160,67,.22)}.tt-tbl tr.chg td{background:rgba(227,179,65,.2)}
+.tt-tbl tr.gone td{background:rgba(239,68,68,.18);text-decoration:line-through;color:#ff9b9b}
+.tt-tbl.blocked{opacity:.25}
+.tt-msg{font-size:.9rem;min-height:1.4em;margin:10px 0 0}
+.tt-side h4{color:#8fa3c7;font:700 .72rem ui-monospace,Menlo,monospace;letter-spacing:.08em;margin:0 0 6px}
+.tt-side ul{list-style:none;margin:0 0 14px;padding:0;font:400 .78rem/1.6 ui-monospace,Menlo,monospace;color:#c9d1d9}
+.tt-side li.on{color:#7ee787}.tt-side li.off{color:#6e7681;text-decoration:line-through}
+.tt-code{margin:0!important}
+.tt-vac{display:flex;gap:8px;align-items:center;margin-top:12px;font-size:.92rem;color:#c9d1d9}
+.tt-vac input{width:20px;height:20px;accent-color:var(--accent)}
+
+
+.med-trio{display:grid;gap:14px;grid-template-columns:1fr}
+@media(min-width:900px){.med-trio{grid-template-columns:repeat(3,1fr)}}
+.med{border-radius:16px;padding:20px;color:#14161a}
+.med span{font-size:2rem}.med h4{font-family:var(--serif);font-size:1.35rem;margin:.3em 0}.med p{font-size:.95rem}.med small{font-weight:700;opacity:.75}
+.med.b{background:linear-gradient(135deg,#f6dcc0,#e9b98a)}.med.s{background:linear-gradient(135deg,#eef2f6,#cfd8e2)}.med.g{background:linear-gradient(135deg,#fdf0c2,#f3cf5e)}
+.med-flow{display:grid;gap:10px;grid-template-columns:1fr;align-items:start}
+@media(min-width:980px){.med-flow{grid-template-columns:1fr 30px 1fr 30px .8fr}}
+.med-flow>*{min-width:0}
+.med-col{background:var(--night-2);border:1px solid var(--line-dark);border-radius:12px;padding:12px;min-height:200px}
+.med-col h4{color:#fff;font:700 .82rem ui-monospace,Menlo,monospace;margin:0 0 8px}
+.med-arrow{font-size:1.6rem;color:#3b5b8a;text-align:center;align-self:center;transition:color .3s}
+.med-arrow.on{color:var(--accent)}
+@media(max-width:979px){.med-arrow{transform:rotate(90deg)}}
+.rw{display:grid;grid-template-columns:1.1fr 1.2fr .9fr 1fr;gap:6px;font:400 .74rem/1.3 ui-monospace,Menlo,monospace;padding:5px 6px;border-radius:6px;margin-bottom:4px;background:#0a1628;color:#c9d1d9;transition:all .5s}
+.rw.h{background:none;color:#8fa3c7;font-weight:700}
+.rw.bad{background:rgba(239,68,68,.18);color:#ffb4b4}.rw.dup{background:rgba(227,179,65,.18);color:#f5d27a}.rw.fix{background:rgba(46,160,67,.2);color:#b7f5c4}
+.rw.out{opacity:0;transform:translateX(20px);height:0;padding:0;margin:0;overflow:hidden}
+.gold-k{display:flex;justify-content:space-between;font:700 .85rem var(--sans);padding:8px 10px;border-radius:8px;background:#3a3010;color:#fcd34d;margin-bottom:6px}
+.med-log{margin:14px 0 0;padding-left:1.3em;font-size:.88rem;color:#c9d1d9;display:grid;gap:4px}
+
+
+.al-grid{display:grid;gap:12px;grid-template-columns:1fr}
+@media(min-width:900px){.al-grid{grid-template-columns:1.2fr 1.2fr .9fr}}
+.al-grid>*{min-width:0}
+.al-grid h4 small{display:block;font:400 .72rem ui-monospace,Menlo,monospace;color:#8fa3c7;margin-top:2px}
+.al-list{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:4px;font:400 .78rem ui-monospace,Menlo,monospace;min-height:60px}
+.al-list li{padding:5px 8px;border-radius:6px;background:#0a1628;color:#c9d1d9;animation:pop .3s ease}
+.al-list li.new{border-left:3px solid #e3b341}.al-list li.done{border-left:3px solid #3fb950;color:#86efac}
+.al-count b{font:800 2.4rem var(--serif);color:var(--accent)}
+
+
+.bs-dag{display:grid;grid-template-columns:1fr;gap:6px;align-items:center}
+@media(min-width:900px){.bs-dag{grid-template-columns:1fr 60px 1fr 60px 1fr 60px 1fr}}
+.bs-dag>*{min-width:0}
+.bs-n{background:var(--night-2);border:1.5px solid var(--line-dark);border-radius:12px;padding:12px;text-align:center;font-weight:700;color:#fff;transition:.3s;position:relative}
+.bs-n small{display:block;font-weight:500;color:#8fa3c7;font-size:.72rem;margin-top:2px}
+.bs-n.on{border-color:var(--accent);box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 25%,transparent)}
+.bs-n .q{position:absolute;top:-10px;right:-6px;background:#e3b341;color:#111;border-radius:999px;font-size:.7rem;padding:2px 7px}
+.bs-p{height:12px;position:relative;overflow:hidden}
+@media(max-width:899px){.bs-p{height:22px;width:12px;margin:0 auto}}
+.bs-p i{position:absolute;width:10px;height:10px;border-radius:50%;background:#5eead4;top:1px;left:-12px;animation:mv .9s linear forwards}
+@media(max-width:899px){.bs-p i{left:1px;top:-12px;animation:mvv .9s linear forwards}}
+@keyframes mv{to{left:100%}}@keyframes mvv{to{top:100%}}
+.bs-meta{display:grid;gap:10px;grid-template-columns:repeat(2,1fr);margin-top:16px}
+@media(min-width:800px){.bs-meta{grid-template-columns:repeat(4,1fr)}}
+.bs-meta small{display:block;color:#8fa3c7;font-size:.72rem}.bs-meta b{font:800 1.3rem var(--serif);color:#fff}
+.ex-bar{display:flex;height:16px;border-radius:8px;overflow:hidden;background:#0a1628;margin-top:10px}
+.ex-bar i{display:block;height:100%;transition:width .4s}#exOk{background:#2ea043}#exBad{background:#ef4444}
+
+
+.sp-lab{display:block;font-size:.95rem;margin-bottom:2px}.sp-lab span{color:var(--accent);font-weight:800}
+.wm-time{position:relative;height:150px;margin:14px 0 6px;background:var(--night-2);border:1px solid var(--line-dark);border-radius:12px;overflow:hidden}
+.wm-time .ax{position:absolute;left:4%;right:4%;bottom:26px;height:2px;background:#2b4a77}
+.wm-time .tk{position:absolute;bottom:6px;font:600 .66rem var(--sans);color:#8fa3c7;transform:translateX(-50%)}
+.wm-time .win{position:absolute;top:10px;bottom:30px;background:rgba(37,99,235,.18);border-left:2px solid #2563eb;border-right:2px dashed #2563eb}
+.wm-time .wait{position:absolute;top:10px;bottom:30px;background:repeating-linear-gradient(135deg,rgba(227,179,65,.18) 0 6px,transparent 6px 12px);border-right:3px solid #e3b341;transition:width .3s}
+.wm-time .ev{position:absolute;width:26px;height:26px;margin-left:-13px;border-radius:50%;display:grid;place-items:center;font-size:.8rem;transition:.3s}
+.wm-time .ev.in{background:#2ea043;color:#fff}.wm-time .ev.late{background:#ef4444;color:#fff}
+.wm-out{display:grid;gap:10px;grid-template-columns:repeat(3,1fr)}
+.wm-out small{display:block;color:#8fa3c7;font-size:.72rem}.wm-out b{font:800 1.3rem var(--serif);color:#fff}
+@media(max-width:520px){.wm-out{grid-template-columns:1fr}}
+
+
+.dg-opts{display:flex;flex-wrap:wrap;gap:10px 22px;font-size:.9rem;color:#c9d1d9;margin-bottom:14px}
+.dg-opts input{width:18px;height:18px;accent-color:var(--accent);vertical-align:-3px;margin-right:6px}
+.dg-opts select{background:var(--night-3);color:#fff;border:1px solid var(--line-dark);border-radius:8px;padding:6px 10px;font:inherit;margin-left:6px}
+.dg-graph{display:grid;gap:10px;grid-template-columns:repeat(4,1fr);align-items:center}
+@media(max-width:700px){.dg-graph{grid-template-columns:1fr}}
+.dg-col{display:grid;gap:10px}
+.dg-t{border:1.5px solid var(--line-dark);background:var(--night-2);border-radius:12px;padding:12px;text-align:center;color:#fff;font-weight:700;font-size:.9rem;transition:.3s;position:relative}
+.dg-t small{display:block;font-weight:500;color:#8fa3c7;font-size:.7rem}
+.dg-t::after{content:attr(data-st);display:block;font:700 .7rem var(--sans);margin-top:4px;color:#8fa3c7}
+.dg-t.run{border-color:#58a6ff;box-shadow:0 0 0 4px rgba(88,166,255,.25)}.dg-t.run::after{color:#58a6ff}
+.dg-t.ok{border-color:#2ea043;background:#0f2a18}.dg-t.ok::after{color:#7ee787}
+.dg-t.bad{border-color:#ef4444;background:#2a1215}.dg-t.bad::after{color:#ff7b72}
+.dg-t.skip{opacity:.5}
+.pwr-log{list-style:none;margin:16px 0 0;padding:0;display:grid;gap:6px;max-height:240px;overflow:auto;font-size:.9rem}
+.pwr-log li{padding:8px 12px;background:var(--night-2);border-radius:8px;border-left:3px solid var(--accent)}
+.pwr-log li.muted{border-left-color:var(--line-dark)}
+
+
+.uc-grid{display:grid;gap:14px;grid-template-columns:1fr;margin-top:14px}
+@media(min-width:900px){.uc-grid{grid-template-columns:.9fr 1.3fr}}
+.uc-grid>*{min-width:0}
+.uc-tree{list-style:none;margin:0;padding:12px;background:var(--night-2);border:1px solid var(--line-dark);border-radius:12px;font:500 .9rem ui-monospace,Menlo,monospace}
+.uc-tree li{margin:2px 0}
+.uc-tree button{border:0;background:transparent;color:#e6edf3;padding:6px 8px;border-radius:8px;width:100%;text-align:left;display:flex;gap:8px;align-items:center;font:inherit;min-height:34px}
+.uc-tree button:hover{background:var(--night-3)}
+.uc-tree button[aria-selected="true"]{background:color-mix(in srgb,var(--accent) 30%,var(--night-3))}
+.uc-tree .d1{padding-left:18px}.uc-tree .d2{padding-left:36px}
+.uc-tree .lock{margin-left:auto;font-size:.8rem}
+.uc-tree .no{color:#6e7681}
+.uc-access{font-weight:700;font-size:1rem;margin:4px 0 10px}
+.uc-prev{width:100%;border-collapse:collapse;font:.8rem ui-monospace,Menlo,monospace}
+.uc-prev th,.uc-prev td{padding:6px 8px;border-bottom:1px solid #16294a;text-align:left;color:#c9d1d9}
+.uc-prev th{color:#8fa3c7;font-size:.7rem;text-transform:uppercase}
+.uc-lin{font-size:.85rem;color:#9fb3c8!important;margin:12px 0 0}
+
+
+.sp-lab{display:block;font-size:.95rem;margin:6px 0 2px}.sp-lab span{color:var(--accent);font-weight:800}
+.ru-wh{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0;min-height:70px;padding:10px;background:var(--night-2);border:1px solid var(--line-dark);border-radius:12px}
+.ru-cl{width:74px;height:58px;border-radius:8px;border:1.5px solid #2ea043;background:#0f2a18;display:grid;place-items:center;font:700 .7rem var(--sans);color:#86efac;text-align:center;animation:pop .3s ease}
+.ru-cl.boot{border-color:#e3b341;background:#2a2112;color:#f2d68c;border-style:dashed}
+.ru-q{display:flex;flex-wrap:wrap;gap:3px;align-content:flex-start;max-width:260px}
+.ru-q i{width:9px;height:9px;border-radius:2px;background:#ef4444}
+.sp-out{display:grid;gap:10px;grid-template-columns:repeat(2,1fr)}
+@media(min-width:800px){.sp-out{grid-template-columns:repeat(4,1fr)}}
+.sp-out small{display:block;color:#8fa3c7;font-size:.72rem}.sp-out b{font:800 1.3rem var(--serif);color:#fff}
 .sp-total{border-color:var(--accent)!important}.sp-total b{color:var(--accent)}
 
 </style>
@@ -1151,6 +1283,998 @@ by_city.show()      <span class="c"># ACTION: now it runs</span>
 
 
 
+<section class="chapter" id="ch7" data-accent="i" data-level="Intermediate" data-num="07" data-title="Delta Lake">
+  <header class="hero">
+    <img src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 10%22%3E%3Crect width=%2216%22 height=%2210%22 fill=%22%23445%22/%3E%3C/svg%3E" alt="Tall old library book stacks seen down a long aisle" data-missing="h07" width="1600" height="1000">
+    <div class="hero-in">
+      <span class="level">Intermediate<i aria-hidden="true"><b class="on"></b><b class="on"></b><b class=""></b></i></span><span class="num">07</span>
+      <h2>A table that remembers everything</h2>
+      <p class="dek">ACID transactions, schema enforcement, time travel, MERGE, OPTIMIZE, VACUUM and liquid clustering.</p>
+    </div>
+    <div class="credit">Photo: [pending h07]</div>
+  </header>
+
+  <div class="section">
+    <p class="hook reveal">A job crashes halfway through writing a million rows. With plain files, readers now see half a table and nobody knows which half. With Delta Lake, they see the old table, untouched, as if the crash never happened.</p>
+    <div class="text">
+      <p class="reveal"><button class="term" data-t="delta">Delta Lake</button> is the table format at the heart of the Databricks lakehouse. Your data is stored as ordinary <button class="term" data-t="parquet">Parquet</button> files. Next to them sits a folder called <code>_delta_log</code>: the <button class="term" data-t="transaction log">transaction log</button>, a numbered diary of every change ever made to the table.</p>
+    </div>
+  </div>
+
+  <div class="section tight">
+    <div class="wrap">
+      <div class="cards reveal">
+        <div class="card2"><div class="ic">🏦</div><h4><button class="term" data-t="acid">ACID transactions</button></h4><p>Every write either fully succeeds or leaves no trace, like a bank transfer. Readers always see a complete version.</p></div>
+        <div class="card2"><div class="ic">🛡️</div><h4>Schema enforcement</h4><p>Try to write a text value into a number column and Delta refuses. You can allow new columns on purpose with schema evolution.</p></div>
+        <div class="card2"><div class="ic">⏪</div><h4><button class="term" data-t="time travel">Time travel</button></h4><p>Query the table as it was at version 12, or last Tuesday. Undo a bad load with <code>RESTORE</code>.</p></div>
+        <div class="card2"><div class="ic">🔀</div><h4><button class="term" data-t="merge">MERGE</button></h4><p>Update rows that match and insert the new ones, in one safe step. The workhorse of change data.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section dark">
+    <div class="lab reveal" id="tt" style="box-shadow:none">
+      <div class="lab-head"><div><span class="tag">Try it</span><h3>Time travel on a Delta table</h3></div><span class="noc-score" id="ttV">Version 5 (latest)</span></div>
+      <p style="margin-top:0">Drag the slider through the history of <code>main.shop.customers</code>. Watch the rows and the log files change.</p>
+      <input type="range" id="ttR" min="0" max="5" value="5" aria-label="Table version">
+      <div class="tt-ticks"><span>v0</span><span>v1</span><span>v2</span><span>v3</span><span>v4</span><span>v5</span></div>
+      <div class="tt-grid">
+        <div>
+          <div class="tt-op" id="ttOp"></div>
+          <table class="tt-tbl"><thead><tr><th>id</th><th>name</th><th>city</th><th>tier</th></tr></thead><tbody id="ttB"></tbody></table>
+          <p class="tt-msg" id="ttMsg" aria-live="polite"></p>
+        </div>
+        <div class="tt-side">
+          <h4>_delta_log/</h4><ul id="ttLog"></ul>
+          <h4>data files</h4><ul id="ttFiles"></ul>
+          <div class="code tt-code"><div class="code-h"><span>SQL</span><button type="button" id="ttCopy">Copy</button></div><pre><code id="ttSql"></code></pre></div>
+        </div>
+      </div>
+      <label class="tt-vac"><input type="checkbox" id="ttVac"> Run <code>VACUUM</code> (keeps data files for the default 7 days)</label>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="wrap split">
+      <div class="copy reveal">
+        <span class="kicker">The daily upsert</span>
+        <h3>MERGE: update or insert in one step</h3>
+        <p>Every night a source system sends you changed customers: some new, some updated. <button class="term" data-t="merge">MERGE</button> matches them on a key, updates what exists and inserts what doesn't, as one atomic transaction.</p>
+        <p>Newer runtimes also support <code>WHEN NOT MATCHED BY SOURCE</code>, to update or delete target rows that disappeared from the source.</p>
+      </div>
+      <div class="reveal">
+<div class="code"><div class="code-h"><span>SQL</span><button type="button">Copy</button></div><pre><code><span class="k">MERGE INTO</span> main.shop.customers <span class="k">AS</span> t
+<span class="k">USING</span> main.shop.customer_updates <span class="k">AS</span> s
+  <span class="k">ON</span> t.id = s.id
+<span class="k">WHEN MATCHED THEN</span>
+  <span class="k">UPDATE SET</span> *
+<span class="k">WHEN NOT MATCHED THEN</span>
+  <span class="k">INSERT</span> *;
+</code></pre></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section tint">
+    <div class="text">
+      <span class="kicker reveal">Keeping tables healthy</span>
+      <h3 class="reveal">OPTIMIZE, VACUUM and clustering</h3>
+      <p class="reveal">Lots of small writes leave lots of small files, and reading 10,000 tiny files is slow. <button class="term" data-t="optimize">OPTIMIZE</button> packs them into fewer, bigger files. <button class="term" data-t="vacuum">VACUUM</button> deletes old files that no recent version needs. By default it keeps 7 days of them, so time travel within a week still works.</p>
+      <p class="reveal">To make queries skip files, keep similar rows together. The old ways were partitioning and <button class="term" data-t="zorder">Z-ordering</button>. Microsoft's docs now say <button class="term" data-t="liquid clustering">liquid clustering</button> replaces both, and Databricks recommends it for all new tables. You can change the clustering keys later without rewriting the data, or let Databricks pick them with <code>CLUSTER BY AUTO</code>.</p>
+    </div>
+<div class="code"><div class="code-h"><span>SQL</span><button type="button">Copy</button></div><pre><code><span class="c">-- New table with liquid clustering on the columns you filter by most</span>
+<span class="k">CREATE TABLE</span> main.shop.orders (
+  order_id <span class="k">BIGINT</span>, customer_id <span class="k">BIGINT</span>, city <span class="k">STRING</span>, amount <span class="k">DECIMAL</span>(10,2), order_date <span class="k">DATE</span>
+) <span class="k">CLUSTER BY</span> (order_date, city);
+
+<span class="c">-- Look back in time</span>
+<span class="k">SELECT</span> * <span class="k">FROM</span> main.shop.orders <span class="k">VERSION AS OF</span> 12;
+<span class="k">DESCRIBE HISTORY</span> main.shop.orders;
+</code></pre></div>
+    <div class="dyk reveal"><p><b>Predictive optimization</b> is on by default for Unity Catalog managed tables: Databricks runs OPTIMIZE, VACUUM and ANALYZE for you, when it thinks they'll help. Another reason to prefer managed tables.</p></div>
+  </div>
+
+  <div class="bignum reveal">
+    <span class="n" data-count="30" data-suf=" days">0</span>
+    <span class="l">of table history kept by default (logRetentionDuration). Data files for time travel are kept 7 days by default (deletedFileRetentionDuration), so plan on 7 days of reliable time travel unless you change both.</span>
+    <span class="src">Source: Microsoft Learn, "Work with table history"</span>
+  </div>
+
+  <div class="section tight">
+    <aside class="inside reveal" aria-label="Inside the data center"><div class="inside-in"><div class="in-head"><span class="led" aria-hidden="true"></span>Inside the data center<span class="rack-id">STORAGE HALL · COPY 1 OF 3</span></div><p class="in-sum">A Delta table is just files, Parquet data and small JSON log files, spread across Azure storage servers. Every one of those files is stored more than once, on different disks, servers and often different buildings.</p><button class="in-btn" aria-expanded="false"><span class="lbl">See inside</span><span class="chev" aria-hidden="true">▾</span></button><div class="in-body" hidden><div class="in-grid"><figure><svg viewBox="0 0 460 300" role="img" aria-label="Diagram: a Delta table folder with Parquet files and a _delta_log, copied across three availability zones">
+        <rect width="460" height="300" fill="#05080c"/>
+        <g font-family="ui-monospace,monospace" font-size="11" fill="#c9d1d9">
+          <text x="20" y="28" fill="#7ee787">customers/</text>
+          <text x="36" y="48">part-0001.parquet</text><text x="36" y="64">part-0002.parquet</text><text x="36" y="80">part-0003.parquet</text>
+          <text x="36" y="100" fill="#e3b341">_delta_log/</text><text x="52" y="116" fill="#e3b341">000…000.json</text><text x="52" y="132" fill="#e3b341">000…001.json</text><text x="52" y="148" fill="#e3b341">000…005.json</text>
+        </g>
+        <g font-family="Inter,sans-serif" font-size="11" text-anchor="middle" fill="#c9d1d9">
+          <rect x="230" y="18" width="210" height="40" rx="8" fill="#0d1b2e" stroke="#2563eb"/><text x="335" y="43">Zone 1 · copy</text>
+          <rect x="230" y="68" width="210" height="40" rx="8" fill="#0d1b2e" stroke="#2563eb"/><text x="335" y="93">Zone 2 · copy</text>
+          <rect x="230" y="118" width="210" height="40" rx="8" fill="#0d1b2e" stroke="#2563eb"/><text x="335" y="143">Zone 3 · copy</text>
+          <text x="230" y="200" fill="#7ee787">ZRS: written to every zone before the write succeeds</text>
+          <text x="230" y="225" fill="#9aa4af">If one disk, server or whole building fails,</text><text x="230" y="243" fill="#9aa4af">reads continue from another copy.</text>
+        </g>
+        <path d="M170 88 H226" stroke="#7ee787" stroke-width="2" stroke-dasharray="4 3"/><path d="M200 88 V38 H226 M200 88 V138 H226" stroke="#7ee787" stroke-width="2" fill="none" stroke-dasharray="4 3"/>
+      </svg><figcaption>Diagram drawn for this magazine.</figcaption></figure><dl class="in-rows"><div class="where"><span class="ic" aria-hidden="true">🏢</span><dt>Where it lives</dt><dd>In ADLS Gen2 storage clusters in your region. With ZRS, each file's copies sit in three or more availability zones: separate buildings with their own power and cooling.</dd></div><div class="machines"><span class="ic" aria-hidden="true">🖥️</span><dt>The machines</dt><dd>Storage servers full of drives, typically hard disks for capacity with flash for speed and metadata. The <code>_delta_log</code> files are tiny; the Parquet files are usually tens to hundreds of megabytes each.</dd></div><div class="journey"><span class="ic" aria-hidden="true">🔀</span><dt>The physical journey</dt><dd>A commit writes new Parquet files first, then one small log file. Only when that log file is safely written, and its copies acknowledged, does the new version "exist". That ordering is what gives you ACID.</dd></div><div class="power"><span class="ic" aria-hidden="true">⚡</span><dt>Power & heat</dt><dd>Data at rest still costs power: drives spin, servers stay on and the halls stay cool, around the clock. VACUUM deleting old files is also an energy and cost saving.</dd></div><div class="scale"><span class="ic" aria-hidden="true">📏</span><dt>Scale</dt><dd>A large table can easily hold hundreds of thousands of Parquet files. OPTIMIZE might rewrite thousands of small files into a few hundred big ones in one go.</dd></div><div class="breaks"><span class="ic" aria-hidden="true">🛠️</span><dt>When something breaks</dt><dd>A failed disk is routine: Azure reads another copy and rebuilds it elsewhere. A failed job is routine too: with no new log entry, readers keep seeing the previous version.</dd></div><div class="feel"><span class="ic" aria-hidden="true">👂</span><dt>Feel it</dt><dd>In a storage row there is no single loud machine, just a deep, even hum and walls of tiny lights blinking as files are read and written.</dd></div></dl></div><a class="in-deeper" href="../data-centers/#ch8">Go deeper: Data Center magazine, Ch 8 · Redundancy, uptime and tiers →</a><p class="in-note">Microsoft doesn't publish every hardware detail. Where exact facts aren't public, we say "typically" or "for example".</p></div></div></aside>
+  </div>
+
+  <div class="section tight">
+    <div class="recap reveal">
+      <h3>Chapter 7 recap</h3>
+      <ul>
+        <li>Delta Lake = Parquet data files + a transaction log; that log gives ACID, history and time travel.</li>
+        <li>Schema enforcement blocks bad writes; schema evolution adds columns on purpose.</li>
+        <li>MERGE upserts changes in one atomic step.</li>
+        <li>OPTIMIZE compacts files; VACUUM removes old ones (7-day default); liquid clustering replaces partitioning and Z-order.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="quiz reveal" data-quiz='[
+    {"q":"What makes a Delta write all-or-nothing?","o":["The transaction log: a new version exists only once its log entry is written","Bigger Parquet files","Running OPTIMIZE first"],"a":0,"why":"Data files are written first; the commit is the log entry. No log entry, no new version."},
+    {"q":"You ran VACUUM with default settings. How far back can you reliably time travel?","o":["Forever","About 7 days","Exactly 1 hour"],"a":1,"why":"VACUUM removes data files older than the 7-day default threshold, so older versions can&apos;t be read."},
+    {"q":"What does Databricks now recommend instead of partitioning and Z-ordering for new tables?","o":["Liquid clustering","More partitions","Bigger clusters"],"a":0,"why":"Liquid clustering replaces partitioning and ZORDER, and its keys can change without rewriting data."}
+  ]'></div>
+  <p class="teaser reveal">You have reliable tables. Now, how should you organise them, from raw to ready?<br><a href="#ch8">Chapter 8: Medallion architecture →</a></p>
+  <div style="height:80px"></div>
+</section>
+
+
+
+
+<section class="chapter" id="ch8" data-accent="i" data-level="Intermediate" data-num="08" data-title="Medallion architecture">
+  <header class="hero">
+    <img src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 10%22%3E%3Crect width=%2216%22 height=%2210%22 fill=%22%23445%22/%3E%3C/svg%3E" alt="Bronze, gold and silver Olympic medals displayed side by side" data-missing="h08" width="1600" height="1000">
+    <div class="hero-in">
+      <span class="level">Intermediate<i aria-hidden="true"><b class="on"></b><b class="on"></b><b class=""></b></i></span><span class="num">08</span>
+      <h2>Bronze, silver, gold</h2>
+      <p class="dek">The medallion architecture: how raw data becomes trusted, business-ready tables, one layer at a time.</p>
+    </div>
+    <div class="credit">Photo: [pending h08]</div>
+  </header>
+
+  <div class="section">
+    <p class="hook reveal">Raw data is like crude oil: valuable, but you can't put it straight into a car. It needs refining, step by step, and you keep the crude in case you need to refine it differently later.</p>
+    <div class="text">
+      <p class="reveal">The <button class="term" data-t="medallion">medallion architecture</button> is the most common way to organise a lakehouse. Microsoft's docs describe its goal simply: improve the structure and quality of data step by step as it flows through each layer. Each layer is usually its own schema in Unity Catalog, like <code>ops.bronze</code>, <code>ops.silver</code> and <code>ops.gold</code>.</p>
+    </div>
+  </div>
+
+  <div class="section tight">
+    <div class="wrap">
+      <div class="med-trio reveal">
+        <div class="med b"><span>🥉</span><h4>Bronze: raw</h4><p>Data exactly as it arrived, from files, Kafka or Salesforce. No cleanup. Add only load time and source file name. It is your safety copy: you can always rebuild from here.</p><small>Who: data engineers</small></div>
+        <div class="med s"><span>🥈</span><h4>Silver: clean</h4><p>Duplicates removed, types fixed, bad rows filtered or quarantined, names standardised, tables joined. Detailed, trustworthy, still row-level.</p><small>Who: engineers, analysts, data scientists</small></div>
+        <div class="med g"><span>🥇</span><h4>Gold: ready</h4><p>Business-level tables: daily sales per city, customer lifetime value. Fewer tables, shaped for dashboards and decisions.</p><small>Who: business users, BI, apps</small></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section dark">
+    <div class="lab reveal" id="med" style="box-shadow:none">
+      <div class="lab-head"><div><span class="tag">Try it</span><h3>Refine the data</h3></div><div class="pwr-btns"><button class="btn" id="medGo">▶ Run the pipeline</button><button class="btn ghost" id="medReset">↺ Reset</button></div></div>
+      <div class="med-flow">
+        <div class="med-col"><h4>🥉 bronze.orders_raw</h4><div id="mB"></div></div>
+        <div class="med-arrow" id="mA1">→</div>
+        <div class="med-col"><h4>🥈 silver.orders</h4><div id="mS"><p class="muted">Waiting…</p></div></div>
+        <div class="med-arrow" id="mA2">→</div>
+        <div class="med-col"><h4>🥇 gold.daily_sales_by_city</h4><div id="mG"><p class="muted">Waiting…</p></div></div>
+      </div>
+      <ol class="med-log" id="mLog" aria-live="polite"></ol>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="wrap split">
+      <div class="copy reveal">
+        <span class="kicker">Bronze → silver in code</span>
+        <h3>Cleaning, the PySpark way</h3>
+        <p>Each fix in the demo is one line of real code. Keep silver logic boring and repeatable: deduplicate on a key, cast types, standardise text, filter impossible values.</p>
+        <p>In Chapter 10 you'll see how pipelines turn the "filter" step into a data-quality rule that counts and reports bad rows instead of silently hiding them.</p>
+      </div>
+      <div class="reveal">
+<div class="code"><div class="code-h"><span>PySpark</span><button type="button">Copy</button></div><pre><code><span class="k">from</span> pyspark.sql <span class="k">import</span> functions <span class="k">as</span> F
+
+silver = (spark.read.table(<span class="s">"ops.bronze.orders_raw"</span>)
+  .dropDuplicates([<span class="s">"order_id"</span>])
+  .withColumn(<span class="s">"city"</span>, F.initcap(F.trim(<span class="s">"city"</span>)))
+  .withColumn(<span class="s">"amount"</span>, F.col(<span class="s">"amount"</span>).cast(<span class="s">"decimal(10,2)"</span>))
+  .withColumn(<span class="s">"order_date"</span>, F.to_date(<span class="s">"order_ts"</span>))
+  .filter(<span class="s">"amount &gt; 0 AND city IS NOT NULL"</span>))
+
+silver.write.mode(<span class="s">"overwrite"</span>).saveAsTable(<span class="s">"ops.silver.orders"</span>)
+</code></pre></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section tint">
+    <p class="pull reveal">Never clean bronze in place. Bronze is your receipt: the proof of what actually arrived.</p>
+    <div class="dyk reveal" style="margin-top:36px"><p>Medallion is a pattern, not a rule. Some teams add a "platinum" layer for ML features, or skip silver for tiny reference tables. What matters is that every layer has a clear owner, clear quality promises and clear consumers.</p></div>
+  </div>
+
+  <div class="section tight">
+    <aside class="inside reveal" aria-label="Inside the data center"><div class="inside-in"><div class="in-head"><span class="led" aria-hidden="true"></span>Inside the data center<span class="rack-id">STORAGE TIERS · HOT / COOL</span></div><p class="in-sum">Bronze, silver and gold are just folders of Delta files, so they all live on the same storage servers. Architects decide how "hot" each layer needs to be: how fast and how expensive the storage behind it should be.</p><button class="in-btn" aria-expanded="false"><span class="lbl">See inside</span><span class="chev" aria-hidden="true">▾</span></button><div class="in-body" hidden><div class="in-grid"><figure><svg viewBox="0 0 460 280" role="img" aria-label="Diagram: bronze, silver and gold layers stored on storage servers, with bronze largest and gold smallest">
+        <rect width="460" height="280" fill="#05080c"/>
+        <g font-family="Inter,sans-serif" font-size="12" text-anchor="middle" font-weight="700">
+          <rect x="20" y="30" width="200" height="200" rx="10" fill="#3b2a12" stroke="#c2803a"/><text x="120" y="135" fill="#f0b46a">BRONZE</text><text x="120" y="153" fill="#c9a77d" font-weight="400" font-size="10">raw · biggest · cool tier ok</text>
+          <rect x="240" y="80" width="120" height="120" rx="10" fill="#22303d" stroke="#9fb3c8"/><text x="300" y="140" fill="#e2e8f0">SILVER</text><text x="300" y="158" fill="#9fb3c8" font-weight="400" font-size="10">clean · detailed</text>
+          <rect x="380" y="125" width="60" height="60" rx="10" fill="#3a3010" stroke="#e3b341"/><text x="410" y="160" fill="#fcd34d" font-size="10">GOLD</text>
+          <text x="230" y="262" fill="#7ee787" font-weight="400" font-size="11" font-family="monospace">all on ADLS Gen2 storage servers · sizes illustrative</text>
+        </g>
+      </svg><figcaption>Diagram drawn for this magazine.</figcaption></figure><dl class="in-rows"><div class="where"><span class="ic" aria-hidden="true">🏢</span><dt>Where it lives</dt><dd>All three layers sit in ADLS Gen2 in your region, usually as separate containers or storage accounts per layer or environment, registered in Unity Catalog.</dd></div><div class="machines"><span class="ic" aria-hidden="true">🖥️</span><dt>The machines</dt><dd>Azure Blob Storage offers access tiers. "Hot" for data read often, "cool" and "cold" for data read rarely at lower storage cost, and "archive" for offline long-term keeping. Old bronze files are a classic candidate for cooler tiers.</dd></div><div class="journey"><span class="ic" aria-hidden="true">🔀</span><dt>The physical journey</dt><dd>Each step reads files from storage servers into cluster memory, transforms them on CPUs, and writes new files back. Bronze → silver → gold means data crosses the network several times, which is why gold tables should be small and pre-aggregated.</dd></div><div class="power"><span class="ic" aria-hidden="true">⚡</span><dt>Power & heat</dt><dd>Every refinement step is compute time: CPUs busy, fans spinning, heat to remove. A well-designed pipeline processes only new data (incrementally), not the whole history every night.</dd></div><div class="scale"><span class="ic" aria-hidden="true">📏</span><dt>Scale</dt><dd>Bronze is usually the biggest layer by far; gold is often thousands of times smaller, small enough for a dashboard to read in a second.</dd></div><div class="breaks"><span class="ic" aria-hidden="true">🛠️</span><dt>When something breaks</dt><dd>Because bronze keeps the raw data, a bug in silver logic is fixable: correct the code, then rebuild silver and gold from bronze.</dd></div><div class="feel"><span class="ic" aria-hidden="true">👂</span><dt>Feel it</dt><dd>You'd never know which disks hold your gold tables: they are a few files among millions, humming away in the same long rows as everything else.</dd></div></dl></div><a class="in-deeper" href="../data-centers/#ch2">Go deeper: Data Center magazine, Ch 2 · The guided tour →</a><p class="in-note">Microsoft doesn't publish every hardware detail. Where exact facts aren't public, we say "typically" or "for example".</p></div></div></aside>
+  </div>
+
+  <div class="section tight">
+    <div class="recap reveal">
+      <h3>Chapter 8 recap</h3>
+      <ul>
+        <li>Bronze keeps raw data as it arrived; silver cleans and conforms it; gold shapes it for the business.</li>
+        <li>Each layer is typically a schema in Unity Catalog with clear owners and consumers.</li>
+        <li>Keep bronze as the source of truth so you can always rebuild.</li>
+        <li>Process incrementally and keep gold small and fast.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="quiz reveal" data-quiz='[
+    {"q":"In which layer do you remove duplicates and fix data types?","o":["Bronze","Silver","Gold"],"a":1,"why":"Silver is where cleanup and validation happen."},
+    {"q":"Why keep raw data in bronze untouched?","o":["To rebuild silver and gold if logic changes or a bug is found","Because gold needs it for dashboards","It is required by Spark"],"a":0,"why":"Bronze is the receipt: you can always reprocess from it."},
+    {"q":"Which layer usually feeds business dashboards?","o":["Bronze","Silver","Gold"],"a":2,"why":"Gold tables are aggregated and shaped for business users and BI."}
+  ]'></div>
+  <p class="teaser reveal">Bronze needs data coming in. How do you get it there reliably?<br><a href="#ch9">Chapter 9: Getting data in →</a></p>
+  <div style="height:80px"></div>
+</section>
+
+
+
+
+<section class="chapter" id="ch9" data-accent="i" data-level="Intermediate" data-num="09" data-title="Getting data in">
+  <header class="hero">
+    <img src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 10%22%3E%3Crect width=%2216%22 height=%2210%22 fill=%22%23445%22/%3E%3C/svg%3E" alt="A mountain reservoir behind a dam, fed by streams" data-missing="h09" width="1600" height="1000">
+    <div class="hero-in">
+      <span class="level">Intermediate<i aria-hidden="true"><b class="on"></b><b class="on"></b><b class=""></b></i></span><span class="num">09</span>
+      <h2>Filling the reservoir</h2>
+      <p class="dek">Auto Loader, COPY INTO, Lakeflow Connect and streams: picking the right way to bring data in.</p>
+    </div>
+    <div class="credit">Photo: [pending h09]</div>
+  </header>
+
+  <div class="section">
+    <p class="hook reveal">A reservoir is fed by many streams: some trickle, some flood, some arrive once a day by truck. Your lakehouse is the same: files, databases, business apps and event streams, all arriving in different ways.</p>
+    <div class="text">
+      <p class="reveal">The hardest part of ingestion isn't reading data once. It's reading <b>only what's new</b>, every time, never missing a file and never loading one twice. Databricks has a tool built for each kind of source.</p>
+    </div>
+  </div>
+
+  <div class="section tight">
+    <div class="wrap">
+      <div class="cards reveal">
+        <div class="card2"><div class="ic">📂</div><h4><button class="term" data-t="auto loader">Auto Loader</button></h4><p>Watches a cloud storage folder and loads each new file exactly once. It is a streaming source called <code>cloudFiles</code>, and it can infer and evolve the schema.</p></div>
+        <div class="card2"><div class="ic">📋</div><h4><button class="term" data-t="copy into">COPY INTO</button></h4><p>A SQL command that loads files into a Delta table. It's idempotent: files it already loaded are skipped if you run it again.</p></div>
+        <div class="card2"><div class="ic">🔌</div><h4><button class="term" data-t="lakeflow connect">Lakeflow Connect</button></h4><p>Managed connectors for databases (SQL Server, MySQL, PostgreSQL, using change data capture) and apps (Salesforce, Workday, HubSpot, Jira, SharePoint and more).</p></div>
+        <div class="card2"><div class="ic">📡</div><h4>Streams</h4><p>Kafka or Azure Event Hubs, read continuously with Structured Streaming (Chapter 11).</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section dark">
+    <div class="lab reveal" id="al" style="box-shadow:none">
+      <div class="lab-head"><div><span class="tag">Try it</span><h3>Auto Loader: only the new files</h3></div><div class="pwr-btns"><button class="btn ghost" id="alNew">📄 A new file arrives</button><button class="btn" id="alRun">▶ Run Auto Loader</button></div></div>
+      <div class="al-grid">
+        <div class="panel"><h4>Landing folder <small>/Volumes/main/landing/orders/</small></h4><ul id="alFiles" class="al-list"></ul></div>
+        <div class="panel"><h4>Checkpoint <small>(what's already loaded)</small></h4><ul id="alCk" class="al-list"></ul></div>
+        <div class="panel"><h4>bronze.orders_raw</h4><p class="al-count"><b id="alRows">0</b> rows</p><p id="alSay" class="muted" style="font-size:.88rem" aria-live="polite">Add files, then run.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="wrap split">
+      <div class="copy reveal">
+        <span class="kicker">The code</span>
+        <h3>Auto Loader in a few lines</h3>
+        <p>The schema location lets Auto Loader remember the columns it found, and add new ones when they appear. The checkpoint remembers every file loaded. <code>availableNow</code> processes everything new, then stops, so you can schedule it like a batch job.</p>
+        <p>By default Auto Loader lists the directory to find new files. Microsoft's docs recommend <b>file notification mode with file events</b> for most workloads: storage tells Databricks about new files, so nothing needs to be listed.</p>
+      </div>
+      <div class="reveal">
+<div class="code"><div class="code-h"><span>PySpark · Auto Loader</span><button type="button">Copy</button></div><pre><code>(spark.readStream
+  .format(<span class="s">"cloudFiles"</span>)
+  .option(<span class="s">"cloudFiles.format"</span>, <span class="s">"json"</span>)
+  .option(<span class="s">"cloudFiles.schemaLocation"</span>, <span class="s">"/Volumes/main/ops/_schemas/orders"</span>)
+  .load(<span class="s">"/Volumes/main/landing/orders/"</span>)
+  .writeStream
+  .option(<span class="s">"checkpointLocation"</span>, <span class="s">"/Volumes/main/ops/_checkpoints/orders"</span>)
+  .trigger(availableNow=<span class="k">True</span>)
+  .toTable(<span class="s">"main.bronze.orders_raw"</span>))
+</code></pre></div>
+<div class="code"><div class="code-h"><span>SQL · COPY INTO</span><button type="button">Copy</button></div><pre><code><span class="k">COPY INTO</span> main.bronze.orders_raw
+<span class="k">FROM</span> <span class="s">'abfss://landing@mystorage.dfs.core.windows.net/orders/'</span>
+<span class="k">FILEFORMAT</span> = CSV
+<span class="k">FORMAT_OPTIONS</span> (<span class="s">'header'</span> = <span class="s">'true'</span>, <span class="s">'inferSchema'</span> = <span class="s">'true'</span>)
+<span class="k">COPY_OPTIONS</span> (<span class="s">'mergeSchema'</span> = <span class="s">'true'</span>);
+</code></pre></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section tint">
+    <div class="lab reveal" id="pick" style="background:var(--night)">
+      <div class="lab-head"><div><span class="tag">Try it</span><h3 style="color:#fff">Which ingestion tool?</h3></div></div>
+      <div class="seg" role="group" aria-label="Data source">
+        <button data-s="files" aria-pressed="true">📂 Files landing in storage</button><button data-s="once" aria-pressed="false">📋 A folder of files, loaded by SQL</button>
+        <button data-s="db" aria-pressed="false">🗃️ SQL Server database</button><button data-s="saas" aria-pressed="false">☁️ Salesforce / Workday</button>
+        <button data-s="events" aria-pressed="false">📡 Event Hubs / Kafka</button><button data-s="onprem" aria-pressed="false">🏢 On-premises system</button>
+      </div>
+      <div class="panel" style="margin-top:14px" aria-live="polite"><h4 id="pkT" style="color:#fff;font-family:var(--serif);font-size:1.3rem"></h4><p id="pkD"></p></div>
+    </div>
+  </div>
+
+  <div class="section tight">
+    <aside class="inside reveal" aria-label="Inside the data center"><div class="inside-in"><div class="in-head"><span class="led" aria-hidden="true"></span>Inside the data center<span class="rack-id">EDGE · MEET-ME ROOM</span></div><p class="in-sum">Before data reaches your lakehouse, it has to physically enter the Azure region: over the internet, or through a private line from your office or data center, into the region's network edge and on to storage servers.</p><button class="in-btn" aria-expanded="false"><span class="lbl">See inside</span><span class="chev" aria-hidden="true">▾</span></button><div class="in-body" hidden><div class="in-grid"><figure><svg viewBox="0 0 460 260" role="img" aria-label="Diagram: on-premises database through a private line and the Azure edge to storage servers and a cluster">
+        <rect width="460" height="260" fill="#05080c"/>
+        <g font-family="Inter,sans-serif" font-size="11" fill="#e6edf3" text-anchor="middle">
+          <rect x="14" y="100" width="90" height="56" rx="8" fill="#1a1407" stroke="#e3b341"/><text x="59" y="124">🏢 On-prem</text><text x="59" y="140" fill="#c9a77d">SQL Server</text>
+          <rect x="130" y="100" width="90" height="56" rx="8" fill="#16102a" stroke="#7c3aed"/><text x="175" y="124">Private line</text><text x="175" y="140" fill="#b9a3ef">or VPN</text>
+          <rect x="246" y="100" width="90" height="56" rx="8" fill="#0d1b2e" stroke="#2563eb"/><text x="291" y="124">Azure edge</text><text x="291" y="140" fill="#93c5fd">routers</text>
+          <rect x="362" y="40" width="86" height="56" rx="8" fill="#0e3346" stroke="#0e7490"/><text x="405" y="64">🗄️ ADLS</text><text x="405" y="80" fill="#7dd3fc">landing</text>
+          <rect x="362" y="160" width="86" height="56" rx="8" fill="#0f1d14" stroke="#3fb950"/><text x="405" y="184">Cluster</text><text x="405" y="200" fill="#86efac">Auto Loader</text>
+        </g>
+        <g stroke="#7ee787" stroke-width="2" fill="none" stroke-dasharray="5 4"><path d="M104 128H130"/><path d="M220 128H246"/><path d="M336 120 C350 100 350 80 362 68"/><path d="M405 96V160"/></g>
+      </svg><figcaption>Diagram drawn for this magazine.</figcaption></figure><dl class="in-rows"><div class="where"><span class="ic" aria-hidden="true">🏢</span><dt>Where it lives</dt><dd>At the edge of the Azure region: routers in network rooms where internet providers and private circuits connect, then across the region's network to ADLS Gen2.</dd></div><div class="machines"><span class="ic" aria-hidden="true">🖥️</span><dt>The machines</dt><dd>Edge routers and firewalls, then storage servers. Data Factory's self-hosted integration runtime is software you install on your own machines, near your on-premises sources.</dd></div><div class="journey"><span class="ic" aria-hidden="true">🔀</span><dt>The physical journey</dt><dd>An on-premises SQL Server → your network → a private circuit such as Azure ExpressRoute, or a VPN, or the internet → Azure's edge → the region network → storage servers. Auto Loader then reads the new file into a cluster VM's memory.</dd></div><div class="power"><span class="ic" aria-hidden="true">⚡</span><dt>Power & heat</dt><dd>Optical transceivers, routers and switches run around the clock. Moving a terabyte uses far less energy than processing it, but the links must be ready 24/7.</dd></div><div class="scale"><span class="ic" aria-hidden="true">📏</span><dt>Scale</dt><dd>A single file is split into many network packets, sent in parallel and reassembled. Big copy jobs open many connections at once to fill the available bandwidth.</dd></div><div class="breaks"><span class="ic" aria-hidden="true">🛠️</span><dt>When something breaks</dt><dd>Private circuits are typically ordered in redundant pairs, and Auto Loader's checkpoint means a failed run simply picks up where it left off, without duplicates.</dd></div><div class="feel"><span class="ic" aria-hidden="true">👂</span><dt>Feel it</dt><dd>In a meet-me room, carriers' cables arrive in labelled bundles and plug into rows of patch panels: the building's front door for data.</dd></div></dl></div><a class="in-deeper" href="../data-centers/#ch4">Go deeper: Data Center magazine, Ch 4 · The journey of a request →</a><p class="in-note">Microsoft doesn't publish every hardware detail. Where exact facts aren't public, we say "typically" or "for example".</p></div></div></aside>
+  </div>
+
+  <div class="section tight">
+    <div class="dyk reveal"><p>Microsoft's docs recommend Auto Loader inside Lakeflow pipelines for incremental ingestion. There, you don't even set the schema or checkpoint locations: the pipeline manages them for you.</p></div>
+    <div class="recap reveal" style="margin-top:36px">
+      <h3>Chapter 9 recap</h3>
+      <ul>
+        <li>Auto Loader loads new files exactly once, with schema inference and evolution.</li>
+        <li>COPY INTO is a simple, idempotent SQL load for folders of files.</li>
+        <li>Lakeflow Connect brings in databases (with change data capture) and SaaS apps.</li>
+        <li>Streams from Event Hubs or Kafka use Structured Streaming.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="quiz reveal" data-quiz='[
+    {"q":"How does Auto Loader avoid loading the same file twice?","o":["It deletes files after reading","It records loaded files in its checkpoint","It loads everything every time"],"a":1,"why":"The checkpoint is its memory of which files are done, giving exactly-once loading."},
+    {"q":"Which tool is designed for pulling Salesforce data into Databricks?","o":["Lakeflow Connect managed connectors","VACUUM","Photon"],"a":0,"why":"Lakeflow Connect offers managed connectors for SaaS apps like Salesforce and Workday."},
+    {"q":"What does trigger(availableNow=True) do?","o":["Runs forever","Processes all data available now, then stops","Waits for a human to click"],"a":1,"why":"It lets a stream run like a batch job: process what&apos;s new, then stop."}
+  ]'></div>
+  <p class="teaser reveal">Data is landing. Now let's build a whole pipeline that cleans it, and checks its quality.<br><a href="#ch10">Chapter 10: Building pipelines →</a></p>
+  <div style="height:80px"></div>
+</section>
+
+
+
+
+<section class="chapter" id="ch10" data-accent="i" data-level="Intermediate" data-num="10" data-title="Building pipelines">
+  <header class="hero">
+    <img src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 10%22%3E%3Crect width=%2216%22 height=%2210%22 fill=%22%23445%22/%3E%3C/svg%3E" alt="Rows of industrial pipelines inside a factory" data-missing="h10" width="1600" height="1000">
+    <div class="hero-in">
+      <span class="level">Intermediate<i aria-hidden="true"><b class="on"></b><b class="on"></b><b class=""></b></i></span><span class="num">10</span>
+      <h2>Say what you want, not how</h2>
+      <p class="dek">Lakeflow Spark Declarative Pipelines: streaming tables, materialized views, data-quality rules, batch vs streaming.</p>
+    </div>
+    <div class="credit">Photo: [pending h10]</div>
+  </header>
+
+  <div class="section">
+    <p class="hook reveal">You could write 500 lines of code to load, clean, retry, order, checkpoint and monitor your tables. Or you could write 30 lines that just say what each table should contain, and let the platform work out the rest.</p>
+    <div class="text">
+      <p class="reveal">That second way is <button class="term" data-t="sdp">Lakeflow Spark Declarative Pipelines</button>, formerly called Delta Live Tables (DLT). Microsoft's docs confirm the rename, and existing DLT code keeps working. The open-source core is now part of Apache Spark itself, starting with Spark 4.1.</p>
+      <p class="reveal">You declare datasets. The pipeline works out which depends on which, runs them in the right order, manages checkpoints and retries, and records data-quality metrics.</p>
+    </div>
+  </div>
+
+  <div class="section tight">
+    <div class="wrap">
+      <div class="cards reveal">
+        <div class="card2"><div class="ic">🌊</div><h4><button class="term" data-t="streaming table">Streaming table</button></h4><p>Grows as new data arrives; each record is processed once. Perfect for bronze and silver.</p></div>
+        <div class="card2"><div class="ic">🪞</div><h4><button class="term" data-t="materialized view">Materialized view</button></h4><p>A saved query result the pipeline keeps up to date, recomputing only what changed where it can. Perfect for gold.</p></div>
+        <div class="card2"><div class="ic">✅</div><h4><button class="term" data-t="expectation">Expectations</button></h4><p>Data-quality rules on each row. Choose: keep and count bad rows, drop them, or stop the pipeline.</p></div>
+        <div class="card2"><div class="ic">⏱️</div><h4>Triggered or continuous</h4><p>Run on a schedule and stop (batch), or keep running and process data within seconds (streaming).</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section dark">
+    <div class="lab reveal" id="bs" style="box-shadow:none">
+      <div class="lab-head"><div><span class="tag">Try it</span><h3>Same pipeline, two modes</h3></div>
+        <div class="seg" role="group" aria-label="Pipeline mode"><button data-m="batch" aria-pressed="true">🗓️ Triggered (batch)</button><button data-m="stream" aria-pressed="false">🌊 Continuous (streaming)</button></div></div>
+      <div class="bs-dag">
+        <div class="bs-n" id="n0">📂 Files<small>landing</small></div><div class="bs-p" id="p0"></div>
+        <div class="bs-n" id="n1">🥉 orders_bronze<small>streaming table</small></div><div class="bs-p" id="p1"></div>
+        <div class="bs-n" id="n2">🥈 orders_silver<small>streaming table + rules</small></div><div class="bs-p" id="p2"></div>
+        <div class="bs-n" id="n3">🥇 daily_sales<small>materialized view</small></div>
+      </div>
+      <div class="bs-meta">
+        <div class="panel"><small>Clock</small><b id="bsClock">08:00</b></div>
+        <div class="panel"><small>Compute</small><b id="bsCompute">off</b></div>
+        <div class="panel"><small>Dashboard freshness</small><b id="bsFresh">–</b></div>
+        <div class="panel"><small>Compute hours today</small><b id="bsHours">0.0</b></div>
+      </div>
+      <p id="bsSay" class="muted" style="font-size:.92rem;margin:12px 0 0" aria-live="polite"></p>
+      <p class="muted" style="font-size:.78rem;margin:6px 0 0">Illustration: a simulated day, sped up. Each dot is a batch of orders.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="wrap split">
+      <div class="copy reveal">
+        <span class="kicker">The whole pipeline</span>
+        <h3>Three tables, declared</h3>
+        <p>Here is the medallion pipeline from Chapter 8, as a declarative pipeline. Notice what's missing: no checkpoint paths, no "run this, then that", no retry loops. The new Python module is <code>pyspark.pipelines</code>, imported as <code>dp</code>.</p>
+        <p>The rule <code>expect_or_drop</code> drops rows with a non-positive amount, and the pipeline UI shows exactly how many were dropped.</p>
+      </div>
+      <div class="reveal">
+<div class="code"><div class="code-h"><span>Python · pipeline</span><button type="button">Copy</button></div><pre><code><span class="k">from</span> pyspark <span class="k">import</span> pipelines <span class="k">as</span> dp
+<span class="k">from</span> pyspark.sql <span class="k">import</span> functions <span class="k">as</span> F
+
+<span class="f">@dp.table</span>
+<span class="k">def</span> orders_bronze():
+    <span class="k">return</span> (spark.readStream.format(<span class="s">"cloudFiles"</span>)
+            .option(<span class="s">"cloudFiles.format"</span>, <span class="s">"json"</span>)
+            .load(<span class="s">"/Volumes/main/landing/orders/"</span>))
+
+<span class="f">@dp.table</span>
+<span class="f">@dp.expect_or_drop</span>(<span class="s">"positive_amount"</span>, <span class="s">"amount &gt; 0"</span>)
+<span class="k">def</span> orders_silver():
+    <span class="k">return</span> (spark.readStream.table(<span class="s">"orders_bronze"</span>)
+            .withColumn(<span class="s">"order_date"</span>, F.to_date(<span class="s">"order_ts"</span>)))
+
+<span class="f">@dp.materialized_view</span>
+<span class="k">def</span> daily_sales():
+    <span class="k">return</span> (spark.read.table(<span class="s">"orders_silver"</span>)
+            .groupBy(<span class="s">"order_date"</span>, <span class="s">"city"</span>)
+            .agg(F.sum(<span class="s">"amount"</span>).alias(<span class="s">"sales"</span>)))
+</code></pre></div>
+<div class="code"><div class="code-h"><span>SQL · same pipeline</span><button type="button">Copy</button></div><pre><code><span class="k">CREATE OR REFRESH STREAMING TABLE</span> orders_bronze
+<span class="k">AS SELECT</span> * <span class="k">FROM STREAM</span> read_files(<span class="s">'/Volumes/main/landing/orders/'</span>, format =&gt; <span class="s">'json'</span>);
+
+<span class="k">CREATE OR REFRESH STREAMING TABLE</span> orders_silver (
+  <span class="k">CONSTRAINT</span> positive_amount <span class="k">EXPECT</span> (amount &gt; 0) <span class="k">ON VIOLATION DROP ROW</span>
+) <span class="k">AS SELECT</span> *, to_date(order_ts) <span class="k">AS</span> order_date <span class="k">FROM STREAM</span>(orders_bronze);
+
+<span class="k">CREATE OR REFRESH MATERIALIZED VIEW</span> daily_sales
+<span class="k">AS SELECT</span> order_date, city, <span class="f">SUM</span>(amount) <span class="k">AS</span> sales
+<span class="k">FROM</span> orders_silver <span class="k">GROUP BY ALL</span>;
+</code></pre></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section tint">
+    <div class="lab reveal" id="exp" style="background:var(--night)">
+      <div class="lab-head"><div><span class="tag">Try it</span><h3 style="color:#fff">What should happen to bad rows?</h3></div></div>
+      <p>The rule is <code>amount &gt; 0</code>. Today's batch has 1,000 rows, and 23 of them break it. Pick a policy:</p>
+      <div class="seg" role="group" aria-label="Expectation policy"><button data-x="warn" aria-pressed="true">⚠️ expect (keep &amp; count)</button><button data-x="drop" aria-pressed="false">🗑️ expect_or_drop</button><button data-x="fail" aria-pressed="false">🛑 expect_or_fail</button></div>
+      <div class="panel" style="margin-top:14px" aria-live="polite"><h4 id="exT" style="color:#fff"></h4><p id="exD"></p><div class="ex-bar"><i id="exOk"></i><i id="exBad"></i></div><p id="exM" class="muted" style="font-size:.85rem;margin-top:8px"></p></div>
+    </div>
+  </div>
+
+  <div class="section tight">
+    <aside class="inside reveal" aria-label="Inside the data center"><div class="inside-in"><div class="in-head"><span class="led" aria-hidden="true"></span>Inside the data center<span class="rack-id">JOB COMPUTE · ON DEMAND</span></div><p class="in-sum">Every pipeline run borrows real machines. In triggered mode, servers are switched on, do the work and are handed back. In continuous mode, a set of machines keeps running all day, waiting for data.</p><button class="in-btn" aria-expanded="false"><span class="lbl">See inside</span><span class="chev" aria-hidden="true">▾</span></button><div class="in-body" hidden><div class="in-grid"><figure><svg viewBox="0 0 460 240" role="img" aria-label="Diagram comparing compute use over a day for triggered and continuous pipelines">
+        <rect width="460" height="240" fill="#05080c"/>
+        <g font-family="Inter,sans-serif" font-size="11" fill="#c9d1d9">
+          <text x="20" y="34" fill="#7ee787" font-family="monospace">TRIGGERED · daily at 02:00</text>
+          <line x1="20" y1="80" x2="440" y2="80" stroke="#30363d"/><rect x="56" y="52" width="22" height="28" fill="#0f857a"/><text x="67" y="96" text-anchor="middle" font-size="10">02:00</text>
+          <text x="20" y="140" fill="#7ee787" font-family="monospace">CONTINUOUS · always on</text>
+          <line x1="20" y1="190" x2="440" y2="190" stroke="#30363d"/><rect x="20" y="162" width="420" height="28" fill="#2563eb" opacity=".8"/>
+          <text x="20" y="214" font-size="10">00:00</text><text x="440" y="214" font-size="10" text-anchor="end">24:00</text>
+          <text x="230" y="232" text-anchor="middle" fill="#6e7681" font-size="10">shaded = servers powered and billed (illustrative)</text>
+        </g>
+      </svg><figcaption>Diagram drawn for this magazine.</figcaption></figure><dl class="in-rows"><div class="where"><span class="ic" aria-hidden="true">🏢</span><dt>Where it lives</dt><dd>Serverless pipelines run in Databricks' serverless plane in your region; classic pipelines start VMs in your subscription.</dd></div><div class="machines"><span class="ic" aria-hidden="true">🖥️</span><dt>The machines</dt><dd>Typically general-purpose or memory-optimised VMs (D- or E-series) for transformations; Photon is enabled on serverless pipelines.</dd></div><div class="journey"><span class="ic" aria-hidden="true">🔀</span><dt>The physical journey</dt><dd>New files are read from storage servers into executor memory, transformed on the CPUs, and written back as new Delta files, three times in a medallion pipeline.</dd></div><div class="power"><span class="ic" aria-hidden="true">⚡</span><dt>Power & heat</dt><dd>A triggered pipeline running 20 minutes a day uses its servers for 20 minutes. A continuous one keeps them powered, and cooled, for 24 hours, which is the real cost of "always fresh".</dd></div><div class="scale"><span class="ic" aria-hidden="true">📏</span><dt>Scale</dt><dd>The same code serves both modes. Switching from triggered to continuous changes the bill, not the logic.</dd></div><div class="breaks"><span class="ic" aria-hidden="true">🛠️</span><dt>When something breaks</dt><dd>If a machine fails mid-run, the pipeline retries the update and the checkpoints make sure no row is processed twice or skipped.</dd></div><div class="feel"><span class="ic" aria-hidden="true">👂</span><dt>Feel it</dt><dd>A triggered pipeline is a light switch: a few racks wake up, fans spin up, then go quiet again. A continuous one is the steady background hum that never stops.</dd></div></dl></div><a class="in-deeper" href="../data-centers/#ch10">Go deeper: Data Center magazine, Ch 10 · Real life, traced →</a><p class="in-note">Microsoft doesn't publish every hardware detail. Where exact facts aren't public, we say "typically" or "for example".</p></div></div></aside>
+  </div>
+
+  <div class="section tight">
+    <div class="dyk reveal"><p>A few old names live on: Microsoft's docs note that the classic SKUs for these pipelines still start with "DLT", and event-log schemas with "dlt" in the name haven't changed. If you see DLT in a bill or a log, it's the same product.</p></div>
+    <div class="recap reveal" style="margin-top:36px">
+      <h3>Chapter 10 recap</h3>
+      <ul>
+        <li>Lakeflow Spark Declarative Pipelines (formerly DLT): declare tables, the platform handles order, checkpoints and retries.</li>
+        <li>Streaming tables for incremental bronze and silver; materialized views for gold.</li>
+        <li>Expectations keep, drop or fail on bad rows, and report the counts.</li>
+        <li>Triggered mode is cheap and fresh daily; continuous mode is fresh in seconds and runs all day.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="quiz reveal" data-quiz='[
+    {"q":"What was Lakeflow Spark Declarative Pipelines previously called?","o":["Delta Live Tables (DLT)","Databricks Connect","Unity Catalog"],"a":0,"why":"DLT was renamed; existing DLT code keeps working without migration."},
+    {"q":"Which expectation stops the pipeline when a row breaks the rule?","o":["expect","expect_or_drop","expect_or_fail"],"a":2,"why":"expect_or_fail (ON VIOLATION FAIL UPDATE) stops the update so bad data never lands."},
+    {"q":"What is the main cost of continuous mode?","o":["You must rewrite the code","Compute stays running all day","It can&apos;t use Delta tables"],"a":1,"why":"Same code; but continuous keeps machines powered and billed around the clock."}
+  ]'></div>
+  <p class="teaser reveal">Continuous mode runs on Structured Streaming. Let's look under that hood.<br><a href="#ch11">Chapter 11: Structured Streaming →</a></p>
+  <div style="height:80px"></div>
+</section>
+
+
+
+
+<section class="chapter" id="ch11" data-accent="i" data-level="Intermediate" data-num="11" data-title="Structured Streaming">
+  <header class="hero">
+    <img src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 10%22%3E%3Crect width=%2216%22 height=%2210%22 fill=%22%23445%22/%3E%3C/svg%3E" alt="A fast mountain river rushing through a conifer forest" data-missing="h11" width="1600" height="1000">
+    <div class="hero-in">
+      <span class="level">Intermediate<i aria-hidden="true"><b class="on"></b><b class="on"></b><b class=""></b></i></span><span class="num">11</span>
+      <h2>Data that never stops</h2>
+      <p class="dek">Micro-batches, checkpoints, triggers, watermarks and late data, explained.</p>
+    </div>
+    <div class="credit">Photo: [pending h11]</div>
+  </header>
+
+  <div class="section">
+    <p class="hook reveal">A taxi app needs to know how many rides started in the last five minutes, right now, not tomorrow morning. But some phones were in a tunnel, and their ride events arrive ten minutes late. Do you wait for them?</p>
+    <div class="text">
+      <p class="reveal"><button class="term" data-t="structured streaming">Structured Streaming</button> lets you write the same DataFrame code you'd write for a batch job, and Spark runs it continuously on new data. Under the hood, it usually works in <button class="term" data-t="micro-batch">micro-batches</button>: every few seconds, it grabs what's new and processes it as a small job.</p>
+    </div>
+  </div>
+
+  <div class="section tight">
+    <div class="wrap split">
+      <div class="copy reveal">
+        <span class="kicker">The bookmark</span>
+        <h3>Checkpoints make it exactly-once</h3>
+        <p>A <button class="term" data-t="checkpoint">checkpoint</button> is a folder where the stream writes down how far it got and what it was in the middle of. Stop the stream, upgrade the cluster, restart, and it continues exactly where it left off.</p>
+        <p>Combined with Delta tables as the sink, each record lands once, even after crashes. One rule: every stream needs its own checkpoint, and you never share it.</p>
+      </div>
+      <div class="copy reveal">
+        <span class="kicker">How often?</span>
+        <h3>Triggers</h3>
+        <ul class="steps" style="margin-top:12px">
+          <li><b>Default:</b> start the next micro-batch as soon as the last one finishes, with typically 3–5 seconds latency.</li>
+          <li><b>processingTime="1 minute":</b> one micro-batch per minute.</li>
+          <li><b>availableNow:</b> process everything new, then stop. Streaming code, batch schedule.</li>
+          <li><b>Real-time mode:</b> for sub-second needs such as fraud detection.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="section dark">
+    <div class="lab reveal" id="wm" style="box-shadow:none">
+      <div class="lab-head"><div><span class="tag">Try it</span><h3>How long should you wait for late data?</h3></div></div>
+      <p style="margin-top:0">We count rides in the window <b>10:00–10:05</b>. Six rides happened in that window, but some arrive late. Move the <button class="term" data-t="watermark">watermark</button> delay.</p>
+      <label class="sp-lab" for="wmR"><b>Watermark delay:</b> <span id="wmV">5 minutes</span></label>
+      <input type="range" id="wmR" min="0" max="15" value="5">
+      <div class="wm-time" id="wmT"></div>
+      <div class="wm-out">
+        <div class="panel"><small>Rides counted</small><b id="wmC"></b></div>
+        <div class="panel"><small>Result published at</small><b id="wmP"></b></div>
+        <div class="panel"><small>State kept in memory</small><b id="wmS"></b></div>
+      </div>
+      <p id="wmSay" class="muted" style="font-size:.92rem;margin:12px 0 0" aria-live="polite"></p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="text">
+      <span class="kicker reveal">The code</span>
+      <h3 class="reveal">Rides per city, every 5 minutes, with late data</h3>
+      <p class="reveal">The watermark tells Spark: "keep each window open for 10 minutes after its end for late events; after that, finalise it and forget it." Without one, Spark would have to remember every window forever.</p>
+    </div>
+<div class="code"><div class="code-h"><span>PySpark · Structured Streaming</span><button type="button">Copy</button></div><pre><code><span class="k">from</span> pyspark.sql <span class="k">import</span> functions <span class="k">as</span> F
+
+rides = spark.readStream.table(<span class="s">"main.bronze.ride_events"</span>)
+
+(rides
+  .withWatermark(<span class="s">"event_time"</span>, <span class="s">"10 minutes"</span>)
+  .groupBy(F.window(<span class="s">"event_time"</span>, <span class="s">"5 minutes"</span>), <span class="s">"city"</span>)
+  .count()
+  .writeStream
+  .option(<span class="s">"checkpointLocation"</span>, <span class="s">"/Volumes/main/ops/_checkpoints/rides_5min"</span>)
+  .trigger(processingTime=<span class="s">"1 minute"</span>)
+  .toTable(<span class="s">"main.gold.rides_per_5min"</span>))
+</code></pre></div>
+  </div>
+
+  <div class="bignum reveal tint">
+    <span class="n" data-count="3">0</span>
+    <span class="l">to 5 seconds: the typical latency of Structured Streaming's default trigger, according to Microsoft's docs. Need less? Real-time mode goes sub-second.</span>
+  </div>
+
+  <div class="section tight">
+    <aside class="inside reveal" aria-label="Inside the data center"><div class="inside-in"><div class="in-head"><span class="led" aria-hidden="true"></span>Inside the data center<span class="rack-id">ALWAYS-ON · ROW 7</span></div><p class="in-sum">A streaming job never clocks off. Its driver and executors keep running on servers day and night, so the building's power and cooling behind them must never stop either.</p><button class="in-btn" aria-expanded="false"><span class="lbl">See inside</span><span class="chev" aria-hidden="true">▾</span></button><div class="in-body" hidden><div class="in-grid"><figure><svg viewBox="0 0 460 250" role="img" aria-label="Diagram: phones to Event Hubs to stream executors to Delta table and checkpoint on storage">
+        <rect width="460" height="250" fill="#05080c"/>
+        <g font-family="Inter,sans-serif" font-size="11" text-anchor="middle" fill="#e6edf3">
+          <rect x="14" y="90" width="70" height="60" rx="8" fill="#1a1407" stroke="#e3b341"/><text x="49" y="118">📱📱📱</text><text x="49" y="136" fill="#c9a77d">rides</text>
+          <rect x="110" y="90" width="90" height="60" rx="8" fill="#0d1b2e" stroke="#2563eb"/><text x="155" y="118">Event Hubs</text><text x="155" y="136" fill="#93c5fd">servers</text>
+          <rect x="226" y="80" width="110" height="80" rx="8" fill="#0f1d14" stroke="#3fb950"/><text x="281" y="108">Stream</text><text x="281" y="124" fill="#86efac">executors</text><text x="281" y="142" fill="#86efac">(state in RAM)</text>
+          <rect x="362" y="40" width="88" height="56" rx="8" fill="#0e3346" stroke="#0e7490"/><text x="406" y="64">Delta table</text><text x="406" y="80" fill="#7dd3fc">results</text>
+          <rect x="362" y="150" width="88" height="56" rx="8" fill="#16102a" stroke="#7c3aed"/><text x="406" y="174">Checkpoint</text><text x="406" y="190" fill="#c4b5fd">progress</text>
+          <text x="230" y="236" fill="#6e7681" font-size="10">runs 24/7 on powered, cooled servers</text>
+        </g>
+        <g stroke="#7ee787" stroke-width="2" fill="none" stroke-dasharray="5 4"><path d="M84 120H110"/><path d="M200 120H226"/><path d="M336 105 C350 90 350 75 362 70"/><path d="M336 140 C350 160 350 170 362 178"/></g>
+      </svg><figcaption>Diagram drawn for this magazine.</figcaption></figure><dl class="in-rows"><div class="where"><span class="ic" aria-hidden="true">🏢</span><dt>Where it lives</dt><dd>On always-on VMs in your region: classic compute in your subscription, or serverless compute in Databricks' plane. Event Hubs runs on its own fleet of servers nearby.</dd></div><div class="machines"><span class="ic" aria-hidden="true">🖥️</span><dt>The machines</dt><dd>Usually general-purpose or compute-optimised VMs; stateful jobs (windows, joins) need more memory to hold their state, often on E-series VMs.</dd></div><div class="journey"><span class="ic" aria-hidden="true">🔀</span><dt>The physical journey</dt><dd>Events go from phones over the internet into Event Hubs servers, then across the region's network into executor memory. Results go to Delta files on storage servers, and the checkpoint is written to storage every micro-batch.</dd></div><div class="power"><span class="ic" aria-hidden="true">⚡</span><dt>Power & heat</dt><dd>24 hours × 365 days of server time, plus cooling. This is where the power chapter of the Data Center magazine matters most: UPS batteries and generators exist so these jobs never notice a power cut.</dd></div><div class="scale"><span class="ic" aria-hidden="true">📏</span><dt>Scale</dt><dd>A 4-node cluster running all year is about 35,000 node-hours, compared with roughly 120 node-hours for the same code run once a day for 5 minutes.</dd></div><div class="breaks"><span class="ic" aria-hidden="true">🛠️</span><dt>When something breaks</dt><dd>If a server fails, the stream restarts from its checkpoint on new machines and reprocesses only the unfinished micro-batch, so you get no duplicates and no gaps.</dd></div><div class="feel"><span class="ic" aria-hidden="true">👂</span><dt>Feel it</dt><dd>In the hall, nothing distinguishes a streaming job's servers, except that their lights never stop flickering, at 3 a.m. or 3 p.m.</dd></div></dl></div><a class="in-deeper" href="../data-centers/#ch5">Go deeper: Data Center magazine, Ch 5 · Power →</a><p class="in-note">Microsoft doesn't publish every hardware detail. Where exact facts aren't public, we say "typically" or "for example".</p></div></div></aside>
+  </div>
+
+  <div class="section tight">
+    <div class="recap reveal">
+      <h3>Chapter 11 recap</h3>
+      <ul>
+        <li>Structured Streaming runs DataFrame code continuously, usually as micro-batches.</li>
+        <li>Checkpoints record progress; with Delta sinks you get exactly-once results.</li>
+        <li>Triggers set the pace: default, fixed interval, availableNow, or real-time mode.</li>
+        <li>Watermarks trade completeness for latency and memory when data arrives late.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="quiz reveal" data-quiz='[
+    {"q":"What does a streaming checkpoint store?","o":["The stream&apos;s progress, so it can restart exactly where it stopped","A backup copy of the whole table","The cluster&apos;s VM images"],"a":0,"why":"It&apos;s the bookmark that makes restarts safe and exactly-once."},
+    {"q":"You raise the watermark delay from 2 to 10 minutes. What happens?","o":["More late events are counted, but results come later and use more memory","Results come sooner","Nothing changes"],"a":0,"why":"Waiting longer includes later events but delays the final result and keeps more state."},
+    {"q":"Which trigger processes everything new and then stops?","o":["processingTime","availableNow","continuous"],"a":1,"why":"availableNow lets you run streaming code on a batch schedule."}
+  ]'></div>
+  <p class="teaser reveal">Many jobs, many dependencies, every night. Who runs the show?<br><a href="#ch12">Chapter 12: Orchestration →</a></p>
+  <div style="height:80px"></div>
+</section>
+
+
+
+
+<section class="chapter" id="ch12" data-accent="i" data-level="Intermediate" data-num="12" data-title="Orchestration">
+  <header class="hero">
+    <img src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 10%22%3E%3Crect width=%2216%22 height=%2210%22 fill=%22%23445%22/%3E%3C/svg%3E" alt="A freight train being switched between tracks in a busy rail yard" data-missing="h12" width="1600" height="1000">
+    <div class="hero-in">
+      <span class="level">Intermediate<i aria-hidden="true"><b class="on"></b><b class="on"></b><b class=""></b></i></span><span class="num">12</span>
+      <h2>Running the rail yard</h2>
+      <p class="dek">Lakeflow Jobs: tasks, dependencies, triggers, retries and repairs, and when to bring in Azure Data Factory.</p>
+    </div>
+    <div class="credit">Photo: [pending h12]</div>
+  </header>
+
+  <div class="section">
+    <p class="hook reveal">A rail yard sends hundreds of wagons to the right tracks, in the right order, on time. If one train breaks down, the yard doesn't cancel everything; it fixes that train and sends the rest on their way.</p>
+    <div class="text">
+      <p class="reveal"><button class="term" data-t="jobs">Lakeflow Jobs</button> (formerly Databricks Workflows) is Databricks' own rail yard. A <b>job</b> is a set of <b>tasks</b> with arrows between them: a <button class="term" data-t="dag">DAG</button>. A <b>trigger</b> decides when it runs: on a schedule, such as every day at 2 a.m., or on an event, such as new files arriving in storage.</p>
+    </div>
+  </div>
+
+  <div class="section tight">
+    <div class="wrap">
+      <div class="cards reveal">
+        <div class="card2"><div class="ic">🧩</div><h4>Tasks</h4><p>Notebooks, Python scripts, SQL, pipelines, dbt, even another job. Each task can run on its own compute.</p></div>
+        <div class="card2"><div class="ic">🔀</div><h4>Control flow</h4><p>Dependencies, plus <b>if/else</b> branches and <b>for each</b> loops, built in the visual editor or as code.</p></div>
+        <div class="card2"><div class="ic">⏰</div><h4>Triggers</h4><p>Time-based schedules, or event-based: when new files arrive, when a table is updated, or continuously.</p></div>
+        <div class="card2"><div class="ic">🔁</div><h4>Retries and repair</h4><p>Retry a flaky task automatically, then "repair" a failed run by rerunning only the failed tasks and what depends on them.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section dark">
+    <div class="lab reveal" id="dag" style="box-shadow:none">
+      <div class="lab-head"><div><span class="tag">Try it</span><h3>Run the nightly job</h3></div><div class="pwr-btns"><button class="btn" id="dgRun">▶ Run job</button><button class="btn ghost" id="dgRepair" disabled>🔧 Repair run</button></div></div>
+      <div class="dg-opts">
+        <label><input type="checkbox" id="dgFail" checked> clean_customers hits a temporary network error on its first attempt</label>
+        <label>Retries for each task: <select id="dgRetry"><option value="0">0</option><option value="1">1</option><option value="2">2</option></select></label>
+      </div>
+      <div class="dg-graph">
+        <div class="dg-col"><div class="dg-t" data-k="ingest">📥 ingest<small>pipeline task</small></div></div>
+        <div class="dg-col"><div class="dg-t" data-k="orders">🧹 clean_orders<small>notebook</small></div><div class="dg-t" data-k="customers">🧹 clean_customers<small>notebook</small></div></div>
+        <div class="dg-col"><div class="dg-t" data-k="gold">🥇 build_gold<small>SQL</small></div></div>
+        <div class="dg-col"><div class="dg-t" data-k="dash">📊 refresh_dashboard<small>dashboard</small></div></div>
+      </div>
+      <ol class="pwr-log dg-log" id="dgLog" aria-live="polite"><li class="muted">Press Run job.</li></ol>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="wrap split">
+      <div class="copy reveal">
+        <span class="kicker">Jobs as code</span>
+        <h3>The same job, in YAML</h3>
+        <p>In real projects, jobs are defined in a bundle (Chapter 18), reviewed in Git and deployed by CI/CD. This job starts when new files land, runs the pipeline, then builds gold with up to two retries.</p>
+      </div>
+      <div class="reveal">
+<div class="code"><div class="code-h"><span>YAML · job</span><button type="button">Copy</button></div><pre><code>resources:
+  jobs:
+    nightly_sales:
+      name: nightly-sales
+      trigger:
+        file_arrival:
+          url: /Volumes/main/landing/orders/
+      tasks:
+        - task_key: ingest
+          pipeline_task:
+            pipeline_id: ${resources.pipelines.sales_pipeline.id}
+        - task_key: build_gold
+          depends_on:
+            - task_key: ingest
+          notebook_task:
+            notebook_path: ../src/build_gold.py
+          max_retries: 2
+          min_retry_interval_millis: 60000
+</code></pre></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section tint">
+    <div class="wrap">
+      <span class="kicker reveal">Jobs or Data Factory?</span>
+      <h3 class="reveal">Use the right yard, or both</h3>
+      <div class="tbl-wrap reveal" style="margin-top:14px;background:var(--night);border-radius:14px">
+        <table class="cmp">
+          <thead><tr><th>Question</th><th>Lakeflow Jobs</th><th>Azure Data Factory</th></tr></thead>
+          <tbody>
+            <tr><td>Best at</td><td data-h="Lakeflow Jobs">Orchestrating work <i>inside</i> Databricks: notebooks, pipelines, SQL, ML</td><td data-h="Data Factory">Moving data between many systems, including on-premises ones</td></tr>
+            <tr><td>Connectors</td><td data-h="Lakeflow Jobs">Uses Lakeflow Connect and Spark for sources</td><td data-h="Data Factory">A large library of built-in connectors, plus a self-hosted runtime for private networks</td></tr>
+            <tr><td>Triggers</td><td data-h="Lakeflow Jobs">Schedules, file arrival, table updates, continuous</td><td data-h="Data Factory">Schedules, tumbling windows, storage and custom events</td></tr>
+            <tr><td>Typical pattern</td><td data-h="Lakeflow Jobs">Owns the lakehouse transformations end to end</td><td data-h="Data Factory">Lands data in ADLS, then triggers a Databricks job</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="reveal" style="max-width:44rem;margin-top:16px">Many enterprises use both: Data Factory for the "outside world" and Lakeflow Jobs for everything inside the lakehouse. Pick one owner for each schedule, so two tools never fight over the same data.</p>
+    </div>
+  </div>
+
+  <div class="section tight">
+    <aside class="inside reveal" aria-label="Inside the data center"><div class="inside-in"><div class="in-head"><span class="led" aria-hidden="true"></span>Inside the data center<span class="rack-id">CONTROL PLANE · SCHEDULER</span></div><p class="in-sum">The job scheduler lives in the Databricks control plane, running on servers in your region that Databricks operates. At 2 a.m., it is the one that wakes up and asks Azure for machines to run your tasks.</p><button class="in-btn" aria-expanded="false"><span class="lbl">See inside</span><span class="chev" aria-hidden="true">▾</span></button><div class="in-body" hidden><div class="in-grid"><figure><svg viewBox="0 0 460 240" role="img" aria-label="Diagram: control plane scheduler sends tasks to compute VMs, with retries on fresh machines">
+        <rect width="460" height="240" fill="#05080c"/>
+        <g font-family="Inter,sans-serif" font-size="11" text-anchor="middle" fill="#e6edf3">
+          <rect x="20" y="20" width="150" height="70" rx="10" fill="#0d1b2e" stroke="#2563eb"/><text x="95" y="48">⏰ Scheduler</text><text x="95" y="66" fill="#93c5fd">control plane</text>
+          <rect x="230" y="20" width="90" height="50" rx="8" fill="#0f1d14" stroke="#3fb950"/><text x="275" y="50">VM ✓</text>
+          <rect x="340" y="20" width="90" height="50" rx="8" fill="#0f1d14" stroke="#3fb950"/><text x="385" y="50">VM ✓</text>
+          <rect x="230" y="110" width="90" height="50" rx="8" fill="#2a1215" stroke="#ef4444"/><text x="275" y="140">VM ✗</text>
+          <rect x="340" y="110" width="90" height="50" rx="8" fill="#0f1d14" stroke="#3fb950"/><text x="385" y="133">fresh VM</text><text x="385" y="149" fill="#86efac">retry ✓</text>
+          <text x="230" y="205" fill="#9aa4af">A failed attempt is retried on new machines;</text><text x="230" y="222" fill="#9aa4af">successful tasks are never rerun in a repair.</text>
+        </g>
+        <g stroke="#7ee787" stroke-width="2" fill="none" stroke-dasharray="5 4"><path d="M170 50H230"/><path d="M170 70 C200 100 210 130 230 135"/><path d="M320 135H340"/></g>
+      </svg><figcaption>Diagram drawn for this magazine.</figcaption></figure><dl class="in-rows"><div class="where"><span class="ic" aria-hidden="true">🏢</span><dt>Where it lives</dt><dd>Scheduler and job history in the control plane; the tasks themselves on serverless or classic compute in your region's compute halls.</dd></div><div class="machines"><span class="ic" aria-hidden="true">🖥️</span><dt>The machines</dt><dd>Control-plane services run on Databricks-managed servers built for high availability. Each task's compute is ordinary VMs, created and released per run.</dd></div><div class="journey"><span class="ic" aria-hidden="true">🔀</span><dt>The physical journey</dt><dd>Trigger fires in the control plane → compute is requested → task code runs on VMs → results and logs flow back to the control plane and storage → the next task starts.</dd></div><div class="power"><span class="ic" aria-hidden="true">⚡</span><dt>Power & heat</dt><dd>An idle scheduler uses almost nothing. The power burst comes when tasks start, which is why many jobs at exactly 02:00 make busy minutes for a region; spreading start times helps.</dd></div><div class="scale"><span class="ic" aria-hidden="true">📏</span><dt>Scale</dt><dd>One job can have hundreds of tasks, and a large workspace can run thousands of job runs a day.</dd></div><div class="breaks"><span class="ic" aria-hidden="true">🛠️</span><dt>When something breaks</dt><dd>Like the data center's redundant power and cooling, the control plane is built with spare capacity. A failed task VM is retried on fresh machines; a repair run reuses everything that already succeeded.</dd></div><div class="feel"><span class="ic" aria-hidden="true">👂</span><dt>Feel it</dt><dd>Nobody is pressing "run" at 2 a.m.: just rows of servers waking up on schedule, fans spinning faster as the jobs begin.</dd></div></dl></div><a class="in-deeper" href="../data-centers/#ch8">Go deeper: Data Center magazine, Ch 8 · Redundancy, uptime and tiers →</a><p class="in-note">Microsoft doesn't publish every hardware detail. Where exact facts aren't public, we say "typically" or "for example".</p></div></div></aside>
+  </div>
+
+  <div class="section tight">
+    <div class="recap reveal">
+      <h3>Chapter 12 recap</h3>
+      <ul>
+        <li>Lakeflow Jobs (formerly Workflows) runs tasks as a DAG, with if/else and for-each control flow.</li>
+        <li>Triggers can be time-based or event-based (file arrival, table update), or continuous.</li>
+        <li>Retries handle flaky failures; repair runs rerun only what failed.</li>
+        <li>Use Data Factory to bring data in from many systems; let Jobs own lakehouse processing.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="quiz reveal" data-quiz='[
+    {"q":"What does a repair run do?","o":["Reruns the whole job from scratch","Reruns only failed tasks and the tasks that depend on them","Deletes the job"],"a":1,"why":"Successful tasks keep their results; only failed and downstream tasks run again."},
+    {"q":"Which is an event-based trigger in Lakeflow Jobs?","o":["File arrival","Every day at 02:00","Manual click only"],"a":0,"why":"File arrival starts the job when new data lands in storage."},
+    {"q":"A common way to combine ADF and Databricks is…","o":["ADF lands data in ADLS, then triggers a Databricks job","ADF replaces Delta Lake","Databricks runs ADF pipelines"],"a":0,"why":"ADF is great at moving data in; Databricks does the lakehouse processing."}
+  ]'></div>
+  <p class="teaser reveal">Data is flowing on schedule. Now: who is allowed to see it?<br><a href="#ch13">Chapter 13: Unity Catalog →</a></p>
+  <div style="height:80px"></div>
+</section>
+
+
+
+
+<section class="chapter" id="ch13" data-accent="i" data-level="Intermediate" data-num="13" data-title="Unity Catalog">
+  <header class="hero">
+    <img src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 10%22%3E%3Crect width=%2216%22 height=%2210%22 fill=%22%23445%22/%3E%3C/svg%3E" alt="Rows of wooden library card catalog drawers" data-missing="h13" width="1600" height="1000">
+    <div class="hero-in">
+      <span class="level">Intermediate<i aria-hidden="true"><b class="on"></b><b class="on"></b><b class=""></b></i></span><span class="num">13</span>
+      <h2>One catalog to rule them all</h2>
+      <p class="dek">Catalogs, schemas, tables, permissions, lineage and sharing: governance with Unity Catalog.</p>
+    </div>
+    <div class="credit">Photo: [pending h13]</div>
+  </header>
+
+  <div class="section">
+    <p class="hook reveal">A library with a million books and no catalogue is just a warehouse of paper. Add a card for every book, a librarian who checks your card, and a log of who borrowed what, and suddenly it is useful, and safe.</p>
+    <div class="text">
+      <p class="reveal"><button class="term" data-t="unity catalog">Unity Catalog</button> is that catalogue and librarian for all your data and AI. Every table, view, volume, function and model gets an address with three parts, <code>catalog.schema.object</code>, and a set of permissions. Microsoft's docs say it is automatically enabled for workspaces created after 9 November 2023.</p>
+    </div>
+  </div>
+
+  <div class="section tight">
+    <div class="wrap">
+      <div class="cards reveal">
+        <div class="card2"><div class="ic">🗂️</div><h4><button class="term" data-t="metastore">Metastore</button></h4><p>The top container, one per region, attached to your workspaces so they all see the same data.</p></div>
+        <div class="card2"><div class="ic">📚</div><h4><button class="term" data-t="catalog">Catalogs</button> and schemas</h4><p>Catalogs often map to environments or business units (<code>prod</code>, <code>dev</code>); schemas to layers or domains (<code>gold</code>, <code>finance</code>).</p></div>
+        <div class="card2"><div class="ic">🔐</div><h4>Permissions</h4><p><button class="term" data-t="grant">GRANT</button> privileges to groups, not people. Add row filters and column masks for finer control.</p></div>
+        <div class="card2"><div class="ic">🧬</div><h4><button class="term" data-t="lineage">Lineage</button> and audit</h4><p>See where each table came from and who uses it, automatically, down to the column.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section dark">
+    <div class="lab reveal" id="uc" style="box-shadow:none">
+      <div class="lab-head"><div><span class="tag">Try it</span><h3>Unity Catalog explorer</h3></div></div>
+      <p style="margin-top:0">Pick <b>who you are</b>, then browse the catalog. Locks show what you can't reach.</p>
+      <div class="seg" role="group" aria-label="Principal" id="ucWho">
+        <button data-w="eng" aria-pressed="true">🛠️ Data engineers</button><button data-w="ana" aria-pressed="false">📊 Analysts</button><button data-w="fin" aria-pressed="false">💼 Finance</button><button data-w="job" aria-pressed="false">🤖 nightly-job (service principal)</button><button data-w="partner" aria-pressed="false">🤝 Partner (OpenSharing)</button>
+      </div>
+      <div class="uc-grid">
+        <ul class="uc-tree" id="ucTree" role="tree" aria-label="Catalog tree"></ul>
+        <div class="panel uc-info" aria-live="polite">
+          <span class="kicker" id="ucPath"></span><h4 id="ucName"></h4>
+          <p id="ucAccess" class="uc-access"></p>
+          <div id="ucPreview"></div>
+          <div class="code" style="max-width:none;margin:12px 0 0"><div class="code-h"><span>SQL</span><button type="button" id="ucCopy">Copy</button></div><pre><code id="ucSql"></code></pre></div>
+          <p id="ucLin" class="uc-lin"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="wrap split">
+      <div class="copy reveal">
+        <span class="kicker">Hide what's sensitive</span>
+        <h3>Column masks and row filters</h3>
+        <p>Analysts need the customers table, but not everyone's email address. A <b>column mask</b> is a small SQL function that shows the real value only to the right group, and "***" to everyone else.</p>
+        <p>A <b>row filter</b> works the same way for rows: the India team only sees Indian customers. The table stays one table; Unity Catalog applies the rules on every query, from any tool.</p>
+      </div>
+      <div class="reveal">
+<div class="code"><div class="code-h"><span>SQL · permissions and masking</span><button type="button">Copy</button></div><pre><code><span class="c">-- Groups, not people</span>
+<span class="k">GRANT USE CATALOG ON CATALOG</span> prod <span class="k">TO</span> `analysts`;
+<span class="k">GRANT USE SCHEMA</span>, <span class="k">SELECT ON SCHEMA</span> prod.gold <span class="k">TO</span> `analysts`;
+
+<span class="c">-- Mask emails for everyone outside pii_readers</span>
+<span class="k">CREATE FUNCTION</span> prod.gold.mask_email(email <span class="k">STRING</span>)
+<span class="k">RETURN CASE WHEN</span> is_account_group_member(<span class="s">'pii_readers'</span>)
+  <span class="k">THEN</span> email <span class="k">ELSE</span> <span class="s">'***'</span> <span class="k">END</span>;
+
+<span class="k">ALTER TABLE</span> prod.gold.customers
+  <span class="k">ALTER COLUMN</span> email <span class="k">SET MASK</span> prod.gold.mask_email;
+</code></pre></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section tint">
+    <div class="text">
+      <span class="kicker reveal">Sharing without copying</span>
+      <h3 class="reveal">OpenSharing (formerly Delta Sharing)</h3>
+      <p class="reveal">Need to give a partner company live sales numbers? <button class="term" data-t="delta sharing">OpenSharing</button> is an open protocol from Databricks for sharing tables and AI assets with other organisations, even if they don't use Databricks. You create a <b>share</b>, add tables, and grant it to a <b>recipient</b>. No exports, no copies going stale.</p>
+    </div>
+    <div class="dyk reveal"><p>Unity Catalog can also auto-classify sensitive data: it can scan and tag columns that look like personal information, so you find out where your sensitive data lives before an auditor does.</p></div>
+  </div>
+
+  <div class="section tight">
+    <aside class="inside reveal" aria-label="Inside the data center"><div class="inside-in"><div class="in-head"><span class="led" aria-hidden="true"></span>Inside the data center<span class="rack-id">SECURE HALL · CAGE 3</span></div><p class="in-sum">Permissions in software are the last of many locks. Before anyone can touch your data, the building itself has fences, guards, badges, cameras and locked cages, the same layers the Data Center magazine walks you through.</p><button class="in-btn" aria-expanded="false"><span class="lbl">See inside</span><span class="chev" aria-hidden="true">▾</span></button><div class="in-body" hidden><div class="in-grid"><figure><svg viewBox="0 0 460 260" role="img" aria-label="Diagram: layers of security from the building fence to Unity Catalog permissions">
+        <rect width="460" height="260" fill="#05080c"/>
+        <g fill="none" stroke-width="2">
+          <rect x="16" y="16" width="428" height="228" rx="18" stroke="#30363d"/><rect x="40" y="38" width="380" height="184" rx="16" stroke="#3b5b8a"/>
+          <rect x="66" y="60" width="328" height="140" rx="14" stroke="#2563eb"/><rect x="92" y="82" width="276" height="96" rx="12" stroke="#7c3aed"/><rect x="120" y="104" width="220" height="52" rx="10" stroke="#3fb950"/>
+        </g>
+        <g font-family="Inter,sans-serif" font-size="10" fill="#9aa4af">
+          <text x="30" y="32">fence &amp; guards</text><text x="54" y="54">badges, man-trap</text><text x="80" y="76">locked cage, cameras</text><text x="106" y="98" fill="#c4b5fd">Entra ID sign-in</text>
+          <text x="230" y="128" text-anchor="middle" fill="#7ee787" font-size="12" font-weight="700">Unity Catalog grants</text><text x="230" y="144" text-anchor="middle" fill="#86efac">→ your table</text>
+        </g>
+      </svg><figcaption>Diagram drawn for this magazine.</figcaption></figure><dl class="in-rows"><div class="where"><span class="ic" aria-hidden="true">🏢</span><dt>Where it lives</dt><dd>Unity Catalog's metadata (names, grants, lineage) is stored and served by the Databricks control plane in your region; the data files stay in your storage accounts, encrypted at rest.</dd></div><div class="machines"><span class="ic" aria-hidden="true">🖥️</span><dt>The machines</dt><dd>Highly available metadata services and databases in the control plane, and the storage servers holding your files, typically in locked, access-controlled data halls.</dd></div><div class="journey"><span class="ic" aria-hidden="true">🔀</span><dt>The physical journey</dt><dd>Your query → the compute checks Unity Catalog → Unity Catalog checks your groups and grants → only then does the compute receive short-lived credentials to read exactly those files from storage.</dd></div><div class="power"><span class="ic" aria-hidden="true">⚡</span><dt>Power & heat</dt><dd>Governance itself is light work. The audit logs it writes, every grant and access event, are kept on storage servers like any other data.</dd></div><div class="scale"><span class="ic" aria-hidden="true">📏</span><dt>Scale</dt><dd>One metastore can govern many workspaces and millions of objects, with every access recorded in audit logs and system tables.</dd></div><div class="breaks"><span class="ic" aria-hidden="true">🛠️</span><dt>When something breaks</dt><dd>If a compute node fails mid-query, the credentials it held expire quickly, and a new node must ask Unity Catalog again. Nothing can "inherit" access by accident.</dd></div><div class="feel"><span class="ic" aria-hidden="true">👂</span><dt>Feel it</dt><dd>Getting to the actual disks would mean passing a fence, a guard desk, a man-trap, a badge-and-fingerprint door and a locked cage, long before any SQL GRANT matters.</dd></div></dl></div><a class="in-deeper" href="../data-centers/#ch7">Go deeper: Data Center magazine, Ch 7 · Security, fire and monitoring →</a><p class="in-note">Microsoft doesn't publish every hardware detail. Where exact facts aren't public, we say "typically" or "for example".</p></div></div></aside>
+  </div>
+
+  <div class="section tight">
+    <div class="recap reveal">
+      <h3>Chapter 13 recap</h3>
+      <ul>
+        <li>Unity Catalog governs data and AI with a three-level name: catalog.schema.object.</li>
+        <li>One metastore per region can be shared by many workspaces.</li>
+        <li>Grant privileges to groups; use column masks and row filters for sensitive data.</li>
+        <li>Lineage and audit come built in; OpenSharing shares live data without copies.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="quiz reveal" data-quiz='[
+    {"q":"What is the three-level namespace in Unity Catalog?","o":["region.workspace.cluster","catalog.schema.object","database.table.column only"],"a":1,"why":"Every governed object lives at catalog.schema.object."},
+    {"q":"Best practice for granting access is to grant to…","o":["Individual users","Groups","Everyone in the company"],"a":1,"why":"Groups are easier to manage and audit as people join and leave."},
+    {"q":"How do you hide email addresses from most analysts while keeping one table?","o":["Copy the table without the column","Apply a column mask","Delete the emails"],"a":1,"why":"A column mask function shows the value only to authorised groups."}
+  ]'></div>
+  <p class="teaser reveal">Governed, trusted gold tables. Time to put them in front of business users.<br><a href="#ch14">Chapter 14: Databricks SQL and dashboards →</a></p>
+  <div style="height:80px"></div>
+</section>
+
+
+
+
+<section class="chapter" id="ch14" data-accent="i" data-level="Intermediate" data-num="14" data-title="SQL and dashboards">
+  <header class="hero">
+    <img src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 10%22%3E%3Crect width=%2216%22 height=%2210%22 fill=%22%23445%22/%3E%3C/svg%3E" alt="An aircraft cockpit full of instrument dashboards" data-missing="h14" width="1600" height="1000">
+    <div class="hero-in">
+      <span class="level">Intermediate<i aria-hidden="true"><b class="on"></b><b class="on"></b><b class=""></b></i></span><span class="num">14</span>
+      <h2>The cockpit for the business</h2>
+      <p class="dek">Databricks SQL, SQL warehouses, AI/BI dashboards, Genie and Power BI, for analysts.</p>
+    </div>
+    <div class="credit">Photo: [pending h14]</div>
+  </header>
+
+  <div class="section">
+    <p class="hook reveal">Monday, 9:00 a.m. Two hundred people open the sales dashboard at the same moment. Will it load in two seconds, or will they all stare at a spinner?</p>
+    <div class="text">
+      <p class="reveal">Analysts don't want clusters or Spark. They want SQL and charts that are always fast. Databricks SQL gives them a SQL editor, dashboards and alerts, all running on <button class="term" data-t="sql warehouse">SQL warehouses</button>: compute tuned only for SQL, with <button class="term" data-t="photon">Photon</button> built in.</p>
+    </div>
+  </div>
+
+  <div class="section tight">
+    <div class="wrap">
+      <div class="cards reveal">
+        <div class="card2"><div class="ic">⚡</div><h4>Serverless warehouse</h4><p>Microsoft's docs say it typically starts in <b>2 to 6 seconds</b>, and uses Intelligent Workload Management to add capacity when queries start queuing. Recommended for most workloads.</p></div>
+        <div class="card2"><div class="ic">🏗️</div><h4>Pro warehouse</h4><p>Photon and Predictive IO, but the compute runs in your Azure subscription. Slower to start.</p></div>
+        <div class="card2"><div class="ic">🧱</div><h4>Classic warehouse</h4><p>Photon only, compute in your subscription. The most basic option.</p></div>
+        <div class="card2"><div class="ic">📏</div><h4>Sizes</h4><p>T-shirt sizes from 2X-Small to 4X-Large. A bigger size makes each heavy query faster; more clusters handle more users at once.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section dark">
+    <div class="lab reveal" id="rush" style="box-shadow:none">
+      <div class="lab-head"><div><span class="tag">Try it</span><h3>Monday 9 a.m. rush</h3></div>
+        <div class="seg" role="group" aria-label="Warehouse type"><button data-t="sl" aria-pressed="true">⚡ Serverless</button><button data-t="cl" aria-pressed="false">🧱 Classic</button></div></div>
+      <label class="sp-lab" for="ruU"><b>People opening the dashboard at once:</b> <span id="ruUv">40</span></label>
+      <input type="range" id="ruU" min="1" max="200" value="40">
+      <label class="sp-lab" for="ruM"><b>Max clusters (scaling limit):</b> <span id="ruMv">4</span></label>
+      <input type="range" id="ruM" min="1" max="10" value="4">
+      <div class="ru-wh" id="ruWh"></div>
+      <div class="sp-out ru-out">
+        <div class="panel"><small>Clusters running</small><b id="ruC"></b></div>
+        <div class="panel"><small>Queries queued</small><b id="ruQ"></b></div>
+        <div class="panel"><small>Wait for the first chart</small><b id="ruW"></b></div>
+        <div class="panel sp-total"><small>Verdict</small><b id="ruV"></b></div>
+      </div>
+      <p class="muted" style="font-size:.78rem;margin:8px 0 0">Illustration: assumes each cluster comfortably handles about 10 dashboard queries at once, and that the warehouse was idle (stopped) before 9:00.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="wrap split rev">
+      <div class="copy reveal">
+        <span class="kicker">Dashboards and plain English</span>
+        <h3>AI/BI dashboards and Genie</h3>
+        <p><b>AI/BI dashboards</b> are Databricks' built-in dashboards, governed by Unity Catalog, so people only see data they're allowed to.</p>
+        <p><button class="term" data-t="genie">Genie</button> lets business users ask questions in plain language, like "Which city grew fastest last month?", and answers from your governed data. And for companies standardised on Microsoft, <button class="term" data-t="power bi">Power BI</button> connects to SQL warehouses directly.</p>
+      </div>
+      <div class="reveal">
+<div class="code"><div class="code-h"><span>SQL · a gold query behind a dashboard</span><button type="button">Copy</button></div><pre><code><span class="k">SELECT</span>
+  date_trunc(<span class="s">'week'</span>, order_date) <span class="k">AS</span> week,
+  city,
+  <span class="f">SUM</span>(sales) <span class="k">AS</span> sales,
+  <span class="f">SUM</span>(sales) / <span class="f">LAG</span>(<span class="f">SUM</span>(sales)) <span class="k">OVER</span> (
+      <span class="k">PARTITION BY</span> city <span class="k">ORDER BY</span> date_trunc(<span class="s">'week'</span>, order_date)) - 1 <span class="k">AS</span> growth
+<span class="k">FROM</span> prod.gold.daily_sales
+<span class="k">WHERE</span> order_date &gt;= current_date() - <span class="k">INTERVAL</span> 90 DAYS
+<span class="k">GROUP BY ALL</span>
+<span class="k">ORDER BY</span> week <span class="k">DESC</span>, sales <span class="k">DESC</span>;
+</code></pre></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section tight">
+    <aside class="inside reveal" aria-label="Inside the data center"><div class="inside-in"><div class="in-head"><span class="led" aria-hidden="true"></span>Inside the data center<span class="rack-id">SERVERLESS POOL · WARM</span></div><p class="in-sum">A serverless warehouse can start in seconds because Databricks keeps pools of machines already running and waiting in the region. When your query arrives, it borrows warm machines instead of waiting for new VMs to boot.</p><button class="in-btn" aria-expanded="false"><span class="lbl">See inside</span><span class="chev" aria-hidden="true">▾</span></button><div class="in-body" hidden><div class="in-grid"><figure><svg viewBox="0 0 460 250" role="img" aria-label="Diagram: warm pool of serverless machines lending capacity to SQL warehouses in seconds, versus classic VMs booting in minutes">
+        <rect width="460" height="250" fill="#05080c"/>
+        <g font-family="Inter,sans-serif" font-size="11" text-anchor="middle" fill="#e6edf3">
+          <text x="115" y="26" fill="#7ee787" font-family="monospace">SERVERLESS · warm pool</text>
+          <g fill="#0f1d14" stroke="#3fb950"><rect x="30" y="40" width="50" height="34" rx="5"/><rect x="90" y="40" width="50" height="34" rx="5"/><rect x="150" y="40" width="50" height="34" rx="5"/><rect x="30" y="84" width="50" height="34" rx="5"/><rect x="90" y="84" width="50" height="34" rx="5"/><rect x="150" y="84" width="50" height="34" rx="5"/></g>
+          <text x="115" y="146" fill="#86efac">ready in ~2–6 s</text>
+          <text x="345" y="26" fill="#e3b341" font-family="monospace">CLASSIC · cold boot</text>
+          <g fill="#1a1407" stroke="#e3b341" stroke-dasharray="4 3"><rect x="260" y="40" width="50" height="34" rx="5"/><rect x="320" y="40" width="50" height="34" rx="5"/><rect x="380" y="40" width="50" height="34" rx="5"/></g>
+          <text x="345" y="100" fill="#f2d68c">VMs created on demand</text><text x="345" y="118" fill="#f2d68c">in your subscription</text>
+          <text x="345" y="146" fill="#f2d68c">ready in minutes</text>
+          <text x="230" y="200" fill="#9aa4af">Same SQL, same Photon engine; the difference is</text><text x="230" y="218" fill="#9aa4af">whether the machines are already running.</text>
+        </g>
+      </svg><figcaption>Diagram drawn for this magazine.</figcaption></figure><dl class="in-rows"><div class="where"><span class="ic" aria-hidden="true">🏢</span><dt>Where it lives</dt><dd>In the serverless compute plane in Databricks' account, in the same region as your workspace; pro and classic warehouses run in your subscription instead.</dd></div><div class="machines"><span class="ic" aria-hidden="true">🖥️</span><dt>The machines</dt><dd>Clusters of VMs running Photon, sized by T-shirt size. Each bigger size means more and/or larger machines behind one cluster.</dd></div><div class="journey"><span class="ic" aria-hidden="true">🔀</span><dt>The physical journey</dt><dd>Dashboard click → control plane → warehouse cluster → reads gold Delta files from storage (or its cache) → results back to the browser in milliseconds to seconds.</dd></div><div class="power"><span class="ic" aria-hidden="true">⚡</span><dt>Power & heat</dt><dd>Warm pools trade a little idle power for speed: machines stay switched on so thousands of customers don't each wait minutes for boots.</dd></div><div class="scale"><span class="ic" aria-hidden="true">📏</span><dt>Scale</dt><dd>Intelligent Workload Management adds clusters when queries queue, then scales down when demand drops, keeping enough capacity for recent peaks.</dd></div><div class="breaks"><span class="ic" aria-hidden="true">🛠️</span><dt>When something breaks</dt><dd>If a machine in a warehouse fails, the affected queries are retried on healthy capacity; a dashboard user might see a slower chart, not an error.</dd></div><div class="feel"><span class="ic" aria-hidden="true">👂</span><dt>Feel it</dt><dd>Somewhere in the hall, a few racks are always "on standby": lights steady, fans idling, ready to spring into work at 9:00 sharp.</dd></div></dl></div><a class="in-deeper" href="../data-centers/#ch9">Go deeper: Data Center magazine, Ch 9 · Virtualization and the cloud →</a><p class="in-note">Microsoft doesn't publish every hardware detail. Where exact facts aren't public, we say "typically" or "for example".</p></div></div></aside>
+  </div>
+
+  <div class="section tight">
+    <div class="dyk reveal"><p>Microsoft's sizing guidance is to start with a single larger serverless warehouse and let its features manage concurrency, rather than many small warehouses. If the monitoring page shows queued queries above zero for long, raise the max clusters.</p></div>
+    <div class="recap reveal" style="margin-top:36px">
+      <h3>Chapter 14 recap</h3>
+      <ul>
+        <li>SQL warehouses run Databricks SQL, dashboards and BI tools, with Photon always on.</li>
+        <li>Serverless starts in about 2–6 seconds and autoscales with Intelligent Workload Management.</li>
+        <li>Size up for heavy queries; add clusters for more simultaneous users.</li>
+        <li>AI/BI dashboards and Genie serve business users; Power BI connects directly too.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="quiz reveal" data-quiz='[
+    {"q":"200 users open a dashboard at once and queries queue. What helps most?","o":["A bigger T-shirt size only","More clusters (raise max clusters / let it autoscale)","Turning off Photon"],"a":1,"why":"Extra clusters serve more simultaneous queries; size helps individual heavy queries."},
+    {"q":"Where does a pro SQL warehouse&apos;s compute run?","o":["In your Azure subscription","In Power BI","On the user&apos;s laptop"],"a":0,"why":"Pro and classic warehouses run compute in your subscription; serverless runs in Databricks&apos; account."},
+    {"q":"What is Genie for?","o":["Encrypting data","Letting business users ask data questions in natural language","Scheduling jobs"],"a":1,"why":"Genie answers plain-language questions from governed data."}
+  ]'></div>
+  <p class="teaser reveal">Intermediate track complete! Now the advanced part: making it all fast.<br><a href="#ch15">Chapter 15: Performance tuning →</a></p>
+  <div style="height:80px"></div>
+</section>
+
+
+
+
 </main>
 
 <button class="to-top" id="toTop" aria-label="Back to top">
@@ -1584,6 +2708,291 @@ $('spRun').onclick = async function(){
   running = false; this.disabled = false; $('spN').disabled = false; this.textContent = '↻ Run again';
 };
 layout();
+})();
+/* ---- ch07-delta.html ---- */
+(function(){
+const V = [
+  {op:'v0 · CREATE TABLE + INSERT 4 rows', days:20, rows:[[1,'Asha','Pune','Silver'],[2,'Ben','Leeds','Gold'],[3,'Chen','Taipei','Silver'],[4,'Dara','Dublin','Bronze']], add:['part-0001'], rm:[]},
+  {op:'v1 · INSERT 2 new customers (append)', days:15, rows:[[1,'Asha','Pune','Silver'],[2,'Ben','Leeds','Gold'],[3,'Chen','Taipei','Silver'],[4,'Dara','Dublin','Bronze'],[5,'Eva','Lisbon','Bronze','new'],[6,'Femi','Lagos','Silver','new']], add:['part-0002'], rm:[]},
+  {op:'v2 · UPDATE: Ben moved to York', days:10, rows:[[1,'Asha','Pune','Silver'],[2,'Ben','York','Gold','chg'],[3,'Chen','Taipei','Silver'],[4,'Dara','Dublin','Bronze'],[5,'Eva','Lisbon','Bronze'],[6,'Femi','Lagos','Silver']], add:['part-0003'], rm:['part-0001']},
+  {op:'v3 · DELETE customer 4 (closed account)', days:6, rows:[[1,'Asha','Pune','Silver'],[2,'Ben','York','Gold'],[3,'Chen','Taipei','Silver'],[4,'Dara','Dublin','Bronze','gone'],[5,'Eva','Lisbon','Bronze'],[6,'Femi','Lagos','Silver']], add:['part-0004'], rm:['part-0003']},
+  {op:'v4 · MERGE nightly updates: 1 updated, 1 inserted', days:3, rows:[[1,'Asha','Pune','Gold','chg'],[2,'Ben','York','Gold'],[3,'Chen','Taipei','Silver'],[5,'Eva','Lisbon','Bronze'],[6,'Femi','Lagos','Silver'],[7,'Gita','Delhi','Bronze','new']], add:['part-0005','part-0006'], rm:['part-0004']},
+  {op:'v5 · OPTIMIZE: small files compacted (no data change)', days:0, rows:[[1,'Asha','Pune','Gold'],[2,'Ben','York','Gold'],[3,'Chen','Taipei','Silver'],[5,'Eva','Lisbon','Bronze'],[6,'Femi','Lagos','Silver'],[7,'Gita','Delhi','Bronze']], add:['part-0007'], rm:['part-0002','part-0005','part-0006']}
+];
+const g = id => document.getElementById(id);
+function draw(){
+  const v = +g('ttR').value, vac = g('ttVac').checked, s = V[v];
+  const blocked = vac && s.days > 7;
+  g('ttV').textContent = `Version ${v}${v === 5 ? ' (latest)' : ''} · ${s.days ? s.days + ' days ago' : 'today'}`;
+  g('ttOp').textContent = s.op;
+  g('ttB').innerHTML = s.rows.map(r => `<tr class="${r[4] || ''}"><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td></tr>`).join('');
+  document.querySelector('.tt-tbl').classList.toggle('blocked', blocked);
+  g('ttMsg').innerHTML = blocked ? '⛔ <b>Can\'t read this version.</b> It is older than the 7-day file retention, and VACUUM has deleted data files that old versions need. The log still lists it, but the data is gone.'
+    : v === 5 ? '✅ The current table. Green = new rows, amber = changed rows, red = deleted rows (shown for the version where it changed).' : `⏪ Reading the table exactly as it was ${s.days} days ago.`;
+  g('ttLog').innerHTML = V.map((x, i) => `<li class="${i <= v ? 'on' : ''}">${String(i).padStart(20, '0')}.json${i <= v ? ' ✓' : ''}</li>`).join('');
+  const live = new Set(); V.slice(0, v + 1).forEach(x => { x.add.forEach(f => live.add(f)); x.rm.forEach(f => live.delete(f)); });
+  const all = [...new Set(V.flatMap(x => x.add))];
+  const latest = new Set(); V.forEach(x => { x.add.forEach(f => latest.add(f)); x.rm.forEach(f => latest.delete(f)); });
+  g('ttFiles').innerHTML = all.map(f => { const gone = vac && !latest.has(f) && V.find(x => x.rm.includes(f) && x.days > 7) !== undefined;
+    return `<li class="${live.has(f) ? 'on' : gone ? 'off' : ''}">${f}.parquet${live.has(f) ? '  ← used' : gone ? '  (vacuumed)' : ''}</li>`; }).join('');
+  g('ttSql').textContent = v === 5 ? 'SELECT * FROM main.shop.customers;' : `SELECT * FROM main.shop.customers VERSION AS OF ${v};\n-- or: RESTORE TABLE main.shop.customers TO VERSION AS OF ${v};`;
+}
+g('ttR').oninput = draw; g('ttVac').onchange = draw;
+g('ttCopy').onclick = async function(){ try { await navigator.clipboard.writeText(g('ttSql').textContent); this.textContent = 'Copied ✓'; } catch (e) { this.textContent = 'Select & copy'; } setTimeout(() => this.textContent = 'Copy', 1500); };
+draw();
+})();
+/* ---- ch08-medallion.html ---- */
+(function(){
+const RAW = [
+  ['1001','pune','1,250','2026-11-02 09:12'],['1002',' Mumbai ','980','2026-11-02 10:40'],['1002',' Mumbai ','980','2026-11-02 10:40'],
+  ['1003','DELHI','-50','2026-11-02 11:05'],['1004','','400','2026-11-02 12:30'],['1005','mumbai','1500','2026-11-02 13:15'],['1006','Pune','720','2026-11-03 08:02']
+];
+const g = id => document.getElementById(id);
+const row = (r, cls = '') => `<div class="rw ${cls}"><span>${r[0]}</span><span>${r[1] === '' ? '∅' : r[1].replace(/ /g, '·')}</span><span>${r[2]}</span><span>${r[3].slice(5)}</span></div>`;
+const head = () => `<div class="rw h"><span>order</span><span>city</span><span>amount</span><span>time</span></div>`;
+const reset = () => { g('mB').innerHTML = head() + RAW.map(r => row(r)).join(''); g('mS').innerHTML = '<p class="muted">Waiting…</p>'; g('mG').innerHTML = '<p class="muted">Waiting…</p>'; g('mLog').innerHTML = ''; ['mA1','mA2'].forEach(i => g(i).classList.remove('on')); };
+const log = t => { const li = document.createElement('li'); li.innerHTML = t; g('mLog').appendChild(li); };
+let run = 0;
+g('medReset').onclick = () => { run++; reset(); g('medGo').disabled = false; };
+g('medGo').onclick = async function(){
+  const my = ++run; this.disabled = true; reset(); g('mA1').classList.add('on');
+  const S = RAW.map(r => r.slice()); g('mS').innerHTML = head() + S.map(r => row(r)).join('');
+  const rows = () => [...g('mS').querySelectorAll('.rw:not(.h)')];
+  const step = async (t, fn) => { if (my !== run) throw 0; log(t); fn(); await sleep(1500); };
+  try {
+    await step('📥 Copied 7 raw rows from bronze. Bronze stays untouched.', () => {});
+    await step('🔁 <b>dropDuplicates(order_id)</b>: order 1002 arrived twice.', () => { rows()[2].classList.add('dup'); setTimeout(() => rows()[2] && rows()[2].classList.add('out'), 700); });
+    await step('🔤 <b>trim + initcap(city)</b>: " Mumbai ", "pune", "DELHI" become Mumbai, Pune, Delhi.', () => { rows().forEach((el, i) => { const r = S[i]; if (!r) return; const c = r[1].trim(); const fixed = c ? c[0].toUpperCase() + c.slice(1).toLowerCase() : ''; if (fixed !== r[1]) { r[1] = fixed; el.children[1].textContent = fixed || '∅'; el.classList.add('fix'); } }); });
+    await step('🔢 <b>cast amount to decimal</b>: "1,250" becomes 1250.00.', () => { rows().forEach((el, i) => { const r = S[i]; const n = parseFloat(r[2].replace(',', '')); el.children[2].textContent = n.toFixed(2); r[2] = n; }); });
+    await step('🚫 <b>filter amount &gt; 0 and city not null</b>: order 1003 (−50) and 1004 (no city) go to a quarantine table for review.', () => { rows().forEach((el, i) => { const r = S[i]; if (r[2] <= 0 || !r[1]) { el.classList.add('bad'); setTimeout(() => el.classList.add('out'), 800); } }); });
+    await step('✅ <b>silver.orders</b> now holds 4 clean rows.', () => { g('mA2').classList.add('on'); });
+    await step('📊 <b>groupBy(order_date, city).sum(amount)</b> builds the gold table.', () => {
+      g('mG').innerHTML = `<div class="gold-k"><span>02 Nov · Mumbai</span><span>₹2,480</span></div><div class="gold-k"><span>02 Nov · Pune</span><span>₹1,250</span></div><div class="gold-k"><span>03 Nov · Pune</span><span>₹720</span></div><p class="muted" style="font-size:.8rem;margin:6px 0 0">7 raw rows → 4 clean rows → 3 business rows</p>`; });
+    log('🎉 Done. A dashboard can now read 3 small rows instead of scanning raw files.');
+  } catch (e) {}
+  if (my === run) this.disabled = false;
+};
+reset();
+})();
+/* ---- ch09-ingest.html ---- */
+(function(){
+const g = id => document.getElementById(id);
+let files = [], loaded = new Set(), rows = 0, n = 0;
+const rnd = () => 40 + Math.floor(Math.random() * 160);
+function draw(){
+  g('alFiles').innerHTML = files.length ? files.map(f => `<li class="${loaded.has(f.name) ? 'done' : 'new'}">${f.name} · ${f.rows} rows ${loaded.has(f.name) ? '✓' : '• new'}</li>`).join('') : '<li>(empty)</li>';
+  g('alCk').innerHTML = loaded.size ? [...loaded].map(x => `<li class="done">${x}</li>`).join('') : '<li>(nothing yet)</li>';
+  g('alRows').textContent = rows.toLocaleString('en-IN');
+}
+const add = () => { n++; files.push({name:`orders_2026-11-0${Math.min(9, n)}_${String(n).padStart(3, '0')}.json`, rows:rnd()}); draw(); };
+g('alNew').onclick = () => { add(); g('alSay').textContent = 'A new file landed. Auto Loader hasn\'t seen it yet.'; };
+g('alRun').onclick = () => {
+  const fresh = files.filter(f => !loaded.has(f.name));
+  if (!fresh.length) { g('alSay').innerHTML = '😴 <b>Nothing new.</b> Every file is already in the checkpoint, so nothing is loaded twice.'; return; }
+  fresh.forEach(f => { loaded.add(f.name); rows += f.rows; });
+  g('alSay').innerHTML = `✅ Loaded <b>${fresh.length}</b> new file${fresh.length > 1 ? 's' : ''} (${fresh.reduce((a, f) => a + f.rows, 0)} rows) and skipped ${files.length - fresh.length} already-loaded file${files.length - fresh.length === 1 ? '' : 's'}. Run again: nothing happens until a new file arrives.`;
+  draw();
+};
+add(); add(); draw();
+const PK = {
+  files:['Auto Loader','New files keep arriving in ADLS or a volume: Auto Loader loads each one exactly once, infers and evolves the schema, and scales to millions of files. Best inside a Lakeflow pipeline.'],
+  once:['COPY INTO','A simple SQL load of a folder of files into a Delta table. Re-runs skip files already loaded. Great for smaller, simpler loads or SQL-only teams.'],
+  db:['Lakeflow Connect (database connector)','Managed ingestion from SQL Server (and MySQL, PostgreSQL) using change tracking or change data capture, so only changed rows move. Azure Data Factory is an alternative if your team already uses it.'],
+  saas:['Lakeflow Connect (SaaS connector)','Managed connectors for apps like Salesforce, Workday, HubSpot and Jira handle the APIs, schema changes and incremental pulls for you.'],
+  events:['Structured Streaming (Kafka source)','Read Azure Event Hubs through its Kafka-compatible endpoint, or Kafka itself, continuously into a bronze streaming table (Chapter 11).'],
+  onprem:['Azure Data Factory (self-hosted runtime)','For systems behind your firewall, ADF\'s self-hosted integration runtime runs next to the source and copies data to ADLS. Then Auto Loader picks it up from there.']
+};
+document.querySelectorAll('#pick [data-s]').forEach(b => b.onclick = () => {
+  document.querySelectorAll('#pick [data-s]').forEach(x => x.setAttribute('aria-pressed', x === b));
+  g('pkT').textContent = PK[b.dataset.s][0]; g('pkD').textContent = PK[b.dataset.s][1];
+});
+g('pkT').textContent = PK.files[0]; g('pkD').textContent = PK.files[1];
+})();
+/* ---- ch10-pipelines.html ---- */
+(function(){
+const g = id => document.getElementById(id);
+let mode = 'batch', timer = null, t = 8 * 60, hours = 0, pending = 0, lastFresh = null, run = 0;
+const hhmm = m => String(Math.floor(m / 60) % 24).padStart(2, '0') + ':' + String(m % 60).padStart(2, '0');
+const flow = () => { ['p0','p1','p2'].forEach((p, k) => setTimeout(() => { const i = document.createElement('i'); g(p).appendChild(i); setTimeout(() => i.remove(), 950); }, k * 300)); };
+const badge = () => { const q = g('n0').querySelector('.q'); if (pending) { (q || g('n0').appendChild(Object.assign(document.createElement('span'), {className:'q'}))).textContent = pending + ' waiting'; } else if (q) q.remove(); };
+function start(){
+  clearInterval(timer); const my = ++run; t = 8 * 60; hours = 0; pending = 0; lastFresh = mode === 'batch' ? 2 * 60 : 8 * 60;
+  ['n0','n1','n2','n3'].forEach(n => g(n).classList.remove('on'));
+  g('bsSay').textContent = mode === 'batch' ? 'Orders arrive all day, but the pipeline only runs at 02:00. Data waits in the landing folder.' : 'Compute stays on. Each new batch of orders flows through within seconds.';
+  timer = setInterval(() => {
+    if (my !== run) return;
+    t += 15; const hourOfDay = Math.floor(t / 60) % 24;
+    if (t % 45 === 0) {
+      if (mode === 'stream') { flow(); lastFresh = t; ['n1','n2','n3'].forEach(n => g(n).classList.add('on')); hours += .75 / 60 * 45 / .75 / 60; }
+      else pending++;
+    }
+    if (mode === 'stream') hours = (t - 8 * 60) / 60;
+    if (mode === 'batch' && hourOfDay === 2 && t % 60 === 0) {
+      ['n1','n2','n3'].forEach(n => g(n).classList.add('on')); flow(); pending = 0; lastFresh = t; hours += 0.3;
+      g('bsSay').textContent = '02:00: the pipeline starts, processes everything that piled up, then the compute shuts down.';
+      setTimeout(() => ['n1','n2','n3'].forEach(n => g(n).classList.remove('on')), 1500);
+    }
+    badge();
+    g('bsClock').textContent = hhmm(t);
+    g('bsCompute').textContent = mode === 'stream' ? 'on (24/7)' : (hourOfDay === 2 ? 'on (run)' : 'off');
+    const age = Math.max(0, t - lastFresh); g('bsFresh').textContent = mode === 'stream' ? 'seconds' : (age >= 60 ? Math.floor(age / 60) + ' h old' : age + ' min old');
+    g('bsHours').textContent = hours.toFixed(1);
+    if (t >= 8 * 60 + 24 * 60) { clearInterval(timer); g('bsSay').textContent += mode === 'batch' ? ' Day done: about 0.3 compute hours, data up to a day old.' : ' Day done: 24 compute hours, data always fresh.'; }
+  }, 110);
+}
+document.querySelectorAll('#bs [data-m]').forEach(b => b.onclick = () => { mode = b.dataset.m; document.querySelectorAll('#bs [data-m]').forEach(x => x.setAttribute('aria-pressed', x === b)); start(); });
+new IntersectionObserver((es, o) => es.forEach(e => { if (e.isIntersecting) { start(); o.disconnect(); } })).observe(g('bs'));
+const EX = {
+  warn:['expect: keep the rows, count the problem','All 1,000 rows land in silver, including 23 with bad amounts. The pipeline UI shows "23 failed positive_amount". Good while you investigate a new source.',1000,23,'Rows written: 1,000 · flagged: 23'],
+  drop:['expect_or_drop: drop bad rows, keep going','977 good rows land in silver; the 23 bad ones are dropped and counted. Pair it with a quarantine table if someone needs to fix them.',977,0,'Rows written: 977 · dropped: 23'],
+  fail:['expect_or_fail: stop everything','The update fails at the first bad row and nothing is written. Use it for rules that must never be broken, like a missing primary key in a finance table.',0,0,'Rows written: 0 · update failed ⛔']
+};
+document.querySelectorAll('#exp [data-x]').forEach(b => b.onclick = () => {
+  document.querySelectorAll('#exp [data-x]').forEach(x => x.setAttribute('aria-pressed', x === b));
+  const [t1, d, ok, bad, m] = EX[b.dataset.x]; g('exT').textContent = t1; g('exD').textContent = d; g('exM').textContent = m;
+  g('exOk').style.width = (ok - bad) / 10 + '%'; g('exBad').style.width = bad / 10 + '%';
+});
+document.querySelector('#exp [data-x="warn"]').click();
+})();
+/* ---- ch11-streaming.html ---- */
+(function(){
+// rides in window 10:00-10:05: [event minute, arrival minute]
+const E = [[1, 1], [2, 2], [3, 3.5], [4, 6], [2, 9], [4, 14]];
+const span = 18, X = m => 4 + (m / span) * 92;
+const g = id => document.getElementById(id);
+function draw(){
+  const d = +g('wmR').value, close = 5 + d;
+  g('wmV').textContent = d + (d === 1 ? ' minute' : ' minutes');
+  let html = '<div class="ax"></div>' + [0, 3, 6, 9, 12, 15, 18].map(m => `<span class="tk" style="left:${X(m)}%">10:${String(m).padStart(2, '0')}</span>`).join('');
+  html += `<div class="win" style="left:${X(0)}%;width:${X(5) - X(0)}%"></div><div class="wait" style="left:${X(5)}%;width:${X(close) - X(5)}%"></div>`;
+  let n = 0;
+  E.forEach(([ev, arr], i) => { const ok = arr <= close; if (ok) n++; html += `<div class="ev ${ok ? 'in' : 'late'}" style="left:${X(arr)}%;top:${16 + (i % 3) * 34}px" title="happened 10:0${ev}, arrived 10:${String(Math.floor(arr)).padStart(2, '0')}">${ok ? '✓' : '✗'}</div>`; });
+  g('wmT').innerHTML = html;
+  g('wmC').textContent = `${n} of 6`;
+  g('wmP').textContent = `10:${String(close).padStart(2, '0')}`;
+  g('wmS').textContent = d <= 2 ? 'small' : d <= 8 ? 'medium' : 'large';
+  g('wmSay').textContent = n === 6 ? `Every ride counted, but the answer waits until 10:${String(close).padStart(2, '0')} and Spark holds the window in memory longer. Fine for a daily report, slow for a live map.`
+    : d === 0 ? 'No waiting: the result is instant, but every late ride is lost. Fast and incomplete.'
+    : `A balance: ${6 - n} very late ride${6 - n > 1 ? 's are' : ' is'} dropped, and results arrive ${d} minute${d > 1 ? 's' : ''} after the window ends.`;
+}
+g('wmR').oninput = draw; draw();
+})();
+/* ---- ch12-orchestration.html ---- */
+(function(){
+const g = id => document.getElementById(id);
+const T = k => document.querySelector(`#dag [data-k="${k}"]`);
+const set = (k, cls, st) => { const t = T(k); t.className = 'dg-t ' + cls; t.dataset.st = st; };
+const log = s => { const li = document.createElement('li'); li.innerHTML = s; g('dgLog').appendChild(li); g('dgLog').scrollTop = 1e6; };
+let run = 0, failedOnce = false, mins = 0;
+async function task(k, my, dur = 900){
+  set(k, 'run', 'running…'); await sleep(dur); if (my !== run) throw 0;
+  const flaky = k === 'customers' && g('dgFail').checked && !failedOnce;
+  if (flaky) { failedOnce = true; return false; }
+  set(k, 'ok', 'succeeded'); mins += 4; return true;
+}
+async function withRetry(k, my){
+  const max = +g('dgRetry').value;
+  for (let a = 0; a <= max; a++) {
+    const ok = await task(k, my); if (ok) { if (a) log(`🔁 <b>${k === 'customers' ? 'clean_customers' : k}</b> succeeded on retry ${a}.`); return true; }
+    set(k, 'bad', a < max ? 'failed, retrying' : 'failed'); log(`❌ <b>clean_customers</b> failed: network timeout reading the source.${a < max ? ' Retrying in 1 minute…' : ''}`);
+    await sleep(700); if (my !== run) throw 0;
+  }
+  return false;
+}
+async function downstream(my){
+  log('▶ <b>build_gold</b> starts: both clean tasks are done.'); await task('gold', my);
+  log('▶ <b>refresh_dashboard</b> starts.'); await task('dash', my);
+  log(`✅ <b>Job succeeded.</b> About ${mins} compute-minutes used.`);
+}
+g('dgRun').onclick = async function(){
+  const my = ++run; failedOnce = false; mins = 0; g('dgLog').innerHTML = ''; g('dgRepair').disabled = true; this.disabled = true;
+  ['ingest','orders','customers','gold','dash'].forEach(k => set(k, '', 'pending'));
+  try {
+    log('⏰ Trigger fired: new files arrived in the landing folder.'); await task('ingest', my); log('✅ <b>ingest</b> succeeded.');
+    log('▶ <b>clean_orders</b> and <b>clean_customers</b> run in parallel.');
+    const [a, b] = await Promise.all([task('orders', my), withRetry('customers', my)]);
+    if (!b) { set('gold', 'skip', 'upstream failed'); set('dash', 'skip', 'upstream failed'); log('⛔ <b>Run failed.</b> Downstream tasks were skipped. Fix the cause, then press <b>Repair run</b>: only the failed task and its dependants rerun.'); g('dgRepair').disabled = false; }
+    else await downstream(my);
+  } catch (e) {}
+  if (my === run) this.disabled = false;
+};
+g('dgRepair').onclick = async function(){
+  const my = ++run; this.disabled = true; g('dgRun').disabled = true; mins = 0;
+  try {
+    log('🔧 <b>Repair run:</b> ingest and clean_orders keep their results. Rerunning clean_customers, build_gold, refresh_dashboard.');
+    set('gold', '', 'pending'); set('dash', '', 'pending');
+    await task('customers', my); log('✅ <b>clean_customers</b> succeeded this time.'); await downstream(my);
+    log('💡 The repair reused 2 successful tasks instead of recomputing them.');
+  } catch (e) {}
+  if (my === run) g('dgRun').disabled = false;
+};
+['ingest','orders','customers','gold','dash'].forEach(k => set(k, '', 'pending'));
+})();
+/* ---- ch13-unity.html ---- */
+(function(){
+const TREE = [
+  ['prod', 0, 'catalog'], ['prod.bronze', 1, 'schema'], ['prod.bronze.orders_raw', 2, 'table'], ['prod.silver', 1, 'schema'], ['prod.silver.orders', 2, 'table'],
+  ['prod.gold', 1, 'schema'], ['prod.gold.daily_sales', 2, 'table'], ['prod.gold.customers', 2, 'table'], ['dev', 0, 'catalog'], ['dev.sandbox', 1, 'schema']
+];
+// access: 'rw' read+write, 'r' read, 'r*' read with masking, '' none
+const ACC = {
+  eng: {'prod':'r','prod.bronze':'rw','prod.bronze.orders_raw':'rw','prod.silver':'rw','prod.silver.orders':'rw','prod.gold':'rw','prod.gold.daily_sales':'rw','prod.gold.customers':'rw','dev':'rw','dev.sandbox':'rw'},
+  ana: {'prod':'r','prod.gold':'r','prod.gold.daily_sales':'r','prod.gold.customers':'r*','dev':'r','dev.sandbox':'rw'},
+  fin: {'prod':'r','prod.gold':'r','prod.gold.daily_sales':'r'},
+  job: {'prod':'r','prod.bronze':'rw','prod.bronze.orders_raw':'rw','prod.silver':'rw','prod.silver.orders':'rw','prod.gold':'rw','prod.gold.daily_sales':'rw','prod.gold.customers':'rw'},
+  partner: {'prod.gold.daily_sales':'s'}
+};
+const WHO = {eng:'`data_engineers`', ana:'`analysts`', fin:'`finance`', job:'`nightly-job`', partner:'recipient `acme_partner`'};
+const PREV = {
+  'prod.gold.daily_sales':[['order_date','city','sales'],[['2026-11-02','Mumbai','2480.00'],['2026-11-02','Pune','1250.00'],['2026-11-03','Pune','720.00']]],
+  'prod.gold.customers':[['id','name','email','tier'],[['1','Asha','asha@example.com','Gold'],['2','Ben','ben@example.com','Gold'],['7','Gita','gita@example.com','Bronze']]],
+  'prod.silver.orders':[['order_id','city','amount'],[['1001','Pune','1250.00'],['1002','Mumbai','980.00'],['1005','Mumbai','1500.00']]],
+  'prod.bronze.orders_raw':[['order_id','city','amount'],[['1001','pune','1,250'],['1002',' Mumbai ','980'],['1002',' Mumbai ','980']]]
+};
+const LIN = {'prod.gold.daily_sales':'Lineage: landing files → bronze.orders_raw → silver.orders → <b>gold.daily_sales</b> → "Sales overview" dashboard, Power BI report',
+  'prod.gold.customers':'Lineage: CRM (Lakeflow Connect) → bronze.customers_raw → silver.customers → <b>gold.customers</b> → churn model',
+  'prod.silver.orders':'Lineage: bronze.orders_raw → <b>silver.orders</b> → gold.daily_sales', 'prod.bronze.orders_raw':'Lineage: Auto Loader from /Volumes/main/landing/orders/ → <b>bronze.orders_raw</b>'};
+let who = 'eng', sel = 'prod.gold.customers';
+const g = id => document.getElementById(id);
+const level = (w, p) => ACC[w][p] || '';
+function tree(){
+  g('ucTree').innerHTML = TREE.map(([p, d, kind]) => { const a = level(who, p); const ic = kind === 'catalog' ? '📚' : kind === 'schema' ? '📁' : '🧾';
+    return `<li class="d${d}"><button role="treeitem" data-p="${p}" aria-selected="${p === sel}" class="${a ? '' : 'no'}">${ic} ${p.split('.').pop()}<span class="lock">${a === 'rw' ? '✏️' : a === 'r' || a === 'r*' ? '👁️' : a === 's' ? '🤝' : '🔒'}</span></button></li>`; }).join('');
+  g('ucTree').querySelectorAll('button').forEach(b => b.onclick = () => { sel = b.dataset.p; tree(); info(); });
+}
+function info(){
+  const a = level(who, sel), kind = TREE.find(t => t[0] === sel)[2];
+  g('ucPath').textContent = kind; g('ucName').textContent = sel;
+  const msg = {rw:'✏️ Can read and modify', r:'👁️ Can read', 'r*':'👁️ Can read, but the email column is masked', s:'🤝 Can read through a share (read-only, live)', '':'🔒 No access: this object is invisible to you'}[a];
+  g('ucAccess').textContent = msg; g('ucAccess').style.color = a ? '#7ee787' : '#ff7b72';
+  const pv = PREV[sel];
+  g('ucPreview').innerHTML = pv && a ? `<table class="uc-prev"><thead><tr>${pv[0].map(h => `<th>${h}</th>`).join('')}</tr></thead><tbody>${pv[1].map(r => `<tr>${r.map((c, i) => `<td>${a === 'r*' && pv[0][i] === 'email' ? '***' : c}</td>`).join('')}</tr>`).join('')}</tbody></table>` : (kind === 'table' && !a ? '<p class="muted">Query error: table not found or permission denied.</p>' : '');
+  const q = kind === 'catalog' ? `GRANT USE CATALOG ON CATALOG ${sel} TO ${WHO[who]};` : kind === 'schema' ? `GRANT USE SCHEMA, SELECT ON SCHEMA ${sel} TO ${WHO[who]};` : `GRANT SELECT ON TABLE ${sel} TO ${WHO[who]};`;
+  g('ucSql').textContent = who === 'partner' ? `CREATE SHARE IF NOT EXISTS partner_share;\nALTER SHARE partner_share ADD TABLE prod.gold.daily_sales;\nGRANT SELECT ON SHARE partner_share TO RECIPIENT acme_partner;` : (a ? '-- already granted, for example:\n' : '-- to grant access:\n') + q;
+  g('ucLin').innerHTML = LIN[sel] || '';
+}
+document.querySelectorAll('#ucWho [data-w]').forEach(b => b.onclick = () => { who = b.dataset.w; document.querySelectorAll('#ucWho [data-w]').forEach(x => x.setAttribute('aria-pressed', x === b)); tree(); info(); });
+g('ucCopy').onclick = async function(){ try { await navigator.clipboard.writeText(g('ucSql').textContent); this.textContent = 'Copied ✓'; } catch (e) { this.textContent = 'Select & copy'; } setTimeout(() => this.textContent = 'Copy', 1500); };
+tree(); info();
+})();
+/* ---- ch14-sql.html ---- */
+(function(){
+const g = id => document.getElementById(id);
+let type = 'sl';
+function draw(){
+  const u = +g('ruU').value, mx = +g('ruM').value; g('ruUv').textContent = u; g('ruMv').textContent = mx;
+  const need = Math.ceil(u / 10), cl = Math.min(need, mx), queued = Math.max(0, u - cl * 10);
+  const boot = type === 'sl' ? 4 : 240;
+  const wait = boot + (queued ? Math.ceil(queued / (cl * 10)) * 3 : 0) + 1;
+  g('ruWh').innerHTML = Array.from({length:cl}, (_, i) => `<div class="ru-cl ${type === 'cl' ? 'boot' : ''}">cluster ${i + 1}<br>${type === 'cl' ? 'booting…' : 'ready'}</div>`).join('') + (queued ? `<div class="ru-q" title="queued queries">${'<i></i>'.repeat(Math.min(queued, 120))}</div>` : '');
+  g('ruC').textContent = `${cl} of ${mx}`; g('ruQ').textContent = queued;
+  g('ruW').textContent = wait >= 60 ? `~${Math.round(wait / 60)} min` : `~${wait} s`;
+  const v = type === 'cl' ? '😴 Slow start' : queued ? '⏳ Queuing' : '✅ Snappy';
+  g('ruV').textContent = v;
+}
+['ruU','ruM'].forEach(i => g(i).oninput = draw);
+document.querySelectorAll('#rush [data-t]').forEach(b => b.onclick = () => { type = b.dataset.t; document.querySelectorAll('#rush [data-t]').forEach(x => x.setAttribute('aria-pressed', x === b)); draw(); });
+draw();
 })();
 </script>
 </body>
