@@ -1,0 +1,1590 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Inside the Lakehouse: Azure Databricks, from First Notebook to Architect</title>
+<meta name="description" content="An interactive magazine that takes data engineers and architects from 'What is Databricks?' to designing production lakehouse architectures on Azure, with the real data center behind every chapter.">
+<meta property="og:title" content="Inside the Lakehouse: Azure Databricks, from First Notebook to Architect">
+<meta property="og:description" content="Azure Databricks from basics to architect, as an interactive magazine.">
+<meta property="og:type" content="article">
+<meta name="theme-color" content="#0a1628">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============ TOKENS ============ */
+:root{
+  --paper:#f3f6f8; --paper-2:#e6edf2; --ink:#14161a; --ink-2:#3c414a; --muted:#6b7280;
+  --night:#0a1628; --night-2:#0f1f36; --night-3:#18304f; --line:#cfd9e2; --line-dark:#24405f;
+  --accent:#0d9488;
+  --serif:"Fraunces", Georgia, "Times New Roman", serif;
+  --sans:"Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --w-text:40rem; --w-wide:72rem; --gutter:clamp(16px,4vw,40px);
+  --radius:14px; --shadow:0 10px 30px rgba(0,0,0,.12);
+  --ok:#22c55e; --bad:#ef4444; --warn:#f59e0b;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 clamp(17px,1.05vw + 12px,19.5px)/1.65 var(--sans);overflow-x:hidden}
+img,svg,canvas{max-width:100%;display:block}
+a{color:inherit}
+h1,h2,h3,h4{font-family:var(--serif);line-height:1.08;margin:0 0 .4em;letter-spacing:-.01em}
+h2{font-size:clamp(2rem,4.2vw,3.4rem);font-weight:800}
+h3{font-size:clamp(1.4rem,2.4vw,2rem);font-weight:800}
+h4{font-size:1.15rem;font-family:var(--sans);font-weight:700;letter-spacing:0}
+p{margin:0 0 1em}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:4px}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ============ TOP BAR, PROGRESS, MENU ============ */
+.topbar{position:fixed;inset:0 0 auto 0;z-index:50;height:56px;display:flex;align-items:center;gap:12px;padding:0 var(--gutter);
+  background:rgba(10,22,40,.85);backdrop-filter:saturate(1.4) blur(10px);-webkit-backdrop-filter:saturate(1.4) blur(10px);color:#fff;
+  transition:background .35s ease}
+.topbar.top{background:linear-gradient(180deg,rgba(0,0,0,.45),rgba(0,0,0,0));backdrop-filter:none;-webkit-backdrop-filter:none}
+.topbar.top .now{visibility:hidden}
+.lib-link{display:inline-flex;align-items:center;gap:4px;font-size:.78rem;font-weight:600;color:#c9d1d9;text-decoration:none;border-right:1px solid rgba(255,255,255,.2);padding-right:12px;white-space:nowrap}
+.lib-link:hover{color:#fff}
+@media(max-width:480px){.lib-link span{display:none}.lib-link{padding-right:8px}}
+.topbar .brand{font-family:var(--serif);font-weight:800;font-size:1.05rem;white-space:nowrap;text-decoration:none}
+.topbar .brand b{color:var(--accent)}
+.topbar .now{flex:1;min-width:0;font-size:.85rem;color:#c9d1d9;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.topbar .now span{color:var(--accent);font-weight:700;margin-right:.4em}
+.menu-btn{border:1px solid rgba(255,255,255,.25);background:transparent;border-radius:999px;padding:6px 14px;font-size:.85rem;font-weight:600;display:flex;gap:8px;align-items:center}
+.menu-btn:hover{background:rgba(255,255,255,.1)}
+.progress{position:absolute;left:0;bottom:-3px;height:3px;width:100%;background:transparent}
+.progress i{display:block;height:100%;width:0;background:var(--accent);transition:background .4s}
+.menu{position:fixed;inset:0;z-index:60;background:rgba(10,22,40,.97);color:#fff;display:none;overflow:auto;padding:80px var(--gutter) 40px}
+.menu.open{display:block}
+.menu ol{list-style:none;margin:0 auto;padding:0;max-width:44rem;counter-reset:c}
+.menu li a{display:flex;gap:16px;align-items:baseline;padding:14px 4px;border-bottom:1px solid #30363d;text-decoration:none;font-family:var(--serif);font-size:clamp(1.15rem,2.4vw,1.6rem);font-weight:600}
+.menu li a small{font-family:var(--sans);font-size:.8rem;color:var(--c);font-weight:700;min-width:2.2em}
+.menu li a:hover{color:var(--c)}
+.menu .close{position:fixed;top:12px;right:var(--gutter);background:none;border:1px solid #555;border-radius:999px;color:#fff;padding:6px 14px}
+.to-top{position:fixed;right:18px;bottom:18px;z-index:40;width:48px;height:48px;border-radius:50%;border:0;background:var(--night);color:#fff;
+  box-shadow:var(--shadow);opacity:0;pointer-events:none;transform:translateY(10px);transition:.3s;display:grid;place-items:center}
+.to-top.show{opacity:1;pointer-events:auto;transform:none}
+.to-top:hover{background:var(--accent)}
+
+/* ============ LAYOUT PRIMITIVES ============ */
+.chapter{position:relative}
+.wrap{max-width:var(--w-wide);margin:0 auto;padding:0 var(--gutter)}
+.text{max-width:var(--w-text);margin:0 auto;padding:0 var(--gutter)}
+.section{padding:clamp(56px,9vw,120px) 0}
+.section.tight{padding:clamp(36px,6vw,72px) 0}
+.dark{background:var(--night);color:#e6edf3}
+.dark .muted,.dark figcaption{color:#9aa4af}
+.tint{background:var(--paper-2)}
+.kicker{font:700 .78rem/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin:0 0 14px;display:block}
+.lead{font-size:1.18em;line-height:1.55;color:var(--ink-2)}
+.dark .lead{color:#c9d1d9}
+.muted{color:var(--muted)}
+.center{text-align:center}
+
+/* Hero */
+.hero{position:relative;min-height:100svh;display:flex;align-items:flex-end;color:#fff;overflow:hidden;background:#000}
+.hero>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(1.04);transition:transform 6s ease-out}
+.hero.in>img{transform:none}
+#ch1 .hero>img{object-position:55% 78%}#ch4 .hero>img{object-position:28% 50%}#ch11 .hero>img{object-position:50% 85%}
+#ch12 .hero>img{object-position:50% 70%}#ch5 .hero>img{object-position:30% 50%}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.15) 0%,rgba(0,0,0,.05) 30%,rgba(0,0,0,.55) 62%,rgba(0,0,0,.88) 100%)}
+.hero .hero-in{position:relative;z-index:2;width:100%;max-width:var(--w-wide);margin:0 auto;padding:0 var(--gutter) clamp(48px,9vh,96px)}
+.hero .num{font:800 clamp(4rem,12vw,9rem)/.8 var(--serif);color:var(--accent);opacity:.95;display:block;margin-bottom:.12em;text-shadow:0 4px 30px rgba(0,0,0,.4)}
+.hero h2{font-size:clamp(2.5rem,7vw,5.6rem);max-width:15ch;text-shadow:0 2px 24px rgba(0,0,0,.45)}
+.hero .dek{font-size:clamp(1.05rem,1.6vw,1.35rem);max-width:36rem;color:#e8e8e8;text-shadow:0 1px 12px rgba(0,0,0,.6)}
+.hero .credit{position:absolute;right:12px;bottom:10px;z-index:3;font-size:.68rem;color:rgba(255,255,255,.7);max-width:60%;text-align:right}
+@media(max-width:700px){.hero .credit,.overlay .credit{left:16px;right:80px;max-width:none;text-align:left}}
+.hero .credit a{color:inherit}
+
+/* Hook */
+.hook{font-family:var(--serif);font-size:clamp(1.5rem,3vw,2.3rem);line-height:1.25;font-weight:600;max-width:34ch;margin:0 auto .6em;padding:0 var(--gutter)}
+.hook::first-letter{color:var(--accent)}
+
+/* Figures */
+figure{margin:0}
+figure img{width:100%;height:auto;border-radius:var(--radius);background:#ddd}
+figcaption{font-size:.74rem;line-height:1.4;color:var(--muted);margin-top:8px}
+figcaption a{color:inherit}
+figcaption b{color:var(--ink-2);font-weight:600}
+.dark figcaption b{color:#c9d1d9}
+
+/* Split */
+.split{display:grid;gap:clamp(24px,4vw,64px);align-items:center;grid-template-columns:1fr}
+@media(min-width:860px){.split{grid-template-columns:1.15fr 1fr}.split.rev>figure,.split.rev>.media{order:2}.split.even{grid-template-columns:1fr 1fr}}
+.split .copy{max-width:34rem}
+
+/* Full-bleed photo with overlay card */
+.overlay{position:relative;min-height:88svh;display:flex;align-items:center;overflow:hidden;color:#fff;background:#000}
+.overlay>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.overlay::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.78) 0%,rgba(0,0,0,.45) 55%,rgba(0,0,0,.1) 100%)}
+.overlay .card{position:relative;z-index:2;max-width:30rem;margin:0 var(--gutter);padding:clamp(22px,3vw,36px);background:rgba(10,12,16,.6);
+  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border-left:4px solid var(--accent);border-radius:6px}
+@media(min-width:1100px){.overlay .card{margin-left:calc((100vw - var(--w-wide))/2 + var(--gutter))}}
+.overlay .credit{position:absolute;right:12px;bottom:10px;z-index:3;font-size:.68rem;color:rgba(255,255,255,.75);text-align:right;max-width:70%}
+.overlay .credit a{color:inherit}
+
+/* Stats */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:clamp(16px,3vw,32px);margin:0 auto}
+.stat{border-top:3px solid var(--accent);padding-top:14px}
+.stat .n{font:800 clamp(2.4rem,4.2vw,3.6rem)/1 var(--serif);white-space:nowrap;color:var(--accent);display:block;letter-spacing:-.02em}
+.stat .l{display:block;font-size:.95rem;color:var(--ink-2);margin-top:8px;max-width:22ch}
+.dark .stat .l{color:#c9d1d9}
+.stat .src{display:block;font-size:.7rem;color:var(--muted);margin-top:6px}
+.bignum{text-align:center;padding:clamp(48px,8vw,96px) var(--gutter)}
+.bignum .n{font:800 clamp(4.5rem,15vw,11rem)/.9 var(--serif);color:var(--accent);display:block;letter-spacing:-.03em}
+.bignum .l{font-size:clamp(1.05rem,2vw,1.4rem);max-width:30ch;margin:14px auto 0;display:block}
+.bignum .src{display:block;font-size:.72rem;color:var(--muted);margin-top:10px}
+
+/* Pull quote + Did you know + Real life */
+.pull{font:600 clamp(1.6rem,3.4vw,2.6rem)/1.2 var(--serif);max-width:24ch;margin:0 auto;text-align:center;padding:0 var(--gutter)}
+.pull::before{content:"\201C";display:block;font-size:2.4em;line-height:.6;color:var(--accent)}
+.dyk{max-width:var(--w-text);margin:2em auto;padding:22px 24px 18px;border-radius:var(--radius);background:#fff;border:1px solid var(--line);position:relative}
+.dark .dyk{background:var(--night-2);border-color:var(--line-dark)}
+.dyk::before{content:"Did you know?";position:absolute;top:-12px;left:18px;background:var(--accent);color:#fff;font:700 .72rem/1 var(--sans);letter-spacing:.1em;text-transform:uppercase;padding:6px 10px;border-radius:999px}
+.dyk p:last-child{margin:0}
+.reallife{max-width:var(--w-text);margin:2em auto;padding:18px 22px;border-radius:var(--radius);background:linear-gradient(135deg,#1b1030,#0d1117);color:#e6edf3;border:1px solid #3b2a5c}
+.reallife b.tag{display:inline-block;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:#f0abfc;margin-bottom:6px}
+.reallife p:last-child{margin:0}
+.reallife a{color:#f0abfc}
+
+/* Cards grid */
+.cards{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.card2{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:20px}
+.dark .card2{background:var(--night-2);border-color:var(--line-dark)}
+.card2 h4{margin:.2em 0 .4em}
+.card2 .ic{font-size:1.8rem;line-height:1}
+.card2 p:last-child{margin:0}
+
+/* Steps (numbered list) */
+.steps{list-style:none;padding:0;margin:0;counter-reset:s}
+.steps li{position:relative;padding:0 0 18px 52px;counter-increment:s}
+.steps li::before{content:counter(s);position:absolute;left:0;top:-2px;width:36px;height:36px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center;font-weight:700;font-size:.95rem}
+.steps li::after{content:"";position:absolute;left:17px;top:38px;bottom:4px;width:2px;background:var(--line)}
+.steps li:last-child::after{display:none}
+
+/* Recap + teaser */
+.recap{max-width:var(--w-text);margin:0 auto;padding:28px;border-radius:var(--radius);background:var(--night);color:#e6edf3;border-top:6px solid var(--accent)}
+.recap h3{color:#fff;font-size:1.5rem}
+.recap ul{margin:0 0 0 1.1em;padding:0}
+.recap li{margin:.35em 0}
+.teaser{max-width:var(--w-text);margin:28px auto 0;padding:0 var(--gutter);font-family:var(--serif);font-size:1.3rem;font-style:italic;text-align:center;color:var(--ink-2)}
+.teaser a{color:var(--accent);font-style:normal;font-family:var(--sans);font-weight:700;font-size:1rem;display:inline-block;margin-top:8px;text-decoration:none}
+
+/* Interactive shell */
+.lab{max-width:var(--w-wide);margin:0 auto;background:var(--night);color:#e6edf3;border-radius:20px;padding:clamp(18px,3vw,36px);box-shadow:0 20px 50px rgba(0,0,0,.25);position:relative}
+.lab-head{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between;margin-bottom:18px}
+.lab-head h3{margin:0;color:#fff;font-size:clamp(1.3rem,2.2vw,1.8rem)}
+.lab .tag{font:700 .7rem/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:6px}
+.lab p{color:#c9d1d9}
+.btn{border:0;border-radius:999px;padding:11px 20px;font-weight:700;background:var(--accent);color:#fff;transition:transform .15s,filter .15s;min-height:44px}
+.btn:hover{filter:brightness(1.1)}.btn:active{transform:scale(.97)}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.btn.ghost{background:transparent;border:1px solid #484f58;color:#e6edf3}
+.seg{display:inline-flex;background:var(--night-3);border-radius:18px;padding:4px;gap:4px;flex-wrap:wrap}
+.seg button{border:0;background:transparent;color:#c9d1d9;padding:8px 14px;border-radius:999px;font-weight:600;font-size:.9rem;min-height:40px}
+.seg button[aria-pressed="true"],.seg button[aria-selected="true"]{background:var(--accent);color:#fff}
+.panel{background:var(--night-2);border:1px solid var(--line-dark);border-radius:12px;padding:16px 18px}
+.panel h4{color:#fff;margin:0 0 .3em}
+.panel p:last-child{margin:0}
+input[type=range]{width:100%;accent-color:var(--accent);height:32px}
+.meter{height:12px;border-radius:999px;background:var(--night-3);overflow:hidden}
+.meter i{display:block;height:100%;width:0;background:var(--accent);transition:width .3s}
+
+/* Glossary terms */
+.term{background:none;border:0;padding:0;font:inherit;color:inherit;text-decoration:underline;text-decoration-style:dotted;text-decoration-color:var(--accent);
+  text-decoration-thickness:2px;text-underline-offset:4px;cursor:help}
+.term:hover{color:var(--accent)}
+.tip{position:absolute;z-index:70;max-width:min(320px,calc(100vw - 32px));background:#111;color:#f0f0f0;border-radius:10px;padding:12px 14px;font-size:.9rem;line-height:1.45;
+  box-shadow:0 12px 30px rgba(0,0,0,.35);border-top:3px solid var(--accent);opacity:0;transform:translateY(4px);transition:opacity .15s,transform .15s;pointer-events:none}
+.tip.show{opacity:1;transform:none;pointer-events:auto}
+.tip b{display:block;color:#fff;margin-bottom:3px;font-size:.95rem}
+
+/* Quiz */
+.quiz{max-width:var(--w-text);margin:0 auto;padding:0 var(--gutter)}
+.quiz-card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:22px;margin-bottom:16px}
+.quiz-card .qn{font:700 .72rem/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+.quiz-card h4{font-family:var(--serif);font-size:1.25rem;margin:.5em 0 .8em}
+.quiz-card .opts{display:grid;gap:8px}
+.quiz-card .opt{text-align:left;border:1.5px solid var(--line);background:var(--paper);border-radius:10px;padding:12px 14px;font-size:.98rem;min-height:44px;transition:.15s}
+.quiz-card .opt:hover:not([disabled]){border-color:var(--accent)}
+.quiz-card .opt.right{border-color:var(--ok);background:#e9f9ef}
+.quiz-card .opt.wrong{border-color:var(--bad);background:#fdecec}
+.quiz-card .opt[disabled]{cursor:default}
+.quiz-card .why{margin:12px 0 0;font-size:.95rem;display:none}
+.quiz-card.done .why{display:block}
+.quiz-score{text-align:center;font-weight:700;margin:6px 0 0;min-height:1.5em}
+
+/* Reveal */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .8s ease,transform .8s ease}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none}}
+
+/* Table */
+.tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:12px}
+table.cmp{width:100%;border-collapse:collapse;font-size:.92rem;min-width:680px}
+table.cmp th,table.cmp td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--line-dark);vertical-align:top}
+table.cmp th{font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;color:#9aa4af;position:sticky;top:0;background:var(--night)}
+table.cmp td:first-child{font-weight:700;color:#fff;white-space:nowrap}
+@media(max-width:700px){
+  table.cmp{min-width:0}
+  table.cmp thead{display:none}
+  table.cmp tr{display:block;border:1px solid var(--line-dark);border-radius:12px;margin-bottom:12px;padding:6px 0}
+  table.cmp td{display:block;border:0;padding:6px 14px}
+  table.cmp td::before{content:attr(data-h);display:block;font-size:.66rem;text-transform:uppercase;letter-spacing:.1em;color:#9aa4af}
+  table.cmp td:first-child{font-size:1.1rem;white-space:normal}
+  table.cmp td:first-child::before{display:none}
+}
+
+/* Footer-ish */
+.credits-list{columns:1;font-size:.82rem;line-height:1.5;padding-left:1.2em}
+@media(min-width:800px){.credits-list{columns:2;column-gap:40px}}
+.credits-list li{break-inside:avoid;margin-bottom:10px}
+.glossary{display:grid;gap:10px 30px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));font-size:.92rem}
+.glossary dt{font-weight:700}
+.glossary dd{margin:0 0 10px;color:var(--ink-2)}
+
+/* Cover */
+.cover{min-height:100svh}
+.cover .hero-in{padding-bottom:clamp(40px,8vh,80px)}
+.cover h1{font-size:clamp(3rem,9vw,7.5rem);line-height:.95;margin:0 0 .25em;text-shadow:0 2px 30px rgba(0,0,0,.5);max-width:12ch}
+.cover h1 em{font-style:normal;color:var(--accent)}
+.scroll-cue{display:inline-flex;align-items:center;gap:10px;margin-top:18px;font-size:.85rem;color:#ddd;text-decoration:none}
+.scroll-cue i{width:22px;height:36px;border:2px solid #ddd;border-radius:12px;position:relative}
+.scroll-cue i::after{content:"";position:absolute;left:50%;top:6px;width:4px;height:8px;margin-left:-2px;background:#fff;border-radius:2px;animation:cue 1.6s infinite}
+@keyframes cue{0%{opacity:0;transform:translateY(0)}40%{opacity:1}100%{opacity:0;transform:translateY(12px)}}
+
+/* Level accents: b = Beginner (teal), i = Intermediate (blue), a = Advanced (violet) */
+[data-accent="b"]{--accent:#0f857a}[data-accent="i"]{--accent:#2563eb}[data-accent="a"]{--accent:#7c3aed}[data-accent="0"]{--accent:#0ea5e9}
+
+/* ============ LAKEHOUSE COMPONENTS ============ */
+.menu li a .lvl{margin-left:auto;font:700 .66rem var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--c);border:1px solid var(--c);border-radius:999px;padding:3px 8px;align-self:center}
+.level{display:inline-flex;align-items:center;gap:6px;font:700 .72rem/1 var(--sans);letter-spacing:.1em;text-transform:uppercase;background:var(--accent);color:#fff;border-radius:999px;padding:7px 12px;margin-bottom:14px}
+.level i{display:inline-flex;gap:3px}.level i b{width:6px;height:10px;border-radius:2px;background:rgba(255,255,255,.35)}.level i b.on{background:#fff}
+/* Inside the data center panel */
+.inside{max-width:var(--w-wide);margin:0 auto;border-radius:18px;color:#c9d1d9;position:relative;overflow:hidden;
+  background:radial-gradient(circle at 12px 12px,rgba(63,185,80,.16) 1.5px,transparent 2px) 0 0/24px 24px,linear-gradient(160deg,#05080c,#0b1118 60%,#071018);border:1px solid #1d2a36;box-shadow:inset 0 0 0 1px rgba(255,255,255,.02),0 20px 40px rgba(0,0,0,.25)}
+.inside-in{padding:clamp(18px,3vw,32px)}
+.in-head{display:flex;align-items:center;gap:10px;font:700 .74rem/1 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.16em;text-transform:uppercase;color:#7ee787}
+.in-head .led{width:9px;height:9px;border-radius:50%;background:#3fb950;box-shadow:0 0 10px #3fb950;animation:led 1.6s infinite}
+.in-head .rack-id{margin-left:auto;color:#6e7681;letter-spacing:.08em}
+@keyframes led{50%{opacity:.35}}
+.in-sum{font:600 clamp(1.05rem,1.6vw,1.25rem)/1.5 var(--sans);color:#e6edf3;margin:14px 0 16px;max-width:52rem}
+.in-btn{display:inline-flex;align-items:center;gap:8px;border:1px solid #2ea043;background:#0f2a18;color:#7ee787;border-radius:999px;padding:10px 18px;font:700 .9rem var(--sans);min-height:44px}
+.in-btn:hover{background:#13361f}
+.in-btn .chev{transition:transform .25s}.in-btn[aria-expanded="true"] .chev{transform:rotate(180deg)}
+.in-body{margin-top:22px;animation:pop .35s ease}
+.in-grid{display:grid;gap:22px;grid-template-columns:1fr;align-items:start}
+@media(min-width:900px){.in-grid{grid-template-columns:1fr 1.15fr}}
+.in-grid figure img,.in-grid figure svg{border-radius:12px;border:1px solid #1d2a36;width:100%;height:auto;display:block}
+.in-grid figcaption{color:#7d8590}
+.in-grid figcaption b{color:#9aa4af}
+.in-rows{margin:0;display:grid;gap:12px}
+.in-rows div{display:grid;grid-template-columns:26px 1fr;gap:10px;align-items:start}
+.in-rows dt{font:700 .7rem ui-monospace,Menlo,Consolas,monospace;color:#7ee787;letter-spacing:.06em;grid-column:2;text-transform:uppercase}
+.in-rows .ic{grid-row:1/3;font-size:1.15rem;line-height:1.2}
+.in-rows dd{margin:0;grid-column:2;font-size:.95rem;line-height:1.55;color:#c9d1d9}
+.in-rows .feel dd{font-family:var(--serif);font-style:italic;font-size:1.05rem;color:#e6edf3}
+.in-deeper{display:inline-flex;gap:8px;align-items:center;margin-top:20px;color:#0d1117;background:#7ee787;font-weight:700;text-decoration:none;border-radius:999px;padding:10px 18px;min-height:44px}
+.in-deeper:hover{background:#a5f3b5}
+.in-note{font-size:.75rem;color:#6e7681;margin:12px 0 0}
+/* Code blocks */
+.code{max-width:var(--w-text);margin:1.2em auto;border-radius:12px;overflow:hidden;background:#0b1020;border:1px solid #1e2a44}
+.wrap .code,.copy .code,.lab .code{max-width:none}
+.code-h{display:flex;justify-content:space-between;align-items:center;padding:6px 8px 6px 14px;background:#121a30;font:700 .7rem var(--sans);letter-spacing:.1em;text-transform:uppercase;color:#8fa3c7}
+.code-h button{border:1px solid #2b3b63;background:transparent;color:#c8d6f0;border-radius:8px;padding:6px 12px;font:600 .78rem var(--sans);min-height:34px}
+.code-h button:hover{background:#1b2746}.code-h button.done{color:#7ee787;border-color:#2ea043}
+.code pre{margin:0;padding:14px 16px;overflow-x:auto;font:400 .84rem/1.6 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:#e2e8f5;-webkit-overflow-scrolling:touch}
+.code .c{color:#7d8fb3;font-style:italic}.code .k{color:#ff9e64}.code .s{color:#9ece6a}.code .f{color:#7aa2f7}
+/* Learning path */
+.path{display:grid;gap:14px;grid-template-columns:1fr}
+@media(min-width:900px){.path{grid-template-columns:repeat(3,1fr)}}
+.track{border-radius:16px;padding:18px;background:var(--night-2);border:1px solid var(--line-dark);border-top:5px solid var(--accent)}
+.track h4{color:#fff;margin:0 0 4px;font-family:var(--serif);font-size:1.3rem}
+.track p{font-size:.88rem;color:#9fb3c8;margin:0 0 12px}
+.track ol{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.track a{display:flex;gap:10px;align-items:baseline;text-decoration:none;color:#e6edf3;padding:8px 10px;border-radius:10px;background:rgba(255,255,255,.03);font-size:.92rem}
+.track a:hover{background:color-mix(in srgb,var(--accent) 25%,transparent)}
+.track a small{color:var(--accent);font-weight:800;min-width:1.6em}
+.noc-score{font-weight:700;color:var(--accent)}
+.split>*,.cards>*,.persona-grid>*,.arch-grid>*,.in-grid>*{min-width:0}
+.code{max-width:min(var(--w-text),100%)}
+/* ============ CHAPTER-SPECIFIC CSS ============ */
+
+.persona-grid{display:grid;gap:14px;margin-top:16px;grid-template-columns:1fr}
+@media(min-width:800px){.persona-grid{grid-template-columns:1.2fr 1fr}}
+.persona-links{display:grid;gap:6px}
+.persona-links a{display:block;padding:9px 12px;border-radius:10px;background:var(--night-3);color:#e6edf3;text-decoration:none;font-size:.92rem}
+.persona-links a:hover{background:color-mix(in srgb,var(--accent) 35%,var(--night-3))}
+
+
+.lh-trio{display:grid;gap:14px;grid-template-columns:1fr}
+@media(min-width:900px){.lh-trio{grid-template-columns:repeat(3,1fr)}}
+.lh-card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px}
+.lh-card.hl{border:2px solid var(--accent);box-shadow:0 12px 30px rgba(15,133,122,.15)}
+.lh-ic{font-size:2rem}.lh-card h4{font-family:var(--serif);font-size:1.35rem;margin:.3em 0}
+.lh-card p{font-size:.95rem;color:var(--ink-2)}.lh-card ul{margin:0;padding:0;list-style:none;font-size:.9rem;display:grid;gap:4px}
+.lh-stack{width:100%;height:auto}.lh-stack .t{font:600 15px var(--sans);text-anchor:middle;fill:#14161a}.lh-stack .w{fill:#fff}
+@media(max-width:600px){.lh-stack .t{font-size:13px}}
+#sortQ .sq{background:var(--night-2);border:1px solid var(--line-dark);border-radius:12px;padding:16px;margin-bottom:12px}
+#sortQ h4{color:#fff;font-size:1rem;margin:0 0 10px}
+#sortQ .opts{display:flex;flex-wrap:wrap;gap:8px}
+#sortQ .opts button{border:1.5px solid var(--line-dark);background:var(--night);color:#e6edf3;border-radius:10px;padding:9px 14px;min-height:44px}
+#sortQ .opts button.right{border-color:#2ea043;background:#0f2a18}#sortQ .opts button.wrong{border-color:#ef4444;background:#2a1215}
+#sortQ .why{margin:10px 0 0;font-size:.9rem;color:#c9d1d9}
+
+
+.arch-grid{display:grid;gap:16px;grid-template-columns:1fr}
+@media(min-width:1000px){.arch-grid{grid-template-columns:1.7fr 1fr}}
+.arch-svg{width:100%;height:auto}
+.arch-svg text{fill:#c9d1d9;font:500 13px var(--sans);text-anchor:middle;pointer-events:none}
+.arch-svg text.h{font:800 12.5px var(--sans);letter-spacing:.06em;fill:#fff}
+.arch-svg text.s{font-size:11px;fill:#8fa3c7}
+.arch-svg .az{cursor:pointer;outline:none}
+.arch-svg .az>rect{fill:#0d1b2e;stroke:#24405f;stroke-width:2;transition:.2s}
+.arch-svg .az:hover>rect,.arch-svg .az:focus>rect{stroke:var(--accent)}
+.arch-svg .az.on>rect{fill:color-mix(in srgb,var(--accent) 22%,#0d1b2e);stroke:var(--accent);stroke-width:3}
+.arch-svg .sub rect,.arch-svg .vm rect{fill:#13284a;stroke:#2b4a77}
+.arch-svg .vnet{fill:none!important;stroke:#3b6aa3!important;stroke-dasharray:6 4}
+.arch-svg .st{fill:#0e3346!important;stroke:#0e7490!important}
+.arch-svg .link{fill:none;stroke:#e3b341;stroke-width:3;stroke-dasharray:6 5}
+.arch-svg .nd{fill:#2a2112;stroke:#e3b341;stroke-width:2}
+.arch-svg .az[data-z="network"].on .nd{fill:#e3b341}
+.arch-svg .ar{stroke:#8fa3c7;stroke-width:2;fill:none}.arch-svg .ar.dash{stroke-dasharray:5 4}
+.arch-info{min-height:260px}
+.arch-facts{display:grid;grid-template-columns:110px 1fr;gap:6px 10px;margin:10px 0 0;font-size:.88rem}
+.arch-facts dt{color:var(--accent);font-weight:700;font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;padding-top:2px}
+.arch-facts dd{margin:0;color:#c9d1d9}
+
+
+.hood-grid{display:grid;gap:16px;grid-template-columns:1fr}
+@media(min-width:960px){.hood-grid{grid-template-columns:1.4fr 1fr}}
+.hood-map{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.hood-map .hub{grid-column:2;grid-row:2;background:linear-gradient(135deg,#0f857a,#0e7490);border-radius:16px;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px;font-size:1.8rem;text-align:center;box-shadow:0 0 0 6px rgba(15,133,122,.2)}
+.hood-map .hub b,.hood-map button b{font:700 .9rem var(--sans);margin-top:4px}.hood-map small{font-size:.72rem;opacity:.8}
+.hood-map button{border:1.5px solid var(--line-dark);background:var(--night-2);color:#e6edf3;border-radius:14px;padding:12px 6px;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:1.5rem;min-height:96px}
+.hood-map button:hover{border-color:var(--accent)}
+.hood-map button[aria-pressed="true"]{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 25%,var(--night-2))}
+.hood-map button:nth-of-type(1){grid-column:1;grid-row:1}.hood-map button:nth-of-type(2){grid-column:2;grid-row:1}.hood-map button:nth-of-type(3){grid-column:3;grid-row:1}
+.hood-map button:nth-of-type(4){grid-column:1;grid-row:2}.hood-map button:nth-of-type(5){grid-column:3;grid-row:2}
+.hood-map button:nth-of-type(6){grid-column:1;grid-row:3}.hood-map button:nth-of-type(7){grid-column:2;grid-row:3}.hood-map button:nth-of-type(8){grid-column:3;grid-row:3}
+.hood-map button:nth-of-type(9){grid-column:1/-1;grid-row:4;flex-direction:row;justify-content:center;gap:10px;min-height:56px}
+@media(max-width:520px){.hood-map button{font-size:1.2rem;min-height:84px}.hood-map .hub b,.hood-map button b{font-size:.76rem}}
+.hood-info{min-height:220px}.hood-link{font-size:.88rem;color:#9fb3c8!important}
+
+
+.ch-q{margin-bottom:14px}.ch-q h4{color:#fff;margin:0 0 8px;font-size:1rem}
+.ch-out{margin-top:6px;border-color:var(--accent)}
+.ch-out h4{font-family:var(--serif);font-size:1.4rem;color:#fff}
+
+
+.sp-lab{display:block;font-size:.95rem;margin-bottom:2px}.sp-lab span{color:var(--accent);font-weight:800}
+.sp-stage{position:relative;display:grid;gap:12px;margin-top:10px}
+.sp-driver{display:flex;gap:12px;align-items:center;background:#1a1407;border:1.5px solid #e3b341;border-radius:12px;padding:10px 14px;font-size:.9rem;color:#f2d68c}
+.sp-driver b{color:#fff;white-space:nowrap}
+.sp-queue,.sp-done{display:flex;gap:8px;align-items:center;min-height:30px}
+.sp-queue small,.sp-done small{color:#8fa3c7;font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;min-width:48px}
+.sp-queue>div,.sp-done>div{display:flex;flex-wrap:wrap;gap:4px}
+.tile{width:22px;height:22px;border-radius:5px;display:grid;place-items:center;font:700 .62rem var(--sans);color:#0a1628}
+.sp-execs{display:grid;gap:8px;grid-template-columns:repeat(auto-fill,minmax(130px,1fr))}
+.ex{background:var(--night-2);border:1px solid var(--line-dark);border-radius:10px;padding:8px}
+.ex.idle{opacity:.45}
+.ex b{display:block;font-size:.75rem;color:#c9d1d9;margin-bottom:6px}
+.ex .slots{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.slot{height:30px;border-radius:6px;background:#0a1628;border:1px dashed #2b4a77;position:relative;overflow:hidden}
+.slot i{position:absolute;left:0;top:0;bottom:0;width:0;opacity:.85}
+.slot span{position:relative;font:700 .66rem var(--sans);color:#fff;display:grid;place-items:center;height:100%}
+.fly{position:absolute;width:10px;height:10px;border-radius:50%;z-index:5;pointer-events:none;transition:left .7s ease,top .7s ease}
+.sp-out{display:grid;gap:10px;grid-template-columns:repeat(2,1fr);margin-top:14px}
+@media(min-width:800px){.sp-out{grid-template-columns:repeat(4,1fr)}}
+.sp-out small{display:block;color:#8fa3c7;font-size:.72rem}
+.sp-out b{font:800 1.4rem var(--serif);color:#fff}
+.sp-total{border-color:var(--accent)!important}.sp-total b{color:var(--accent)}
+
+</style>
+</head>
+<body>
+<a class="sr-only" href="#ch1">Skip to the first chapter</a>
+
+<header class="topbar" id="topbar" data-accent="0">
+  <a class="lib-link" href="../" aria-label="All magazines (library home)"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M9 2 4 7l5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>All magazines</span></a>
+  <a class="brand" href="#top">Inside the <b>Lakehouse</b></a>
+  <div class="now" id="nowReading" aria-live="polite"></div>
+  <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="menu">
+    <svg width="16" height="12" viewBox="0 0 16 12" aria-hidden="true"><path d="M0 1h16M0 6h16M0 11h16" stroke="currentColor" stroke-width="2"/></svg>Chapters</button>
+  <div class="progress" aria-hidden="true"><i id="progress"></i></div>
+</header>
+
+<nav class="menu" id="menu" aria-label="Chapters">
+  <button class="close" id="menuClose">Close ✕</button>
+  <ol id="menuList"></ol>
+</nav>
+
+<main id="top">
+<section class="hero cover" id="cover" data-accent="0">
+  <img src="images/cover-lg.jpg" srcset="images/cover-sm.jpg 960w, images/cover-lg.jpg 1920w" sizes="100vw" width="1920" height="1280" alt="A wooden house on stilts standing in the calm water of a lake" fetchpriority="high">
+  <div class="hero-in">
+    <span class="kicker">An interactive magazine · 21 chapters · About 2 hours</span>
+    <h1>Inside the <em>Lakehouse</em></h1>
+    <p class="dek">Azure Databricks, from your first notebook to designing production architectures, with the real data center behind every chapter.</p>
+    <a class="scroll-cue" href="#intro"><i></i> Scroll to begin</a>
+  </div>
+  <div class="credit">Photo: <b>Kiril Simeonovski</b> · <a href="https://commons.wikimedia.org/wiki/File:%D0%9D%D0%B0%D0%BA%D0%BE%D0%BB%D0%BD%D0%BE_%D0%B6%D0%B8%D0%B2%D0%B5%D0%B0%D0%BB%D0%B8%D1%88%D1%82%D0%B5_%D0%B2%D0%BE_%D0%94%D0%BE%D1%98%D1%80%D0%B0%D0%BD%D1%81%D0%BA%D0%BE_%D0%95%D0%B7%D0%B5%D1%80%D0%BE.jpg" target="_blank" rel="noopener">Wikimedia Commons</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0" target="_blank" rel="noopener">CC BY-SA 4.0</a></div>
+</section>
+
+<section class="section" id="intro" data-accent="0">
+  <div class="text">
+    <p class="hook reveal" style="padding:0">Every company is drowning in data. The ones that win can turn it into answers, fast, safely and cheaply.</p>
+    <p class="reveal">Azure Databricks is one of the most popular places to do that. This magazine takes you from "What is Databricks?" all the way to designing a production-ready lakehouse that an architect would sign off.</p>
+    <p class="reveal">Every chapter has hands-on demos, short code you can copy, and a quiz. And because data never lives in "the cloud" but in real buildings, every chapter also opens a door into the data center behind it.</p>
+  </div>
+  <div class="wrap" style="margin-top:44px">
+    <div class="cards reveal">
+      <div class="card2"><div class="ic">🧭</div><h4>Pick your track</h4><p>Chapters are marked <b>Beginner</b>, <b>Intermediate</b> or <b>Advanced</b>. Start anywhere on the map below.</p></div>
+      <div class="card2"><div class="ic">🖱️</div><h4>Play with it</h4><p>Run a Spark job, travel back in time on a Delta table, fix a skewed join, and price a cluster.</p></div>
+      <div class="card2"><div class="ic">🏭</div><h4>See inside</h4><p>Look for the dark <b>Inside the data center</b> panel: the servers, cables, power and heat behind each idea.</p></div>
+      <div class="card2"><div class="ic">📋</div><h4>Copy real code</h4><p>Short PySpark, SQL and YAML examples, with a Copy button, checked against current docs.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section dark" id="path" data-accent="0">
+  <div class="wrap">
+    <span class="kicker reveal">Your learning path</span>
+    <h2 class="reveal" style="color:#fff">From first notebook to architect</h2>
+    <p class="reveal" style="max-width:40rem;color:#9fb3c8">Follow the tracks in order, or jump straight to what you need. Tap any stop.</p>
+    <div class="path reveal" style="margin-top:24px">
+      <div class="track" data-accent="b"><h4>🌱 Beginner</h4><p>What it is, how it's built, and how Spark thinks.</p><ol>
+        <li><a href="#ch1"><small>01</small>What is Databricks?</a></li><li><a href="#ch2"><small>02</small>Lake, warehouse, lakehouse</a></li>
+        <li><a href="#ch3"><small>03</small>The architecture</a></li><li><a href="#ch4"><small>04</small>Its neighbours in Azure</a></li>
+        <li><a href="#ch5"><small>05</small>Compute: choosing your engine</a></li><li><a href="#ch6"><small>06</small>Spark basics</a></li></ol></div>
+      <div class="track" data-accent="i"><h4>🌿 Intermediate</h4><p>Build reliable pipelines and govern your data.</p><ol>
+        <li><a href="#ch7"><small>07</small>Delta Lake</a></li><li><a href="#ch8"><small>08</small>Medallion architecture</a></li>
+        <li><a href="#ch9"><small>09</small>Getting data in</a></li><li><a href="#ch10"><small>10</small>Building pipelines</a></li>
+        <li><a href="#ch11"><small>11</small>Structured Streaming</a></li><li><a href="#ch12"><small>12</small>Orchestration</a></li>
+        <li><a href="#ch13"><small>13</small>Unity Catalog</a></li><li><a href="#ch14"><small>14</small>SQL and dashboards</a></li></ol></div>
+      <div class="track" data-accent="a"><h4>🌳 Advanced</h4><p>Make it fast, cheap, secure, automated, and architect-ready.</p><ol>
+        <li><a href="#ch15"><small>15</small>Performance tuning</a></li><li><a href="#ch16"><small>16</small>Cost control</a></li>
+        <li><a href="#ch17"><small>17</small>Security and networking</a></li><li><a href="#ch18"><small>18</small>DevOps and CI/CD</a></li>
+        <li><a href="#ch19"><small>19</small>ML and AI, briefly</a></li><li><a href="#ch20"><small>20</small>Reference architectures</a></li>
+        <li><a href="#ch21"><small>21</small>The architect's checklist</a></li></ol></div>
+    </div>
+    <p class="muted reveal" style="font-size:.8rem;margin-top:18px">Product names and features were checked against Microsoft Learn and Databricks documentation in November 2026. Databricks renames things often; where a name changed recently, we mention the old one too.</p>
+  </div>
+</section>
+
+<section class="chapter" id="ch1" data-accent="b" data-level="Beginner" data-num="01" data-title="What is Databricks?">
+  <header class="hero">
+    <img src="images/h01-lg.jpg" srcset="images/h01-sm.jpg 960w, images/h01-lg.jpg 1920w" sizes="100vw" width="1920" height="1280" alt="Long rows of server racks in a large computing hall" loading="lazy" decoding="async">
+    <div class="hero-in">
+      <span class="level">Beginner<i aria-hidden="true"><b class="on"></b><b class=""></b><b class=""></b></i></span><span class="num">01</span>
+      <h2>One kitchen for all your data</h2>
+      <p class="dek">What Databricks is, why it exists, and where it fits in Azure.</p>
+    </div>
+    <div class="credit">Photo: <b>Florian Hirzinger - www.fh-ap.com</b> · <a href="https://commons.wikimedia.org/wiki/File:CERN_Server_03.jpg" target="_blank" rel="noopener">Wikimedia Commons</a> · <a href="https://creativecommons.org/licenses/by-sa/3.0" target="_blank" rel="noopener">CC BY-SA 3.0</a></div>
+  </header>
+
+  <div class="section">
+    <p class="hook reveal">Your company keeps sales in one database, website clicks in log files and customer chats in another app. Then the boss asks: "Which customers are about to leave us?" Where do you even start?</p>
+    <div class="text">
+      <p class="reveal">That question needs all three kinds of data, joined together, cleaned, and maybe fed to a machine-learning model. The data is too big for one laptop, and four different teams need to work on it.</p>
+      <p class="reveal"><button class="term" data-t="databricks">Azure Databricks</button> exists to solve exactly this: one place where engineers, analysts and data scientists work on the same data, with as many computers as the job needs.</p>
+    </div>
+  </div>
+
+  <div class="section tight">
+    <div class="wrap split">
+      <div class="copy reveal">
+        <span class="kicker">The big idea</span>
+        <h3>A rented, fully equipped kitchen</h3>
+        <p>Think of Databricks as a professional kitchen you rent by the hour. The stoves are computers. The pantry is cloud storage. The head chef and line cooks are <button class="term" data-t="spark">Apache Spark</button>, software that splits big jobs across many machines.</p>
+        <p>You bring the recipe (your code or SQL). Databricks brings the kitchen, switches it on when you need it and off when you don't.</p>
+      </div>
+      <div class="reveal cards" style="grid-template-columns:1fr 1fr;gap:10px">
+        <div class="card2"><div class="ic">🛠️</div><h4>Data engineers</h4><p class="muted" style="font-size:.88rem">Build pipelines that collect and clean data.</p></div>
+        <div class="card2"><div class="ic">📊</div><h4>Analysts</h4><p class="muted" style="font-size:.88rem">Ask questions in SQL and build dashboards.</p></div>
+        <div class="card2"><div class="ic">🧪</div><h4>Data scientists</h4><p class="muted" style="font-size:.88rem">Train and serve machine-learning models.</p></div>
+        <div class="card2"><div class="ic">🏛️</div><h4>Architects</h4><p class="muted" style="font-size:.88rem">Design how it all fits, safely and affordably.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section tint">
+    <div class="text">
+      <span class="kicker reveal">Where it came from</span>
+      <h3 class="reveal">Built by the people who built Spark</h3>
+      <p class="reveal">Apache Spark began as a research project at UC Berkeley. Its creators later started the company Databricks. Microsoft's documentation notes that several key open-source projects were originally created by Databricks employees: Apache Spark and Structured Streaming, Delta Lake, MLflow and OpenSharing.</p>
+      <p class="reveal">On Azure, Databricks is a native Azure service. You create it in the Azure portal, pay through your Azure subscription, sign in with <button class="term" data-t="entra">Microsoft Entra ID</button> and connect it to your Azure storage and networks.</p>
+    </div>
+    <p class="pull reveal" style="margin-top:48px">Bring the recipe. Databricks brings the kitchen, the cooks and the pantry.</p>
+  </div>
+
+  <div class="section">
+    <div class="wrap split rev">
+      <div class="copy reveal">
+        <span class="kicker">Your first notebook</span>
+        <h3>A lab notebook that runs code</h3>
+        <p>Most work starts in a <b>notebook</b>: a web page of cells where you write Python or SQL, run it and see the result right below. Like a lab notebook where the experiments run themselves.</p>
+        <p>This tiny example reads a table and counts orders per city. Behind the scenes, Spark may spread it across dozens of machines.</p>
+      </div>
+      <div class="reveal">
+<div class="code"><div class="code-h"><span>PySpark</span><button type="button">Copy</button></div><pre><code><span class="c"># Read a table and count orders per city</span>
+orders = spark.read.table(<span class="s">"main.sales.orders"</span>)
+
+(orders
+  .groupBy(<span class="s">"city"</span>)
+  .count()
+  .orderBy(<span class="s">"count"</span>, ascending=<span class="k">False</span>)
+  .display())
+</code></pre></div>
+<div class="code"><div class="code-h"><span>SQL</span><button type="button">Copy</button></div><pre><code><span class="k">SELECT</span> city, <span class="f">COUNT</span>(*) <span class="k">AS</span> orders
+<span class="k">FROM</span> main.sales.orders
+<span class="k">GROUP BY</span> city
+<span class="k">ORDER BY</span> orders <span class="k">DESC</span>;
+</code></pre></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section dark">
+    <div class="lab reveal" id="persona" style="box-shadow:none">
+      <div class="lab-head"><div><span class="tag">Try it</span><h3>What will <i>you</i> use Databricks for?</h3></div></div>
+      <div class="seg" role="group" aria-label="Your role">
+        <button data-p="eng" aria-pressed="true">🛠️ Data engineer</button><button data-p="ana" aria-pressed="false">📊 Analyst</button>
+        <button data-p="ds" aria-pressed="false">🧪 Data scientist</button><button data-p="arch" aria-pressed="false">🏛️ Architect</button>
+      </div>
+      <div class="persona-grid">
+        <div class="panel"><h4 id="pT"></h4><p id="pD"></p></div>
+        <div class="panel"><h4>Your must-read chapters</h4><div id="pL" class="persona-links"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section tight">
+    <aside class="inside reveal" aria-label="Inside the data center"><div class="inside-in"><div class="in-head"><span class="led" aria-hidden="true"></span>Inside the data center<span class="rack-id">REGION · ZONE 1</span></div><p class="in-sum">When you create a Databricks workspace, you pick an Azure <b>region</b>, such as Central India or West Europe. From then on, your notebooks, clusters and data live in real buildings in that area.</p><button class="in-btn" aria-expanded="false"><span class="lbl">See inside</span><span class="chev" aria-hidden="true">▾</span></button><div class="in-body" hidden><div class="in-grid"><figure><img src="images/i01-lg.jpg" srcset="images/i01-sm.jpg 720w, images/i01-lg.jpg 1280w" sizes="(min-width: 860px) 50vw, 100vw" width="1280" height="853" alt="Rows of server racks inside a large computing hall" loading="lazy" decoding="async"><figcaption>Photo: <b>Victor Grigas</b> · <a href="https://commons.wikimedia.org/wiki/File:Wikimedia_Foundation_Servers-8055_08.jpg" target="_blank" rel="noopener">Wikimedia Commons</a> · <a href="https://creativecommons.org/licenses/by-sa/3.0" target="_blank" rel="noopener">CC BY-SA 3.0</a></figcaption></figure><dl class="in-rows"><div class="where"><span class="ic" aria-hidden="true">🏢</span><dt>Where it lives</dt><dd>In an Azure <button class="term" data-t="region">region</button>: one or more data centers in the same area. Many regions are split into <button class="term" data-t="availability zone">availability zones</button>: separate groups of data centers, each with its own power, cooling and network.</dd></div><div class="machines"><span class="ic" aria-hidden="true">🖥️</span><dt>The machines</dt><dd>Ordinary-looking rack servers. Each one is sliced into <button class="term" data-t="vm">virtual machines</button>, and every Databricks cluster node is one of those VMs.</dd></div><div class="journey"><span class="ic" aria-hidden="true">🔀</span><dt>The physical journey</dt><dd>Your browser → the internet → Azure's network edge → the region's data center network → the servers running the Databricks web app and your cluster.</dd></div><div class="power"><span class="ic" aria-hidden="true">⚡</span><dt>Power & heat</dt><dd>A large data center hall can draw tens of megawatts, typically. Every query you run turns into a little heat that the cooling plant has to remove.</dd></div><div class="scale"><span class="ic" aria-hidden="true">📏</span><dt>Scale</dt><dd>Microsoft says its availability zones are typically several kilometres apart, and usually within 100 km of each other: close enough to be fast, far enough that one flood or fire can't hit them all.</dd></div><div class="breaks"><span class="ic" aria-hidden="true">🛠️</span><dt>When something breaks</dt><dd>If one zone has a problem, services designed for zones keep running in the others. Your data, if stored with zone redundancy, survives too.</dd></div><div class="feel"><span class="ic" aria-hidden="true">👂</span><dt>Feel it</dt><dd>Step into the hall and you hear it before you see it: a steady roar of fans from thousands of servers, and rows of tiny lights blinking in the cold air.</dd></div></dl></div><a class="in-deeper" href="../data-centers/#ch1">Go deeper: Data Center magazine, Ch 1 · What is a data center? →</a><p class="in-note">Microsoft doesn't publish every hardware detail. Where exact facts aren't public, we say "typically" or "for example".</p></div></div></aside>
+  </div>
+
+  <div class="section tight">
+    <div class="dyk reveal"><p>Databricks is sold on several clouds, but on Azure it is a first-class Azure product: created in the Azure portal and billed on your Azure invoice. Since April 2026, all new Azure Databricks workspaces use the <b>Premium</b> tier, and the old Standard tier was retired in October 2026.</p></div>
+    <div class="recap reveal" style="margin-top:36px">
+      <h3>Chapter 1 recap</h3>
+      <ul>
+        <li>Databricks is one platform for data engineering, analytics and AI, built on Apache Spark.</li>
+        <li>On Azure it is a native service: Azure billing, Entra ID sign-in, Azure storage and networks.</li>
+        <li>You work in notebooks, jobs and dashboards; Spark spreads the work across many machines.</li>
+        <li>Everything runs in real data centers in the Azure region you choose.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="quiz reveal" data-quiz='[
+    {"q":"What is Apache Spark&apos;s role inside Databricks?","o":["It stores files","It splits big data jobs across many machines","It draws dashboards"],"a":1,"why":"Spark is the engine: like a head chef splitting a big order between many cooks."},
+    {"q":"How do you pay for Azure Databricks?","o":["Through your Azure subscription","Only by credit card to Databricks","It is always free"],"a":0,"why":"Azure Databricks is billed through your Azure subscription, like other Azure services."},
+    {"q":"Which tier must new Azure Databricks workspaces use today?","o":["Standard","Premium","Basic"],"a":1,"why":"New workspaces must be Premium since April 2026; Standard was retired in October 2026."}
+  ]'></div>
+  <p class="teaser reveal">Databricks calls itself a "lakehouse". What on earth is that?<br><a href="#ch2">Chapter 2: Lake, warehouse, lakehouse →</a></p>
+  <div style="height:80px"></div>
+</section>
+
+
+
+
+<section class="chapter" id="ch2" data-accent="b" data-level="Beginner" data-num="02" data-title="Lake, warehouse, lakehouse">
+  <header class="hero">
+    <img src="images/h02-lg.jpg" srcset="images/h02-sm.jpg 960w, images/h02-lg.jpg 1920w" sizes="100vw" width="1920" height="1280" alt="A white house on the shore of a calm summer lake" loading="lazy" decoding="async">
+    <div class="hero-in">
+      <span class="level">Beginner<i aria-hidden="true"><b class="on"></b><b class=""></b><b class=""></b></i></span><span class="num">02</span>
+      <h2>A house built on the lake</h2>
+      <p class="dek">Data lake vs data warehouse vs lakehouse, and why the industry merged them.</p>
+    </div>
+    <div class="credit">Photo: <b>U.S. Fish and Wildlife Service</b> · <a href="https://commons.wikimedia.org/wiki/File:Lake_at_summer_scenic_white_house_on_shore_in_background.jpg" target="_blank" rel="noopener">Wikimedia Commons</a> · Public domain</div>
+  </header>
+
+  <div class="section">
+    <p class="hook reveal">For twenty years, companies kept two copies of their data: one tidy and expensive, one messy and cheap. Then someone asked: why not build one good house right on the lake?</p>
+  </div>
+
+  <div class="section tight">
+    <div class="wrap">
+      <div class="lh-trio reveal">
+        <div class="lh-card"><span class="lh-ic">🏬</span><h4><button class="term" data-t="warehouse">Data warehouse</button></h4><p>A shop with neat, labelled shelves. Data is cleaned and shaped <i>before</i> it goes in, so reports are fast and trusted.</p><ul><li>✅ Fast, reliable SQL</li><li>❌ Expensive storage</li><li>❌ Struggles with images, logs, free text</li></ul></div>
+        <div class="lh-card"><span class="lh-ic">🏞️</span><h4><button class="term" data-t="data lake">Data lake</button></h4><p>A huge lake where any file can flow in: CSV, JSON, images, logs. Cheap and flexible, but easy to turn into a swamp.</p><ul><li>✅ Cheap, any kind of data</li><li>✅ Great for AI</li><li>❌ No safe updates, hard to trust</li></ul></div>
+        <div class="lh-card hl"><span class="lh-ic">🏡</span><h4><button class="term" data-t="lakehouse">Lakehouse</button></h4><p>Keep everything in cheap, open files on the lake, then add a "house": transactions, tables, permissions and speed.</p><ul><li>✅ One copy for BI <i>and</i> AI</li><li>✅ Open file formats</li><li>✅ Reliable updates and governance</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="text">
+      <span class="kicker reveal">How the "house" works</span>
+      <h3 class="reveal">Open files plus a smart layer on top</h3>
+      <p class="reveal">In a lakehouse, the data itself sits in cloud storage as <button class="term" data-t="parquet">Parquet</button> files, an open format that stores data column by column. Anyone's tools can read it.</p>
+      <p class="reveal">On top sits a table format, <button class="term" data-t="delta">Delta Lake</button>, which keeps a log of every change. That log is what makes the files behave like a proper database table, with safe updates and history. Databricks also supports Apache Iceberg tables. Then <button class="term" data-t="unity catalog">Unity Catalog</button> adds names, permissions and lineage.</p>
+    </div>
+    <div class="wrap reveal" style="margin-top:28px">
+      <svg viewBox="0 0 760 300" class="lh-stack" role="img" aria-label="Diagram: the lakehouse stack, from cloud storage at the bottom to BI, SQL and AI at the top">
+        <rect x="20" y="236" width="720" height="50" rx="10" fill="#0e7490"/><text x="380" y="267" class="t w">Cloud storage (ADLS Gen2): cheap, durable, holds every file</text>
+        <rect x="20" y="176" width="720" height="50" rx="10" fill="#0f857a"/><text x="380" y="207" class="t w">Open files: Parquet (data) + transaction log</text>
+        <rect x="20" y="116" width="720" height="50" rx="10" fill="#2563eb"/><text x="380" y="147" class="t w">Table format: Delta Lake (or Iceberg): ACID, history, schema</text>
+        <rect x="20" y="56" width="720" height="50" rx="10" fill="#7c3aed"/><text x="380" y="87" class="t w">Governance: Unity Catalog: names, permissions, lineage</text>
+        <g class="t"><rect x="20" y="6" width="230" height="40" rx="10" fill="#e6edf2"/><text x="135" y="31">BI and dashboards</text>
+        <rect x="265" y="6" width="230" height="40" rx="10" fill="#e6edf2"/><text x="380" y="31">SQL analytics</text>
+        <rect x="510" y="6" width="230" height="40" rx="10" fill="#e6edf2"/><text x="625" y="31">Data science and AI</text></g>
+      </svg>
+      <p class="muted center" style="font-size:.8rem">Diagram drawn for this magazine.</p>
+    </div>
+  </div>
+
+  <div class="section dark">
+    <div class="lab reveal" id="sorter" style="box-shadow:none">
+      <div class="lab-head"><div><span class="tag">Try it</span><h3>Where would you keep it?</h3></div><span class="noc-score" id="sortScore">0 / 5</span></div>
+      <p style="margin-top:0">Five real requests. Pick the best home for each, then read why.</p>
+      <div id="sortQ"></div>
+    </div>
+  </div>
+
+  <div class="bignum reveal">
+    <span class="n" data-count="1">0</span>
+    <span class="l">copy of the data, used by everyone: the core promise of the lakehouse. No more syncing a lake and a warehouse every night.</span>
+  </div>
+
+  <div class="section tight">
+    <aside class="inside reveal" aria-label="Inside the data center"><div class="inside-in"><div class="in-head"><span class="led" aria-hidden="true"></span>Inside the data center<span class="rack-id">STORAGE HALL · ROW S</span></div><p class="in-sum">Your lakehouse files live on <b>storage servers</b>: machines packed with dozens of drives, in their own rows of the data center. Azure keeps several copies of every file, so one broken disk never loses your data.</p><button class="in-btn" aria-expanded="false"><span class="lbl">See inside</span><span class="chev" aria-hidden="true">▾</span></button><div class="in-body" hidden><div class="in-grid"><figure><img src="images/i02-lg.jpg" srcset="images/i02-sm.jpg 720w, images/i02-lg.jpg 1280w" sizes="(min-width: 860px) 50vw, 100vw" width="1280" height="1067" alt="A large storage system with many drive bays in a computing center" loading="lazy" decoding="async"><figcaption>Photo: <b>Gregory Rocher / Ifremer</b> · <a href="https://commons.wikimedia.org/wiki/File:Le_Centre_Datarmor,_les_coulisses_(Ifremer_00957-106840_-_54953).jpg" target="_blank" rel="noopener">Wikimedia Commons</a> · <a href="https://creativecommons.org/licenses/by/4.0" target="_blank" rel="noopener">CC BY 4.0</a></figcaption></figure><dl class="in-rows"><div class="where"><span class="ic" aria-hidden="true">🏢</span><dt>Where it lives</dt><dd>In the storage halls of your Azure region. <button class="term" data-t="adls">ADLS Gen2</button> is built on Azure Blob Storage, so your Parquet and Delta files sit in the same storage system as millions of other customers' files.</dd></div><div class="machines"><span class="ic" aria-hidden="true">🖥️</span><dt>The machines</dt><dd>Storage servers, typically packed with many large hard disks for capacity and some SSDs for speed, plus fast network cards. Microsoft doesn't publish exact models.</dd></div><div class="journey"><span class="ic" aria-hidden="true">🔀</span><dt>The physical journey</dt><dd>A query reads files from storage servers, across the data center network, into the memory of your cluster's VMs. Columnar Parquet means only the needed columns travel.</dd></div><div class="power"><span class="ic" aria-hidden="true">⚡</span><dt>Power & heat</dt><dd>Spinning disks draw only a few watts each, but a hall with tens of thousands of them adds up, and they need steady, cool air.</dd></div><div class="scale"><span class="ic" aria-hidden="true">📏</span><dt>Scale</dt><dd>With <button class="term" data-t="lrs">zone-redundant storage (ZRS)</button>, Microsoft copies your data synchronously across three or more availability zones. Locally redundant storage (LRS) keeps the copies inside one data center.</dd></div><div class="breaks"><span class="ic" aria-hidden="true">🛠️</span><dt>When something breaks</dt><dd>Drives fail every day in a big hall. LRS protects against drive, server and rack failures: Azure reads another copy and quietly rebuilds the lost one.</dd></div><div class="feel"><span class="ic" aria-hidden="true">👂</span><dt>Feel it</dt><dd>The storage rows hum lower than the compute rows: thousands of drives spinning, little activity lights flickering like a starfield.</dd></div></dl></div><a class="in-deeper" href="../data-centers/#ch2">Go deeper: Data Center magazine, Ch 2 · The guided tour →</a><p class="in-note">Microsoft doesn't publish every hardware detail. Where exact facts aren't public, we say "typically" or "for example".</p></div></div></aside>
+  </div>
+
+  <div class="section tight">
+    <div class="recap reveal">
+      <h3>Chapter 2 recap</h3>
+      <ul>
+        <li>Warehouses are tidy and fast but costly; lakes are cheap and flexible but messy.</li>
+        <li>A lakehouse keeps open files in cheap storage and adds a table format and governance on top.</li>
+        <li>On Databricks: ADLS Gen2 + Parquet + Delta Lake + Unity Catalog.</li>
+        <li>One copy of the data serves BI, SQL and AI.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="quiz reveal" data-quiz='[
+    {"q":"What makes plain Parquet files behave like a reliable table?","o":["A transaction log from a table format like Delta Lake","Bigger hard disks","Renaming the folder"],"a":0,"why":"Delta Lake&apos;s transaction log records every change, giving safe updates and history."},
+    {"q":"What is the main problem with a pure data lake?","o":["It is too expensive","It can turn into an untrusted &apos;swamp&apos; without safe updates or structure","It cannot store images"],"a":1,"why":"Lakes are cheap and flexible, but without transactions and governance they become hard to trust."},
+    {"q":"Where do lakehouse data files physically live on Azure?","o":["In the Databricks web app","On storage servers in an Azure region (ADLS Gen2)","On the analyst&apos;s laptop"],"a":1,"why":"Files sit in Azure storage, spread over storage servers with several copies."}
+  ]'></div>
+  <p class="teaser reveal">So where does Databricks itself run, and what lives in <i>your</i> Azure subscription?<br><a href="#ch3">Chapter 3: The architecture →</a></p>
+  <div style="height:80px"></div>
+</section>
+
+
+
+
+<section class="chapter" id="ch3" data-accent="b" data-level="Beginner" data-num="03" data-title="The architecture">
+  <header class="hero">
+    <img src="images/h03-lg.jpg" srcset="images/h03-sm.jpg 960w, images/h03-lg.jpg 1920w" sizes="100vw" width="1920" height="971" alt="Aerial view of a large data center campus surrounded by fields" loading="lazy" decoding="async">
+    <div class="hero-in">
+      <span class="level">Beginner<i aria-hidden="true"><b class="on"></b><b class=""></b><b class=""></b></i></span><span class="num">03</span>
+      <h2>Two planes, one platform</h2>
+      <p class="dek">Control plane, compute plane, workspaces, and what lands in your Azure subscription.</p>
+    </div>
+    <div class="credit">Photo: <b>Xpda</b> · <a href="https://commons.wikimedia.org/wiki/File:Google_Mayes_County_P0004974a.jpg" target="_blank" rel="noopener">Wikimedia Commons</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0" target="_blank" rel="noopener">CC BY-SA 4.0</a></div>
+  </header>
+
+  <div class="section">
+    <p class="hook reveal">When you click "Run" in a notebook, two very different sets of machines get involved: some run by Databricks, some running in your own Azure subscription. Knowing which is which is the first thing an architect learns.</p>
+    <div class="text">
+      <p class="reveal">Azure Databricks is split into a <button class="term" data-t="control plane">control plane</button> and a <button class="term" data-t="compute plane">compute plane</button>. Think of a restaurant: the control plane is the front office that takes bookings, keeps the menus and tells the kitchen what to cook. The compute plane is the kitchen where the cooking, your data processing, actually happens.</p>
+    </div>
+  </div>
+
+  <div class="section tight">
+    <div class="wrap split">
+      <div class="copy reveal">
+        <span class="kicker">The pieces</span>
+        <h3>Account, workspaces, metastore</h3>
+        <p>At the top sits your Databricks <b>account</b>: users, billing, policies. Under it you create <button class="term" data-t="workspace">workspaces</button>, each in one Azure region, where teams keep notebooks, jobs and dashboards.</p>
+        <p>Next to them sits a <button class="term" data-t="metastore">Unity Catalog metastore</button>, the shared catalog of tables and models. You can attach one metastore to many workspaces in the same region, so everyone sees the same data, with the same permissions.</p>
+      </div>
+      <div class="copy reveal">
+        <span class="kicker">Two kinds of compute</span>
+        <h3>Classic vs serverless</h3>
+        <p><b><button class="term" data-t="classic compute">Classic compute</button></b>: the VMs are created inside <i>your</i> Azure subscription and virtual network. You choose sizes, you see them, and you pay Azure for them.</p>
+        <p><b><button class="term" data-t="serverless">Serverless</button></b>: the machines run in a serverless compute plane inside the Databricks account, in the same Azure region as your workspace. They start in seconds and you never manage them.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section dark">
+    <div class="lab reveal" id="arch" style="box-shadow:none">
+      <div class="lab-head"><div><span class="tag">Try it</span><h3>Architecture explorer</h3></div><p class="muted" style="margin:0;font-size:.9rem">Tap any part of the diagram.</p></div>
+      <div class="arch-grid">
+        <svg viewBox="0 0 900 540" class="arch-svg" role="group" aria-label="Clickable Azure Databricks architecture diagram">
+          <defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#8fa3c7"/></marker></defs>
+          <rect x="6" y="6" width="888" height="528" rx="16" fill="#071121" stroke="#1d3355"/>
+          <g class="az" data-z="users" tabindex="0" role="button" aria-label="Users and tools"><rect x="24" y="30" width="190" height="120" rx="12"/><text x="119" y="62" class="h">Users &amp; tools</text><text x="119" y="88">💻 Browser, notebooks</text><text x="119" y="108">📊 Power BI</text><text x="119" y="128">🔁 CI/CD, APIs</text></g>
+          <g class="az" data-z="control" tabindex="0" role="button" aria-label="Control plane"><rect x="250" y="24" width="390" height="190" rx="14"/><text x="445" y="52" class="h">CONTROL PLANE · Databricks account</text>
+            <g class="sub"><rect x="270" y="70" width="170" height="54" rx="8"/><text x="355" y="102">Web app &amp; APIs</text><rect x="452" y="70" width="170" height="54" rx="8"/><text x="537" y="102">Job scheduler</text>
+            <rect x="270" y="136" width="170" height="54" rx="8"/><text x="355" y="168">Compute manager</text><rect x="452" y="136" width="170" height="54" rx="8"/><text x="537" y="168">Notebook &amp; query service</text></g></g>
+          <g class="az" data-z="uc" tabindex="0" role="button" aria-label="Unity Catalog"><rect x="676" y="24" width="200" height="190" rx="14"/><text x="776" y="58" class="h">UNITY CATALOG</text><text x="776" y="90">🗂️ Metastore</text><text x="776" y="114">catalog.schema.table</text><text x="776" y="138">🔐 Permissions</text><text x="776" y="162">🧬 Lineage, audit</text><text x="776" y="196" class="s">account level, per region</text></g>
+          <g class="az" data-z="classic" tabindex="0" role="button" aria-label="Classic compute plane"><rect x="24" y="262" width="380" height="250" rx="14"/><text x="214" y="292" class="h">CLASSIC COMPUTE PLANE · your subscription</text>
+            <rect x="44" y="308" width="340" height="140" rx="10" class="vnet"/><text x="214" y="328" class="s">Virtual network (VNet)</text>
+            <g class="vm"><rect x="64" y="340" width="90" height="44" rx="6"/><text x="109" y="367">Driver VM</text><rect x="168" y="340" width="90" height="44" rx="6"/><text x="213" y="367">Worker VM</text><rect x="272" y="340" width="90" height="44" rx="6"/><text x="317" y="367">Worker VM</text>
+            <rect x="64" y="394" width="90" height="44" rx="6"/><text x="109" y="421">Driver VM</text><rect x="168" y="394" width="90" height="44" rx="6"/><text x="213" y="421">Worker VM</text></g>
+            <rect x="44" y="458" width="340" height="40" rx="8" class="st"/><text x="214" y="483">Workspace storage account</text></g>
+          <g class="az" data-z="serverless" tabindex="0" role="button" aria-label="Serverless compute plane"><rect x="430" y="262" width="230" height="250" rx="14"/><text x="545" y="292" class="h">SERVERLESS PLANE</text><text x="545" y="312" class="s">Databricks account, same region</text>
+            <g class="vm"><rect x="452" y="330" width="86" height="40" rx="6"/><text x="495" y="355">⚡ warm</text><rect x="552" y="330" width="86" height="40" rx="6"/><text x="595" y="355">⚡ warm</text><rect x="452" y="380" width="86" height="40" rx="6"/><text x="495" y="405">⚡ warm</text><rect x="552" y="380" width="86" height="40" rx="6"/><text x="595" y="405">⚡ warm</text></g>
+            <text x="545" y="452">SQL warehouses, notebooks,</text><text x="545" y="472">jobs, pipelines, Model Serving</text></g>
+          <g class="az" data-z="storage" tabindex="0" role="button" aria-label="Your data in ADLS Gen2"><rect x="686" y="262" width="190" height="250" rx="14"/><text x="781" y="292" class="h">YOUR DATA</text><text x="781" y="312" class="s">ADLS Gen2 · your subscription</text><text x="781" y="350" style="font-size:30px">🗄️</text><text x="781" y="390">Delta / Parquet files</text><text x="781" y="412">Volumes (any files)</text><text x="781" y="450" class="s">or default storage for</text><text x="781" y="468" class="s">serverless workspaces</text></g>
+          <g class="az" data-z="network" tabindex="0" role="button" aria-label="Network connections"><path d="M214 262 C214 236 330 236 330 214" class="link"/><circle cx="268" cy="238" r="15" class="nd"/><text x="268" y="243">🔒</text></g>
+          <path d="M214 150 L250 150" class="ar" marker-end="url(#ah)"/><path d="M404 380 L686 380" class="ar dash" marker-end="url(#ah)"/><path d="M640 120 L676 120" class="ar" marker-end="url(#ah)"/><path d="M660 430 L686 430" class="ar dash" marker-end="url(#ah)"/>
+        </svg>
+        <div class="panel arch-info" aria-live="polite"><span class="kicker" id="aK"></span><h4 id="aT"></h4><p id="aD"></p><dl class="arch-facts" id="aF"></dl></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="wrap split rev">
+      <div class="copy reveal">
+        <span class="kicker">What lands in your subscription</span>
+        <h3>The managed resource group</h3>
+        <p>When you create a classic workspace, Azure also creates a <b>managed resource group</b> in your subscription. It holds the workspace storage account and, unless you bring your own network, a virtual network for the cluster VMs.</p>
+        <p>Microsoft's docs are blunt about it: don't delete or modify the workspace storage. A workspace depends on it, and if it is deleted, the workspace cannot be recovered.</p>
+      </div>
+      <div class="copy reveal">
+        <span class="kicker">Two workspace types</span>
+        <h3>Classic and serverless workspaces</h3>
+        <p><b>Classic workspaces</b> (shown as "Hybrid" in the Azure portal) have a workspace storage account in your subscription and can run both classic and serverless compute.</p>
+        <p><b>Serverless workspaces</b> use fully managed default storage and serverless compute only, and can still connect to your own storage accounts for your data.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section tight">
+    <aside class="inside reveal" aria-label="Inside the data center"><div class="inside-in"><div class="in-head"><span class="led" aria-hidden="true"></span>Inside the data center<span class="rack-id">TWO WORLDS · ONE REGION</span></div><p class="in-sum">Behind the two "planes" are two groups of real machines in the same Azure region. Databricks' control-plane services and serverless pools run in Databricks' own Azure account; your classic cluster VMs run on servers billed to your subscription.</p><button class="in-btn" aria-expanded="false"><span class="lbl">See inside</span><span class="chev" aria-hidden="true">▾</span></button><div class="in-body" hidden><div class="in-grid"><figure><svg viewBox="0 0 460 300" role="img" aria-label="Diagram: control plane and serverless servers in the Databricks account, classic VMs in your subscription, both in one Azure region">
+        <rect width="460" height="300" fill="#05080c"/>
+        <rect x="10" y="10" width="440" height="280" rx="12" fill="none" stroke="#3fb950" stroke-dasharray="6 5"/><text x="230" y="32" fill="#7ee787" font-size="13" text-anchor="middle" font-family="monospace">AZURE REGION</text>
+        <rect x="26" y="48" width="196" height="226" rx="10" fill="#0d1b2e" stroke="#2563eb"/><text x="124" y="70" fill="#93c5fd" font-size="12" text-anchor="middle" font-family="Inter,sans-serif" font-weight="700">Databricks account</text>
+        <rect x="238" y="48" width="196" height="226" rx="10" fill="#0f1d14" stroke="#0f857a"/><text x="336" y="70" fill="#5eead4" font-size="12" text-anchor="middle" font-family="Inter,sans-serif" font-weight="700">Your subscription</text>
+        <g fill="#1c2a40" stroke="#3b5b8a"><rect x="44" y="86" width="70" height="170" rx="4"/><rect x="132" y="86" width="70" height="170" rx="4"/></g>
+        <g fill="#16241b" stroke="#2f6b56"><rect x="256" y="86" width="70" height="170" rx="4"/><rect x="344" y="86" width="70" height="170" rx="4"/></g>
+        <g fill="#3fb950"><circle cx="104" cy="100" r="2.5"/><circle cx="104" cy="120" r="2.5"/><circle cx="192" cy="100" r="2.5"/><circle cx="316" cy="100" r="2.5"/><circle cx="404" cy="120" r="2.5"/></g>
+        <g font-family="Inter,sans-serif" font-size="10" fill="#c9d1d9" text-anchor="middle"><text x="79" y="150">control</text><text x="79" y="164">plane</text><text x="167" y="150">serverless</text><text x="167" y="164">pool</text><text x="291" y="150">driver</text><text x="291" y="164">VM</text><text x="379" y="150">worker</text><text x="379" y="164">VMs</text></g>
+        <path d="M256 210 C230 210 230 190 202 190" stroke="#e3b341" stroke-width="2" fill="none" stroke-dasharray="4 3"/><text x="229" y="232" fill="#e3b341" font-size="9" text-anchor="middle" font-family="Inter,sans-serif">relay (443, outbound)</text>
+      </svg><figcaption>Diagram drawn for this magazine.</figcaption></figure><dl class="in-rows"><div class="where"><span class="ic" aria-hidden="true">🏢</span><dt>Where it lives</dt><dd>Both live in the region you chose for the workspace. Serverless compute is created in the same region as your workspace's classic compute plane.</dd></div><div class="machines"><span class="ic" aria-hidden="true">🖥️</span><dt>The machines</dt><dd>Every cluster node is a <button class="term" data-t="vm">virtual machine</button>: a slice of a physical rack server, carved out by a hypervisor. Your VMs and other customers' VMs may share the same building, but are isolated from each other.</dd></div><div class="journey"><span class="ic" aria-hidden="true">🔀</span><dt>The physical journey</dt><dd>With <button class="term" data-t="scc">secure cluster connectivity</button>, your cluster VMs have no public IPs and open no inbound ports. Each cluster dials out to a relay in the control plane over HTTPS (port 443) and gets its work through that connection.</dd></div><div class="power"><span class="ic" aria-hidden="true">⚡</span><dt>Power & heat</dt><dd>Control-plane services are small and steady. The big power draw is the compute: every running worker VM is a share of a server burning watts until you stop it.</dd></div><div class="scale"><span class="ic" aria-hidden="true">📏</span><dt>Scale</dt><dd>One region typically hosts many thousands of servers. Your 10-node cluster is a tiny tenant among them.</dd></div><div class="breaks"><span class="ic" aria-hidden="true">🛠️</span><dt>When something breaks</dt><dd>If a VM's host server dies, Azure moves or recreates VMs on another host, and Databricks replaces lost worker nodes. Your notebooks and jobs live in the control plane, so they survive.</dd></div><div class="feel"><span class="ic" aria-hidden="true">👂</span><dt>Feel it</dt><dd>Picture two neighbouring halls of identical racks: one full of Databricks' shared machines, one hosting your cluster. Same hum, same cold air, different owners.</dd></div></dl></div><a class="in-deeper" href="../data-centers/#ch9">Go deeper: Data Center magazine, Ch 9 · Virtualization and the cloud →</a><p class="in-note">Microsoft doesn't publish every hardware detail. Where exact facts aren't public, we say "typically" or "for example".</p></div></div></aside>
+  </div>
+
+  <div class="section tight">
+    <div class="dyk reveal"><p>Secure cluster connectivity ("No Public IP") is the default: in the Azure portal it's set to Yes when you create a workspace, and newer ARM template versions treat it as on unless you turn it off.</p></div>
+    <div class="recap reveal" style="margin-top:36px">
+      <h3>Chapter 3 recap</h3>
+      <ul>
+        <li>The control plane (web app, scheduler, compute manager) runs in the Databricks account.</li>
+        <li>Classic compute runs VMs in your subscription and VNet; serverless runs in Databricks' account, same region.</li>
+        <li>Unity Catalog metastores sit at account level and can be shared by workspaces in one region.</li>
+        <li>Classic workspaces add a managed resource group with workspace storage: never delete it.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="quiz reveal" data-quiz='[
+    {"q":"Where do classic cluster VMs run?","o":["In the Databricks control plane","In your Azure subscription and virtual network","On the analyst&apos;s laptop"],"a":1,"why":"Classic compute is created inside your own subscription, in the workspace&apos;s VNet."},
+    {"q":"Where does serverless compute run?","o":["In a serverless compute plane in the Databricks account, in the same region","In a different country","Inside Power BI"],"a":0,"why":"Serverless runs in Databricks&apos; account, in the same Azure region as your workspace."},
+    {"q":"With secure cluster connectivity, how do clusters talk to the control plane?","o":["They open inbound ports to the internet","They dial out to a relay over HTTPS (port 443)","They don&apos;t talk at all"],"a":1,"why":"No public IPs and no open ports: clusters initiate an outbound connection to the relay."}
+  ]'></div>
+  <p class="teaser reveal">Databricks rarely works alone. Meet the Azure services it talks to every day.<br><a href="#ch4">Chapter 4: Its neighbours in Azure →</a></p>
+  <div style="height:80px"></div>
+</section>
+
+
+
+
+<section class="chapter" id="ch4" data-accent="b" data-level="Beginner" data-num="04" data-title="Its neighbours in Azure">
+  <header class="hero">
+    <img src="images/h04-lg.jpg" srcset="images/h04-sm.jpg 960w, images/h04-lg.jpg 1920w" sizes="100vw" width="1920" height="1203" alt="Glowing optical fibre cables carrying light" loading="lazy" decoding="async">
+    <div class="hero-in">
+      <span class="level">Beginner<i aria-hidden="true"><b class="on"></b><b class=""></b><b class=""></b></i></span><span class="num">04</span>
+      <h2>It takes a neighbourhood</h2>
+      <p class="dek">ADLS Gen2, Entra ID, Key Vault, Data Factory, Event Hubs, Power BI and friends.</p>
+    </div>
+    <div class="credit">Photo: <b>Hustvedt</b> · <a href="https://commons.wikimedia.org/wiki/File:Fiber_optic_illuminated.jpg" target="_blank" rel="noopener">Wikimedia Commons</a> · <a href="https://creativecommons.org/licenses/by-sa/3.0" target="_blank" rel="noopener">CC BY-SA 3.0</a></div>
+  </header>
+
+  <div class="section">
+    <p class="hook reveal">A great kitchen still needs a pantry, a front door with a lock, a key cabinet, delivery trucks and a dining room. Databricks is the kitchen. These Azure services are the rest of the restaurant.</p>
+    <div class="text">
+      <p class="reveal">You will almost never use Databricks alone. A real platform connects it to storage, identity, secrets, data movement, streaming and reporting. Tap each neighbour to see what it does and how they connect.</p>
+    </div>
+  </div>
+
+  <div class="section dark">
+    <div class="lab reveal" id="hood" style="box-shadow:none">
+      <div class="lab-head"><div><span class="tag">Try it</span><h3>The Azure neighbourhood</h3></div><p class="muted" style="margin:0;font-size:.9rem">Tap a neighbour.</p></div>
+      <div class="hood-grid">
+        <div class="hood-map">
+          <div class="hub">🏡<b>Azure Databricks</b><small>the lakehouse</small></div>
+          <button data-n="adls">🗄️<b>ADLS Gen2</b><small>storage</small></button>
+          <button data-n="entra">🪪<b>Entra ID</b><small>identity</small></button>
+          <button data-n="kv">🔑<b>Key Vault</b><small>secrets</small></button>
+          <button data-n="adf">🚚<b>Data Factory</b><small>move &amp; orchestrate</small></button>
+          <button data-n="eh">📡<b>Event Hubs</b><small>streaming in</small></button>
+          <button data-n="pbi">📊<b>Power BI</b><small>reports</small></button>
+          <button data-n="mon">🩺<b>Azure Monitor</b><small>logs &amp; alerts</small></button>
+          <button data-n="pv">🧭<b>Purview</b><small>enterprise catalog</small></button>
+          <button data-n="devops">🔁<b>GitHub / Azure DevOps</b><small>code &amp; CI/CD</small></button>
+        </div>
+        <div class="panel hood-info" aria-live="polite"><span class="kicker" id="hK"></span><h4 id="hT"></h4><p id="hD"></p><p class="hood-link" id="hL"></p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="wrap split">
+      <div class="copy reveal">
+        <span class="kicker">A typical day</span>
+        <h3>How the neighbours work together</h3>
+        <ol class="steps" style="margin-top:14px">
+          <li>Data Factory copies last night's sales from an on-premises database into <b>ADLS Gen2</b>.</li>
+          <li>Clicks stream in all day through <b>Event Hubs</b>.</li>
+          <li>A Databricks job cleans and joins it all, using a database password from <b>Key Vault</b>.</li>
+          <li>Analysts open <b>Power BI</b> reports that query a Databricks SQL warehouse.</li>
+          <li>Everyone signs in with <b>Entra ID</b>; <b>Azure Monitor</b> keeps the logs.</li>
+        </ol>
+      </div>
+      <figure class="reveal svgfig">
+        <svg viewBox="0 0 440 330" role="img" aria-label="Diagram: data flows from Data Factory and Event Hubs into ADLS Gen2 and Databricks, then out to Power BI">
+          <rect width="440" height="330" rx="14" fill="#fff"/>
+          <g font-family="Inter,sans-serif" font-size="12" font-weight="700" text-anchor="middle">
+            <rect x="16" y="30" width="110" height="46" rx="10" fill="#e0f2fe"/><text x="71" y="58" fill="#075985">Data Factory</text>
+            <rect x="16" y="140" width="110" height="46" rx="10" fill="#e0f2fe"/><text x="71" y="168" fill="#075985">Event Hubs</text>
+            <rect x="166" y="80" width="110" height="60" rx="10" fill="#ccfbf1"/><text x="221" y="108" fill="#115e59">ADLS Gen2</text><text x="221" y="126" fill="#115e59" font-weight="500" font-size="10">bronze files</text>
+            <rect x="166" y="200" width="110" height="60" rx="10" fill="#0f857a"/><text x="221" y="228" fill="#fff">Databricks</text><text x="221" y="246" fill="#ccfbf1" font-weight="500" font-size="10">silver, gold</text>
+            <rect x="316" y="200" width="110" height="60" rx="10" fill="#fef3c7"/><text x="371" y="234" fill="#92400e">Power BI</text>
+            <rect x="316" y="80" width="110" height="46" rx="10" fill="#ede9fe"/><text x="371" y="108" fill="#5b21b6">Key Vault</text>
+            <rect x="96" y="286" width="250" height="32" rx="10" fill="#f1f5f9"/><text x="221" y="307" fill="#334155">Entra ID sign-in · Azure Monitor logs</text>
+          </g>
+          <g stroke="#64748b" stroke-width="2.5" fill="none"><path d="M126 53 H150 V100 H166"/><path d="M126 163 H150 V220 H166"/><path d="M221 140 V200"/><path d="M276 230 H316"/><path d="M316 103 H296 V210 H276" stroke-dasharray="4 4"/></g>
+        </svg>
+        <figcaption>Diagram drawn for this magazine.</figcaption>
+      </figure>
+    </div>
+  </div>
+
+  <div class="section tight">
+    <aside class="inside reveal" aria-label="Inside the data center"><div class="inside-in"><div class="in-head"><span class="led" aria-hidden="true"></span>Inside the data center<span class="rack-id">NETWORK ROOM · SPINE 2</span></div><p class="in-sum">Every arrow on that diagram is real traffic: packets travelling between buildings and racks over fibre, through switches and routers inside the Azure region. Keeping Databricks, storage and Event Hubs in the same region keeps those trips short.</p><button class="in-btn" aria-expanded="false"><span class="lbl">See inside</span><span class="chev" aria-hidden="true">▾</span></button><div class="in-body" hidden><div class="in-grid"><figure><svg viewBox="0 0 460 280" role="img" aria-label="Diagram: data path from Event Hubs servers through switches to storage servers and cluster VMs">
+        <rect width="460" height="280" fill="#05080c"/>
+        <g font-family="Inter,sans-serif" font-size="11" fill="#c9d1d9" text-anchor="middle">
+          <rect x="20" y="30" width="110" height="60" rx="8" fill="#0d1b2e" stroke="#2563eb"/><text x="75" y="57">Event Hubs</text><text x="75" y="73" fill="#8fa3c7">servers</text>
+          <rect x="175" y="110" width="110" height="60" rx="8" fill="#1a1407" stroke="#e3b341"/><text x="230" y="137">Spine &amp; leaf</text><text x="230" y="153" fill="#e3b341">switches</text>
+          <rect x="330" y="30" width="110" height="60" rx="8" fill="#0f1d14" stroke="#0f857a"/><text x="385" y="57">Storage</text><text x="385" y="73" fill="#8fa3c7">servers (ADLS)</text>
+          <rect x="330" y="190" width="110" height="60" rx="8" fill="#0f1d14" stroke="#3fb950"/><text x="385" y="217">Cluster VMs</text><text x="385" y="233" fill="#8fa3c7">your workers</text>
+          <rect x="20" y="190" width="110" height="60" rx="8" fill="#16102a" stroke="#7c3aed"/><text x="75" y="217">Data Factory</text><text x="75" y="233" fill="#8fa3c7">runtime</text>
+        </g>
+        <g stroke="#7ee787" stroke-width="2" fill="none" stroke-dasharray="5 4"><path d="M130 60 C160 60 175 120 175 130"/><path d="M285 130 C300 110 320 80 330 70"/><path d="M285 150 C300 170 320 210 330 220"/><path d="M130 220 C160 220 175 160 175 150"/></g>
+      </svg><figcaption>Diagram drawn for this magazine.</figcaption></figure><dl class="in-rows"><div class="where"><span class="ic" aria-hidden="true">🏢</span><dt>Where it lives</dt><dd>Each service runs on its own fleets of servers, usually in the same region you chose. Traffic between them stays on Microsoft's network inside the region when they're co-located.</dd></div><div class="machines"><span class="ic" aria-hidden="true">🖥️</span><dt>The machines</dt><dd>Storage servers for ADLS Gen2, servers for Event Hubs and Data Factory's integration runtime, VMs for your clusters, all linked by switches and routers.</dd></div><div class="journey"><span class="ic" aria-hidden="true">🔀</span><dt>The physical journey</dt><dd>A Data Factory copy job reads from your source, crosses into the region, and writes files onto storage servers. Later your cluster reads those files back over the data center network into its memory.</dd></div><div class="power"><span class="ic" aria-hidden="true">⚡</span><dt>Power & heat</dt><dd>Network gear runs 24/7, and every switch port and optical transceiver draws power and adds heat, even when idle.</dd></div><div class="scale"><span class="ic" aria-hidden="true">📏</span><dt>Scale</dt><dd>Microsoft says availability zones are usually within 100 km of each other, so cross-zone hops are typically just a few milliseconds.</dd></div><div class="breaks"><span class="ic" aria-hidden="true">🛠️</span><dt>When something breaks</dt><dd>Networks are built with spare paths. If a switch or a fibre link fails, traffic is re-routed over the remaining paths, usually without your job noticing.</dd></div><div class="feel"><span class="ic" aria-hidden="true">👂</span><dt>Feel it</dt><dd>In the network room, bundles of yellow and blue fibre pour out of patch panels, and the switches blink so fast the lights look like they're shimmering.</dd></div></dl></div><a class="in-deeper" href="../data-centers/#ch4">Go deeper: Data Center magazine, Ch 4 · The journey of a request →</a><p class="in-note">Microsoft doesn't publish every hardware detail. Where exact facts aren't public, we say "typically" or "for example".</p></div></div></aside>
+  </div>
+
+  <div class="section tight">
+    <div class="dyk reveal"><p>Power BI can do more than read from Databricks: from inside Azure Databricks you can publish datasets straight to the Power BI service, and Power BI Desktop can connect to both clusters and SQL warehouses.</p></div>
+    <div class="recap reveal" style="margin-top:36px">
+      <h3>Chapter 4 recap</h3>
+      <ul>
+        <li>ADLS Gen2 holds the data; Entra ID handles sign-in; Key Vault guards secrets.</li>
+        <li>Data Factory moves data in and can trigger Databricks; Event Hubs streams events in.</li>
+        <li>Power BI reads gold tables through SQL warehouses; Azure Monitor collects logs.</li>
+        <li>Keep these services in the same region to keep data trips short and cheap.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="quiz reveal" data-quiz='[
+    {"q":"Where should a database password used by a Databricks job live?","o":["Written in the notebook","In a secret (for example backed by Azure Key Vault)","In the table name"],"a":1,"why":"Secrets keep credentials out of code; Key Vault is Azure&apos;s safe for them."},
+    {"q":"Which service is built to receive millions of events per second?","o":["Azure Event Hubs","Power BI","Microsoft Entra ID"],"a":0,"why":"Event Hubs ingests high-volume event streams, and speaks the Kafka protocol too."},
+    {"q":"Why keep Databricks, storage and Event Hubs in the same region?","o":["It looks tidier","Data travels shorter distances: faster and cheaper","Regions must always match by law"],"a":1,"why":"Same-region traffic stays on short network paths inside the region."}
+  ]'></div>
+  <p class="teaser reveal">Time to pick the engine. Classic, serverless, jobs, SQL warehouse… which one?<br><a href="#ch5">Chapter 5: Compute →</a></p>
+  <div style="height:80px"></div>
+</section>
+
+
+
+
+<section class="chapter" id="ch5" data-accent="b" data-level="Beginner" data-num="05" data-title="Compute: choosing your engine">
+  <header class="hero">
+    <img src="images/h05-lg.jpg" srcset="images/h05-sm.jpg 960w, images/h05-lg.jpg 1920w" sizes="100vw" width="1920" height="1280" alt="Dell rack servers stacked in a rack with blue status lights" loading="lazy" decoding="async">
+    <div class="hero-in">
+      <span class="level">Beginner<i aria-hidden="true"><b class="on"></b><b class=""></b><b class=""></b></i></span><span class="num">05</span>
+      <h2>Pick the right engine</h2>
+      <p class="dek">All-purpose, jobs, serverless, SQL warehouses, Photon and autoscaling, and how to choose.</p>
+    </div>
+    <div class="credit">Photo: <b>Victor Grigas</b> · <a href="https://commons.wikimedia.org/wiki/File:Wikimedia_Foundation_Servers-8055_43.jpg" target="_blank" rel="noopener">Wikimedia Commons</a> · <a href="https://creativecommons.org/licenses/by-sa/3.0" target="_blank" rel="noopener">CC BY-SA 3.0</a></div>
+  </header>
+
+  <div class="section">
+    <p class="hook reveal">You wouldn't hire a bus to deliver one pizza, or a scooter to move house. Databricks gives you several kinds of compute for exactly the same reason.</p>
+    <div class="text">
+      <p class="reveal">"Compute" just means the machines that run your work. The right choice depends on three things: what kind of work it is, how much control you need, and whether you care more about fast starts or the lowest price.</p>
+    </div>
+  </div>
+
+  <div class="section tight">
+    <div class="wrap">
+      <div class="cards reveal">
+        <div class="card2"><div class="ic">⚡</div><h4><button class="term" data-t="serverless">Serverless</button></h4><p>For notebooks, jobs and pipelines. Starts in seconds, scales itself, and Databricks manages the machines. You pay DBUs only.</p></div>
+        <div class="card2"><div class="ic">🧑‍🍳</div><h4>All-purpose (classic)</h4><p>A <button class="term" data-t="cluster">cluster</button> you create for interactive work. Shared by a team, or dedicated to one person. You pick VM sizes, libraries and settings.</p></div>
+        <div class="card2"><div class="ic">🗓️</div><h4>Jobs compute (classic)</h4><p>Created just for one job run and shut down when it ends. Cheaper DBU rate than all-purpose; ideal for scheduled pipelines.</p></div>
+        <div class="card2"><div class="ic">📊</div><h4><button class="term" data-t="sql warehouse">SQL warehouses</button></h4><p>Built for SQL and dashboards. Serverless (starts in seconds) or classic. <button class="term" data-t="photon">Photon</button> is always on.</p></div>
+        <div class="card2"><div class="ic">🏊</div><h4>Instance pools</h4><p>A few idle VMs kept warm, so classic clusters start faster.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section tint">
+    <div class="wrap split">
+      <div class="copy reveal">
+        <span class="kicker">Two access modes</span>
+        <h3>Standard or Dedicated?</h3>
+        <p>Classic compute comes in two access modes. <b>Standard</b> (formerly "shared") lets many users share one cluster safely. Databricks isolates each user's code with a technology called Lakeguard.</p>
+        <p><b>Dedicated</b> (formerly "single user") belongs to one user or group. Use it for machine-learning runtimes, GPUs, or workloads that need low-level access.</p>
+      </div>
+      <div class="copy reveal">
+        <span class="kicker">Two speed-ups</span>
+        <h3>Photon and autoscaling</h3>
+        <p><button class="term" data-t="photon">Photon</button> is Databricks' native engine written in C++. It processes data in big column batches instead of row by row. It is on for serverless and SQL warehouses, and enabled by default for classic compute too.</p>
+        <p><button class="term" data-t="autoscaling">Autoscaling</button> adds workers when the job is busy and removes them when it is quiet, between a minimum and maximum you set. Add <b>auto-termination</b> so idle clusters switch themselves off.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section dark">
+    <div class="lab reveal" id="chooser" style="box-shadow:none">
+      <div class="lab-head"><div><span class="tag">Try it</span><h3>Which compute should I use?</h3></div><p class="muted" style="margin:0;font-size:.9rem">Answer three questions.</p></div>
+      <div class="ch-q"><h4>1. What are you doing?</h4><div class="seg" data-q="job">
+        <button data-v="explore" aria-pressed="true">🔍 Exploring in a notebook</button><button data-v="sched" aria-pressed="false">🗓️ A scheduled pipeline</button><button data-v="bi" aria-pressed="false">📊 SQL and dashboards</button><button data-v="ml" aria-pressed="false">🧠 Training ML models</button></div></div>
+      <div class="ch-q"><h4>2. How much control do you need?</h4><div class="seg" data-q="ctl">
+        <button data-v="none" aria-pressed="true">Just run it</button><button data-v="custom" aria-pressed="false">Custom libraries / VM types</button><button data-v="gpu" aria-pressed="false">GPUs</button></div></div>
+      <div class="ch-q"><h4>3. What matters most?</h4><div class="seg" data-q="pri">
+        <button data-v="fast" aria-pressed="true">Fast start, no admin</button><button data-v="cheap" aria-pressed="false">Lowest cost for long, steady runs</button></div></div>
+      <div class="panel ch-out" aria-live="polite"><span class="kicker">Recommendation</span><h4 id="cR"></h4><p id="cW"></p></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="text">
+      <span class="kicker reveal">Configure it as code</span>
+      <h3 class="reveal">A sensible classic job cluster</h3>
+      <p class="reveal">For a scheduled classic job: a memory-optimised worker type, autoscaling between 2 and 8 workers, and Photon on. In real projects this lives in a bundle (Chapter 18), not in clicks.</p>
+    </div>
+<div class="code"><div class="code-h"><span>JSON · job cluster</span><button type="button">Copy</button></div><pre><code>{
+  <span class="s">"spark_version"</span>: <span class="s">"17.3.x-scala2.13"</span>,
+  <span class="s">"node_type_id"</span>: <span class="s">"Standard_E8ds_v5"</span>,
+  <span class="s">"autoscale"</span>: { <span class="s">"min_workers"</span>: 2, <span class="s">"max_workers"</span>: 8 },
+  <span class="s">"runtime_engine"</span>: <span class="s">"PHOTON"</span>,
+  <span class="s">"data_security_mode"</span>: <span class="s">"DATA_SECURITY_MODE_DEDICATED"</span>
+}
+</code></pre></div>
+    <p class="muted center reveal" style="font-size:.8rem">17.3 LTS is a long-term-support Databricks Runtime (supported until October 2028). Pick the latest LTS your libraries support.</p>
+  </div>
+
+  <div class="section tight">
+    <aside class="inside reveal" aria-label="Inside the data center"><div class="inside-in"><div class="in-head"><span class="led" aria-hidden="true"></span>Inside the data center<span class="rack-id">COMPUTE ROW · E-SERIES</span></div><p class="in-sum">Every cluster node you choose is a real <b>Azure virtual machine</b>, a slice of a rack server. The VM name tells you what kind of server slice you get: balanced, memory-heavy, disk-heavy, or packed with GPUs.</p><button class="in-btn" aria-expanded="false"><span class="lbl">See inside</span><span class="chev" aria-hidden="true">▾</span></button><div class="in-body" hidden><div class="in-grid"><figure><svg viewBox="0 0 460 300" role="img" aria-label="Diagram comparing Azure VM families: D general purpose, E memory optimized, F compute optimized, L storage optimized, N GPU">
+        <rect width="460" height="300" fill="#05080c"/>
+        <g font-family="Inter,sans-serif" font-size="11" fill="#c9d1d9">
+          <text x="20" y="28" fill="#7ee787" font-family="monospace" font-size="11">VM FAMILY        CPU    RAM    DISK   GPU</text>
+          <g transform="translate(0,48)"><text x="20" y="10" fill="#fff" font-weight="700">D  general</text><rect x="150" y="0" width="60" height="12" fill="#2563eb"/><rect x="220" y="0" width="45" height="12" fill="#0f857a"/><rect x="275" y="0" width="25" height="12" fill="#e3b341"/></g>
+          <g transform="translate(0,96)"><text x="20" y="10" fill="#fff" font-weight="700">E  memory</text><rect x="150" y="0" width="60" height="12" fill="#2563eb"/><rect x="220" y="0" width="80" height="12" fill="#0f857a"/><rect x="310" y="0" width="25" height="12" fill="#e3b341"/></g>
+          <g transform="translate(0,144)"><text x="20" y="10" fill="#fff" font-weight="700">F  compute</text><rect x="150" y="0" width="70" height="12" fill="#2563eb"/><rect x="230" y="0" width="25" height="12" fill="#0f857a"/></g>
+          <g transform="translate(0,192)"><text x="20" y="10" fill="#fff" font-weight="700">L  storage</text><rect x="150" y="0" width="50" height="12" fill="#2563eb"/><rect x="210" y="0" width="45" height="12" fill="#0f857a"/><rect x="265" y="0" width="95" height="12" fill="#e3b341"/></g>
+          <g transform="translate(0,240)"><text x="20" y="10" fill="#fff" font-weight="700">N  GPU</text><rect x="150" y="0" width="60" height="12" fill="#2563eb"/><rect x="220" y="0" width="70" height="12" fill="#0f857a"/><rect x="300" y="0" width="30" height="12" fill="#e3b341"/><rect x="340" y="0" width="100" height="12" fill="#ef4444"/></g>
+          <text x="20" y="288" fill="#6e7681" font-size="10">Bars are illustrative, not to scale.  ■ CPU ■ RAM ■ local disk ■ GPU</text>
+        </g>
+      </svg><figcaption>Diagram drawn for this magazine.</figcaption></figure><dl class="in-rows"><div class="where"><span class="ic" aria-hidden="true">🏢</span><dt>Where it lives</dt><dd>In the compute rows of your Azure region's data halls, in racks of identical servers. For classic compute they are billed to your subscription; serverless uses Databricks' own pool.</dd></div><div class="machines"><span class="ic" aria-hidden="true">🖥️</span><dt>The machines</dt><dd><b>D-series</b> (general purpose; Ddsv5: 2–96 vCPUs, 8–384 GiB RAM, local SSD). <b>E-series</b> (memory-optimised; Edsv5: 2–104 vCPUs, 16–672 GiB) for joins and big aggregations. <b>F-series</b> (compute-optimised; Fsv2: 2–72 vCPUs, high clock speeds). <b>L-series</b> (storage-optimised; Lsv3: up to 10 local NVMe disks of 1.92 TiB) for heavy caching. <b>N-series</b> (GPU; ND H100 v5: 8 NVIDIA H100 GPUs per VM) for deep learning.</dd></div><div class="journey"><span class="ic" aria-hidden="true">🔀</span><dt>The physical journey</dt><dd>Your code is sent from the control plane to the driver VM, which hands tasks to worker VMs. Each worker pulls data from storage across the network into its RAM and CPU caches.</dd></div><div class="power"><span class="ic" aria-hidden="true">⚡</span><dt>Power & heat</dt><dd>A busy general-purpose server typically draws several hundred watts; an 8-GPU server can draw over 10 kW. Pick bigger machines only when the work needs them.</dd></div><div class="scale"><span class="ic" aria-hidden="true">📏</span><dt>Scale</dt><dd>The "d" in Ddsv5 and Edsv5 means a local temporary SSD, which Databricks uses for its disk cache (Chapter 15). Recent sizes run on Intel Xeon Platinum processors such as Ice Lake and Emerald Rapids.</dd></div><div class="breaks"><span class="ic" aria-hidden="true">🛠️</span><dt>When something breaks</dt><dd>If a worker VM's host fails, Databricks replaces the node and Spark reruns the lost tasks elsewhere. If the driver fails, the cluster restarts; your job's retry policy takes over.</dd></div><div class="feel"><span class="ic" aria-hidden="true">👂</span><dt>Feel it</dt><dd>Walk down a compute row and the air coming out of the back of the racks is noticeably warm, while the cold aisle in front feels like an open fridge.</dd></div></dl></div><a class="in-deeper" href="../data-centers/#ch3">Go deeper: Data Center magazine, Ch 3 · Meet the servers →</a><p class="in-note">Microsoft doesn't publish every hardware detail. Where exact facts aren't public, we say "typically" or "for example".</p></div></div></aside>
+  </div>
+
+  <div class="section tight">
+    <div class="dyk reveal"><p>Microsoft says Photon delivers up to 5× better price/performance than other cloud data warehouses on the TPC-DS benchmark. Photon still uses Spark's planner; it just takes over the execution, avoiding Java's garbage-collection pauses.</p></div>
+    <div class="recap reveal" style="margin-top:36px">
+      <h3>Chapter 5 recap</h3>
+      <ul>
+        <li>Serverless: fastest start, no machines to manage. Classic: full control, VMs in your subscription.</li>
+        <li>All-purpose for interactive work; jobs compute for scheduled runs; SQL warehouses for BI.</li>
+        <li>Standard access mode shares safely; Dedicated is for one user or group.</li>
+        <li>Turn on autoscaling and auto-termination; Photon speeds up most SQL and DataFrame work.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="quiz reveal" data-quiz='[
+    {"q":"Which compute is created for a single job run and removed afterwards?","o":["All-purpose compute","Jobs compute","An instance pool"],"a":1,"why":"Jobs compute lives only for the run, which is why it has a cheaper DBU rate."},
+    {"q":"Which VM family is best for big joins that need lots of RAM?","o":["E-series (memory optimised)","F-series (compute optimised)","B-series (burstable)"],"a":0,"why":"E-series VMs have a high memory-to-CPU ratio."},
+    {"q":"What does Photon do?","o":["Stores files","Executes queries in fast native C++, processing columns in batches","Encrypts your network"],"a":1,"why":"Photon replaces the JVM execution layer for supported operations, processing data in columnar batches."}
+  ]'></div>
+  <p class="teaser reveal">You have a cluster. What does Spark actually do with it?<br><a href="#ch6">Chapter 6: Spark basics →</a></p>
+  <div style="height:80px"></div>
+</section>
+
+
+
+
+<section class="chapter" id="ch6" data-accent="b" data-level="Beginner" data-num="06" data-title="Spark basics">
+  <header class="hero">
+    <img src="images/h06-lg.jpg" srcset="images/h06-sm.jpg 960w, images/h06-lg.jpg 1920w" sizes="100vw" width="1920" height="817" alt="Rows of rack servers with blue status lights" loading="lazy" decoding="async">
+    <div class="hero-in">
+      <span class="level">Beginner<i aria-hidden="true"><b class="on"></b><b class=""></b><b class=""></b></i></span><span class="num">06</span>
+      <h2>A kitchen full of cooks</h2>
+      <p class="dek">Driver and executors, partitions, transformations vs actions, lazy evaluation and the dreaded shuffle.</p>
+    </div>
+    <div class="credit">Photo: <b>Victor Grigas</b> · <a href="https://commons.wikimedia.org/wiki/File:Wikimedia_Foundation_Servers-8055_13.jpg" target="_blank" rel="noopener">Wikimedia Commons</a> · <a href="https://creativecommons.org/licenses/by-sa/3.0" target="_blank" rel="noopener">CC BY-SA 3.0</a></div>
+  </header>
+
+  <div class="section">
+    <p class="hook reveal">A restaurant gets an order for 10,000 sandwiches by noon. One cook would need a week. Twenty cooks, each with a stack of bread, finish before lunch. That is the whole idea behind Spark.</p>
+    <div class="text">
+      <p class="reveal">A Spark cluster is like a team of cooks splitting one big order so it's ready faster. The <button class="term" data-t="driver">driver</button> is the head chef: it reads your code and makes the plan. The <button class="term" data-t="executor">executors</button> are the line cooks: they do the actual work, each on its own slice of the data.</p>
+    </div>
+  </div>
+
+  <div class="section tight">
+    <div class="wrap">
+      <div class="cards reveal">
+        <div class="card2"><div class="ic">🍕</div><h4><button class="term" data-t="partition">Partitions</button></h4><p>Your data is cut into slices, like a pizza. Each slice can be worked on by a different core at the same time.</p></div>
+        <div class="card2"><div class="ic">🧾</div><h4><button class="term" data-t="task">Tasks</button></h4><p>One task = one slice processed by one executor core. A 2-core executor runs 2 tasks at once.</p></div>
+        <div class="card2"><div class="ic">📝</div><h4><button class="term" data-t="transformation">Transformations</button></h4><p><code>filter</code>, <code>select</code>, <code>join</code>, <code>groupBy</code>: recipe steps that describe what to do, but do nothing yet.</p></div>
+        <div class="card2"><div class="ic">🔔</div><h4><button class="term" data-t="action">Actions</button></h4><p><code>count</code>, <code>show</code>, <code>write</code>: "Service!" The moment Spark actually starts cooking.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section tint">
+    <div class="wrap split">
+      <div class="copy reveal">
+        <span class="kicker">Lazy on purpose</span>
+        <h3>Spark waits, then plans</h3>
+        <p>Spark uses <button class="term" data-t="lazy">lazy evaluation</button>. When you write a transformation, it just notes it down. Only when you call an action does it look at the <i>whole</i> recipe and find the fastest route, like a delivery driver who waits for all the orders before planning the trip.</p>
+        <p>That's why <code>.filter()</code> before a join can be pushed down into the file read, so less data ever leaves storage.</p>
+      </div>
+      <div class="reveal">
+<div class="code"><div class="code-h"><span>PySpark</span><button type="button">Copy</button></div><pre><code>orders = spark.read.table(<span class="s">"main.sales.orders"</span>)   <span class="c"># nothing runs</span>
+big = orders.filter(<span class="s">"amount &gt; 1000"</span>)            <span class="c"># still nothing</span>
+by_city = big.groupBy(<span class="s">"city"</span>).count()          <span class="c"># still nothing</span>
+
+by_city.explain()   <span class="c"># show the plan Spark made</span>
+by_city.show()      <span class="c"># ACTION: now it runs</span>
+</code></pre></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="text">
+      <span class="kicker reveal">The expensive part</span>
+      <h3 class="reveal">The shuffle</h3>
+      <p class="reveal">Some steps need data from many slices at once. To count orders per city, every row for "Mumbai" must end up on the same executor. Spark moves rows across the network so they meet. That move is a <button class="term" data-t="shuffle">shuffle</button>.</p>
+      <p class="reveal">Shuffles split a job into <b>stages</b>. Inside a stage, cooks work alone ("narrow" steps). Between stages, they swap ingredients across the kitchen ("wide" steps). Fewer, smaller shuffles usually means a faster job.</p>
+    </div>
+  </div>
+
+  <div class="section dark">
+    <div class="lab reveal" id="sparkLab" style="box-shadow:none">
+      <div class="lab-head"><div><span class="tag">Try it</span><h3>Run a Spark job</h3></div><button class="btn" id="spRun">▶ Run the job</button></div>
+      <p style="margin-top:0">The job: count orders per city across <b>16 partitions</b>. Each executor has <b>2 cores</b>. Change the number of executors, then run it.</p>
+      <label for="spN" class="sp-lab"><b>Executors:</b> <span id="spNv">4</span></label>
+      <input type="range" id="spN" min="1" max="12" value="4">
+      <div class="sp-stage" id="spStage">
+        <div class="sp-driver" id="spDriver"><b>🧑‍🍳 Driver</b><span id="spDrv">Waiting for an action…</span></div>
+        <div class="sp-queue"><small>To do</small><div id="spQ"></div></div>
+        <div class="sp-execs" id="spExecs"></div>
+        <div class="sp-done"><small>Done</small><div id="spD"></div></div>
+      </div>
+      <div class="sp-out">
+        <div class="panel"><small>Stage 1: read + partial count</small><b id="sp1">–</b></div>
+        <div class="panel"><small>Shuffle across the network</small><b id="spS">–</b></div>
+        <div class="panel"><small>Stage 2: final count</small><b id="sp2">–</b></div>
+        <div class="panel sp-total"><small>Total (simulated)</small><b id="spT">–</b></div>
+      </div>
+      <p class="muted" id="spSay" style="font-size:.9rem;margin:10px 0 0" aria-live="polite"></p>
+      <p class="muted" style="font-size:.78rem;margin:6px 0 0">Illustration with made-up timings: 4 s per read task, 2 s per final task, and a shuffle that costs a little more for every extra executor.</p>
+    </div>
+  </div>
+
+  <div class="bignum reveal">
+    <span class="n" data-count="16">0</span>
+    <span class="l">partitions ÷ 2 cores per executor = at most 8 useful executors for this stage. More than that, and the extra cooks just stand around.</span>
+  </div>
+
+  <div class="section tight">
+    <aside class="inside reveal" aria-label="Inside the data center"><div class="inside-in"><div class="in-head"><span class="led" aria-hidden="true"></span>Inside the data center<span class="rack-id">ROW 14 · RACK B</span></div><p class="in-sum">When you start a cluster, Azure switches on real virtual machines in a data center near you. Your driver and each executor run on servers in racks, joined by high-speed network cables.</p><button class="in-btn" aria-expanded="false"><span class="lbl">See inside</span><span class="chev" aria-hidden="true">▾</span></button><div class="in-body" hidden><div class="in-grid"><figure><svg viewBox="0 0 460 330" role="img" aria-label="Diagram: notebook to cluster to VMs to rack servers to switches to storage servers">
+        <rect width="460" height="330" fill="#05080c"/>
+        <g font-family="Inter,sans-serif" font-size="11" text-anchor="middle" fill="#e6edf3">
+          <rect x="160" y="10" width="140" height="30" rx="8" fill="#0d1b2e" stroke="#2563eb"/><text x="230" y="30">📓 Your notebook</text>
+          <rect x="160" y="58" width="140" height="30" rx="8" fill="#0d1b2e" stroke="#2563eb"/><text x="230" y="78">Cluster (driver + 3 workers)</text>
+          <g><rect x="40" y="110" width="80" height="28" rx="6" fill="#16241b" stroke="#3fb950"/><text x="80" y="128">driver VM</text>
+          <rect x="140" y="110" width="80" height="28" rx="6" fill="#16241b" stroke="#3fb950"/><text x="180" y="128">worker VM</text>
+          <rect x="240" y="110" width="80" height="28" rx="6" fill="#16241b" stroke="#3fb950"/><text x="280" y="128">worker VM</text>
+          <rect x="340" y="110" width="80" height="28" rx="6" fill="#16241b" stroke="#3fb950"/><text x="380" y="128">worker VM</text></g>
+          <g fill="#1c2128" stroke="#484f58"><rect x="40" y="158" width="180" height="70" rx="4"/><rect x="240" y="158" width="180" height="70" rx="4"/></g>
+          <text x="130" y="178" fill="#9aa4af">Rack A servers</text><text x="330" y="178" fill="#9aa4af">Rack B servers</text>
+          <g fill="#3fb950"><circle cx="60" cy="200" r="3"/><circle cx="80" cy="200" r="3"/><circle cx="100" cy="200" r="3"/><circle cx="260" cy="200" r="3"/><circle cx="280" cy="200" r="3"/><circle cx="300" cy="200" r="3"/></g>
+          <rect x="70" y="244" width="120" height="24" rx="5" fill="#1a1407" stroke="#e3b341"/><text x="130" y="260" fill="#e3b341">top-of-rack switch</text>
+          <rect x="270" y="244" width="120" height="24" rx="5" fill="#1a1407" stroke="#e3b341"/><text x="330" y="260" fill="#e3b341">top-of-rack switch</text>
+          <rect x="150" y="284" width="160" height="24" rx="5" fill="#1a1407" stroke="#e3b341"/><text x="230" y="300" fill="#e3b341">spine switches</text>
+          <rect x="330" y="292" width="120" height="30" rx="6" fill="#0e3346" stroke="#0e7490"/><text x="390" y="311">🗄️ storage servers</text>
+        </g>
+        <g stroke="#7ee787" stroke-width="1.5" fill="none" stroke-dasharray="4 3"><path d="M230 40V58"/><path d="M230 88 C230 100 80 100 80 110"/><path d="M230 88V96 H380V110"/><path d="M130 228V244"/><path d="M330 228V244"/><path d="M190 268 C200 280 210 280 220 284"/><path d="M270 268 C260 280 250 280 240 284"/><path d="M310 296 H330"/></g>
+      </svg><figcaption>Diagram drawn for this magazine.</figcaption></figure><dl class="in-rows"><div class="where"><span class="ic" aria-hidden="true">🏢</span><dt>Where it lives</dt><dd>In a compute hall of your Azure region. The driver and executors are separate VMs, often on different physical servers, sometimes in different racks.</dd></div><div class="machines"><span class="ic" aria-hidden="true">🖥️</span><dt>The machines</dt><dd>For heavy joins, a memory-optimised VM such as <b>Standard_E8ds_v5</b>: 8 vCPUs, 64 GiB of RAM and a local SSD, a slice of a dual-socket rack server with many cores, lots of memory and fast network cards.</dd></div><div class="journey"><span class="ic" aria-hidden="true">🔀</span><dt>The physical journey</dt><dd>Your notebook → the control plane → the driver VM → tasks to executor VMs. Each executor pulls its partitions from ADLS Gen2 storage servers, across the network, into memory. During a shuffle, data rushes between servers through the top-of-rack switches and up to the spine switches when executors sit in different racks.</dd></div><div class="power"><span class="ic" aria-hidden="true">⚡</span><dt>Power & heat</dt><dd>A busy rack of general-purpose servers often draws somewhere between 5 and 20 kW, as much as several homes, all turned into heat for the cooling system to remove.</dd></div><div class="scale"><span class="ic" aria-hidden="true">📏</span><dt>Scale</dt><dd>A standard rack has 42 slots (rack units). A typical 1U or 2U server takes one or two, so one rack can hold a few dozen servers, each hosting several VMs.</dd></div><div class="breaks"><span class="ic" aria-hidden="true">🛠️</span><dt>When something breaks</dt><dd>If a server dies mid-job, its executor is lost. The driver notices, and Spark reruns just the lost tasks on the remaining executors; Databricks requests a replacement VM. Your job finishes a little later instead of failing.</dd></div><div class="feel"><span class="ic" aria-hidden="true">👂</span><dt>Feel it</dt><dd>Stand in the cold aisle and thousands of fans hum in chorus; walk round to the hot aisle behind your executors and it feels like opening an oven door.</dd></div></dl></div><a class="in-deeper" href="../data-centers/#ch3">Go deeper: Data Center magazine, Ch 3 · Meet the servers →</a><p class="in-note">Microsoft doesn't publish every hardware detail. Where exact facts aren't public, we say "typically" or "for example".</p></div></div></aside>
+  </div>
+
+  <div class="section tight">
+    <div class="dyk reveal"><p>Spark's results don't go through the driver unless you ask. <code>.write</code> lets every executor save its own slice straight to storage in parallel. <code>.collect()</code> pulls everything into the driver's memory, the classic way to crash a driver with a big table.</p></div>
+    <div class="recap reveal" style="margin-top:36px">
+      <h3>Chapter 6 recap</h3>
+      <ul>
+        <li>The driver plans; executors do the work, one task per partition per core.</li>
+        <li>Transformations are lazy; actions make Spark run the whole optimised plan.</li>
+        <li>Shuffles move data across the network between stages, and they are the expensive part.</li>
+        <li>More executors help only up to the number of partitions, and shuffles grow with cluster size.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="quiz reveal" data-quiz='[
+    {"q":"Which of these is an action?","o":["filter()","groupBy()","count()"],"a":2,"why":"count() asks for a result, so Spark has to run the plan. filter and groupBy are lazy transformations."},
+    {"q":"A stage has 16 partitions and each executor has 2 cores. How many executors can work at once on it?","o":["4","8","16"],"a":1,"why":"16 tasks ÷ 2 cores each = 8 executors busy at the same time. More would sit idle."},
+    {"q":"Why is a shuffle slow?","o":["It moves data between machines over the network","It deletes data","It runs on the driver only"],"a":0,"why":"Rows are sent across the network so related keys meet: network and disk work, not just CPU."}
+  ]'></div>
+  <p class="teaser reveal">Beginner track done! Next: the table format that makes the lakehouse trustworthy.<br><a href="#ch7">Chapter 7: Delta Lake →</a></p>
+  <div style="height:80px"></div>
+</section>
+
+
+
+
+</main>
+
+<button class="to-top" id="toTop" aria-label="Back to top">
+  <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M9 15V3M3 9l6-6 6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</button>
+<div class="tip" id="tip" role="tooltip"></div>
+
+<script>
+/* ===================== GLOSSARY ===================== */
+const TERMS = {
+  "databricks":["Azure Databricks","A cloud platform for data engineering, analytics and AI, built on Apache Spark and run as a first-party service on Azure. Think of it as a fully equipped kitchen you rent: the stoves, the cooks and the pantry, all organised for you."],
+  "spark":["Apache Spark","Open-source software that splits a big data job into many small tasks and runs them on many machines at once. Like a team of cooks splitting one huge order so it is ready faster."],
+  "cluster":["Cluster (compute)","A group of virtual machines working together on your Spark jobs: one driver plus several workers. Like a kitchen team with a head chef and line cooks."],
+  "driver":["Driver","The 'head chef' of a Spark cluster. It reads your code, plans the work, splits it into tasks and collects the results."],
+  "executor":["Executor / worker","A 'line cook' in a Spark cluster. It runs on a worker machine and does the actual work on its slice of the data."],
+  "partition":["Partition","One slice of a big dataset. Spark works on many partitions at the same time, like cutting a pizza so many people can eat at once."],
+  "task":["Task","One unit of work: one partition processed by one executor core."],
+  "transformation":["Transformation","An instruction that describes a change to data (filter, join, group) without running it yet. Like writing a recipe card."],
+  "action":["Action","An instruction that asks for a result (count, show, write). It makes Spark actually cook the recipe."],
+  "lazy":["Lazy evaluation","Spark waits until you ask for a result, then plans the whole job at once, so it can find the fastest way. Like a delivery driver who waits for all the orders before planning the route."],
+  "shuffle":["Shuffle","Moving data between machines so that related rows end up together (for example, all rows for 'Mumbai' on one machine). It is the slowest step in most jobs because it crosses the network."],
+  "dataframe":["DataFrame","A table of data in Spark, with named columns, spread across many machines."],
+  "lakehouse":["Lakehouse","One platform that keeps all data in cheap open files (like a data lake) but adds the reliability and speed of a warehouse. A lake with a well-organised house built on it."],
+  "data lake":["Data lake","Cheap storage that keeps any kind of file, raw and unsorted. Like a big lake: everything flows in, but finding things can be hard."],
+  "warehouse":["Data warehouse","A database built for fast, reliable business reporting on clean, structured tables. Like a shop with neat labelled shelves."],
+  "delta":["Delta Lake","An open table format that adds a transaction log to Parquet files, giving reliable updates, history and time travel. Like a careful accountant's ledger for your data files."],
+  "parquet":["Parquet","An open file format that stores data by column and compresses it well, so queries read only the columns they need."],
+  "acid":["ACID transactions","A guarantee that every change either fully happens or not at all, and readers never see half-finished work. Like a bank transfer: money never vanishes halfway."],
+  "transaction log":["Transaction log (_delta_log)","The folder of small files where Delta Lake records every change to a table, in order. Like a diary of the table's life."],
+  "time travel":["Time travel","Reading a Delta table as it looked at an earlier version or time. Like scrolling back through a document's version history."],
+  "schema":["Schema","The list of columns and their types in a table. In Unity Catalog, a schema is also a folder of tables inside a catalog."],
+  "merge":["MERGE","One SQL command that updates rows that match and inserts rows that don't, in a single safe step. Also called an upsert."],
+  "optimize":["OPTIMIZE","A Delta command that combines many small files into fewer, bigger ones, so reads are faster."],
+  "vacuum":["VACUUM","A Delta command that deletes old data files no longer needed by recent table versions. Default safety window: 7 days."],
+  "liquid clustering":["Liquid clustering","Databricks' modern way of arranging table data so similar rows sit together. It replaces partitioning and Z-ordering, and you can change the keys later without rewriting everything."],
+  "zorder":["Z-ordering","An older technique that co-locates related values in the same files. Liquid clustering now replaces it for new tables."],
+  "predictive optimization":["Predictive optimization","Databricks automatically runs OPTIMIZE, VACUUM and ANALYZE on Unity Catalog managed tables for you. It is on by default."],
+  "medallion":["Medallion architecture","Organising data in three layers: bronze (raw), silver (cleaned) and gold (ready for business). Like mining ore, refining it, then making jewellery."],
+  "auto loader":["Auto Loader","A Databricks feature that notices new files arriving in cloud storage and loads only the new ones, exactly once. Like a mail sorter that only opens envelopes it hasn't seen."],
+  "copy into":["COPY INTO","A SQL command that loads files from storage into a table and remembers which files it already loaded."],
+  "lakeflow connect":["Lakeflow Connect","Ready-made connectors that pull data from databases (like SQL Server) and business apps (like Salesforce or Workday) into Databricks."],
+  "sdp":["Lakeflow Spark Declarative Pipelines","Databricks' way to build pipelines by declaring the tables you want and the rules they must follow; Databricks works out the order and runs them. Formerly called Delta Live Tables (DLT)."],
+  "expectation":["Expectation","A data-quality rule in a pipeline, such as 'amount must be positive'. You choose whether bad rows are kept and counted, dropped, or stop the pipeline."],
+  "streaming table":["Streaming table","A table that grows as new data arrives, processing each record only once."],
+  "materialized view":["Materialized view","A saved query result that Databricks keeps up to date as source data changes."],
+  "structured streaming":["Structured Streaming","Spark's engine for processing data continuously as it arrives, using the same code as batch."],
+  "checkpoint":["Checkpoint","A small folder where a stream records how far it has got, so it can restart exactly where it stopped. Like a bookmark."],
+  "trigger":["Trigger","The setting that decides how often a stream runs: as fast as possible, every N minutes, or once for everything available."],
+  "watermark":["Watermark","How long a stream waits for late data before closing a time window. Like a shop that keeps the door open 10 minutes after closing time for late customers."],
+  "micro-batch":["Micro-batch","Structured Streaming collects a small batch of new records every few seconds and processes it as one mini job."],
+  "jobs":["Lakeflow Jobs","Databricks' built-in scheduler and orchestrator (formerly called Workflows). It runs tasks in order, on a schedule or when files arrive, and retries failures."],
+  "adf":["Azure Data Factory","Azure's service for moving and orchestrating data across many systems, with 90+ connectors. Often used to land data and to call Databricks jobs."],
+  "dag":["DAG","Directed acyclic graph: a set of tasks with arrows showing which must finish first, with no loops."],
+  "unity catalog":["Unity Catalog","Databricks' central governance layer: one place to organise all data and AI assets and to control who can see what, with lineage and auditing."],
+  "metastore":["Metastore","The top container of Unity Catalog for a region. It holds catalogs and is attached to your workspaces."],
+  "catalog":["Catalog","The first level of Unity Catalog's catalog.schema.table address. Often one per environment or business area."],
+  "grant":["GRANT","The SQL command that gives a user or group permission on an object, such as SELECT on a table."],
+  "lineage":["Lineage","An automatic map of where data came from and where it goes: which tables, jobs and dashboards use it."],
+  "delta sharing":["OpenSharing (formerly Delta Sharing)","An open protocol to share live tables and AI assets with other teams or companies without copying them."],
+  "sql warehouse":["SQL warehouse","Compute built for SQL queries and dashboards. It comes as serverless (starts in seconds) or classic."],
+  "serverless":["Serverless compute","Compute that Databricks runs and scales for you in its own Azure account. You don't pick or manage VMs; it starts in seconds."],
+  "classic compute":["Classic compute","Compute whose virtual machines run inside your own Azure subscription and virtual network. You choose VM sizes and settings."],
+  "photon":["Photon","Databricks' fast query engine written in C++. It processes data in big column batches instead of row by row."],
+  "autoscaling":["Autoscaling","Adding or removing worker machines automatically as the workload grows or shrinks."],
+  "dbu":["DBU (Databricks Unit)","The unit Databricks uses to measure and bill processing. Each compute type has a price per DBU-hour; classic compute also pays Azure for the VMs."],
+  "cluster policy":["Compute policy","Rules that limit what compute people can create (sizes, max workers, auto-termination), to control cost and security."],
+  "spot":["Spot VM","Azure's spare capacity sold at a big discount. Azure can take it back with about 30 seconds' notice."],
+  "control plane":["Control plane","The part of Azure Databricks that Databricks runs for you: the web app, scheduler, notebooks storage and cluster manager."],
+  "compute plane":["Compute plane","Where your data is actually processed: either in your Azure subscription (classic) or in Databricks' serverless account."],
+  "workspace":["Workspace","Your team's Databricks environment: notebooks, jobs, dashboards and compute, all in one region."],
+  "subscription":["Azure subscription","Your billing and ownership container in Azure. Classic compute VMs and your storage accounts live here."],
+  "adls":["ADLS Gen2","Azure Data Lake Storage Gen2: Azure Blob Storage with a real folder structure (hierarchical namespace), built for analytics."],
+  "entra":["Microsoft Entra ID","Azure's identity service (formerly Azure Active Directory). It is how people and apps sign in."],
+  "key vault":["Azure Key Vault","Azure's safe for passwords, keys and certificates."],
+  "secret":["Secret","A password or key stored safely (in a secret scope or Key Vault) instead of written in code."],
+  "event hubs":["Azure Event Hubs","Azure's service for receiving millions of events per second, such as clicks or sensor readings. It speaks the Kafka protocol too."],
+  "power bi":["Power BI","Microsoft's business reporting and dashboard tool."],
+  "vnet":["Virtual network (VNet)","Your private network in Azure. Like a gated estate with its own roads."],
+  "vnet injection":["VNet injection","Deploying the Databricks classic compute VMs into a virtual network that you own and control."],
+  "private link":["Private Link","A private road into an Azure service, so traffic never travels over the public internet."],
+  "scc":["Secure cluster connectivity","Also called No Public IP. Cluster VMs get no public IP addresses and open no inbound ports; they call out to the control plane instead. On by default."],
+  "git folder":["Git folders","A Git client inside the Databricks workspace (formerly called Repos), so notebooks and code live in GitHub, Azure DevOps or GitLab."],
+  "bundle":["Declarative Automation Bundles","YAML files that describe your jobs, pipelines and settings as code, so you can deploy the same project to dev, test and prod. Formerly called Databricks Asset Bundles (still 'DAB')."],
+  "ci/cd":["CI/CD","Continuous integration and delivery: every code change is automatically tested and deployed by a pipeline, not by hand."],
+  "mlflow":["MLflow","Open-source tool that records ML experiments, packages models and tracks their versions."],
+  "model serving":["Model Serving","Databricks' service that turns a model into a REST API that apps can call, scaling automatically."],
+  "agent bricks":["Agent Bricks","Databricks' platform for building, evaluating and deploying AI agents."],
+  "genie":["Genie","Databricks' AI experience that lets business users ask data questions in plain language."],
+  "aqe":["Adaptive Query Execution (AQE)","Spark re-plans a query while it runs, using real data sizes: merging tiny partitions, splitting skewed ones, choosing better joins. On by default."],
+  "skew":["Data skew","When one partition has far more data than the others, so one executor works for ages while the rest wait."],
+  "salting":["Salting","Adding a random number to a skewed key so its rows spread over many partitions."],
+  "disk cache":["Disk cache","Databricks copies data you read onto the workers' fast local SSDs, so repeated reads are much faster. Formerly called the Delta cache."],
+  "spark ui":["Spark UI","Spark's built-in web page showing jobs, stages, tasks and how long each took. The first place to look when something is slow."],
+  "vm":["Virtual machine (VM)","A slice of a real server that behaves like its own computer. Every Databricks cluster node is a VM."],
+  "region":["Azure region","A geographic area (like Central India or West Europe) with one or more data centers."],
+  "availability zone":["Availability zone","A separate group of data centers inside a region, with its own power, cooling and network. Usually several kilometres apart."],
+  "lrs":["LRS / ZRS / GRS","Storage redundancy options. LRS keeps copies inside one data center; ZRS spreads them across three or more zones; GRS also copies to a second region."],
+  "nvme":["NVMe SSD","A very fast flash drive plugged straight into the server's PCIe bus."],
+  "tor":["Top-of-rack switch","The network switch at the top of each server rack that connects every server in it."]
+};
+
+/* ===================== CORE ===================== */
+const MAG_SLUG = 'azure-databricks'; // used by the library home page's "Continue reading"
+function saveProgress(ch){ try { localStorage.setItem('cookbook:' + MAG_SLUG, JSON.stringify({id: ch.id, num: ch.dataset.num, title: ch.dataset.title, at: Date.now()})); } catch (e) { /* storage unavailable: fine */ } }
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+/* Chapters menu + scroll spy + progress */
+(function nav(){
+  const chapters = $$('section.chapter[data-title]');
+  const list = $('#menuList'), menu = $('#menu'), btn = $('#menuBtn'), now = $('#nowReading'), bar = $('#topbar');
+  chapters.forEach(ch => {
+    const li = document.createElement('li');
+    li.innerHTML = `<a href="#${ch.id}" style="--c:${getComputedStyle(ch).getPropertyValue('--accent')}"><small>${ch.dataset.num || ''}</small>${ch.dataset.title}${ch.dataset.level ? `<em class="lvl">${ch.dataset.level}</em>` : ''}</a>`;
+    list.appendChild(li);
+  });
+  const open = v => { menu.classList.toggle('open', v); btn.setAttribute('aria-expanded', v); document.body.style.overflow = v ? 'hidden' : ''; if (v) list.querySelector('a')?.focus(); };
+  btn.onclick = () => open(true);
+  $('#menuClose').onclick = () => open(false);
+  list.addEventListener('click', e => { if (e.target.closest('a')) open(false); });
+  addEventListener('keydown', e => { if (e.key === 'Escape') { open(false); hideTip(); } });
+  const prog = $('#progress'), toTop = $('#toTop');
+  let ticking = false, lastSaved = null;
+  const onScroll = () => {
+    const h = document.documentElement.scrollHeight - innerHeight;
+    prog.style.width = (scrollY / h * 100) + '%';
+    bar.classList.toggle('top', scrollY < innerHeight * .6);
+    toTop.classList.toggle('show', scrollY > innerHeight * 1.5);
+    let cur = null;
+    for (const ch of chapters) { if (ch.getBoundingClientRect().top < innerHeight * .4) cur = ch; }
+    if (cur) {
+      if (cur !== lastSaved) { lastSaved = cur; saveProgress(cur); }
+      bar.dataset.accent = cur.dataset.accent;
+      now.innerHTML = `<span>${cur.dataset.num || ''}</span>${cur.dataset.title}`;
+    } else { now.textContent = ''; }
+    ticking = false;
+  };
+  addEventListener('scroll', () => { if (!ticking) { requestAnimationFrame(onScroll); ticking = true; } }, {passive:true});
+  onScroll();
+  toTop.onclick = () => scrollTo({top:0, behavior: reduceMotion ? 'auto' : 'smooth'});
+})();
+
+/* Reveal + count-up */
+(function reveal(){
+  const fmt = (v, d) => v.toLocaleString('en-IN', {minimumFractionDigits:d, maximumFractionDigits:d});
+  const count = el => {
+    const to = parseFloat(el.dataset.count), d = +(el.dataset.dec || 0), pre = el.dataset.pre || '', suf = el.dataset.suf || '';
+    if (reduceMotion) { el.textContent = pre + fmt(to, d) + suf; return; }
+    const t0 = performance.now(), dur = 1600;
+    const step = t => { const p = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - p, 3);
+      el.textContent = pre + fmt(to * e, d) + suf; if (p < 1) requestAnimationFrame(step); };
+    requestAnimationFrame(step);
+  };
+  $$('[data-count]').forEach(el => { el.textContent = (el.dataset.pre || '') + '0' + (el.dataset.suf || ''); });
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    if (!e.isIntersecting) return;
+    e.target.classList.add('in');
+    if (e.target.dataset.count) count(e.target);
+    $$('[data-count]', e.target).forEach(c => { if (!c.dataset.done) { c.dataset.done = 1; count(c); } });
+    io.unobserve(e.target);
+  }), {threshold:.18});
+  $$('.reveal, .hero, [data-count]').forEach(el => io.observe(el));
+})();
+
+/* Glossary tooltips */
+const tip = $('#tip'); let tipFor = null;
+function showTip(el){
+  const key = el.dataset.t, d = TERMS[key]; if (!d) return;
+  tip.innerHTML = `<b>${d[0]}</b>${d[1]}`;
+  const acc = getComputedStyle(el).getPropertyValue('--accent'); tip.style.borderTopColor = acc;
+  tip.classList.add('show'); tipFor = el; el.setAttribute('aria-describedby', 'tip');
+  const r = el.getBoundingClientRect(), tw = tip.offsetWidth, th = tip.offsetHeight;
+  let x = r.left + r.width / 2 - tw / 2 + scrollX; x = Math.max(scrollX + 12, Math.min(x, scrollX + document.documentElement.clientWidth - tw - 12));
+  let y = r.top + scrollY - th - 10; if (r.top < th + 70) y = r.bottom + scrollY + 10;
+  tip.style.left = x + 'px'; tip.style.top = y + 'px';
+}
+function hideTip(){ tip.classList.remove('show'); if (tipFor) tipFor.removeAttribute('aria-describedby'); tipFor = null; }
+document.addEventListener('click', e => {
+  const t = e.target.closest('.term');
+  if (t) { e.preventDefault(); showTip(t); return; }
+  if (!e.target.closest('#tip')) hideTip();
+});
+document.addEventListener('mouseover', e => { const t = e.target.closest('.term'); if (t && matchMedia('(hover:hover)').matches) showTip(t); });
+document.addEventListener('mouseout', e => { const t = e.target.closest('.term'); if (t && matchMedia('(hover:hover)').matches && !t.contains(e.relatedTarget)) hideTip(); });
+document.addEventListener('focusin', e => { const t = e.target.closest('.term'); if (t) showTip(t); });
+document.addEventListener('focusout', e => { if (e.target.closest('.term')) hideTip(); });
+addEventListener('resize', hideTip);
+$$('.term').forEach(t => { t.type = 'button'; if (!TERMS[t.dataset.t]) console.warn('Missing term', t.dataset.t); });
+
+/* Quiz engine: <div class="quiz" data-quiz='[{"q":"...","o":["a","b","c"],"a":0,"why":"..."}]'> */
+$$('.quiz[data-quiz]').forEach(qz => {
+  const qs = JSON.parse(qz.dataset.quiz); let score = 0, answered = 0;
+  const out = document.createElement('p'); out.className = 'quiz-score'; out.setAttribute('aria-live', 'polite');
+  qs.forEach((q, i) => {
+    const card = document.createElement('div'); card.className = 'quiz-card';
+    card.innerHTML = `<span class="qn">Question ${i + 1} of ${qs.length}</span><h4>${q.q}</h4><div class="opts"></div><p class="why"></p>`;
+    const opts = $('.opts', card);
+    q.o.forEach((o, j) => {
+      const b = document.createElement('button'); b.className = 'opt'; b.textContent = o;
+      b.onclick = () => {
+        $$('.opt', card).forEach(x => x.disabled = true);
+        $$('.opt', card)[q.a].classList.add('right');
+        const ok = j === q.a; if (!ok) b.classList.add('wrong'); else score++;
+        answered++; card.classList.add('done');
+        $('.why', card).innerHTML = (ok ? '✅ <b>Right!</b> ' : '❌ <b>Not quite.</b> ') + q.why;
+        if (answered === qs.length) out.textContent = `You got ${score} of ${qs.length}. ${score === qs.length ? 'Perfect! 🎉' : score >= 2 ? 'Nice work!' : 'Read the recap above and try the next chapter!'}`;
+      };
+      opts.appendChild(b);
+    });
+    qz.appendChild(card);
+  });
+  qz.appendChild(out);
+});
+
+/* Generic tabs: [data-tabs] with buttons[data-tab] and panels[data-panel] */
+function initTabs(root, onChange){
+  const btns = $$('[data-tab]', root), panels = $$('[data-panel]', root);
+  const sel = id => {
+    btns.forEach(b => b.setAttribute('aria-selected', b.dataset.tab === id));
+    panels.forEach(p => p.hidden = p.dataset.panel !== id);
+    onChange && onChange(id);
+  };
+  btns.forEach(b => { b.setAttribute('role', 'tab'); b.onclick = () => sel(b.dataset.tab); });
+  sel(btns[0].dataset.tab);
+  return sel;
+}
+
+/* Hotspot images: .hotspots with buttons.hs[data-i] and .hs-info with [data-info] */
+$$('.hotspots').forEach(hs => {
+  const btns = $$('.hs', hs), infos = $$('[data-info]', hs.closest('.hs-wrap'));
+  const pick = i => {
+    btns.forEach(b => b.setAttribute('aria-pressed', b.dataset.i === i));
+    infos.forEach(p => p.hidden = p.dataset.info !== i);
+  };
+  btns.forEach(b => b.onclick = () => pick(b.dataset.i));
+  const lis = $$('[data-pick]', hs.closest('.hs-wrap'));
+  lis.forEach(l => l.onclick = () => pick(l.dataset.pick));
+  pick(btns[0]?.dataset.i);
+});
+
+/* Inside-the-data-center panels */
+document.querySelectorAll('.inside').forEach(p => {
+  const b = p.querySelector('.in-btn'), body = p.querySelector('.in-body'), lbl = b.querySelector('.lbl');
+  b.setAttribute('aria-expanded', 'false');
+  b.onclick = () => {
+    const open = b.getAttribute('aria-expanded') !== 'true';
+    b.setAttribute('aria-expanded', open); body.hidden = !open; lbl.textContent = open ? 'Close the door' : 'See inside';
+    if (open) body.querySelectorAll('img[loading=lazy]').forEach(i => i.loading = 'eager');
+  };
+});
+/* Copy buttons for code */
+document.querySelectorAll('.code').forEach(c => {
+  const b = c.querySelector('.code-h button'), code = c.querySelector('pre').innerText;
+  b.onclick = async () => {
+    let ok = false;
+    try { await navigator.clipboard.writeText(code); ok = true; } catch (e) {
+      const t = document.createElement('textarea'); t.value = code; t.style.position = 'fixed'; t.style.opacity = '0'; document.body.appendChild(t); t.select();
+      try { ok = document.execCommand('copy'); } catch (e2) {} t.remove();
+    }
+    b.textContent = ok ? 'Copied ✓' : 'Select & copy'; b.classList.toggle('done', ok);
+    setTimeout(() => { b.textContent = 'Copy'; b.classList.remove('done'); }, 1800);
+  };
+});
+/* ---- ch01-what.html ---- */
+(function(){
+const P = {
+  eng:['As a data engineer…','You build the roads data travels on: ingesting files and streams, cleaning them in bronze, silver and gold layers, and scheduling it all to run reliably every day.',[['ch6','Spark basics'],['ch7','Delta Lake'],['ch8','Medallion architecture'],['ch10','Building pipelines'],['ch15','Performance tuning']]],
+  ana:['As an analyst…','You ask questions of clean, trusted tables with SQL, and turn the answers into dashboards that business people use every morning.',[['ch2','Lake, warehouse, lakehouse'],['ch13','Unity Catalog'],['ch14','SQL and dashboards'],['ch16','Cost control']]],
+  ds:['As a data scientist…','You explore data in notebooks, train models on big datasets, track experiments, and serve the best model so apps can use it.',[['ch5','Choosing compute'],['ch6','Spark basics'],['ch7','Delta Lake'],['ch19','ML and AI']]],
+  arch:['As an architect…','You decide how everything fits: networks, identity, governance, environments, cost and recovery. You design so that the others can move fast, safely.',[['ch3','The architecture'],['ch13','Unity Catalog'],['ch17','Security and networking'],['ch18','DevOps'],['ch20','Reference architectures'],['ch21','The checklist']]]
+};
+const show = k => {
+  document.querySelectorAll('#persona [data-p]').forEach(b => b.setAttribute('aria-pressed', b.dataset.p === k));
+  document.getElementById('pT').textContent = P[k][0]; document.getElementById('pD').textContent = P[k][1];
+  document.getElementById('pL').innerHTML = P[k][2].map(([id, t]) => `<a href="#${id}">${id.replace('ch', 'Ch ')} · ${t} →</a>`).join('');
+};
+document.querySelectorAll('#persona [data-p]').forEach(b => b.onclick = () => show(b.dataset.p));
+show('eng');
+})();
+/* ---- ch02-lakehouse.html ---- */
+(function(){
+const SQ = [
+  ['📑 The finance team needs the exact quarterly revenue report, every quarter, signed off by auditors.', 2, 'A lakehouse gives warehouse-style reliability (ACID tables, permissions, history) on the same data. A classic warehouse would also work, but then you keep a second copy.'],
+  ['📷 Millions of product photos to train an image model.', 0, 'Raw images belong in the lake (or a Unity Catalog volume on it). Warehouses are built for tables, not pictures.'],
+  ['🖱️ Every website click, arriving all day, for marketing dashboards and a recommendation model.', 2, 'Both BI and AI need it: land it in the lake, then turn it into Delta tables so dashboards and models share one copy.'],
+  ['🧾 A small, stable reference list of 200 store locations.', 2, 'Any table store works for small data. In a lakehouse, it is just another Delta table next to everything else.'],
+  ['📂 Raw log files you might need someday, but nobody queries today.', 0, 'Cheap lake storage (even a cool or archive tier) is perfect for keep-just-in-case raw data.']
+];
+const names = ['🏞️ Data lake', '🏬 Warehouse', '🏡 Lakehouse table'];
+let score = 0; const box = document.getElementById('sortQ');
+SQ.forEach(([q, a, why]) => {
+  const d = document.createElement('div'); d.className = 'sq';
+  d.innerHTML = `<h4>${q}</h4><div class="opts">${names.map((n, i) => `<button data-i="${i}">${n}</button>`).join('')}</div><p class="why" hidden></p>`;
+  d.querySelectorAll('button').forEach(b => b.onclick = () => {
+    d.querySelectorAll('button').forEach(x => x.disabled = true);
+    const i = +b.dataset.i; d.querySelector(`[data-i="${a}"]`).classList.add('right');
+    if (i === a) score++; else b.classList.add('wrong');
+    const w = d.querySelector('.why'); w.hidden = false; w.textContent = (i === a ? '✅ ' : '💡 ') + why;
+    document.getElementById('sortScore').textContent = `${score} / 5`;
+  });
+  box.appendChild(d);
+});
+})();
+/* ---- ch03-architecture.html ---- */
+(function(){
+const A = {
+  users:['Who uses it','Users and tools','People reach Databricks through the browser, through BI tools such as Power BI, and through APIs and CI/CD pipelines. Everyone signs in with Microsoft Entra ID.',[['Lives in','Your offices, laptops and tools'],['Talks to','The control plane web app and APIs (and SQL warehouses for BI)']]],
+  control:['Run by Databricks','Control plane','The backend services Databricks runs for you: the web application, REST APIs, the job scheduler, the compute manager that starts and stops clusters, and the services behind notebooks and queries.',[['Lives in','The Databricks account (not your subscription)'],['You manage','Settings and permissions, not machines'],['Analogy','The restaurant front office']]],
+  uc:['Governance','Unity Catalog','The central catalog for tables, views, volumes, functions and models, with permissions, lineage and auditing. Data is addressed as catalog.schema.object. Automatically enabled for workspaces created after 9 November 2023.',[['Lives in','Account level; one metastore per region, shared by attached workspaces'],['Controls','Who can read or change each object']]],
+  classic:['In your subscription','Classic compute plane','When you start classic compute, VMs are created inside your Azure subscription, in the workspace virtual network: one driver and some workers per cluster. You pick the VM sizes and pay Azure for them, plus Databricks DBUs.',[['Lives in','Your subscription, your VNet'],['Good for','Custom libraries, GPUs, full control'],['Starts in','Typically a few minutes']]],
+  serverless:['Managed for you','Serverless compute plane','Compute that Databricks runs in its own account, in the same region as your workspace, inside a network boundary per workspace. It powers serverless notebooks, jobs, pipelines and SQL warehouses, and starts in seconds.',[['Lives in','The Databricks account, same region'],['You manage','Nothing about the machines'],['Billed as','DBUs only (infrastructure included)']]],
+  storage:['Your data','Storage: ADLS Gen2','Your tables and files live in Azure Data Lake Storage Gen2 accounts in your subscription (or in managed default storage for serverless workspaces). Compute comes and goes; the data stays.',[['Lives in','Your storage accounts'],['Format','Delta Lake / Parquet, volumes for other files'],['Access via','Unity Catalog external locations and credentials']]],
+  network:['Connections','Network paths','With secure cluster connectivity, classic clusters have no public IPs and dial out to the control plane relay over port 443. You can add Private Link: inbound (front-end) for users, classic (back-end) for compute-to-control-plane, and outbound (serverless) for serverless-to-your-resources.',[['Default','Secure cluster connectivity on'],['Lock down','VNet injection + Private Link (Chapter 17)']]]
+};
+const zs = document.querySelectorAll('#arch .az');
+const pick = k => {
+  zs.forEach(z => z.classList.toggle('on', z.dataset.z === k));
+  const [kick, t, d, f] = A[k];
+  document.getElementById('aK').textContent = kick; document.getElementById('aT').textContent = t; document.getElementById('aD').textContent = d;
+  document.getElementById('aF').innerHTML = f.map(([a, b]) => `<dt>${a}</dt><dd>${b}</dd>`).join('');
+};
+zs.forEach(z => { z.addEventListener('click', () => pick(z.dataset.z)); z.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pick(z.dataset.z); } }); });
+pick('control');
+})();
+/* ---- ch04-neighbours.html ---- */
+(function(){
+const H = {
+  adls:['Storage','ADLS Gen2','Azure Data Lake Storage Gen2 is Azure Blob Storage with a real folder structure (a hierarchical namespace), built for analytics. It is where your lakehouse files actually live.','In Databricks: registered in Unity Catalog as external locations or as managed storage for catalogs.'],
+  entra:['Identity','Microsoft Entra ID','Azure\'s identity service (formerly Azure Active Directory). Users sign in to Databricks with it, and users and groups can be synced automatically, so access follows your company directory.','In Databricks: single sign-on, groups, and service principals for automation.'],
+  kv:['Secrets','Azure Key Vault','Azure\'s safe for passwords, keys and certificates. Instead of pasting a password into code, jobs read it as a secret at run time.','In Databricks: secret scopes, including Azure Key Vault-backed ones.'],
+  adf:['Move and orchestrate','Azure Data Factory','Azure\'s service for copying data between many systems (on-premises databases, SaaS apps, files) and for scheduling pipelines. It can call Databricks notebooks and jobs as steps.','In Databricks: often lands raw data in ADLS, then triggers a Databricks job (Chapter 12).'],
+  eh:['Streaming in','Azure Event Hubs','Built to receive millions of events per second: clicks, app logs, IoT sensor readings. It also offers a Kafka-compatible endpoint, so Spark can read it with the Kafka connector.','In Databricks: a source for Structured Streaming and pipelines (Chapter 11).'],
+  pbi:['Reports','Power BI','Microsoft\'s reporting tool. Power BI Desktop connects to Databricks clusters and SQL warehouses, and you can publish datasets to the Power BI service from Databricks.','In Databricks: gold tables served by a SQL warehouse (Chapter 14).'],
+  mon:['Logs and alerts','Azure Monitor','Collects logs and metrics across Azure. Databricks diagnostic logs (who did what, when) can flow into a Log Analytics workspace for alerts and audits.','In Databricks: plus system tables for usage, billing and audit (Chapter 16).'],
+  pv:['Enterprise catalog','Microsoft Purview','Microsoft\'s data governance catalog across the whole company. It can scan Azure Databricks Unity Catalog so your lakehouse tables show up next to everything else.','In Databricks: Unity Catalog stays the source of truth for permissions.'],
+  devops:['Code and CI/CD','GitHub / Azure DevOps','Where your notebooks and code are versioned and tested. Pipelines deploy them to dev, test and prod workspaces automatically.','In Databricks: Git folders and Declarative Automation Bundles (Chapter 18).']
+};
+const hb = document.querySelectorAll('#hood [data-n]');
+const hp = k => { hb.forEach(b => b.setAttribute('aria-pressed', b.dataset.n === k)); const [a, t, d, l] = H[k];
+  document.getElementById('hK').textContent = a; document.getElementById('hT').textContent = t; document.getElementById('hD').textContent = d; document.getElementById('hL').textContent = '🔗 ' + l; };
+hb.forEach(b => b.onclick = () => hp(b.dataset.n)); hp('adls');
+})();
+/* ---- ch05-compute.html ---- */
+(function(){
+const st = {job:'explore', ctl:'none', pri:'fast'};
+const rec = () => {
+  const {job, ctl, pri} = st; let r, w;
+  if (job === 'bi') { r = 'Serverless SQL warehouse'; w = 'SQL warehouses are built for queries and dashboards, with Photon always on. Serverless starts in seconds and scales with the number of users. Use a classic or pro warehouse only if networking rules prevent serverless.'; }
+  else if (ctl === 'gpu') { r = job === 'sched' ? 'Classic jobs compute with GPU VMs (N-series), Dedicated mode' : 'Classic all-purpose compute with GPU VMs (N-series), Dedicated mode'; w = 'GPU work needs a machine-learning runtime and GPU VM types such as the NC or ND families. Dedicated access mode gives the low-level access ML libraries expect. Turn on auto-termination: idle GPUs are expensive.'; }
+  else if (job === 'sched') {
+    if (ctl === 'custom' || pri === 'cheap') { r = 'Classic jobs compute, autoscaling'; w = 'A job cluster lives only for the run and has a cheaper DBU rate than all-purpose. Choose VM types to fit the data (E-series for heavy joins), enable autoscaling, and consider spot workers for the non-driver nodes (Chapter 16).'; }
+    else { r = 'Serverless compute for jobs'; w = 'No cluster to configure, starts in seconds, and Databricks scales it. Great for most scheduled pipelines. You pay DBUs only, with the infrastructure included.'; }
+  } else if (job === 'ml') {
+    r = ctl === 'custom' ? 'Classic all-purpose, Dedicated mode (ML runtime)' : 'Serverless notebooks to explore, then a jobs cluster to train';
+    w = 'Explore and prototype on serverless notebooks; for heavy or long training runs, use a Dedicated classic cluster with the Databricks Runtime for Machine Learning so you control libraries and VM types.';
+  } else {
+    if (ctl === 'custom') { r = 'Classic all-purpose compute, Standard mode'; w = 'Your team can share one cluster safely (Standard mode isolates users). Install the libraries you need, set autoscaling and a short auto-termination, such as 30 minutes.'; }
+    else { r = 'Serverless compute for notebooks'; w = 'Attach your notebook and go: no sizing, no waiting minutes for VMs, and nothing to forget to switch off.'; }
+  }
+  document.getElementById('cR').textContent = r; document.getElementById('cW').textContent = w;
+};
+document.querySelectorAll('#chooser [data-q]').forEach(g => g.querySelectorAll('button').forEach(b => b.onclick = () => {
+  g.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x === b)); st[g.dataset.q] = b.dataset.v; rec();
+}));
+rec();
+})();
+/* ---- ch06-spark.html ---- */
+(function(){
+const COLORS = ['#5eead4','#93c5fd','#fcd34d','#f9a8d4'];
+const $ = id => document.getElementById(id);
+let N = 4, running = false;
+const execs = $('spExecs'), stage = $('spStage');
+function layout(){
+  execs.innerHTML = '';
+  for (let i = 0; i < N; i++) execs.insertAdjacentHTML('beforeend', `<div class="ex" id="ex${i}"><b>Executor ${i + 1} · VM</b><div class="slots"><div class="slot"><i></i><span></span></div><div class="slot"><i></i><span></span></div></div></div>`);
+  $('spQ').innerHTML = Array.from({length:16}, (_, i) => `<span class="tile" style="background:${COLORS[i % 4]}">${i + 1}</span>`).join('');
+  $('spD').innerHTML = '';
+}
+const timings = n => { const s1 = Math.ceil(16 / (n * 2)) * 4, sh = +(3 + .4 * n).toFixed(1), s2 = Math.ceil(4 / (n * 2)) * 2; return [s1, sh, s2, +(s1 + sh + s2).toFixed(1)]; };
+const fmt = v => v.toFixed(1) + ' s';
+const SPEED = 130; // ms of animation per simulated second
+async function runTasks(count, secs, label, color){
+  const slots = [...execs.querySelectorAll('.slot')];
+  let next = 0;
+  while (next < count) {
+    const wave = slots.slice(0, Math.min(slots.length, count - next));
+    wave.forEach((s, k) => { const id = next + k; s.querySelector('span').textContent = label(id); const bar = s.querySelector('i'); bar.style.transition = 'none'; bar.style.width = '0'; bar.style.background = color(id); });
+    execs.querySelectorAll('.ex').forEach((e, i) => e.classList.toggle('idle', i * 2 >= wave.length));
+    if (label === lblRead) { const q = $('spQ'); for (let k = 0; k < wave.length; k++) q.firstElementChild && q.firstElementChild.remove(); }
+    await sleep(30);
+    wave.forEach(s => { const bar = s.querySelector('i'); bar.style.transition = `width ${secs * SPEED}ms linear`; bar.style.width = '100%'; });
+    await sleep(secs * SPEED + 80);
+    next += wave.length;
+  }
+  slots.forEach(s => { s.querySelector('span').textContent = ''; s.querySelector('i').style.width = '0'; });
+  execs.querySelectorAll('.ex').forEach(e => e.classList.remove('idle'));
+}
+const lblRead = id => 'P' + (id + 1);
+async function shuffle(secs){
+  const sr = stage.getBoundingClientRect(), boxes = [...execs.querySelectorAll('.ex')].map(e => e.getBoundingClientRect());
+  const dots = [];
+  for (let k = 0; k < Math.min(48, N * 8); k++) {
+    const a = boxes[k % N], b = boxes[(k * 7 + 3) % N], d = document.createElement('div'); d.className = 'fly'; d.style.background = COLORS[k % 4];
+    d.style.left = (a.left - sr.left + 20 + (k % 5) * 18) + 'px'; d.style.top = (a.top - sr.top + 34) + 'px'; stage.appendChild(d); dots.push([d, b]);
+  }
+  await sleep(40);
+  dots.forEach(([d, b], k) => { d.style.transitionDuration = Math.max(400, secs * SPEED) + 'ms'; d.style.left = (b.left - sr.left + 20 + (k % 5) * 18) + 'px'; d.style.top = (b.top - sr.top + 34) + 'px'; });
+  await sleep(Math.max(400, secs * SPEED) + 100);
+  dots.forEach(([d]) => d.remove());
+}
+$('spN').oninput = e => { if (running) return; N = +e.target.value; $('spNv').textContent = N; layout(); ['sp1','spS','sp2','spT'].forEach(i => $(i).textContent = '–'); $('spSay').textContent = ''; };
+$('spRun').onclick = async function(){
+  if (running) return; running = true; this.disabled = true; $('spN').disabled = true; layout();
+  const [s1, sh, s2, tot] = timings(N);
+  $('spDrv').textContent = 'Action called! Planning 2 stages: 16 read tasks, a shuffle, then 4 final tasks.'; await sleep(900);
+  $('spDrv').textContent = 'Stage 1: each executor reads its partitions and counts per city.';
+  await runTasks(16, 4, lblRead, id => COLORS[id % 4]); $('sp1').textContent = fmt(s1);
+  $('spD').innerHTML = Array.from({length:16}, (_, i) => `<span class="tile" style="background:${COLORS[i % 4]};opacity:.5">✓</span>`).join('');
+  $('spDrv').textContent = 'Shuffle: sending each city\'s rows to one executor over the network…';
+  await shuffle(sh); $('spS').textContent = fmt(sh);
+  $('spDrv').textContent = 'Stage 2: 4 tasks add up the final count for each city group.';
+  await runTasks(4, 2, id => ['A–F','G–L','M–R','S–Z'][id], id => COLORS[id]); $('sp2').textContent = fmt(s2);
+  $('spT').textContent = fmt(tot); $('spDrv').textContent = 'Done: results returned to your notebook. ✅';
+  const best = Math.min(...Array.from({length:12}, (_, i) => timings(i + 1)[3]));
+  $('spSay').textContent = N === 1 ? 'One executor works through 16 tasks, 2 at a time: 8 slow waves. Try 4 or 8.'
+    : N < 8 ? `Faster! Stage 1 needed ${Math.ceil(16 / (N * 2))} waves. Try more executors.`
+    : N === 8 ? 'Sweet spot: all 16 tasks run in one wave. Now try 12 executors…'
+    : `Slower than 8 executors! Extra executors sit idle in stage 1, and the shuffle has more machines to coordinate. The best here is ${best.toFixed(1)} s.`;
+  running = false; this.disabled = false; $('spN').disabled = false; this.textContent = '↻ Run again';
+};
+layout();
+})();
+</script>
+</body>
+</html>

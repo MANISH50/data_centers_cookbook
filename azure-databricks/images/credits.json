@@ -1,0 +1,101 @@
+[
+ {
+  "file": "images/cover-lg.jpg",
+  "small": "images/cover-sm.jpg",
+  "what": "Cover: a stilt house in Lake Dojran",
+  "title": "Наколно живеалиште во Дојранско Езеро",
+  "artist": "Kiril Simeonovski",
+  "license": "CC BY-SA 4.0",
+  "licurl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:%D0%9D%D0%B0%D0%BA%D0%BE%D0%BB%D0%BD%D0%BE_%D0%B6%D0%B8%D0%B2%D0%B5%D0%B0%D0%BB%D0%B8%D1%88%D1%82%D0%B5_%D0%B2%D0%BE_%D0%94%D0%BE%D1%98%D1%80%D0%B0%D0%BD%D1%81%D0%BA%D0%BE_%D0%95%D0%B7%D0%B5%D1%80%D0%BE.jpg",
+  "source": "Wikimedia Commons"
+ },
+ {
+  "file": "images/h01-lg.jpg",
+  "small": "images/h01-sm.jpg",
+  "what": "Ch 1 opening: server hall at CERN",
+  "title": "CERN Server 03",
+  "artist": "Florian Hirzinger - www.fh-ap.com",
+  "license": "CC BY-SA 3.0",
+  "licurl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "page": "https://commons.wikimedia.org/wiki/File:CERN_Server_03.jpg",
+  "source": "Wikimedia Commons"
+ },
+ {
+  "file": "images/i01-lg.jpg",
+  "small": "images/i01-sm.jpg",
+  "what": "Ch 1 inside panel: rows of Wikimedia Foundation servers",
+  "title": "Wikimedia Foundation Servers-8055 08",
+  "artist": "Victor Grigas",
+  "license": "CC BY-SA 3.0",
+  "licurl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Wikimedia_Foundation_Servers-8055_08.jpg",
+  "source": "Wikimedia Commons"
+ },
+ {
+  "file": "images/h02-lg.jpg",
+  "small": "images/h02-sm.jpg",
+  "what": "Ch 2 opening: a house on a lake shore",
+  "title": "Lake at summer scenic white house on shore in background",
+  "artist": "U.S. Fish and Wildlife Service",
+  "license": "Public domain",
+  "licurl": "",
+  "page": "https://commons.wikimedia.org/wiki/File:Lake_at_summer_scenic_white_house_on_shore_in_background.jpg",
+  "source": "Wikimedia Commons"
+ },
+ {
+  "file": "images/i02-lg.jpg",
+  "small": "images/i02-sm.jpg",
+  "what": "Ch 2 inside panel: storage system at Ifremer's Datarmor centre",
+  "title": "Le Centre Datarmor, les coulisses (Ifremer 00957-106840 - 54953)",
+  "artist": "Gregory Rocher / Ifremer",
+  "license": "CC BY 4.0",
+  "licurl": "https://creativecommons.org/licenses/by/4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Le_Centre_Datarmor,_les_coulisses_(Ifremer_00957-106840_-_54953).jpg",
+  "source": "Wikimedia Commons"
+ },
+ {
+  "file": "images/h03-lg.jpg",
+  "small": "images/h03-sm.jpg",
+  "what": "Ch 3 opening: Google data center campus, Mayes County, Oklahoma",
+  "title": "Google Mayes County P0004974a",
+  "artist": "Xpda",
+  "license": "CC BY-SA 4.0",
+  "licurl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Google_Mayes_County_P0004974a.jpg",
+  "source": "Wikimedia Commons"
+ },
+ {
+  "file": "images/h04-lg.jpg",
+  "small": "images/h04-sm.jpg",
+  "what": "Ch 4 opening: illuminated optical fibres",
+  "title": "Fiber optic illuminated",
+  "artist": "Hustvedt",
+  "license": "CC BY-SA 3.0",
+  "licurl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Fiber_optic_illuminated.jpg",
+  "source": "Wikimedia Commons"
+ },
+ {
+  "file": "images/h05-lg.jpg",
+  "small": "images/h05-sm.jpg",
+  "what": "Ch 5 opening: Dell servers in a rack (Wikimedia)",
+  "title": "Wikimedia Foundation Servers-8055 43",
+  "artist": "Victor Grigas",
+  "license": "CC BY-SA 3.0",
+  "licurl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Wikimedia_Foundation_Servers-8055_43.jpg",
+  "source": "Wikimedia Commons"
+ },
+ {
+  "file": "images/h06-lg.jpg",
+  "small": "images/h06-sm.jpg",
+  "what": "Ch 6 opening: Wikimedia Foundation servers",
+  "title": "Wikimedia Foundation Servers-8055 13",
+  "artist": "Victor Grigas",
+  "license": "CC BY-SA 3.0",
+  "licurl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "page": "https://commons.wikimedia.org/wiki/File:Wikimedia_Foundation_Servers-8055_13.jpg",
+  "source": "Wikimedia Commons"
+ }
+]
