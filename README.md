@@ -1,48 +1,77 @@
-# Inside the Cloud: How a Data Center Really Works
+# The Cloud Cookbook
 
-An interactive, magazine-style story that explains data centers to curious beginners, in plain everyday language.
-It covers servers, racks, storage, networking, power, cooling, **water use**, security, redundancy, the cloud, efficiency, and how data centers are built and run.
-It also traces real activities, such as coding with Claude Code, running a Spark job on Databricks, streaming video, paying with UPI and sending a WhatsApp message, step by step through the building.
+A free library of interactive, magazine-style explainers about how the cloud really works, written in plain everyday language.
+Each magazine has real photos, diagrams you can tap, small simulations and a quiz at the end of every chapter.
 
-**Live site:** https://manish50.github.io/data_centers_cookbook/
+**Live library:** https://manish50.github.io/data_centers_cookbook/
 
-![Screenshot of the Inside the Cloud cover page](images/screenshot.jpg)
+![The library home page with a cover card for each magazine](images/home-screenshot.jpg)
 
-## What's inside
+## The magazines
 
-12 chapters, each with a hook, short sections, real photos, "Did you know?" boxes, a recap and a 3-question quiz.
+| Issue | Magazine | Level | Chapters | Live link |
+|---|---|---|---|---|
+| 01 | **Inside the Cloud**: How a Data Center Really Works | Beginner | 12 · about 35 min | https://manish50.github.io/data_centers_cookbook/data-centers/ |
+| 02 | **Inside the Lakehouse**: Azure Databricks, from First Notebook to Architect | Beginner to Advanced | 21 · about 2 h | https://manish50.github.io/data_centers_cookbook/azure-databricks/ |
+
+The home page remembers the last chapter you reached in each magazine and offers **Continue reading**.
+That progress is stored only in your browser (`localStorage`), and every page still works when storage is blocked.
+
+## How the site is organised
+
+```
+index.html                 library home page (magazine stand)
+images/                    home-page images (README screenshot)
+data-centers/index.html    Issue 01, photos in data-centers/images/
+azure-databricks/index.html Issue 02, photos in azure-databricks/images/
+.nojekyll                  serve files as-is on GitHub Pages
+```
+
+Each magazine is a single self-contained `index.html` (styles, scripts and diagrams inline) with its photos next to it.
+Every path is relative, so the site works on GitHub Pages and when opened straight from disk.
+
+### Adding a magazine
+
+1. Create a folder, for example `my-topic/`, with its `index.html` and `images/` (include `images/cover-sm.jpg` and `images/cover-lg.jpg`).
+2. Add an "All magazines" link to `../` in its top bar. To support Continue reading, save `localStorage['cookbook:my-topic'] = {id, num, title, at}` inside a try/catch.
+3. Add one entry to the `MAGAZINES` list at the top of the script in the root `index.html`.
+
+## Run it locally
+
+No server or install needed: open `index.html` in any modern browser.
+Fonts (Fraunces and Inter) load from Google Fonts when online, and the pages fall back to system fonts offline.
+
+---
+
+## Issue 01: Inside the Cloud
+
+![Inside the Cloud cover page](data-centers/images/screenshot.jpg)
+
+An interactive story about data centers for curious beginners. It covers servers, racks, storage, networking, power, cooling, **water use**, security, redundancy, the cloud, efficiency, and how data centers are built and run.
+It also traces real activities step by step through the building, such as coding with Claude Code, running a Spark job on Databricks, streaming video, paying with UPI and sending a WhatsApp message.
 
 | # | Chapter | Try it |
 |---|---|---|
 | 01 | What is a data center? | "Your day online" app tapper |
 | 02 | The guided tour: racks, storage, networking | Clickable floor plan, build-a-rack, spine-leaf diagram |
-| 03 | Meet the servers | Server type explorer, clickable server photos, CPU-vs-GPU painting race, comparison table |
+| 03 | Meet the servers | Server type explorer, clickable server photos, CPU-vs-GPU painting race |
 | 04 | The journey of a request | Animated request: normal website vs AI chatbot |
 | 05 | Power | Power-failure simulator (UPS → batteries → generator) |
-| 06 | Cooling (and water) | Hot/cold-aisle airflow animation, air vs liquid, water evaporated per rack |
-| 07 | Security, fire and monitoring | Security layers, fire suppression sequence, control-room alarm game |
+| 06 | Cooling (and water) | Hot/cold-aisle airflow, air vs liquid, water evaporated per rack |
+| 07 | Security, fire and monitoring | Security layers, fire suppression, control-room alarm game |
 | 08 | Redundancy, uptime and tiers | Break units in N / N+1 / 2N, uptime "nines" slider |
 | 09 | Virtualization and the cloud | Slice-a-server, "pizza as a service" |
-| 10 | Real life, traced | Activity tracer: Claude Code, Spark on Databricks, streaming, UPI, WhatsApp, GitHub CI, video calls |
+| 10 | Real life, traced | Activity tracer: Claude Code, Spark on Databricks, streaming, UPI, WhatsApp, CI, video calls |
 | 11 | Energy, water and the planet | PUE + WUE calculator |
 | 12 | Planning, building and running | Pick-the-site game, build steps, a day in the life |
 
-Key terms are underlined: tap or hover to see a plain-language explanation. Big numbers count up as you scroll.
+**Facts and sources:** numbers were checked in November 2026 against the IEA (*Energy and AI*, 2025), the Uptime Institute, Google, Microsoft, LBNL, NVIDIA and Supermicro specifications, NPCI, Netflix, Databricks, WhatsApp and others.
+The full list with links is in the "Sources" section at the end of the magazine.
 
-## Run it locally
-
-No server or install needed: open `index.html` in any modern browser. Everything (styles, scripts, diagrams) is inside `index.html`; photos are in `images/`.
-Fonts load from Google Fonts when online; the page falls back to system fonts offline.
-
-## Facts and sources
-
-Numbers were checked in November 2026 against the IEA (*Energy and AI*, 2025), the Uptime Institute (2025 survey and outage analysis), Google, Microsoft, LBNL, NVIDIA and Supermicro specifications, NPCI, Netflix, Databricks, WhatsApp and others.
-The full list is in the "Sources" section at the end of the page.
-
-## Photo credits
+### Photo credits: Inside the Cloud
 
 All photos come from [Wikimedia Commons](https://commons.wikimedia.org/) under the free licences below. They were resized and compressed for the web, and some were cropped; adapted versions keep the same licence.
-Diagrams and animations were drawn for this site. A machine-readable list is in [`images/credits.json`](images/credits.json).
+Diagrams and animations were drawn for this site. A machine-readable list is in [`data-centers/images/credits.json`](data-centers/images/credits.json).
 
 | Used for | Photo | Author | Licence |
 |---|---|---|---|
@@ -90,3 +119,137 @@ Diagrams and animations were drawn for this site. A machine-readable list is in 
 | Finale: computing rack at Ifremer's Datarmor centre | [Le Centre Datarmor, les coulisses (Ifremer 00957-106840 - 54954)](https://commons.wikimedia.org/wiki/File:Le_Centre_Datarmor,_les_coulisses_(Ifremer_00957-106840_-_54954).jpg) | Gregory Rocher / Ifremer | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0) |
 | Ch 1: computer room, University of St. Gallen (historic) | [Blick in einen Raum des HSG-Rechenzentrums HSGH 022-001118](https://commons.wikimedia.org/wiki/File:Blick_in_einen_Raum_des_HSG-Rechenzentrums_HSGH_022-001118.jpg) | University of St. Gallen | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
 | Ch 12: technician working on network equipment | [Network server and technician](https://commons.wikimedia.org/wiki/File:Network_server_and_technician.jpg) | Bill Branson (Photographer) | Public domain |
+
+---
+
+## Issue 02: Inside the Lakehouse
+
+![Inside the Lakehouse cover page](azure-databricks/images/screenshot.jpg)
+
+A guide to Azure Databricks for data engineers and architects, from "What is Databricks?" to a production-ready design.
+Chapters are marked **Beginner**, **Intermediate** or **Advanced**, and a learning path at the start shows three tracks.
+Every chapter has an **Inside the data center** panel: a short summary with a "See inside" button that opens up the physical side. It covers where the work runs, which Azure VM families it uses, how the data travels, power and heat, scale, what happens when something breaks, and how it would feel to stand there. It also has a "Go deeper" link into the matching chapter of Issue 01.
+
+| # | Chapter | Level | Try it |
+|---|---|---|---|
+| 01 | What is Databricks? | Beginner | Persona picker |
+| 02 | Lake, warehouse, lakehouse | Beginner | "Where would you keep it?" sorter |
+| 03 | The architecture | Beginner | Architecture explorer |
+| 04 | Its neighbours in Azure | Beginner | Azure neighbourhood map |
+| 05 | Compute: choosing your engine | Beginner | "Which compute?" chooser |
+| 06 | Spark basics | Beginner | Spark job animation with executor slider |
+| 07 | Delta Lake | Intermediate | Time-travel slider + VACUUM |
+| 08 | Medallion architecture | Intermediate | Bronze → silver → gold animation |
+| 09 | Getting data in | Intermediate | Auto Loader demo + ingestion picker |
+| 10 | Building pipelines | Intermediate | Batch vs streaming toggle, expectations demo |
+| 11 | Structured Streaming | Intermediate | Watermark / late-data slider |
+| 12 | Orchestration | Intermediate | Job DAG with failure, retry and repair |
+| 13 | Unity Catalog | Intermediate | Catalog explorer: who can see what |
+| 14 | Databricks SQL and dashboards | Intermediate | Rush-hour SQL warehouse demo |
+| 15 | Performance tuning | Advanced | Data skew demo (AQE, salting) |
+| 16 | Cost control | Advanced | Cluster cost estimator (example prices) |
+| 17 | Security and networking | Advanced | Network lock-down in 4 steps |
+| 18 | DevOps | Advanced | dev → test → prod promotion |
+| 19 | ML and AI | Advanced | MLflow lifecycle stepper |
+| 20 | Reference architectures | Advanced | Architecture switcher |
+| 21 | Mistakes and the architect checklist | Advanced | Production-readiness checklist |
+
+Product names follow the current Microsoft Learn and Databricks documentation (checked November 2026):
+- Lakeflow Spark Declarative Pipelines (formerly Delta Live Tables)
+- Lakeflow Jobs (formerly Workflows)
+- Declarative Automation Bundles (formerly Databricks Asset Bundles)
+- OpenSharing (formerly Delta Sharing)
+- Git folders
+- Standard / Dedicated access modes
+
+Prices in the cost estimator are **examples** from the Azure Databricks pricing page (Premium, pay-as-you-go, US East). Prices change, so it is not a quote.
+
+This is an independent educational guide. It is not affiliated with or endorsed by Microsoft or Databricks, and it uses no official logos or diagrams. All diagrams were drawn for this site.
+
+### Sources: Inside the Lakehouse
+
+- [What is Azure Databricks?](https://learn.microsoft.com/en-us/azure/databricks/introduction/)
+- [High-level architecture](https://learn.microsoft.com/en-us/azure/databricks/getting-started/high-level-architecture)
+- [End of life for Standard tier workspaces](https://learn.microsoft.com/en-us/azure/databricks/admin/account-settings/standard-tier)
+- [Compute](https://learn.microsoft.com/en-us/azure/databricks/compute/)
+- [Compute configuration](https://learn.microsoft.com/en-us/azure/databricks/compute/configure)
+- [Photon](https://learn.microsoft.com/en-us/azure/databricks/compute/photon)
+- [SQL warehouse types](https://learn.microsoft.com/en-us/azure/databricks/compute/sql-warehouse/warehouse-types)
+- [SQL warehouse sizing and scaling](https://learn.microsoft.com/en-us/azure/databricks/compute/sql-warehouse/warehouse-behavior)
+- [Table history and time travel](https://learn.microsoft.com/en-us/azure/databricks/delta/history)
+- [VACUUM](https://learn.microsoft.com/en-us/azure/databricks/delta/vacuum)
+- [MERGE](https://learn.microsoft.com/en-us/azure/databricks/delta/merge)
+- [Liquid clustering](https://learn.microsoft.com/en-us/azure/databricks/delta/clustering)
+- [Predictive optimization](https://learn.microsoft.com/en-us/azure/databricks/optimizations/predictive-optimization)
+- [Medallion architecture](https://learn.microsoft.com/en-us/azure/databricks/lakehouse/medallion)
+- [Auto Loader](https://learn.microsoft.com/en-us/azure/databricks/ingestion/cloud-object-storage/auto-loader/)
+- [COPY INTO](https://learn.microsoft.com/en-us/azure/databricks/ingestion/copy-into/)
+- [Lakeflow Connect](https://learn.microsoft.com/en-us/azure/databricks/ingestion/lakeflow-connect/)
+- [Lakeflow Spark Declarative Pipelines](https://learn.microsoft.com/en-us/azure/databricks/ldp/)
+- [What happened to DLT?](https://learn.microsoft.com/en-us/azure/databricks/ldp/concepts/where-is-dlt)
+- [Expectations](https://learn.microsoft.com/en-us/azure/databricks/ldp/expectations)
+- [Triggers](https://learn.microsoft.com/en-us/azure/databricks/structured-streaming/triggers)
+- [Watermarks](https://learn.microsoft.com/en-us/azure/databricks/structured-streaming/watermarks)
+- [Lakeflow Jobs](https://learn.microsoft.com/en-us/azure/databricks/jobs/)
+- [Unity Catalog](https://learn.microsoft.com/en-us/azure/databricks/data-governance/unity-catalog/)
+- [OpenSharing](https://learn.microsoft.com/en-us/azure/databricks/delta-sharing/)
+- [Secure cluster connectivity](https://learn.microsoft.com/en-us/azure/databricks/security/network/classic/secure-cluster-connectivity)
+- [VNet injection](https://learn.microsoft.com/en-us/azure/databricks/security/network/classic/vnet-inject)
+- [Private Link](https://learn.microsoft.com/en-us/azure/databricks/security/network/classic/private-link)
+- [Secrets](https://learn.microsoft.com/en-us/azure/databricks/security/secrets/)
+- [Adaptive Query Execution](https://learn.microsoft.com/en-us/azure/databricks/optimizations/aqe)
+- [Disk cache](https://learn.microsoft.com/en-us/azure/databricks/optimizations/disk-cache)
+- [Git folders](https://learn.microsoft.com/en-us/azure/databricks/repos/)
+- [Declarative Automation Bundles](https://learn.microsoft.com/en-us/azure/databricks/dev-tools/bundles/)
+- [Bundles release notes (rename, March 2026)](https://docs.databricks.com/aws/en/release-notes/dev-tools/bundles)
+- [MLflow](https://learn.microsoft.com/en-us/azure/databricks/mlflow/)
+- [Model Serving](https://learn.microsoft.com/en-us/azure/databricks/machine-learning/model-serving/)
+- [Agent Bricks](https://learn.microsoft.com/en-us/azure/databricks/generative-ai/agent-bricks/)
+- [AI/BI dashboards](https://learn.microsoft.com/en-us/azure/databricks/dashboards/)
+- [Genie](https://learn.microsoft.com/en-us/azure/databricks/genie/)
+- [Power BI](https://learn.microsoft.com/en-us/azure/databricks/partners/bi/power-bi)
+- [VM sizes](https://learn.microsoft.com/en-us/azure/virtual-machines/sizes/overview)
+- [Ddsv5](https://learn.microsoft.com/en-us/azure/virtual-machines/sizes/general-purpose/ddsv5-series)
+- [Edsv5](https://learn.microsoft.com/en-us/azure/virtual-machines/sizes/memory-optimized/edsv5-series)
+- [Fsv2](https://learn.microsoft.com/en-us/azure/virtual-machines/sizes/compute-optimized/fsv2-series)
+- [Lsv3](https://learn.microsoft.com/en-us/azure/virtual-machines/sizes/storage-optimized/lsv3-series)
+- [ND H100 v5](https://learn.microsoft.com/en-us/azure/virtual-machines/sizes/gpu-accelerated/ndh100v5-series)
+- [Storage redundancy](https://learn.microsoft.com/en-us/azure/storage/common/storage-redundancy)
+- [Availability zones](https://learn.microsoft.com/en-us/azure/reliability/availability-zones-overview)
+- [Azure Spot VMs](https://learn.microsoft.com/en-us/azure/virtual-machines/spot-vms)
+- [Azure Databricks pricing](https://azure.microsoft.com/en-us/pricing/details/databricks/)
+- [Databricks Runtime release notes](https://docs.databricks.com/aws/en/release-notes/runtime/)
+- [Lakeflow Jobs (formerly Workflows)](https://www.databricks.com/blog/whats-new-lakeflow-jobs-provides-more-efficient-data-orchestration)
+
+### Photo credits: Inside the Lakehouse
+
+All photos come from [Wikimedia Commons](https://commons.wikimedia.org/) under the free licences below (several are shared with Issue 01). They were resized and compressed for the web, and some were cropped; adapted versions keep the same licence.
+A machine-readable list is in [`azure-databricks/images/credits.json`](azure-databricks/images/credits.json).
+
+| Used for | Photo | Author | Licence |
+|---|---|---|---|
+| Cover: a stilt house in Lake Dojran | [Наколно живеалиште во Дојранско Езеро](https://commons.wikimedia.org/wiki/File:%D0%9D%D0%B0%D0%BA%D0%BE%D0%BB%D0%BD%D0%BE_%D0%B6%D0%B8%D0%B2%D0%B5%D0%B0%D0%BB%D0%B8%D1%88%D1%82%D0%B5_%D0%B2%D0%BE_%D0%94%D0%BE%D1%98%D1%80%D0%B0%D0%BD%D1%81%D0%BA%D0%BE_%D0%95%D0%B7%D0%B5%D1%80%D0%BE.jpg) | Kiril Simeonovski | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
+| Ch 1 opening: server hall at CERN | [CERN Server 03](https://commons.wikimedia.org/wiki/File:CERN_Server_03.jpg) | Florian Hirzinger - www.fh-ap.com | [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0) |
+| Ch 1 inside panel: rows of Wikimedia Foundation servers | [Wikimedia Foundation Servers-8055 08](https://commons.wikimedia.org/wiki/File:Wikimedia_Foundation_Servers-8055_08.jpg) | Victor Grigas | [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0) |
+| Ch 2 opening: lake with a house on its shore | [Lake at summer scenic white house on shore in background](https://commons.wikimedia.org/wiki/File:Lake_at_summer_scenic_white_house_on_shore_in_background.jpg) | U.S. Fish and Wildlife Service | Public domain |
+| Ch 2 inside panel: storage system at Ifremer's Datarmor centre | [Le Centre Datarmor, les coulisses (Ifremer 00957-106840 - 54953)](https://commons.wikimedia.org/wiki/File:Le_Centre_Datarmor,_les_coulisses_(Ifremer_00957-106840_-_54953).jpg) | Gregory Rocher / Ifremer | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0) |
+| Ch 3 opening: Google data center campus, Mayes County, Oklahoma | [Google Mayes County P0004974a](https://commons.wikimedia.org/wiki/File:Google_Mayes_County_P0004974a.jpg) | Xpda | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
+| Ch 4 opening: illuminated optical fibres | [Fiber optic illuminated](https://commons.wikimedia.org/wiki/File:Fiber_optic_illuminated.jpg) | Hustvedt | [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0) |
+| Ch 5 opening: Dell servers in a rack (Wikimedia) | [Wikimedia Foundation Servers-8055 43](https://commons.wikimedia.org/wiki/File:Wikimedia_Foundation_Servers-8055_43.jpg) | Victor Grigas | [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0) |
+| Ch 6 opening: Wikimedia Foundation servers | [Wikimedia Foundation Servers-8055 13](https://commons.wikimedia.org/wiki/File:Wikimedia_Foundation_Servers-8055_13.jpg) | Victor Grigas | [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0) |
+| Ch 7 opening: library bookstacks, 1904 | [Bookstacks1904 - DPLA - b3cd3f1ec1091fd385286151c2e6e417](https://commons.wikimedia.org/wiki/File:Bookstacks1904_-_DPLA_-_b3cd3f1ec1091fd385286151c2e6e417.jpg) | Brackett, J. Raymond | Public domain |
+| Ch 8 opening: 1996 Summer Olympics medals | [1996 Summer Olympics medals, Atlanta History Center](https://commons.wikimedia.org/wiki/File:1996_Summer_Olympics_medals,_Atlanta_History_Center.jpg) | JJonahJackalope | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
+| Ch 9 opening: Lemon Reservoir, Colorado | [Lemon Reservoir, Colorado](https://commons.wikimedia.org/wiki/File:Lemon_Reservoir,_Colorado.jpg) | Radomianin | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
+| Ch 10 opening: interior pipelines, Gates Rubber | [Gates Rubber, interior pipelines](https://commons.wikimedia.org/wiki/File:Gates_Rubber,_interior_pipelines.jpg) | Eric Jusino from Denver, CO, USA | [CC BY 2.0](https://creativecommons.org/licenses/by/2.0) |
+| Ch 11 opening: fast mountain river | [Fast mountain river flowing through the conifer forest](https://commons.wikimedia.org/wiki/File:Fast_mountain_river_flowing_through_the_conifer_forest.jpg) | Smith Michael L, U.S. Fish and Wildlife Service | Public domain |
+| Ch 12 opening: CSX train switching, Framingham North Yard | [CSX train switching at Framingham North Yard June 2026](https://commons.wikimedia.org/wiki/File:CSX_train_switching_at_Framingham_North_Yard_June_2026.jpg) | 4300streetcar | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0) |
+| Ch 13 opening: card catalog drawer, Library of Congress | [Copyright Card Catalog Drawer](https://commons.wikimedia.org/wiki/File:Copyright_Card_Catalog_Drawer.jpg) | Michael Holley Swtpc6800 | Public domain |
+| Ch 14 opening: KC-135 Stratotanker cockpit | [KC-135 Stratotanker Cockpit](https://commons.wikimedia.org/wiki/File:KC-135_Stratotanker_Cockpit.JPG) | Unknown | Public domain |
+| Ch 15 opening: Formula One wheel gun | [Formula One Wheel Gun](https://commons.wikimedia.org/wiki/File:Formula_One_Wheel_Gun.jpg) | Rich Jones from United Kingdom | [CC BY 2.0](https://creativecommons.org/licenses/by/2.0) |
+| Ch 16 opening: a pile of coins | [A pile of Ukrainian currency coins](https://commons.wikimedia.org/wiki/File:A_pile_of_Ukrainian_currency_coins.jpg) | Роман Рябенко | [CC0](http://creativecommons.org/publicdomain/zero/1.0/deed.en) |
+| Ch 17 opening: locked customer cage in a data center | [Cage Quelle EMC HostCo GmbH](https://commons.wikimedia.org/wiki/File:Cage_Quelle_EMC_HostCo_GmbH.jpg) | Virtuo Doc | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
+| Ch 18 opening: container cranes, Fremantle Harbour | [Container cranes in Fremantle Harbour, July 2023 01](https://commons.wikimedia.org/wiki/File:Container_cranes_in_Fremantle_Harbour,_July_2023_01.jpg) | Calistemon | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
+| Ch 19 opening: NVIDIA HGX B200 GPU board | [Nvidia DGX-B200-HGX](https://commons.wikimedia.org/wiki/File:Nvidia_DGX-B200-HGX.jpg) | Pokiiri | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
+| Ch 20 opening: blueprint of an elevation | [Blueprint of elevation by Alice Trythall Washburn](https://commons.wikimedia.org/wiki/File:Blueprint_of_elevation_by_Alice_Trythall_Washburn.jpg) | Alice Trythall Washburn | Public domain |
+| Ch 21 opening: pilots in a C-130J cockpit | [120316-F-LR266-986 C-130J Hercules Cockpit Ramstein Air Base 2012](https://commons.wikimedia.org/wiki/File:120316-F-LR266-986_C-130J_Hercules_Cockpit_Ramstein_Air_Base_2012.jpg) | U.S. Air Force photo/Staff Sgt. Chris Willis | Public domain |
+| Finale: stilt house in Lake Dojran | [Наколно живеалиште во Дојранско Езеро](https://commons.wikimedia.org/wiki/File:%D0%9D%D0%B0%D0%BA%D0%BE%D0%BB%D0%BD%D0%BE_%D0%B6%D0%B8%D0%B2%D0%B5%D0%B0%D0%BB%D0%B8%D1%88%D1%82%D0%B5_%D0%B2%D0%BE_%D0%94%D0%BE%D1%98%D1%80%D0%B0%D0%BD%D1%81%D0%BA%D0%BE_%D0%95%D0%B7%D0%B5%D1%80%D0%BE.jpg) | Kiril Simeonovski | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
