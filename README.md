@@ -1,6 +1,6 @@
 # The Cloud Cookbook
 
-A free library of interactive, magazine-style explainers about how the cloud really works, written in plain everyday language.
+A free library of interactive, magazine-style explainers about how the cloud and AI really work, written in plain everyday language.
 Each magazine has real photos, diagrams you can tap, small simulations and a quiz at the end of every chapter.
 
 **Live library:** https://manish50.github.io/data_centers_cookbook/
@@ -13,6 +13,7 @@ Each magazine has real photos, diagrams you can tap, small simulations and a qui
 |---|---|---|---|---|
 | 01 | **Inside the Cloud**: How a Data Center Really Works | Beginner | 12 · about 35 min | https://manish50.github.io/data_centers_cookbook/data-centers/ |
 | 02 | **Inside the Lakehouse**: Azure Databricks, from First Notebook to Architect | Beginner to Advanced | 21 · about 2 h | https://manish50.github.io/data_centers_cookbook/azure-databricks/ |
+| 03 | **Inside the Mind of a Model**: How Claude Opus Is Built, Trained and Served | Beginner to Advanced | 25 · about 2½ h | https://manish50.github.io/data_centers_cookbook/ai-model/ |
 
 The home page remembers the last chapter you reached in each magazine and offers **Continue reading**.
 That progress is stored only in your browser (`localStorage`), and every page still works when storage is blocked.
@@ -24,6 +25,7 @@ index.html                 library home page (magazine stand)
 images/                    home-page images (README screenshot)
 data-centers/index.html    Issue 01, photos in data-centers/images/
 azure-databricks/index.html Issue 02, photos in azure-databricks/images/
+ai-model/index.html        Issue 03, photos in ai-model/images/
 .nojekyll                  serve files as-is on GitHub Pages
 ```
 
@@ -253,3 +255,144 @@ A machine-readable list is in [`azure-databricks/images/credits.json`](azure-dat
 | Ch 20 opening: blueprint of an elevation | [Blueprint of elevation by Alice Trythall Washburn](https://commons.wikimedia.org/wiki/File:Blueprint_of_elevation_by_Alice_Trythall_Washburn.jpg) | Alice Trythall Washburn | Public domain |
 | Ch 21 opening: pilots in a C-130J cockpit | [120316-F-LR266-986 C-130J Hercules Cockpit Ramstein Air Base 2012](https://commons.wikimedia.org/wiki/File:120316-F-LR266-986_C-130J_Hercules_Cockpit_Ramstein_Air_Base_2012.jpg) | U.S. Air Force photo/Staff Sgt. Chris Willis | Public domain |
 | Finale: stilt house in Lake Dojran | [Наколно живеалиште во Дојранско Езеро](https://commons.wikimedia.org/wiki/File:%D0%9D%D0%B0%D0%BA%D0%BE%D0%BB%D0%BD%D0%BE_%D0%B6%D0%B8%D0%B2%D0%B5%D0%B0%D0%BB%D0%B8%D1%88%D1%82%D0%B5_%D0%B2%D0%BE_%D0%94%D0%BE%D1%98%D1%80%D0%B0%D0%BD%D1%81%D0%BA%D0%BE_%D0%95%D0%B7%D0%B5%D1%80%D0%BE.jpg) | Kiril Simeonovski | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
+
+---
+
+## Issue 03: Inside the Mind of a Model
+
+![Inside the Mind of a Model cover page](ai-model/images/screenshot.jpg)
+
+> **An independent explainer. Not affiliated with or endorsed by Anthropic.**
+
+How a large AI model like Claude Opus is created, trained, served on real hardware and used to build applications, from a single token to liquid-cooled AI racks.
+It has its own "night lab" look (with a light reading mode): hooks that stream in token by token, a living network on the cover, diagrams that stay pinned while you scroll, "Not public" redaction bars, a context-window reading meter and a searchable chapter map.
+
+Every fact carries one of three labels:
+- **Anthropic has said ↗**: published by Anthropic (or a named cloud/chip partner), with a link to the source.
+- **How models like this work**: general knowledge about language models.
+- **Illustration**: a simplified demo made for teaching.
+
+Numbers Anthropic hasn't published, such as parameter counts, training data size, chip counts and training cost, are never guessed: the magazine shows them as "Not public". Models, features, platforms and prices were checked on Anthropic's website on 9 November 2026. Every chapter has an **Inside the data center** panel linking into Issue 01.
+
+| # | Chapter | Level | Try it |
+|---|---|---|---|
+| 01 | What is a large language model? | Beginner | Next-word game |
+| 02 | Meet the Claude family | Beginner | “Which model for which job?” picker |
+| 03 | Training data | Beginner | Keep / fix / drop data sorter |
+| 04 | Tokens | Beginner | Tokenizer demo |
+| 05 | The Transformer | Intermediate | Pinned scroll story, attention explorer, word-meaning map |
+| 06 | Pre-training | Intermediate | Training animation (loss curve) |
+| 07 | Post-training | Intermediate | “Which answer is better?” preference picker |
+| 08 | Safety work | Intermediate | Responsible Scaling Policy stepper, feature explorer |
+| 09 | Why AI needs special chips | Beginner | CPU vs accelerator race |
+| 10 | Inside an AI server | Intermediate | AI server explorer |
+| 11 | Training clusters | Advanced | Scale explorer: laptop → cluster |
+| 12 | Power and cooling for AI | Intermediate | Rack power slider: air vs liquid |
+| 13 | Training vs inference | Intermediate | Side-by-side toggle |
+| 14 | The journey of one message | Beginner | Message journey animation |
+| 15 | Context, sampling, streaming, thinking | Intermediate | Context window demo, temperature slider |
+| 16 | Serving millions of users | Advanced | Batching simulator |
+| 17 | Where you can use Claude | Beginner | Platform chooser |
+| 18 | Claude API basics | Intermediate | Python/JS code, cost estimator with current prices |
+| 19 | Prompting well | Beginner | Prompt fixer |
+| 20 | Tools, agents and MCP | Intermediate | Agent loop simulator, tool-call code |
+| 21 | Retrieval (RAG) | Intermediate | “Ask your documents” demo |
+| 22 | Faster and cheaper | Advanced | Prompt caching savings calculator |
+| 23 | Claude Code | Intermediate | Coding-session replay with permission modes |
+| 24 | Example architectures | Advanced | Architecture switcher incl. Azure Data Factory assistant via Microsoft Foundry |
+| 25 | Testing, limits and responsible use | Advanced | Spot the made-up answer, readiness checklist |
+
+No Anthropic or Claude logos, website designs, images or diagrams are used. All diagrams, animations and the cover artwork were drawn for this magazine.
+
+### Sources: Inside the Mind of a Model
+
+- [System Card: Claude Opus 5.5](https://anthropic.com/claude-opus-5-5-system-card)
+- [Introducing Claude Opus 5.5](https://www.anthropic.com/news/claude-opus-5-5)
+- [Claude’s Constitution](https://www.anthropic.com/constitution)
+- [Constitutional AI: Harmlessness from AI Feedback](https://www.anthropic.com/research/constitutional-ai-harmlessness-from-ai-feedback)
+- [Anthropic’s Responsible Scaling Policy](https://www.anthropic.com/responsible-scaling-policy)
+- [Mapping the mind of a large language model](https://www.anthropic.com/research/mapping-mind-language-model)
+- [Tracing the thoughts of a large language model](https://www.anthropic.com/research/tracing-thoughts-language-model)
+- [Building effective AI agents](https://www.anthropic.com/engineering/building-effective-agents)
+- [Contextual retrieval in AI systems](https://www.anthropic.com/news/contextual-retrieval)
+- [Expanding our use of Google Cloud TPUs and Services](https://www.anthropic.com/news/expanding-our-use-of-google-cloud-tpus-and-services)
+- [Anthropic invests $50 billion in American AI infrastructure](https://www.anthropic.com/news/anthropic-invests-50-billion-in-american-ai-infrastructure)
+- [Microsoft, NVIDIA, and Anthropic announce strategic partnerships](https://www.anthropic.com/news/microsoft-nvidia-anthropic-announce-strategic-partnerships)
+- [Covering electricity price increases](https://www.anthropic.com/news/covering-electricity-price-increases)
+- [Anthropic expands Google and Broadcom compute deal](https://www.anthropic.com/news/google-broadcom-partnership-compute)
+- [Anthropic and Amazon expand collaboration for up to 5 gigawatts of new compute](https://www.anthropic.com/news/anthropic-amazon-compute)
+- [Higher usage limits for Claude and a compute deal with SpaceX](https://www.anthropic.com/news/higher-limits-spacex)
+- [Download Claude (apps)](https://claude.com/download)
+- [Models overview](https://platform.claude.com/docs/en/about-claude/models/overview)
+- [Pricing](https://platform.claude.com/docs/en/about-claude/pricing)
+- [Context windows](https://platform.claude.com/docs/en/build-with-claude/context-windows)
+- [Thinking](https://platform.claude.com/docs/en/build-with-claude/thinking)
+- [Streaming messages](https://platform.claude.com/docs/en/build-with-claude/streaming)
+- [Token counting](https://platform.claude.com/docs/en/build-with-claude/token-counting)
+- [Messages API reference](https://platform.claude.com/docs/en/api/messages/create)
+- [Rate limits](https://platform.claude.com/docs/en/api/rate-limits)
+- [Prompt caching](https://platform.claude.com/docs/en/build-with-claude/prompt-caching)
+- [Batch processing](https://platform.claude.com/docs/en/build-with-claude/batch-processing)
+- [Tool use with Claude](https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview)
+- [Embeddings](https://platform.claude.com/docs/en/build-with-claude/embeddings)
+- [Citations](https://platform.claude.com/docs/en/build-with-claude/citations)
+- [Prompting best practices](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices)
+- [Claude in Microsoft Foundry](https://platform.claude.com/docs/en/build-with-claude/claude-in-microsoft-foundry)
+- [Claude Code overview](https://code.claude.com/docs/en/overview)
+- [How Claude Code works](https://code.claude.com/docs/en/how-claude-code-works)
+- [Amazon: Project Rainier](https://www.aboutamazon.com/news/aws/aws-project-rainier-ai-trainium-chips-compute-cluster)
+- [AWS Trainium](https://aws.amazon.com/ai/machine-learning/trainium/)
+- [Google Cloud: Ironwood TPUs](https://cloud.google.com/blog/products/compute/ironwood-tpus-and-new-axion-based-vms-for-your-ai-workloads)
+- [NVIDIA: Blackwell platform and GB200 NVL72](https://nvidianews.nvidia.com/news/nvidia-blackwell-platform-arrives-to-power-a-new-era-of-computing)
+- [Microsoft Learn: Data Factory metrics and alerts](https://learn.microsoft.com/en-us/azure/data-factory/monitor-metrics-alerts)
+- [Model Context Protocol: introduction](https://modelcontextprotocol.io/docs/getting-started/intro)
+- [Vaswani et al. (2017), Attention Is All You Need](https://arxiv.org/abs/1706.03762)
+- [Kaplan et al. (2020), Scaling Laws for Neural Language Models](https://arxiv.org/abs/2001.08361)
+- [Hoffmann et al. (2022), Training Compute-Optimal Large Language Models](https://arxiv.org/abs/2203.15556)
+- [Ouyang et al. (2022), Training language models to follow instructions with human feedback](https://arxiv.org/abs/2203.02155)
+- [Bai et al. (2022), Training a Helpful and Harmless Assistant with RLHF](https://arxiv.org/abs/2204.05862)
+- [Bai et al. (2022), Constitutional AI: Harmlessness from AI Feedback](https://arxiv.org/abs/2212.08073)
+- [Lewis et al. (2020), Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks](https://arxiv.org/abs/2005.11401)
+
+### Photo credits: Inside the Mind of a Model
+
+All photos come from [Wikimedia Commons](https://commons.wikimedia.org/) under the free licences below (several are shared with Issues 01 and 02). They were resized and compressed for the web; adapted versions keep the same licence.
+A machine-readable list is in [`ai-model/images/credits.json`](ai-model/images/credits.json).
+
+| Used for | Photo | Author | Licence |
+|---|---|---|---|
+| Ch 1 inside panel: rows of Wikimedia Foundation servers | [Wikimedia Foundation Servers-8055 08](https://commons.wikimedia.org/wiki/File:Wikimedia_Foundation_Servers-8055_08.jpg) | Victor Grigas | [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0) |
+| Ch 2 inside panel: a TSUBAME 4.0 computing node | [TSUBAME4.0 P5160989](https://commons.wikimedia.org/wiki/File:TSUBAME4.0_P5160989.jpg) | Fukumoto | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
+| Ch 3 opening: Library of Congress main reading room | [LOC Main Reading Room Highsmith](https://commons.wikimedia.org/wiki/File:LOC_Main_Reading_Room_Highsmith.jpg) | Carol M. Highsmith | Public domain |
+| Ch 3 inside panel: storage behind the scenes at Ifremer’s DATARMOR center | [Le Centre Datarmor, les coulisses (Ifremer 00957-106840 - 54953)](https://commons.wikimedia.org/wiki/File:Le_Centre_Datarmor,_les_coulisses_(Ifremer_00957-106840_-_54953).jpg) | Gregory Rocher / Ifremer | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0) |
+| Ch 6 opening: racks of the TSUBAME 4.0 supercomputer | [TSUBAME4.0 P5160972](https://commons.wikimedia.org/wiki/File:TSUBAME4.0_P5160972.jpg) | Fukumoto | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
+| Ch 6 inside panel: IBM Blue Gene/P supercomputer racks | [IBM Blue Gene P supercomputer](https://commons.wikimedia.org/wiki/File:IBM_Blue_Gene_P_supercomputer.jpg) | Argonne National Laboratory | [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0) |
+| Ch 7 inside panel: a technician working on servers | [Network server and technician](https://commons.wikimedia.org/wiki/File:Network_server_and_technician.jpg) | Bill Branson (Photographer) | Public domain |
+| Ch 8 opening: a lab technician at a microscope | [Lab technitian looking through the microscope while adjusting coarse knob](https://commons.wikimedia.org/wiki/File:Lab_technitian_looking_through_the_microscope_while_adjusting_coarse_knob.jpg) | Shixart1985 | [CC BY 2.0](https://creativecommons.org/licenses/by/2.0) |
+| Ch 8 inside panel: a locked server cage | [Cage Quelle EMC HostCo GmbH](https://commons.wikimedia.org/wiki/File:Cage_Quelle_EMC_HostCo_GmbH.jpg) | Virtuo Doc | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
+| Ch 9 opening: a silicon wafer | [Silicon Wafer 20190210](https://commons.wikimedia.org/wiki/File:Silicon_Wafer_20190210.jpg) | Enrique Jiménez | [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0) |
+| Ch 9 inside panel: a Google TPU v3 board | [Tensor Processing Unit 3.0](https://commons.wikimedia.org/wiki/File:Tensor_Processing_Unit_3.0.jpg) | Zinskauf | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
+| Ch 10 opening: NVIDIA DGX B200 8-GPU board (HGX) | [Nvidia DGX-B200-HGX](https://commons.wikimedia.org/wiki/File:Nvidia_DGX-B200-HGX.jpg) | Pokiiri | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
+| Ch 10: NVIDIA GB200 liquid-cooled rack | [Nvidia DGX GB200](https://commons.wikimedia.org/wiki/File:Nvidia_DGX_GB200.jpg) | Pokiiri | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
+| Ch 10 inside panel: four NVIDIA H100 GPUs in a TSUBAME 4.0 node | [TSUBAME4.0 P5160984](https://commons.wikimedia.org/wiki/File:TSUBAME4.0_P5160984.jpg) | Fukumoto | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
+| Ch 11 opening: the Frontier supercomputer | [Frontier Supercomputer (1)](https://commons.wikimedia.org/wiki/File:Frontier_Supercomputer_(1).jpg) | OLCF at ORNL | [CC BY 2.0](https://creativecommons.org/licenses/by/2.0) |
+| Ch 11 inside panel: InfiniBand network interfaces on a TSUBAME 4.0 node | [TSUBAME4.0 P5160986](https://commons.wikimedia.org/wiki/File:TSUBAME4.0_P5160986.jpg) | Fukumoto | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
+| Ch 12 opening: cooling tower on a data center roof | [Data center cooling tower](https://commons.wikimedia.org/wiki/File:Data_center_cooling_tower.jpg) | Rsparks3 | [CC0](http://creativecommons.org/publicdomain/zero/1.0/deed.en) |
+| Ch 12: an immersion cooling system | [Asperitas AIC24 Immersion system](https://commons.wikimedia.org/wiki/File:Asperitas_AIC24_Immersion_system.jpg) | Rolf Brink | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
+| Ch 12 inside panel: a bank of backup generators | [Una batteria di grossi generatori alimentati a gasolio in un Data Center in via di ultimazione](https://commons.wikimedia.org/wiki/File:Una_batteria_di_grossi_generatori_alimentati_a_gasolio_in_un_Data_Center_in_via_di_ultimazione.jpg) | Lapalmauz | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
+| Ch 13 inside panel: an engineer in a data center aisle | [Data Center Fish Eye View (noirlab-racks-155)](https://commons.wikimedia.org/wiki/File:Data_Center_Fish_Eye_View_(noirlab-racks-155).jpg) | International Gemini Observatory/NOIRLab/NSF/AURA/Manuel Paredes | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0) |
+| Ch 14 opening: an illuminated fibre-optic cable | [Fiber optic illuminated](https://commons.wikimedia.org/wiki/File:Fiber_optic_illuminated.jpg) | Hustvedt | [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0) |
+| Ch 14 inside panel: a telecommunications technician | [Telecommunications technician](https://commons.wikimedia.org/wiki/File:Telecommunications_technician.jpg) | U.S. Department of Agriculture
+
+Lance Cheung/Multimedia PhotoJournalist | Public domain |
+| Ch 16 opening: air traffic control | [Lajes Field Air Traffic Control](https://commons.wikimedia.org/wiki/File:Lajes_Field_Air_Traffic_Control.jpg) | Senior Airman John Wright | Public domain |
+| Ch 16 inside panel: two rows of server cabinets | [Cabinet Asile](https://commons.wikimedia.org/wiki/File:Cabinet_Asile.jpg) | Robert.Harker | [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0) |
+| Ch 17 inside panel: a large data center campus | [Google Mayes County P0004974a](https://commons.wikimedia.org/wiki/File:Google_Mayes_County_P0004974a.jpg) | Xpda | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
+| Ch 21 opening: library card catalog drawers | [Copyright Card Catalog Drawer](https://commons.wikimedia.org/wiki/File:Copyright_Card_Catalog_Drawer.jpg) | Michael Holley Swtpc6800 | Public domain |
+| Ch 21 inside panel: Wikimedia Foundation servers | [Wikimedia Foundation Servers-8055 24](https://commons.wikimedia.org/wiki/File:Wikimedia_Foundation_Servers-8055_24.jpg) | Victor Grigas | [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0) |
+| Ch 22 opening: a pile of coins | [A pile of Ukrainian currency coins](https://commons.wikimedia.org/wiki/File:A_pile_of_Ukrainian_currency_coins.jpg) | Роман Рябенко | [CC0](http://creativecommons.org/publicdomain/zero/1.0/deed.en) |
+| Ch 23 inside panel: code on a computer monitor | [Code on computer monitor (Unsplash)](https://commons.wikimedia.org/wiki/File:Code_on_computer_monitor_(Unsplash).jpg) | Markus Spiske markusspiske | [CC0](http://creativecommons.org/publicdomain/zero/1.0/deed.en) |
+| Ch 24 opening: a blueprint | [Blueprint of elevation by Alice Trythall Washburn](https://commons.wikimedia.org/wiki/File:Blueprint_of_elevation_by_Alice_Trythall_Washburn.jpg) | Alice Trythall Washburn | Public domain |
+| Ch 24 inside panel: a data center server room | [BalticServers data center](https://commons.wikimedia.org/wiki/File:BalticServers_data_center.jpg) | BalticServers.com | [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0) |
+| Ch 25 opening: pilots going through a pre-flight checklist | [120316-F-LR266-986 C-130J Hercules Cockpit Ramstein Air Base 2012](https://commons.wikimedia.org/wiki/File:120316-F-LR266-986_C-130J_Hercules_Cockpit_Ramstein_Air_Base_2012.jpg) | U.S. Air Force photo/Staff Sgt. Chris Willis | Public domain |
+| Ch 25 inside panel: a Blue Gene/Q supercomputer cabinet | [Blue Gene-Q, Super computer control room at EFPL, Lausanne (2015-05-22 02.41.34 by Mitch Altman)](https://commons.wikimedia.org/wiki/File:Blue_Gene-Q,_Super_computer_control_room_at_EFPL,_Lausanne_(2015-05-22_02.41.34_by_Mitch_Altman).jpg) | Mitch Altman from San Francisco, USA | [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0) |
