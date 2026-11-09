@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Cloud Cookbook: Interactive Magazines</title>
+<meta name="description" content="A free library of interactive magazines that explain how the cloud really works, from the data centers that run the internet to building lakehouses on Azure Databricks.">
+<meta property="og:title" content="The Cloud Cookbook: Interactive Magazines">
+<meta property="og:description" content="Read, tap, play and quiz your way through how the cloud really works.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0b0f17">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#e8edf3; --ink-2:#aab6c4; --muted:#7d8a99; --bg:#0b0f17; --bg-2:#111723; --bg-3:#18202f; --line:#243044; --paper:#f5f3ee;
+  --accent:#38bdf8; --serif:"Fraunces", Georgia, "Times New Roman", serif; --sans:"Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --gutter:clamp(16px,4vw,40px); --w:76rem;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 clamp(16px,.9vw + 11px,18px)/1.6 var(--sans);overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:6px}
+.wrap{max-width:var(--w);margin:0 auto;padding:0 var(--gutter)}
+
+/* top bar */
+.bar{position:sticky;top:0;z-index:20;background:rgba(11,15,23,.82);backdrop-filter:saturate(1.4) blur(10px);-webkit-backdrop-filter:saturate(1.4) blur(10px);border-bottom:1px solid var(--line)}
+.bar .wrap{display:flex;align-items:center;gap:14px;height:58px}
+.brand{font:800 1.1rem var(--serif);text-decoration:none;white-space:nowrap}.brand b{color:var(--accent)}
+.bar nav{margin-left:auto;display:flex;gap:6px}
+.bar nav a{font-size:.85rem;font-weight:600;color:var(--ink-2);text-decoration:none;padding:6px 12px;border-radius:999px}
+.bar nav a:hover{color:#fff;background:var(--bg-3)}
+@media(max-width:520px){.bar nav a.hide-sm{display:none}}
+
+/* welcome */
+.welcome{position:relative;padding:clamp(56px,10vw,120px) 0 clamp(40px,6vw,72px);overflow:hidden}
+.welcome::before{content:"";position:absolute;inset:0;background:radial-gradient(60% 80% at 15% 0%,rgba(56,189,248,.16),transparent 60%),radial-gradient(50% 70% at 95% 20%,rgba(15,133,122,.18),transparent 60%);pointer-events:none}
+.kicker{font:700 .76rem/1 var(--sans);letter-spacing:.18em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:16px}
+h1{font:800 clamp(2.6rem,7vw,5.4rem)/.98 var(--serif);margin:0 0 .35em;letter-spacing:-.02em;max-width:15ch}
+h1 em{font-style:normal;color:var(--accent)}
+.lede{font-size:clamp(1.05rem,1.6vw,1.3rem);color:var(--ink-2);max-width:40rem;margin:0}
+.how{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));margin-top:36px;max-width:60rem}
+.how div{background:var(--bg-2);border:1px solid var(--line);border-radius:14px;padding:14px 16px;font-size:.92rem;color:var(--ink-2)}
+.how b{display:block;color:#fff;font-size:1rem;margin:4px 0 2px}
+.how span{font-size:1.5rem}
+
+/* stand */
+.stand{padding:clamp(28px,5vw,56px) 0 clamp(60px,8vw,100px)}
+.stand h2{font:800 clamp(1.8rem,3.6vw,2.6rem)/1.1 var(--serif);margin:0 0 6px}
+.stand .sub{color:var(--muted);margin:0 0 28px}
+.grid{display:grid;gap:clamp(20px,3vw,36px);grid-template-columns:1fr}
+@media(min-width:720px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:1180px){.grid{grid-template-columns:repeat(3,1fr)}}
+.mag{display:flex;flex-direction:column;background:var(--bg-2);border:1px solid var(--line);border-radius:20px;overflow:hidden;transition:transform .25s,box-shadow .25s,border-color .25s;opacity:0;transform:translateY(18px);animation:rise .7s ease forwards}
+.mag:hover{transform:translateY(-4px);box-shadow:0 24px 60px rgba(0,0,0,.45);border-color:color-mix(in srgb,var(--c) 60%,var(--line))}
+@keyframes rise{to{opacity:1;transform:none}}
+.cover{position:relative;aspect-ratio:3/4;overflow:hidden;display:block;text-decoration:none;color:#fff;background:#000;border-left:10px solid var(--c)}
+@media(min-width:720px) and (max-width:1179px){.cover{aspect-ratio:4/5}}
+.cover img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1.2s ease}
+.mag:hover .cover img{transform:scale(1.04)}
+.cover::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.55) 0%,rgba(0,0,0,.05) 32%,rgba(0,0,0,.15) 55%,rgba(0,0,0,.88) 100%)}
+.mast{position:absolute;z-index:2;left:20px;right:20px;top:18px;display:flex;justify-content:space-between;font:700 .72rem var(--sans);letter-spacing:.16em;text-transform:uppercase}
+.mast span{text-shadow:0 1px 6px rgba(0,0,0,.7)}
+.mast span:last-child{color:#fff;background:var(--c);padding:2px 8px;border-radius:6px;text-shadow:none;color:#06121a}
+.ctitle{position:absolute;z-index:2;left:20px;right:20px;bottom:22px}
+.ctitle h3{font:800 clamp(2rem,4.2vw,2.9rem)/.98 var(--serif);margin:0 0 8px;text-shadow:0 2px 20px rgba(0,0,0,.5)}
+.ctitle h3 em{font-style:normal;color:var(--c)}
+.ctitle p{margin:0;font-size:1rem;color:#e6e6e6;max-width:26ch;text-shadow:0 1px 10px rgba(0,0,0,.6)}
+.body{padding:18px 20px 22px;display:flex;flex-direction:column;gap:14px;flex:1}
+.desc{margin:0;color:var(--ink-2);font-size:.98rem}
+.meta{display:flex;flex-wrap:wrap;gap:8px;font-size:.82rem;color:var(--ink-2)}
+.meta span{background:var(--bg-3);border-radius:999px;padding:5px 11px}
+.meta .lvl{background:color-mix(in srgb,var(--c) 22%,var(--bg-3));color:#fff;font-weight:700}
+.actions{margin-top:auto;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.btn{display:inline-flex;align-items:center;gap:8px;border:0;border-radius:999px;padding:11px 20px;font:700 .95rem var(--sans);text-decoration:none;background:var(--c);color:#0b0f17;min-height:44px}
+.btn:hover{filter:brightness(1.1)}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.btn.ghost:hover{border-color:var(--c)}
+.cont{font-size:.82rem;color:var(--muted);width:100%}
+.cont b{color:var(--ink)}
+.soon{border-style:dashed;align-items:center;justify-content:center;text-align:center;padding:40px 24px;min-height:320px;background:transparent}
+.soon .ic{font-size:2.6rem}.soon h3{font:800 1.6rem var(--serif);margin:10px 0 6px}.soon p{color:var(--muted);max-width:26ch;margin:0 auto}
+
+footer{border-top:1px solid var(--line);padding:32px 0 48px;color:var(--muted);font-size:.86rem}
+footer p{margin:0 0 8px;max-width:60rem}
+footer a{color:var(--ink-2)}
+</style>
+</head>
+<body>
+<header class="bar">
+  <div class="wrap">
+    <a class="brand" href="./">The Cloud <b>Cookbook</b></a>
+    <nav aria-label="Library"><a href="#stand">Magazines</a><a class="hide-sm" href="#about">About</a></nav>
+  </div>
+</header>
+
+<main>
+  <section class="welcome">
+    <div class="wrap">
+      <span class="kicker">A free library of interactive magazines</span>
+      <h1>How the cloud <em>really</em> works</h1>
+      <p class="lede">Every app you use runs on real machines in real buildings. These magazines take you inside, in plain everyday language, with photos, diagrams and things to tap and play with. Pick a magazine and start reading. No sign-up, no install: it works on your phone or laptop.</p>
+      <div class="how">
+        <div><span>📖</span><b>Read</b>Short chapters with real photos and simple words.</div>
+        <div><span>👆</span><b>Tap and play</b>Simulators, animations and diagrams you can explore.</div>
+        <div><span>✅</span><b>Check yourself</b>A quick quiz at the end of every chapter.</div>
+        <div><span>🔖</span><b>Pick up later</b>Your place is remembered on this device.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="stand" id="stand">
+    <div class="wrap">
+      <h2>On the stand</h2>
+      <p class="sub">Each magazine stands alone, and they link to each other where it helps.</p>
+      <div class="grid" id="grid"></div>
+    </div>
+  </section>
+</main>
+
+<footer id="about">
+  <div class="wrap">
+    <p><b>About this library.</b> Independent, educational magazines that explain cloud technology for curious beginners and working engineers. Facts are checked against official documentation and sources listed at the end of each magazine.</p>
+    <p>Photos are from Wikimedia Commons under free licences; each magazine lists its own photo credits. Product names belong to their owners; no affiliation with or endorsement by any company is implied.</p>
+  </div>
+</footer>
+
+<script>
+/* ============================================================
+   THE MAGAZINE LIST: add a new magazine by adding one entry.
+   - slug:     the folder name (the magazine lives in slug/index.html)
+   - cover:    image path WITHOUT the "-sm.jpg" / "-lg.jpg" ending
+   - chapters: number of chapters · minutes: reading time
+   - level:    e.g. "Beginner", "Beginner to Advanced"
+   - accent:   the magazine's colour
+   ============================================================ */
+const MAGAZINES = [
+  {
+    slug: 'data-centers',
+    issue: 'Issue 01',
+    title: 'Inside the <em>Cloud</em>',
+    subtitle: 'How a Data Center Really Works',
+    description: 'Servers, power, cooling, water, security and the cloud: walk through the buildings that run the internet, and follow your own messages, payments and AI questions inside.',
+    cover: 'data-centers/images/cover',
+    chapters: 12,
+    minutes: 35,
+    level: 'Beginner',
+    accent: '#38bdf8'
+  },
+  {
+    slug: 'azure-databricks',
+    issue: 'Issue 02',
+    title: 'Inside the <em>Lakehouse</em>',
+    subtitle: 'Azure Databricks, from First Notebook to Architect',
+    description: 'Spark, Delta Lake, pipelines, streaming, Unity Catalog, cost, security and DevOps, ending with real reference architectures and a production checklist. With the data center behind every chapter.',
+    cover: 'azure-databricks/images/cover',
+    chapters: 21,
+    minutes: 120,
+    level: 'Beginner to Advanced',
+    accent: '#14b8a6'
+  }
+];
+
+/* Reading progress is saved by each magazine as localStorage["cookbook:<slug>"]. Works fine without it. */
+function progress(slug){
+  try { const v = JSON.parse(localStorage.getItem('cookbook:' + slug) || 'null'); return v && v.id ? v : null; } catch (e) { return null; }
+}
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const time = m => m >= 60 ? `${Math.floor(m / 60)} h${m % 60 ? ' ' + (m % 60) + ' min' : ''}` : `${m} min`;
+const grid = document.getElementById('grid');
+grid.innerHTML = MAGAZINES.map((m, i) => {
+  const p = progress(m.slug), plain = m.title.replace(/<[^>]+>/g, '');
+  const start = `<a class="btn${p ? ' ghost' : ''}" href="${m.slug}/">${p ? 'Start over' : 'Start reading →'}</a>`;
+  const cont = p ? `<a class="btn" href="${m.slug}/#${encodeURIComponent(p.id)}">Continue reading →</a><span class="cont">You were at <b>${p.num && p.num !== '★' ? 'Ch ' + esc(p.num) + ' · ' : ''}${esc(p.title)}</b></span>` : '';
+  return `<article class="mag" style="--c:${m.accent};animation-delay:${i * .12}s" aria-label="${esc(plain)}">
+    <a class="cover" href="${m.slug}/${p ? '#' + encodeURIComponent(p.id) : ''}" aria-label="Open ${esc(plain)}">
+      <img src="${m.cover}-sm.jpg" srcset="${m.cover}-sm.jpg 960w, ${m.cover}-lg.jpg 1920w" sizes="(min-width:1180px) 30vw, (min-width:720px) 46vw, 100vw" alt="" loading="${i < 2 ? 'eager' : 'lazy'}">
+      <div class="mast"><span>The Cloud Cookbook</span><span>${esc(m.issue)}</span></div>
+      <div class="ctitle"><h3>${m.title}</h3><p>${esc(m.subtitle)}</p></div>
+    </a>
+    <div class="body">
+      <p class="desc">${esc(m.description)}</p>
+      <div class="meta"><span>📖 ${m.chapters} chapters</span><span>⏱ about ${time(m.minutes)}</span><span class="lvl">${esc(m.level)}</span></div>
+      <div class="actions">${cont}${start}</div>
+    </div>
+  </article>`;
+}).join('') + `<article class="mag soon" style="--c:#7d8a99;animation-delay:${MAGAZINES.length * .12}s"><div class="ic">🗞️</div><h3>More on the way</h3><p>New magazines are added to this stand as they're written.</p></article>`;
+</script>
+</body>
+</html>
