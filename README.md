@@ -14,6 +14,7 @@ Each magazine has real photos, diagrams you can tap, small simulations and a qui
 | 01 | **Inside the Cloud**: How a Data Center Really Works | Beginner | 12 · about 35 min | https://manish50.github.io/data_centers_cookbook/data-centers/ |
 | 02 | **Inside the Lakehouse**: Azure Databricks, from First Notebook to Architect | Beginner to Advanced | 21 · about 2 h | https://manish50.github.io/data_centers_cookbook/azure-databricks/ |
 | 03 | **Inside the Mind of a Model**: How Claude Opus Is Built, Trained and Served | Beginner to Advanced | 25 · about 2½ h | https://manish50.github.io/data_centers_cookbook/ai-model/ |
+| 04 | **How Netflix Streams**: from Play to pixels, a flying tour | Beginner to Intermediate | 15 stops · about 20 min | https://manish50.github.io/data_centers_cookbook/netflix-streaming/ |
 
 The home page remembers the last chapter you reached in each magazine and offers **Continue reading**.
 That progress is stored only in your browser (`localStorage`), and every page still works when storage is blocked.
@@ -26,6 +27,8 @@ images/                    home-page images (README screenshot)
 data-centers/index.html    Issue 01, photos in data-centers/images/
 azure-databricks/index.html Issue 02, photos in azure-databricks/images/
 ai-model/index.html        Issue 03, photos in ai-model/images/
+netflix-streaming/         Issue 04: map tour (index.html, data.js, core.js, tour.js, tour.css, tests/)
+sitemap.xml                list of pages for search engines
 .nojekyll                  serve files as-is on GitHub Pages
 ```
 
@@ -396,3 +399,47 @@ Lance Cheung/Multimedia PhotoJournalist | Public domain |
 | Ch 24 inside panel: a data center server room | [BalticServers data center](https://commons.wikimedia.org/wiki/File:BalticServers_data_center.jpg) | BalticServers.com | [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0) |
 | Ch 25 opening: pilots going through a pre-flight checklist | [120316-F-LR266-986 C-130J Hercules Cockpit Ramstein Air Base 2012](https://commons.wikimedia.org/wiki/File:120316-F-LR266-986_C-130J_Hercules_Cockpit_Ramstein_Air_Base_2012.jpg) | U.S. Air Force photo/Staff Sgt. Chris Willis | Public domain |
 | Ch 25 inside panel: a Blue Gene/Q supercomputer cabinet | [Blue Gene-Q, Super computer control room at EFPL, Lausanne (2015-05-22 02.41.34 by Mitch Altman)](https://commons.wikimedia.org/wiki/File:Blue_Gene-Q,_Super_computer_control_room_at_EFPL,_Lausanne_(2015-05-22_02.41.34_by_Mitch_Altman).jpg) | Mitch Altman from San Francisco, USA | [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0) |
+
+## Issue 04: How Netflix Streams
+
+![How Netflix Streams: the whole map](netflix-streaming/og.jpg)
+
+An independent, single-screen map tour of Netflix's streaming system. The camera flies across one big map with 15 stops, from pressing Play to Open Connect boxes inside your internet provider, live events and the 2007–2025 data-center timeline.
+Every stop has two parts: **What happens** and its **Data-center role**, with a location badge.
+It has a Data-center view, an Auto tour, a "Read as text" version (also pre-rendered into the HTML for search engines and no-JS readers) and a Sources panel.
+It has no logos and no brand typeface. Netflix is a trademark of Netflix, Inc. Not affiliated.
+
+**Navigation:** scroll, swipe, pinch, drag, arrow/Page/Space/Home/End keys, Prev/Next, the progress rail, or the minimap. Each stop has a deep link: `#stop-1` … `#stop-15`.
+
+**Things to try:** "Fail Region A" (stop 5), encoding bars that grow (stop 8), the overnight fill (stop 9), "Throttle my Wi-Fi" and "Fail this OCA" (stop 11), and the live-stream counter (stop 12).
+
+### Files
+
+| File | What it holds |
+|---|---|
+| `netflix-streaming/data.js` | **All content**: stops (text, data-center role, camera target, highlighted site, active wires), map zones, wires, timeline and sources |
+| `netflix-streaming/core.js` | Pure helpers: hash routing, input throttle, camera flight maths, data validation |
+| `netflix-streaming/tour.js` | Engine: draws the SVG map, flies the camera, types captions, handles input and runs the mini-scenes |
+| `netflix-streaming/tour.css` | "Screening room" styles, mobile bottom sheet, reduced-motion rules |
+| `netflix-streaming/prerender.mjs` | Writes the text version, first caption and Sources list into `index.html` |
+| `netflix-streaming/tests/` | `unit.test.mjs` (node:test) and `e2e.mjs` (Playwright) |
+
+### Editing the tour
+
+- **Change stop text:** edit `lines` (1–3 short lines) or `dc.text` for that stop in `data.js`, then run `node netflix-streaming/prerender.mjs` so the text version matches.
+- **Add a stop:** add an object to `STOPS` with `id`, `eyebrow`, `title`, `cam`, `lines`, `dc {badge, text}`, `site`, `tint`, `active`, `wires`, `chips` and `src`, then re-run the prerender. The unit test expects exactly 15 stops, so update `validateStops` in `core.js` if you change the count.
+- **Re-tune a camera target:** `cam: { x, y, zoom }` is the map point to centre on, in world units (the map is 4000 × 2640), and how many times closer than the full map. Open `netflix-streaming/#stop-N`, adjust, and reload. The caption card and controls are left out of the frame automatically on desktop and mobile.
+- **Wire up analytics:** the page fires `topic_start`, `stop_view {n}`, `tour_complete`, `auto_tour_toggle {on}` and `read_as_text {on}` as a `cookbook:analytics` DOM event (and in `window.cookbookEvents`). The site has no analytics tool yet, so nothing is sent anywhere.
+
+### Tests
+
+```bash
+node --test netflix-streaming/tests/*.test.mjs
+python3 -m http.server 8765        # in another terminal, from the repo root
+node netflix-streaming/tests/e2e.mjs http://localhost:8765/
+```
+
+### Sources
+
+Facts were checked against: the [Open Connect Overview PDF](https://openconnect.netflix.com/Open-Connect-Overview.pdf), [Open Connect appliance specs](https://openconnect.netflix.com/en/appliances/), Netflix's [Completing the Netflix Cloud Migration](https://about.netflix.com/en/news/completing-the-netflix-cloud-migration), the [APNIC Open Connect article](https://blog.apnic.net/2018/06/20/netflix-content-distribution-through-open-connect/), and Netflix Tech Blog posts on [fill](https://netflixtechblog.com/netflix-and-fill-c43a32b490c0), [active-active](https://netflixtechblog.com/active-active-for-multi-regional-resiliency-c47719f6685b), [Zuul 2](https://netflixtechblog.com/zuul-2-the-netflix-journey-to-asynchronous-non-blocking-systems-45947377fb5c), [Cosmos](https://netflixtechblog.com/the-netflix-cosmos-platform-35c14d9351ad), [AV1 on Android](https://netflixtechblog.com/netflix-now-streaming-av1-on-android-d5264a515202), [film grain synthesis](https://netflixtechblog.com/av1-scale-film-grain-synthesis-the-awakening-ee09cfdff40b), [Live, part 1](https://netflixtechblog.com/behind-the-streams-live-at-netflix-part-1-d23f917c2f40) and the [Live Origin](https://netflixtechblog.com/netflix-live-origin-41f1b0ad5371). The full list is in the page's Sources panel.
+The map, icons and cover are drawn in code for this page, with no photos.

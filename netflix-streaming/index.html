@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>How Netflix Streams: from Play to pixels, a flying tour</title>
+<meta name="description" content="An independent, interactive map tour of how Netflix streaming works: AWS control plane, Zuul, steering, encoding, Open Connect appliances inside ISPs, live events and how Netflix's data-center strategy evolved from 2007 to 2025. Not affiliated with Netflix.">
+<link rel="canonical" href="https://manish50.github.io/data_centers_cookbook/netflix-streaming/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="How Netflix Streams: from Play to pixels, a flying tour">
+<meta property="og:description" content="Fly across one map, from pressing Play to Open Connect boxes inside your ISP. 15 stops, each with its data-center role.">
+<meta property="og:url" content="https://manish50.github.io/data_centers_cookbook/netflix-streaming/">
+<meta property="og:image" content="https://manish50.github.io/data_centers_cookbook/netflix-streaming/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="How Netflix Streams: from Play to pixels, a flying tour">
+<meta name="twitter:description" content="An independent, interactive map tour of Netflix's streaming system and data-center strategy.">
+<meta name="twitter:image" content="https://manish50.github.io/data_centers_cookbook/netflix-streaming/og.jpg">
+<meta name="theme-color" content="#0d0a09">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22%3E%3Crect width=%2264%22 height=%2264%22 rx=%2214%22 fill=%22%230d0a09%22/%3E%3Cpath d=%22M24 18l24 14-24 14z%22 fill=%22%23ff5a4e%22/%3E%3C/svg%3E">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Article","headline":"How Netflix Streams: from Play to pixels, a flying tour","description":"An independent, interactive explainer of Netflix's streaming system, from pressing Play to Open Connect, live events and the data-center timeline 2007–2025.","image":"https://manish50.github.io/data_centers_cookbook/netflix-streaming/og.jpg","mainEntityOfPage":"https://manish50.github.io/data_centers_cookbook/netflix-streaming/","isPartOf":{"@type":"CreativeWorkSeries","name":"Data Centers Cookbook"},"inLanguage":"en","about":["Netflix Open Connect","Content delivery network","Video streaming","Data centers","Amazon Web Services"]}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="tour.css">
+<script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+<a class="skip" href="#text">Skip to the text version</a>
+
+<header class="bar">
+  <a class="lib" href="../" aria-label="Back to the library"><span aria-hidden="true">←</span><span class="t">Library</span></a>
+  <div class="brand"><span class="k">Issue 04 · Independent explainer · Not affiliated with Netflix</span><h1>How <em>Netflix</em> Streams</h1></div>
+  <div class="tools">
+    <button class="tb" id="bDc" aria-pressed="false" aria-label="Data-center view" title="Data-center view"><span class="i" aria-hidden="true">🏢</span><span class="t">Data-center view</span></button>
+    <button class="tb" id="bAuto" aria-pressed="false" aria-label="Auto tour" title="Auto tour (10 s per stop)"><span class="i" aria-hidden="true">▶</span><span class="t">Auto tour</span></button>
+    <button class="tb" id="bText" aria-pressed="false" aria-label="Read as text" title="Read as text"><span class="i" aria-hidden="true">≡</span><span class="t">Read as text</span></button>
+    <button class="tb" id="bSrc" aria-label="Sources" title="Sources"><span class="i" aria-hidden="true">ⓘ</span><span class="t">Sources</span></button>
+  </div>
+</header>
+
+<main class="stage" id="stage" aria-label="Interactive map tour">
+  <div class="cam" id="camWrap"><div class="idle"><svg id="map" role="img" aria-label="Map of Netflix's streaming system: your home, your ISP, an internet exchange, AWS cloud, the encoding factory, live events and a timeline" preserveAspectRatio="none"></svg></div></div>
+  <div class="vignette" aria-hidden="true"></div>
+  <div class="letterbox top" aria-hidden="true"></div><div class="letterbox bot" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+  <section class="card" id="card" aria-labelledby="cardTitle" aria-live="polite">
+<!--CARD-->
+    <p class="eyebrow"><span class="n">01</span><span>/ 15</span> · Start here</p>
+    <h2 class="title" id="cardTitle">What happens when you press Play?</h2>
+    <div class="blocks"><div class="main" style="order:0"><p class="ln">In a second or two, your TV talks to the cloud, gets permission, and starts pulling video from a box that is probably inside your own internet provider.</p><p class="ln">Fly through it stop by stop: scroll, swipe, drag, use the arrow keys, or press Next.</p><p class="ln">Watch the moving dots: each colour is a different kind of traffic, named in the legend.</p><div class="scene" id="sceneUi"></div></div><section class="dcb k-req" style="order:1" aria-label="Data-center role"><p class="dch"><span class="lab">Data-center role</span><span class="badge">📍 Device</span></p><p class="t">Five kinds of physical place are involved: your device, your ISP’s site, internet exchanges, AWS regions, and Netflix’s Open Connect network linking them.</p></section></div>
+    <ul class="legend" aria-label="Legend"><li class="chip k-req"><i aria-hidden="true"></i>Requests · control plane</li><li class="chip k-video"><i aria-hidden="true"></i>Video bytes · data plane</li><li class="chip k-fill"><i aria-hidden="true"></i>Pre-positioning · fill</li><li class="chip k-live"><i aria-hidden="true"></i>Live</li></ul>
+    <p class="srcs">Sources: <a href="https://openconnect.netflix.com/Open-Connect-Overview.pdf" target="_blank" rel="noopener" title="Netflix Open Connect Overview (PDF)">[1]</a> · <button class="linkish" data-open-sources>all sources</button></p>
+    <p class="tm">Independent explainer · Netflix is a trademark of Netflix, Inc. Not affiliated.</p>
+  <!--/CARD-->
+  </section>
+  <div class="mini" id="mini" aria-hidden="true"><svg viewBox="0 0 4000 2640"></svg><p>Map · click to jump</p></div>
+  <nav class="ctrl" aria-label="Tour navigation">
+    <button class="nb" id="bPrev" aria-label="Previous stop"><span aria-hidden="true">‹</span> <span class="t">Prev</span></button>
+    <ol id="rail" aria-label="Stops"></ol>
+    <div id="railBar" aria-hidden="true"></div>
+    <span id="count" aria-hidden="true">1 / 15</span>
+    <button class="nb" id="bNext" aria-label="Next stop">Next <span aria-hidden="true">›</span></button>
+  </nav>
+</main>
+
+<article class="text-version" id="text" tabindex="-1">
+<!--TEXT-->
+  <h2>How Netflix streams: the whole tour as text</h2>
+  <p class="lede">What happens between pressing Play and the first frame, where each step physically runs, and how Netflix’s data-center strategy changed from 2007 to 2025. 15 stops.</p>
+  <p class="back"><button class="nb" data-back-to-map>← Back to the map</button></p>
+  <section aria-labelledby="t-stop-1">
+    <h3 id="t-stop-1"><span class="n">01</span>What happens when you press Play?</h3>
+    <p><b>What happens.</b> In a second or two, your TV talks to the cloud, gets permission, and starts pulling video from a box that is probably inside your own internet provider. Fly through it stop by stop: scroll, swipe, drag, use the arrow keys, or press Next. Watch the moving dots: each colour is a different kind of traffic, named in the legend.</p>
+    <section class="dcb k-req" aria-label="Data-center role"><p class="dch"><span class="lab">Data-center role</span><span class="badge">📍 Device</span></p><p class="t">Five kinds of physical place are involved: your device, your ISP’s site, internet exchanges, AWS regions, and Netflix’s Open Connect network linking them.</p></section>
+    <p class="srcs">Sources: <a href="https://openconnect.netflix.com/Open-Connect-Overview.pdf" target="_blank" rel="noopener" title="Netflix Open Connect Overview (PDF)">[1]</a></p>
+  </section>
+  <section aria-labelledby="t-stop-2">
+    <h3 id="t-stop-2"><span class="n">02</span>You press Play</h3>
+    <p><b>What happens.</b> One press starts two separate journeys. The control plane (red) runs in AWS: who you are, what you may watch, and where to fetch it from. The data plane (teal) is the video itself, served by Netflix’s own Open Connect network.</p>
+    <section class="dcb k-req" aria-label="Data-center role"><p class="dch"><span class="lab">Data-center role</span><span class="badge">📍 AWS region</span></p><p class="t">Since early 2016 Netflix has run no data centers of its own for streaming. Compute lives in AWS regions; video lives on Netflix-built appliances inside ISPs and exchanges.</p></section>
+    <p class="srcs">Sources: <a href="https://about.netflix.com/en/news/completing-the-netflix-cloud-migration" target="_blank" rel="noopener" title="Completing the Netflix Cloud Migration (Feb 2016)">[3]</a> <a href="https://openconnect.netflix.com/Open-Connect-Overview.pdf" target="_blank" rel="noopener" title="Netflix Open Connect Overview (PDF)">[1]</a></p>
+  </section>
+  <section aria-labelledby="t-stop-3">
+    <h3 id="t-stop-3"><span class="n">03</span>Inside the app</h3>
+    <p><b>What happens.</b> Before asking for anything, the app knows what your device can do: resolution, HDR, and codecs such as AV1, HEVC or AVC. Video is protected by DRM. The app will need a licence for the device’s DRM system (Widevine, PlayReady or FairPlay). Its adaptive-bitrate (ABR) player keeps a buffer of video and picks a quality to match your connection.</p>
+    <section class="dcb k-req" aria-label="Data-center role"><p class="dch"><span class="lab">Data-center role</span><span class="badge">📍 Device</span></p><p class="t">The device is the outermost edge. It pulls its menus, artwork and settings from AWS. No video has moved yet.</p></section>
+    <p class="srcs">Sources: <a href="https://openconnect.netflix.com/Open-Connect-Overview.pdf" target="_blank" rel="noopener" title="Netflix Open Connect Overview (PDF)">[1]</a></p>
+  </section>
+  <section aria-labelledby="t-stop-4">
+    <h3 id="t-stop-4"><span class="n">04</span>The request leaves home</h3>
+    <p><b>What happens.</b> Your play request travels router → ISP → the internet → an AWS region. These are small API calls: a few kilobytes, not video. DNS decides which AWS region answers you.</p>
+    <section class="dcb k-req" aria-label="Data-center role"><p class="dch"><span class="lab">Data-center role</span><span class="badge">📍 AWS region</span></p><p class="t">Netflix runs active-active across AWS regions: members are routed by DNS to a nearby region, and any healthy region can serve any member.</p></section>
+    <p class="srcs">Sources: <a href="https://netflixtechblog.com/active-active-for-multi-regional-resiliency-c47719f6685b" target="_blank" rel="noopener" title="Netflix Tech Blog: Active-Active for Multi-Regional Resiliency">[8]</a></p>
+  </section>
+  <section aria-labelledby="t-stop-5">
+    <h3 id="t-stop-5"><span class="n">05</span>Zuul, the edge gateway</h3>
+    <p><b>What happens.</b> Every request first meets Zuul, Netflix’s edge gateway. It routes requests to the right service, applies security checks, and can shed less important load to protect the services behind it. It can also send traffic to another region. Try it: fail a region below.</p>
+    <section class="dcb k-req" aria-label="Data-center role"><p class="dch"><span class="lab">Data-center role</span><span class="badge">📍 AWS region</span></p><p class="t">Zuul fronts all of Netflix’s edge services in each region. In a region-wide outage, tools override DNS and move members to a healthy region.</p></section>
+    <p class="srcs">Sources: <a href="https://netflixtechblog.com/zuul-2-the-netflix-journey-to-asynchronous-non-blocking-systems-45947377fb5c" target="_blank" rel="noopener" title="Netflix Tech Blog: Zuul 2, the Netflix journey to asynchronous, non-blocking systems">[9]</a> <a href="https://netflixtechblog.com/active-active-for-multi-regional-resiliency-c47719f6685b" target="_blank" rel="noopener" title="Netflix Tech Blog: Active-Active for Multi-Regional Resiliency">[8]</a> <a href="https://netflixtechblog.com/keeping-netflix-reliable-using-prioritized-load-shedding-6cc827b02f94" target="_blank" rel="noopener" title="Netflix Tech Blog: Keeping Netflix Reliable Using Prioritized Load Shedding">[10]</a></p>
+  </section>
+  <section aria-labelledby="t-stop-6">
+    <h3 id="t-stop-6"><span class="n">06</span>Microservices</h3>
+    <p><b>What happens.</b> Behind Zuul, many small services each do one job: entitlement, profiles, playback, licensing, recommendations, billing. Data lives in EVCache (a fast cache), Cassandra (a database) and Keystone, the Kafka-based event pipeline. Titus runs the containers, Spinnaker ships new code, and Chaos Monkey randomly switches servers off to prove the system survives.</p>
+    <section class="dcb k-req" aria-label="Data-center role"><p class="dch"><span class="lab">Data-center role</span><span class="badge">📍 AWS region</span></p><p class="t">Services spread across availability zones, and data is copied between regions, so losing one building or one region does not lose member data.</p></section>
+    <p class="srcs">Sources: <a href="https://about.netflix.com/en/news/completing-the-netflix-cloud-migration" target="_blank" rel="noopener" title="Completing the Netflix Cloud Migration (Feb 2016)">[3]</a> <a href="https://netflixtechblog.com/active-active-for-multi-regional-resiliency-c47719f6685b" target="_blank" rel="noopener" title="Netflix Tech Blog: Active-Active for Multi-Regional Resiliency">[8]</a> <a href="https://techblog.netflix.com/2011/07/netflix-simian-army.html" target="_blank" rel="noopener" title="Netflix Tech Blog: The Netflix Simian Army (July 2011)">[11]</a></p>
+  </section>
+  <section aria-labelledby="t-stop-7">
+    <h3 id="t-stop-7"><span class="n">07</span>Steering</h3>
+    <p><b>What happens.</b> The playback service checks your account and licensing, then works out which files you need. The steering service picks healthy, nearby Open Connect Appliances (OCAs) that hold those files. Your device gets back a manifest, a ranked list of OCA URLs and a licence.</p>
+    <section class="dcb k-req" aria-label="Data-center role"><p class="dch"><span class="lab">Data-center role</span><span class="badge">📍 AWS region</span></p><p class="t">The decision runs in AWS, using data from the edge: every OCA reports its health, the routes it has learned and the files it stores to the control plane in AWS.</p></section>
+    <p class="srcs">Sources: <a href="https://openconnect.netflix.com/Open-Connect-Overview.pdf" target="_blank" rel="noopener" title="Netflix Open Connect Overview (PDF)">[1]</a> <a href="https://blog.apnic.net/2018/06/20/netflix-content-distribution-through-open-connect/" target="_blank" rel="noopener" title="APNIC Blog: Netflix content distribution through Open Connect (2018)">[5]</a></p>
+  </section>
+  <section aria-labelledby="t-stop-8">
+    <h3 id="t-stop-8"><span class="n">08</span>Before you pressed Play: encoding</h3>
+    <p><b>What happens.</b> The studio master is split into chunks and shots, and encoded in parallel in the cloud on Cosmos, Netflix’s media platform. Per-title encoding (2015) gave each title its own settings; per-shot encoding (2018) tunes every shot, judged by the VMAF quality score. The result is a ladder of qualities in AV1, HEVC and AVC. AV1 film grain synthesis re-creates grain on your device instead of sending it.</p>
+    <section class="dcb k-fill" aria-label="Data-center role"><p class="dch"><span class="lab">Data-center role</span><span class="badge">📍 AWS region</span></p><p class="t">Encoding is a burst workload on AWS EC2: it scales up for new releases and down when idle. Masters and finished files are stored in S3, the origin for the edge.</p></section>
+    <p class="srcs">Sources: <a href="https://netflixtechblog.com/the-netflix-cosmos-platform-35c14d9351ad" target="_blank" rel="noopener" title="Netflix Tech Blog: The Netflix Cosmos Platform (2021)">[14]</a> <a href="https://www.theregister.com/2015/12/16/netflix_per_title_encode_optimization/" target="_blank" rel="noopener" title="The Register: Netflix per-title encode optimization (Dec 2015)">[12]</a> <a href="https://netflixtechblog.com/optimized-shot-based-encodes-for-4k-now-streaming-47b516b10bbb" target="_blank" rel="noopener" title="Netflix Tech Blog: Optimized shot-based encodes for 4K (2020), on per-shot dynamic optimization">[13]</a> <a href="https://netflixtechblog.com/av1-scale-film-grain-synthesis-the-awakening-ee09cfdff40b" target="_blank" rel="noopener" title="Netflix Tech Blog: AV1 @ Scale, Film Grain Synthesis (2025)">[16]</a> <a href="https://about.netflix.com/en/news/completing-the-netflix-cloud-migration" target="_blank" rel="noopener" title="Completing the Netflix Cloud Migration (Feb 2016)">[3]</a> <a href="https://netflixtechblog.com/netflix-and-fill-c43a32b490c0" target="_blank" rel="noopener" title="Netflix Tech Blog: Netflix and Fill">[6]</a></p>
+  </section>
+  <section aria-labelledby="t-stop-9">
+    <h3 id="t-stop-9"><span class="n">09</span>The overnight fill</h3>
+    <p><b>What happens.</b> Netflix predicts what members will watch, and when. In off-peak “fill windows” it copies tomorrow’s popular titles to OCAs: the catalogue to storage OCAs at internet exchanges, the most popular titles to OCAs inside ISPs. OCAs can also fill from each other, saving backbone traffic.</p>
+    <section class="dcb k-fill" aria-label="Data-center role"><p class="dch"><span class="lab">Data-center role</span><span class="badge">📍 Netflix backbone</span></p><p class="t">Files move from the S3 origin in AWS over Netflix’s backbone to exchange sites, then out to ISP sites, mostly at night when networks are quiet.</p></section>
+    <p class="srcs">Sources: <a href="https://netflixtechblog.com/netflix-and-fill-c43a32b490c0" target="_blank" rel="noopener" title="Netflix Tech Blog: Netflix and Fill">[6]</a> <a href="https://openconnect.netflix.com/Open-Connect-Overview.pdf" target="_blank" rel="noopener" title="Netflix Open Connect Overview (PDF)">[1]</a> <a href="https://netflixtechblog.com/distributing-content-to-open-connect-3e3e391d4dc9" target="_blank" rel="noopener" title="Netflix Tech Blog: Distributing Content to Open Connect">[7]</a></p>
+  </section>
+  <section aria-labelledby="t-stop-10">
+    <h3 id="t-stop-10"><span class="n">10</span>An OCA inside your ISP</h3>
+    <p><b>What happens.</b> An Open Connect Appliance is a Netflix-built server, given free to qualifying ISPs. It runs FreeBSD and the NGINX web server on bare metal. It stores video files and serves them over HTTPS, and nothing else: no member data. Netflix lists its current storage appliance at around 200 Gbps and up to 120 TB.</p>
+    <section class="dcb k-video" aria-label="Data-center role"><p class="dch"><span class="lab">Data-center role</span><span class="badge">📍 ISP site</span></p><p class="t">The ISP’s building becomes Netflix’s video data center. Netflix supplies the hardware; the ISP supplies space, power and connectivity, and saves upstream traffic.</p></section>
+    <p class="srcs">Sources: <a href="https://openconnect.netflix.com/en/appliances/" target="_blank" rel="noopener" title="Open Connect Appliances: hardware and software">[2]</a> <a href="https://openconnect.netflix.com/Open-Connect-Overview.pdf" target="_blank" rel="noopener" title="Netflix Open Connect Overview (PDF)">[1]</a></p>
+  </section>
+  <section aria-labelledby="t-stop-11">
+    <h3 id="t-stop-11"><span class="n">11</span>Video flows</h3>
+    <p><b>What happens.</b> The player fetches short segments from the top-ranked OCA. If your connection slows, ABR steps down the quality ladder; when it recovers, it steps back up. If an OCA fails, the player moves to the next URL on its list. Try both buttons.</p>
+    <section class="dcb k-video" aria-label="Data-center role"><p class="dch"><span class="lab">Data-center role</span><span class="badge">📍 ISP site</span></p><p class="t">Open Connect serves 100% of Netflix’s video traffic, not AWS. Playback quality data flows back to AWS to improve steering.</p></section>
+    <p class="srcs">Sources: <a href="https://blog.apnic.net/2018/06/20/netflix-content-distribution-through-open-connect/" target="_blank" rel="noopener" title="APNIC Blog: Netflix content distribution through Open Connect (2018)">[5]</a> <a href="https://openconnect.netflix.com/Open-Connect-Overview.pdf" target="_blank" rel="noopener" title="Netflix Open Connect Overview (PDF)">[1]</a></p>
+  </section>
+  <section aria-labelledby="t-stop-12">
+    <h3 id="t-stop-12"><span class="n">12</span>Live</h3>
+    <p><b>What happens.</b> Netflix’s first live show was in 2023: Chris Rock’s Selective Outrage. The venue feed is encoded in real time in the cloud. A custom Live Origin passes segments to Open Connect. Tyson vs. Paul in November 2024 peaked at 65 million concurrent streams.</p>
+    <section class="dcb k-live" aria-label="Data-center role"><p class="dch"><span class="lab">Data-center role</span><span class="badge">📍 AWS region</span></p><p class="t">Live can’t be pre-filled. Encoding runs in AWS in real time; the Live Origin, on EC2, feeds top-tier Open Connect caches, which pass segments down as viewers ask for them.</p></section>
+    <p class="srcs">Sources: <a href="https://netflixtechblog.com/behind-the-streams-live-at-netflix-part-1-d23f917c2f40" target="_blank" rel="noopener" title="Netflix Tech Blog: Behind the Streams, Live at Netflix, Part 1 (2025)">[17]</a> <a href="https://netflixtechblog.com/netflix-live-origin-41f1b0ad5371" target="_blank" rel="noopener" title="Netflix Tech Blog: Netflix Live Origin (Dec 2025)">[18]</a></p>
+  </section>
+  <section aria-labelledby="t-stop-13">
+    <h3 id="t-stop-13"><span class="n">13</span>Data-center evolution, 2007–2012</h3>
+    <p><b>What happens.</b> 2007: streaming begins, from Netflix’s own data centers. 2008: a major database corruption stops DVD shipping for three days, and the move to the cloud begins. Services are rebuilt cloud-native on AWS. 2011: Chaos Monkey goes public. 2012: Open Connect is announced.</p>
+    <section class="dcb k-req" aria-label="Data-center role"><p class="dch"><span class="lab">Data-center role</span><span class="badge">📍 AWS region</span></p><p class="t">A big relational database in one owned facility was a single point of failure. Netflix chose horizontally scalable cloud services over growing its own data centers.</p></section>
+    <p class="srcs">Sources: <a href="https://about.netflix.com/en/news/completing-the-netflix-cloud-migration" target="_blank" rel="noopener" title="Completing the Netflix Cloud Migration (Feb 2016)">[3]</a> <a href="https://techblog.netflix.com/2011/07/netflix-simian-army.html" target="_blank" rel="noopener" title="Netflix Tech Blog: The Netflix Simian Army (July 2011)">[11]</a> <a href="https://techcrunch.com/2012/06/04/netflix-open-connect/" target="_blank" rel="noopener" title="TechCrunch: Netflix Rolls Out Its Own CDN, Open Connect (June 2012)">[19]</a> <a href="https://openconnect.netflix.com/Open-Connect-Overview.pdf" target="_blank" rel="noopener" title="Netflix Open Connect Overview (PDF)">[1]</a></p>
+  </section>
+  <section aria-labelledby="t-stop-14">
+    <h3 id="t-stop-14"><span class="n">14</span>2015–2025</h3>
+    <p><b>What happens.</b> 2015: per-title encoding. January 2016: the last data center is shut down, and Netflix reaches 190 countries. 2018: per-shot encoding. 2020: AV1 on Android. 2023: the first live show. 2024–25: live at scale.</p>
+    <section class="dcb k-fill" aria-label="Data-center role"><p class="dch"><span class="lab">Data-center role</span><span class="badge">📍 Netflix backbone</span></p><p class="t">The end state is hybrid: rented, elastic compute in AWS for logic and encoding, plus owned, purpose-built hardware at the network edge for the bytes.</p></section>
+    <p class="srcs">Sources: <a href="https://www.theregister.com/2015/12/16/netflix_per_title_encode_optimization/" target="_blank" rel="noopener" title="The Register: Netflix per-title encode optimization (Dec 2015)">[12]</a> <a href="https://about.netflix.com/en/news/completing-the-netflix-cloud-migration" target="_blank" rel="noopener" title="Completing the Netflix Cloud Migration (Feb 2016)">[3]</a> <a href="https://about.netflix.com/en/news/netflix-is-now-available-around-the-world" target="_blank" rel="noopener" title="Netflix is now available around the world (Jan 2016)">[4]</a> <a href="https://netflixtechblog.com/optimized-shot-based-encodes-for-4k-now-streaming-47b516b10bbb" target="_blank" rel="noopener" title="Netflix Tech Blog: Optimized shot-based encodes for 4K (2020), on per-shot dynamic optimization">[13]</a> <a href="https://netflixtechblog.com/netflix-now-streaming-av1-on-android-d5264a515202" target="_blank" rel="noopener" title="Netflix Tech Blog: Netflix Now Streaming AV1 on Android (Feb 2020)">[15]</a> <a href="https://netflixtechblog.com/behind-the-streams-live-at-netflix-part-1-d23f917c2f40" target="_blank" rel="noopener" title="Netflix Tech Blog: Behind the Streams, Live at Netflix, Part 1 (2025)">[17]</a> <a href="https://netflixtechblog.com/netflix-live-origin-41f1b0ad5371" target="_blank" rel="noopener" title="Netflix Tech Blog: Netflix Live Origin (Dec 2025)">[18]</a></p>
+  </section>
+  <section aria-labelledby="t-stop-15">
+    <h3 id="t-stop-15"><span class="n">15</span>The whole system</h3>
+    <p><b>What happens.</b> Brains in the cloud: AWS decides who you are, what you may watch and where to get it. Bytes at the edge: Open Connect boxes near you send the video. Prepared in advance: titles are encoded and pre-positioned overnight; only live is made on the fly.</p>
+    <section class="dcb k-video" aria-label="Data-center role"><p class="dch"><span class="lab">Data-center role</span><span class="badge">📍 AWS region</span></p><p class="t">Where it runs, from the device to AWS regions to internet exchanges to ISP sites:</p><table class="where"><caption class="sr-only">Where it runs</caption><tbody><tr><th scope="row">Device</th><td>UI and playback</td></tr><tr><th scope="row">AWS regions</th><td>APIs, data, encoding, steering, live encoding</td></tr><tr><th scope="row">Internet exchanges</th><td>Storage OCAs</td></tr><tr><th scope="row">ISP sites</th><td>OCAs serving video</td></tr></tbody></table></section>
+    <p class="srcs">Sources: <a href="https://openconnect.netflix.com/Open-Connect-Overview.pdf" target="_blank" rel="noopener" title="Netflix Open Connect Overview (PDF)">[1]</a> <a href="https://about.netflix.com/en/news/completing-the-netflix-cloud-migration" target="_blank" rel="noopener" title="Completing the Netflix Cloud Migration (Feb 2016)">[3]</a> <a href="https://netflixtechblog.com/netflix-live-origin-41f1b0ad5371" target="_blank" rel="noopener" title="Netflix Tech Blog: Netflix Live Origin (Dec 2025)">[18]</a></p>
+  </section>
+  <h3 id="t-sources">Sources</h3>
+  <ol class="srclist"><li><a href="https://openconnect.netflix.com/Open-Connect-Overview.pdf" target="_blank" rel="noopener">Netflix Open Connect Overview (PDF)</a></li><li><a href="https://openconnect.netflix.com/en/appliances/" target="_blank" rel="noopener">Open Connect Appliances: hardware and software</a></li><li><a href="https://about.netflix.com/en/news/completing-the-netflix-cloud-migration" target="_blank" rel="noopener">Completing the Netflix Cloud Migration (Feb 2016)</a></li><li><a href="https://about.netflix.com/en/news/netflix-is-now-available-around-the-world" target="_blank" rel="noopener">Netflix is now available around the world (Jan 2016)</a></li><li><a href="https://blog.apnic.net/2018/06/20/netflix-content-distribution-through-open-connect/" target="_blank" rel="noopener">APNIC Blog: Netflix content distribution through Open Connect (2018)</a></li><li><a href="https://netflixtechblog.com/netflix-and-fill-c43a32b490c0" target="_blank" rel="noopener">Netflix Tech Blog: Netflix and Fill</a></li><li><a href="https://netflixtechblog.com/distributing-content-to-open-connect-3e3e391d4dc9" target="_blank" rel="noopener">Netflix Tech Blog: Distributing Content to Open Connect</a></li><li><a href="https://netflixtechblog.com/active-active-for-multi-regional-resiliency-c47719f6685b" target="_blank" rel="noopener">Netflix Tech Blog: Active-Active for Multi-Regional Resiliency</a></li><li><a href="https://netflixtechblog.com/zuul-2-the-netflix-journey-to-asynchronous-non-blocking-systems-45947377fb5c" target="_blank" rel="noopener">Netflix Tech Blog: Zuul 2, the Netflix journey to asynchronous, non-blocking systems</a></li><li><a href="https://netflixtechblog.com/keeping-netflix-reliable-using-prioritized-load-shedding-6cc827b02f94" target="_blank" rel="noopener">Netflix Tech Blog: Keeping Netflix Reliable Using Prioritized Load Shedding</a></li><li><a href="https://techblog.netflix.com/2011/07/netflix-simian-army.html" target="_blank" rel="noopener">Netflix Tech Blog: The Netflix Simian Army (July 2011)</a></li><li><a href="https://www.theregister.com/2015/12/16/netflix_per_title_encode_optimization/" target="_blank" rel="noopener">The Register: Netflix per-title encode optimization (Dec 2015)</a></li><li><a href="https://netflixtechblog.com/optimized-shot-based-encodes-for-4k-now-streaming-47b516b10bbb" target="_blank" rel="noopener">Netflix Tech Blog: Optimized shot-based encodes for 4K (2020), on per-shot dynamic optimization</a></li><li><a href="https://netflixtechblog.com/the-netflix-cosmos-platform-35c14d9351ad" target="_blank" rel="noopener">Netflix Tech Blog: The Netflix Cosmos Platform (2021)</a></li><li><a href="https://netflixtechblog.com/netflix-now-streaming-av1-on-android-d5264a515202" target="_blank" rel="noopener">Netflix Tech Blog: Netflix Now Streaming AV1 on Android (Feb 2020)</a></li><li><a href="https://netflixtechblog.com/av1-scale-film-grain-synthesis-the-awakening-ee09cfdff40b" target="_blank" rel="noopener">Netflix Tech Blog: AV1 @ Scale, Film Grain Synthesis (2025)</a></li><li><a href="https://netflixtechblog.com/behind-the-streams-live-at-netflix-part-1-d23f917c2f40" target="_blank" rel="noopener">Netflix Tech Blog: Behind the Streams, Live at Netflix, Part 1 (2025)</a></li><li><a href="https://netflixtechblog.com/netflix-live-origin-41f1b0ad5371" target="_blank" rel="noopener">Netflix Tech Blog: Netflix Live Origin (Dec 2025)</a></li><li><a href="https://techcrunch.com/2012/06/04/netflix-open-connect/" target="_blank" rel="noopener">TechCrunch: Netflix Rolls Out Its Own CDN, Open Connect (June 2012)</a></li></ol>
+  <footer><p>An independent explainer by the Data Centers Cookbook. Not affiliated with or endorsed by Netflix. Netflix is a trademark of Netflix, Inc. Not affiliated. Map and diagrams are illustrations drawn for this page.</p><p><a href="../">← Back to the library</a></p></footer>
+<!--/TEXT-->
+</article>
+
+<dialog id="srcDlg" aria-labelledby="srcTitle">
+  <div class="dlg-in">
+<!--SOURCES-->
+    <button class="x" data-close aria-label="Close sources">✕ Close</button>
+    <h2 id="srcTitle">Sources</h2>
+    <p>Every fact on this tour comes from these public pages. Numbers in the caption cards, like [3], point to this list.</p>
+    <ol><li><a href="https://openconnect.netflix.com/Open-Connect-Overview.pdf" target="_blank" rel="noopener">Netflix Open Connect Overview (PDF)</a></li><li><a href="https://openconnect.netflix.com/en/appliances/" target="_blank" rel="noopener">Open Connect Appliances: hardware and software</a></li><li><a href="https://about.netflix.com/en/news/completing-the-netflix-cloud-migration" target="_blank" rel="noopener">Completing the Netflix Cloud Migration (Feb 2016)</a></li><li><a href="https://about.netflix.com/en/news/netflix-is-now-available-around-the-world" target="_blank" rel="noopener">Netflix is now available around the world (Jan 2016)</a></li><li><a href="https://blog.apnic.net/2018/06/20/netflix-content-distribution-through-open-connect/" target="_blank" rel="noopener">APNIC Blog: Netflix content distribution through Open Connect (2018)</a></li><li><a href="https://netflixtechblog.com/netflix-and-fill-c43a32b490c0" target="_blank" rel="noopener">Netflix Tech Blog: Netflix and Fill</a></li><li><a href="https://netflixtechblog.com/distributing-content-to-open-connect-3e3e391d4dc9" target="_blank" rel="noopener">Netflix Tech Blog: Distributing Content to Open Connect</a></li><li><a href="https://netflixtechblog.com/active-active-for-multi-regional-resiliency-c47719f6685b" target="_blank" rel="noopener">Netflix Tech Blog: Active-Active for Multi-Regional Resiliency</a></li><li><a href="https://netflixtechblog.com/zuul-2-the-netflix-journey-to-asynchronous-non-blocking-systems-45947377fb5c" target="_blank" rel="noopener">Netflix Tech Blog: Zuul 2, the Netflix journey to asynchronous, non-blocking systems</a></li><li><a href="https://netflixtechblog.com/keeping-netflix-reliable-using-prioritized-load-shedding-6cc827b02f94" target="_blank" rel="noopener">Netflix Tech Blog: Keeping Netflix Reliable Using Prioritized Load Shedding</a></li><li><a href="https://techblog.netflix.com/2011/07/netflix-simian-army.html" target="_blank" rel="noopener">Netflix Tech Blog: The Netflix Simian Army (July 2011)</a></li><li><a href="https://www.theregister.com/2015/12/16/netflix_per_title_encode_optimization/" target="_blank" rel="noopener">The Register: Netflix per-title encode optimization (Dec 2015)</a></li><li><a href="https://netflixtechblog.com/optimized-shot-based-encodes-for-4k-now-streaming-47b516b10bbb" target="_blank" rel="noopener">Netflix Tech Blog: Optimized shot-based encodes for 4K (2020), on per-shot dynamic optimization</a></li><li><a href="https://netflixtechblog.com/the-netflix-cosmos-platform-35c14d9351ad" target="_blank" rel="noopener">Netflix Tech Blog: The Netflix Cosmos Platform (2021)</a></li><li><a href="https://netflixtechblog.com/netflix-now-streaming-av1-on-android-d5264a515202" target="_blank" rel="noopener">Netflix Tech Blog: Netflix Now Streaming AV1 on Android (Feb 2020)</a></li><li><a href="https://netflixtechblog.com/av1-scale-film-grain-synthesis-the-awakening-ee09cfdff40b" target="_blank" rel="noopener">Netflix Tech Blog: AV1 @ Scale, Film Grain Synthesis (2025)</a></li><li><a href="https://netflixtechblog.com/behind-the-streams-live-at-netflix-part-1-d23f917c2f40" target="_blank" rel="noopener">Netflix Tech Blog: Behind the Streams, Live at Netflix, Part 1 (2025)</a></li><li><a href="https://netflixtechblog.com/netflix-live-origin-41f1b0ad5371" target="_blank" rel="noopener">Netflix Tech Blog: Netflix Live Origin (Dec 2025)</a></li><li><a href="https://techcrunch.com/2012/06/04/netflix-open-connect/" target="_blank" rel="noopener">TechCrunch: Netflix Rolls Out Its Own CDN, Open Connect (June 2012)</a></li></ol>
+    <p class="fine">The map, animations and the adaptive-bitrate game are illustrations, not real Netflix data. Independent explainer · Netflix is a trademark of Netflix, Inc. Not affiliated.</p>
+  <!--/SOURCES-->
+  </div>
+</dialog>
+
+<script type="module" src="tour.js"></script>
+</body>
+</html>
