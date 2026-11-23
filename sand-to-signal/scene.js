@@ -1,6 +1,6 @@
 /* FROM SAND TO SIGNAL: the 3D world. Every model is built from simple three.js shapes (no downloaded models).
    buildWorld() returns each station's group, its labels and a small API used by the hands-on controls. */
-import * as THREE from './vendor/three.min.js';
+import * as THREE from '../vendor/three.min.js';
 import { STATIONS } from './data.js';
 import { nandTransistors, rippleAdd, numberPixels } from './logic.js';
 

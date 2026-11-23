@@ -11,7 +11,7 @@ Each magazine has real photos, diagrams you can tap, small simulations and a qui
 
 | Issue | Magazine | Level | Chapters | Live link |
 |---|---|---|---|---|
-| 01 | **Inside the Cloud**: How a Data Center Really Works | Beginner | 12 · about 35 min | https://manish50.github.io/data_centers_cookbook/data-centers/ |
+| 01 | **Inside the Cloud**: How a Data Center Really Works (self-playing 3D tour) | Beginner | 13 · about 13 min | https://manish50.github.io/data_centers_cookbook/data-centers/ |
 | 02 | **Inside the Lakehouse**: Azure Databricks, from First Notebook to Architect | Beginner to Advanced | 21 · about 2 h | https://manish50.github.io/data_centers_cookbook/azure-databricks/ |
 | 03 | **Inside the Mind of a Model**: How Claude Opus Is Built, Trained and Served | Beginner to Advanced | 25 · about 2½ h | https://manish50.github.io/data_centers_cookbook/ai-model/ |
 | 04 | **How Netflix Streams**: from Play to pixels, a flying tour | Beginner to Intermediate | 15 stops · about 20 min | https://manish50.github.io/data_centers_cookbook/netflix-streaming/ |
@@ -25,17 +25,18 @@ That progress is stored only in your browser (`localStorage`), and every page st
 ```
 index.html                 library home page (magazine stand)
 images/                    home-page images (README screenshot)
-data-centers/index.html    Issue 01, photos in data-centers/images/
+data-centers/              Issue 01: self-playing 3D tour (data.js, timeline.js, campus.js, player.js, tests/)
 azure-databricks/index.html Issue 02, photos in azure-databricks/images/
 ai-model/index.html        Issue 03, photos in ai-model/images/
 netflix-streaming/         Issue 04: map tour (index.html, data.js, core.js, tour.js, tour.css, tests/)
-sand-to-signal/            Issue 05: 3D tour (three.js in vendor/, data.js, logic.js, scene.js, tour.js, tests/)
+sand-to-signal/            Issue 05: 3D tour (data.js, logic.js, scene.js, tour.js, tests/)
+vendor/three.min.js        three.js r186, tree-shaken, shared by the 3D pages (MIT, see vendor/LICENSE-three.txt)
 sitemap.xml                list of pages for search engines
 .nojekyll                  serve files as-is on GitHub Pages
 ```
 
-Each magazine is a single self-contained `index.html` (styles, scripts and diagrams inline) with its photos next to it.
-Every path is relative, so the site works on GitHub Pages and when opened straight from disk.
+Issues 02 and 03 are single self-contained `index.html` files (styles, scripts and diagrams inline) with their photos next to them. Issues 01, 04 and 05 keep their content in a `data.js` file and pre-render a text version into `index.html`.
+Every path is relative. The 2D magazines work when opened straight from disk; the 3D and map tours use JavaScript modules, so serve the folder (for example `python3 -m http.server`).
 
 ### Adding a magazine
 
@@ -52,80 +53,58 @@ Fonts (Fraunces and Inter) load from Google Fonts when online, and the pages fal
 
 ## Issue 01: Inside the Cloud
 
-![Inside the Cloud cover page](data-centers/images/screenshot.jpg)
+![Inside the Cloud: the 3D data hall, with the power cut playing](data-centers/images/screenshot.jpg)
 
-An interactive story about data centers for curious beginners. It covers servers, racks, storage, networking, power, cooling, **water use**, security, redundancy, the cloud, efficiency, and how data centers are built and run.
-It also traces real activities step by step through the building, such as coding with Claude Code, running a Spark job on Databricks, streaming video, paying with UPI and sending a WhatsApp message.
+A self-playing 3D tour of a data center, built with [three.js](https://threejs.org/). It plays like a film, about 13 minutes at 1×: the camera glides around one data-center campus while captions type in, numbers appear on stat cards and the scenes animate.
+You can pause at any time, drag to look around or scroll to zoom (which pauses the tour, with a Resume button), scrub the timeline, jump to a chapter, change the speed or turn captions off.
 
-| # | Chapter | Try it |
+| # | Chapter | What plays in 3D |
 |---|---|---|
-| 01 | What is a data center? | "Your day online" app tapper |
-| 02 | The guided tour: racks, storage, networking | Clickable floor plan, build-a-rack, spine-leaf diagram |
-| 03 | Meet the servers | Server type explorer, clickable server photos, CPU-vs-GPU painting race |
-| 04 | The journey of a request | Animated request: normal website vs AI chatbot |
-| 05 | Power | Power-failure simulator (UPS → batteries → generator) |
-| 06 | Cooling (and water) | Hot/cold-aisle airflow, air vs liquid, water evaporated per rack |
-| 07 | Security, fire and monitoring | Security layers, fire suppression, control-room alarm game |
-| 08 | Redundancy, uptime and tiers | Break units in N / N+1 / 2N, uptime "nines" slider |
-| 09 | Virtualization and the cloud | Slice-a-server, "pizza as a service" |
-| 10 | Real life, traced | Activity tracer: Claude Code, Spark on Databricks, streaming, UPI, WhatsApp, CI, video calls |
-| 11 | Energy, water and the planet | PUE + WUE calculator |
-| 12 | Planning, building and running | Pick-the-site game, build steps, a day in the life |
+| 01 | What is a data center? | Campus fly-over; store, move and compute lighting up; sizes from a closet to a hyperscale campus |
+| 02 | The guided tour | The roof lifts and each room lights up; the 42U rack; storage tiers; copies rebuilding; spine-leaf network |
+| 03 | Meet the servers | Rack, blade and tower; inside a server; server roles across the hall; GPUs; a liquid-cooled AI rack |
+| 04 | The journey of a request | A packet from your phone through the mast, fibre, meet-me room, load balancer, web, app and database, and back; a chatbot streaming tokens |
+| 05 | Power | Grid → substation → switchgear → UPS → PDU → racks; paths A and B; a full power cut with batteries and generators |
+| 06 | Cooling | Cold and hot aisles, raised floor, CRAHs → chillers → cooling towers with steam; WUE; liquid cooling |
+| 07 | Security, fire and monitoring | Fence, gate, mantrap, cages; smoke detection and gas suppression; the NOC |
+| 08 | Redundancy, uptime and tiers | N, N+1, 2N with units failing; the nines; Tier I–IV; a second site |
+| 09 | Virtualization and the cloud | Idle servers → VMs → containers; regions and zones on a globe |
+| 10 | Real life, traced | Streaming, a UPI payment, AI and a Spark job, each lighting up the parts it uses |
+| 11 | Energy, water and the planet | PUE bars; wind and solar; district heating; the water footprint |
+| 12 | Planning, building and running | Site factors; a construction time-lapse; commissioning; go-live; a day in the life |
+| 13 | Journey's end | Fly-over recap |
 
-**Facts and sources:** numbers were checked in November 2026 against the IEA (*Energy and AI*, 2025), the Uptime Institute, Google, Microsoft, LBNL, NVIDIA and Supermicro specifications, NPCI, Netflix, Databricks, WhatsApp and others.
-The full list with links is in the "Sources" section at the end of the magazine.
+The whole tour is also pre-rendered as text ("Read as text", or automatically when WebGL isn't available). Its chapter sections keep the old ids, so links like `../data-centers/#ch5` from the other magazines still land on the right chapter.
+Reduced-motion settings turn off autoplay and camera glides.
 
-### Photo credits: Inside the Cloud
+### Files
 
-All photos come from [Wikimedia Commons](https://commons.wikimedia.org/) under the free licences below. They were resized and compressed for the web, and some were cropped; adapted versions keep the same licence.
-Diagrams and animations were drawn for this site. A machine-readable list is in [`data-centers/images/credits.json`](data-centers/images/credits.json).
+| File | What it holds |
+|---|---|
+| `data-centers/data.js` | **All content**: 13 chapters of "beats" (caption, length, camera, scene cue, labels, stat card), named points (`POI`), sources and recaps |
+| `data-centers/timeline.js` | Pure helpers: beats → timeline, time → beat and chapter, camera path, typed captions, deep links, validation |
+| `data-centers/campus.js` | The 3D campus and studio sets, built from simple three.js shapes. `apply(beat, progress, time)` sets every scene from the time alone, so any moment can be scrubbed to |
+| `data-centers/player.js` | Autoplay, scrubber, chapters, captions, stat cards, orbit and Resume, keyboard, text mode |
+| `data-centers/prerender.mjs` | Writes the text version and Sources list into `index.html` |
 
-| Used for | Photo | Author | Licence |
-|---|---|---|---|
-| Cover: Wikimedia Foundation server racks | [Wikimedia Foundation Servers-8055 35](https://commons.wikimedia.org/wiki/File:Wikimedia_Foundation_Servers-8055_35.jpg) | Victor Grigas | [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0) |
-| Ch 1 opening: Google data center, The Dalles, Oregon | [Google Datacenter - The Dalles, Oregon (17832143871)](https://commons.wikimedia.org/wiki/File:Google_Datacenter_-_The_Dalles,_Oregon_(17832143871).jpg) | Tony Webster from Minneapolis, Minnesota, United States | [CC BY 2.0](https://creativecommons.org/licenses/by/2.0) |
-| Ch 1: server hall at CERN | [CERN Server 03](https://commons.wikimedia.org/wiki/File:CERN_Server_03.jpg) | Florian Hirzinger - www.fh-ap.com | [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0) |
-| Ch 1: CERN data centre building, Geneva | [CERN data centre](https://commons.wikimedia.org/wiki/File:CERN_data_centre.jpg) | Unnerving duck | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
-| Ch 2 opening: data center aisle | [BalticServers data center](https://commons.wikimedia.org/wiki/File:BalticServers_data_center.jpg) | BalticServers.com | [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0) |
-| Ch 2: Dell servers in a rack, with rack-unit numbers (Wikimedia) | [Wikimedia Foundation Servers-8055 43](https://commons.wikimedia.org/wiki/File:Wikimedia_Foundation_Servers-8055_43.jpg) | Victor Grigas | [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0) |
-| Ch 2: storage system at Ifremer's Datarmor centre | [Le Centre Datarmor, les coulisses (Ifremer 00957-106840 - 54953)](https://commons.wikimedia.org/wiki/File:Le_Centre_Datarmor,_les_coulisses_(Ifremer_00957-106840_-_54953).jpg) | Gregory Rocher / Ifremer | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0) |
-| Ch 2: network switches and cables | [Network switches](https://commons.wikimedia.org/wiki/File:Network_switches.jpg) | ShakataGaNai | [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0) |
-| Ch 3 opening: Wikimedia Foundation servers | [Wikimedia Foundation Servers-8055 13](https://commons.wikimedia.org/wiki/File:Wikimedia_Foundation_Servers-8055_13.jpg) | Victor Grigas | [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0) |
-| Ch 3: rack servers | [Dell PowerEdge Servers](https://commons.wikimedia.org/wiki/File:Dell_PowerEdge_Servers.jpg) | Dsv | Public domain |
-| Ch 3: HP BladeSystem c7000 blade chassis | [HP c7000-1](https://commons.wikimedia.org/wiki/File:HP_c7000-1.jpg) | Redline | [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0) |
-| Ch 3: tower-style servers on shelves (BalticServers) | [BalticServers data center](https://commons.wikimedia.org/wiki/File:BalticServers_data_center.jpg) | BalticServers.com | [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0) |
-| Ch 3: web and application servers (Wikimedia) | [Wikimedia Foundation Servers-8055 17](https://commons.wikimedia.org/wiki/File:Wikimedia_Foundation_Servers-8055_17.jpg) | Victor Grigas | [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0) |
-| Ch 3: rack servers (Wikimedia) | [Wikimedia Foundation Servers-8055 08](https://commons.wikimedia.org/wiki/File:Wikimedia_Foundation_Servers-8055_08.jpg) | Victor Grigas | [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0) |
-| Ch 3: storage server type | [Le Centre Datarmor, les coulisses (Ifremer 00957-106840 - 54953)](https://commons.wikimedia.org/wiki/File:Le_Centre_Datarmor,_les_coulisses_(Ifremer_00957-106840_-_54953).jpg) | Gregory Rocher / Ifremer | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0) |
-| Ch 3: AI server type | [Nvidia DGX-B200-HGX](https://commons.wikimedia.org/wiki/File:Nvidia_DGX-B200-HGX.jpg) | Pokiiri | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
-| Ch 3: IBM System z10 mainframe | [IBM System z10](https://commons.wikimedia.org/wiki/File:IBM_System_z10.jpg) | Roberto Berlim from Brazil | [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0) |
-| Ch 3: inside a 1U web server (Dell PowerEdge 850) | [Inside and Rear of Webserver](https://commons.wikimedia.org/wiki/File:Inside_and_Rear_of_Webserver.jpg) | Rodzilla at English Wikipedia | [CC BY 2.5](https://creativecommons.org/licenses/by/2.5) |
-| Ch 3: NVIDIA HGX B200 GPU board | [Nvidia DGX-B200-HGX](https://commons.wikimedia.org/wiki/File:Nvidia_DGX-B200-HGX.jpg) | Pokiiri | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
-| Ch 3: NVIDIA GB200 NVL72 rack | [Nvidia DGX GB200](https://commons.wikimedia.org/wiki/File:Nvidia_DGX_GB200.jpg) | Pokiiri | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
-| Ch 4 opening: illuminated optical fibres | [Fiber optic illuminated](https://commons.wikimedia.org/wiki/File:Fiber_optic_illuminated.jpg) | Hustvedt | [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0) |
-| Ch 4: network cables plugged into servers (Wikimedia) | [Wikimedia Foundation Servers-8055 24](https://commons.wikimedia.org/wiki/File:Wikimedia_Foundation_Servers-8055_24.jpg) | Victor Grigas | [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0) |
-| Ch 5 opening: UPS cabinet row | [EPS 6000 Row B](https://commons.wikimedia.org/wiki/File:EPS_6000_Row_B.jpg) | Robert.Harker | [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0) |
-| Ch 5: data center backup batteries | [Datacenter Backup Batteries](https://commons.wikimedia.org/wiki/File:Datacenter_Backup_Batteries.jpg) | Jelson25 | [CC BY 3.0](https://creativecommons.org/licenses/by/3.0) |
-| Ch 5: diesel generator of a hospital data center | [Power generator of a hospital data center](https://commons.wikimedia.org/wiki/File:Power_generator_of_a_hospital_data_center.jpg) | Mikael Häggström | [CC0](http://creativecommons.org/publicdomain/zero/1.0/deed.en) |
-| Ch 6 opening: CRAC cooling units | [CRAC Cabinets 2](https://commons.wikimedia.org/wiki/File:CRAC_Cabinets_2.jpg) | Robert.Harker | [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0) |
-| Ch 6: aisle between server cabinets | [Cabinet Asile](https://commons.wikimedia.org/wiki/File:Cabinet_Asile.jpg) | Robert.Harker | [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0) |
-| Ch 6: perforated raised-floor panel | [All-steel perforated ventilation raised floor panel 28 percent open area](https://commons.wikimedia.org/wiki/File:All-steel_perforated_ventilation_raised_floor_panel_28_percent_open_area.jpg) | LP Floor Group | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0) |
-| Ch 6: cooling tower on a data center, Mesa, Arizona | [Data center cooling tower](https://commons.wikimedia.org/wiki/File:Data_center_cooling_tower.jpg) | Rsparks3 | [CC0](http://creativecommons.org/publicdomain/zero/1.0/deed.en) |
-| Ch 6: Asperitas immersion cooling system | [Asperitas AIC24 Immersion system](https://commons.wikimedia.org/wiki/File:Asperitas_AIC24_Immersion_system.jpg) | Rolf Brink | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
-| Ch 7 opening: locked customer cage | [Cage Quelle EMC HostCo GmbH](https://commons.wikimedia.org/wiki/File:Cage_Quelle_EMC_HostCo_GmbH.jpg) | Virtuo Doc | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
-| Ch 7: racks seen through protective enclosure (NOIRLab) | [Data Center Fish Eye View (noirlab-racks-155)](https://commons.wikimedia.org/wiki/File:Data_Center_Fish_Eye_View_(noirlab-racks-155).jpg) | International Gemini Observatory/NOIRLab/NSF/AURA/Manuel Paredes | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0) |
-| Ch 7: gas fire-suppression discharge in a server room | [COMPUTER ROOM DISCHARGE](https://commons.wikimedia.org/wiki/File:COMPUTER_ROOM_DISCHARGE.JPG) | Keith4048 | Public domain |
-| Ch 8 opening: rows of Wikimedia Foundation servers | [Wikimedia Foundation Servers-8055 08](https://commons.wikimedia.org/wiki/File:Wikimedia_Foundation_Servers-8055_08.jpg) | Victor Grigas | [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0) |
-| Ch 9 opening: IBM Blue Gene/P supercomputer, Argonne | [IBM Blue Gene P supercomputer](https://commons.wikimedia.org/wiki/File:IBM_Blue_Gene_P_supercomputer.jpg) | Argonne National Laboratory | [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0) |
-| Ch 10 opening: compute trays of an NVIDIA GB200 rack | [Nvidia DGX GB200](https://commons.wikimedia.org/wiki/File:Nvidia_DGX_GB200.jpg) | Pokiiri | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
-| Ch 11 opening: wind turbines and power lines, East Sussex | [Wind Turbines and Power Lines, East Sussex, England - April 2009](https://commons.wikimedia.org/wiki/File:Wind_Turbines_and_Power_Lines,_East_Sussex,_England_-_April_2009.jpg) | Diliff | [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0) |
-| Ch 11: Google data center campus, Mayes County, Oklahoma | [Google Mayes County P0004974a](https://commons.wikimedia.org/wiki/File:Google_Mayes_County_P0004974a.jpg) | Xpda | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
-| Ch 11: district heating pipes, Jyväskylä, Finland | [District heating pipes in Jyväskylä](https://commons.wikimedia.org/wiki/File:District_heating_pipes_in_Jyv%C3%A4skyl%C3%A4.jpg) | Antti Leppänen | [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0) |
-| Ch 12 opening: generators at a nearly finished data center | [Una batteria di grossi generatori alimentati a gasolio in un Data Center in via di ultimazione](https://commons.wikimedia.org/wiki/File:Una_batteria_di_grossi_generatori_alimentati_a_gasolio_in_un_Data_Center_in_via_di_ultimazione.jpg) | Lapalmauz | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
-| Ch 12: load bank testing a standby generator | [Air cooled load bank](https://commons.wikimedia.org/wiki/File:Air_cooled_load_bank.jpg) | Wtshymanski | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
-| Finale: computing rack at Ifremer's Datarmor centre | [Le Centre Datarmor, les coulisses (Ifremer 00957-106840 - 54954)](https://commons.wikimedia.org/wiki/File:Le_Centre_Datarmor,_les_coulisses_(Ifremer_00957-106840_-_54954).jpg) | Gregory Rocher / Ifremer | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0) |
-| Ch 1: computer room, University of St. Gallen (historic) | [Blick in einen Raum des HSG-Rechenzentrums HSGH 022-001118](https://commons.wikimedia.org/wiki/File:Blick_in_einen_Raum_des_HSG-Rechenzentrums_HSGH_022-001118.jpg) | University of St. Gallen | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
-| Ch 12: technician working on network equipment | [Network server and technician](https://commons.wikimedia.org/wiki/File:Network_server_and_technician.jpg) | Bill Branson (Photographer) | Public domain |
+### Editing the tour
+
+- **Change a caption:** edit the beat's text in `data.js`, then run `node data-centers/prerender.mjs`.
+- **Re-time it:** each beat has `d`, its length in seconds (8.5 by default).
+- **Move the camera:** `cam: [point, az, el, dist]`. The point is a name from `POI` or `[x, y, z]` in metres, with the building centred on 0, 0, 0. `az` is the angle around, `el` the height angle, `dist` the distance. Open `data-centers/?paused#t=SECONDS` to look at one moment.
+- **Add a scene:** give the beat a `cue` and handle it in `apply()` in `campus.js`.
+
+### Tests
+
+```bash
+node --test data-centers/tests/*.test.mjs
+node data-centers/tests/e2e.mjs http://localhost:8765/
+```
+
+### Sources
+
+Every number on a stat card comes from the original magazine's checked sources: the IEA (*Energy and AI*, 2025), the Uptime Institute, Google, Microsoft, LBNL, NVIDIA and Supermicro specifications, NPCI, NRDC, ASHRAE, NFPA 2001 and the LTO Program. The full list is in the tour's Sources panel and at the end of the text version.
+The earlier photo edition of this magazine is in the git history; this edition uses no photos.
 
 ---
 
@@ -485,7 +464,7 @@ There is also a "Read as text" version, pre-rendered into the HTML. Browsers wit
 | `sand-to-signal/core.js` | Pure helpers: hash routing, throttle, camera maths, data validation |
 | `sand-to-signal/scene.js` | The 3D models, built from simple three.js shapes (no downloaded models) |
 | `sand-to-signal/tour.js` | Captions, input, camera flights, hands-on controls; loads three.js after the first caption shows |
-| `sand-to-signal/vendor/three.min.js` | three.js r186 (`three@0.186.1`), tree-shaken to the classes this page uses and minified. MIT licence in `vendor/LICENSE-three.txt`. To add a three.js class, rebuild it with esbuild from an entry file that exports the classes you need |
+| `vendor/three.min.js` (shared) | three.js r186 (`three@0.186.1`), tree-shaken to the classes the 3D pages use and minified. MIT licence in `vendor/LICENSE-three.txt`. To add a three.js class, rebuild it with esbuild from an entry file that exports the classes you need |
 | `sand-to-signal/prerender.mjs` | Writes the text version, first caption and Sources list into `index.html` |
 
 ### Editing the tour
