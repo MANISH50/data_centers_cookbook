@@ -208,7 +208,8 @@ async function start3d() {
   resize(); addEventListener('resize', resize);
   root.classList.add('gl-ready'); curBeat = -1; draw(true);
   window.__dc = { renderer, scene, camera, campus, get t() { return t; }, get playing() { return playing; }, TL };
-  if (!reduced && !startPaused) setTimeout(() => { if (!playing && !textMode && !userTook) setPlaying(true); }, t > .5 ? 700 : 1800);
+  // No GPU (software rendering): every frame is slow, so wait for the reader to press Play.
+  if (!reduced && !startPaused && !softGL) setTimeout(() => { if (!playing && !textMode && !userTook) setPlaying(true); }, t > .5 ? 700 : 1800);
 }
 
 /* ================= BOOT ================= */

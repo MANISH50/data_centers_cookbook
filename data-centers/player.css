@@ -84,8 +84,9 @@ button{font:inherit;color:inherit;cursor:pointer}
 #scrub::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;margin-top:-6px;border-radius:50%;background:#fff;border:3px solid var(--sky)}
 #scrub::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:#fff;border:3px solid var(--sky)}
 #ticks{position:absolute;left:0;right:0;top:0;height:22px;pointer-events:none}
-.tick{position:absolute;top:2px;width:4px;height:18px;margin-left:-2px;padding:0;border:0;border-radius:2px;background:rgba(234,240,251,.45);pointer-events:auto}
-.tick.on{background:var(--focus)}
+.tick{position:absolute;top:0;width:24px;height:22px;margin-left:-12px;padding:0;border:0;background:none;pointer-events:auto}
+.tick::after{content:"";position:absolute;left:10px;top:2px;width:4px;height:18px;border-radius:2px;background:rgba(234,240,251,.45)}
+.tick.on::after{background:var(--focus)}
 .btns{display:flex;align-items:center;gap:6px;min-width:0}
 .cb{min-height:44px;min-width:44px;padding:0 10px;border-radius:999px;border:1px solid var(--line-2);background:#111a2e;font-weight:700;font-size:.9rem;white-space:nowrap}
 .cb:hover{border-color:var(--muted)}
@@ -96,6 +97,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 @media (max-width:640px){
   :root{--ctrl:96px}
   .hide-sm{display:none}
+  #ticks{display:none}
   .caption{padding:10px 14px 12px}
   .cap-text{font-size:.95rem;min-height:4.5em}
   .stat{width:min(220px,60vw);padding:10px 12px;top:calc(var(--bar) + 10px)}

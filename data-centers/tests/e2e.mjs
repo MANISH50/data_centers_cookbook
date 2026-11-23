@@ -27,7 +27,9 @@ console.log('Desktop 1280×760');
   await ready(p);
   check(await p.evaluate(() => !!document.querySelector('#view3d canvas')), 'WebGL canvas created');
   await p.waitForTimeout(5000);
-  check(await p.evaluate(() => window.__dc.playing), 'tour starts playing on its own');
+  const soft = await p.evaluate(() => document.documentElement.classList.contains('soft-gl'));
+  if (soft) { check(!(await p.evaluate(() => window.__dc.playing)) && await p.locator('#bBig').isVisible(), 'no GPU: waits for Play instead of autoplaying'); await p.click('#bBig'); await p.waitForTimeout(600); }
+  check(await p.evaluate(() => window.__dc.playing), soft ? 'Play starts the tour' : 'tour starts playing on its own');
   const t1 = await T(p); await p.waitForTimeout(2500); const t2 = await T(p);
   check(t2 > t1 + 1, `timeline advances while playing (${t1.toFixed(1)} → ${t2.toFixed(1)} s)`);
   check((await p.textContent('#capText')).length > 20, 'caption typed in');
