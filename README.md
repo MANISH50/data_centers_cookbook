@@ -16,6 +16,7 @@ Each magazine has real photos, diagrams you can tap, small simulations and a qui
 | 03 | **Inside the Mind of a Model**: How Claude Opus Is Built, Trained and Served | Beginner to Advanced | 25 · about 2½ h | https://manish50.github.io/data_centers_cookbook/ai-model/ |
 | 04 | **How Netflix Streams**: from Play to pixels, a flying tour | Beginner to Intermediate | 15 stops · about 20 min | https://manish50.github.io/data_centers_cookbook/netflix-streaming/ |
 | 05 | **From Sand to Signal**: how a chip is made, and how it lights a pixel (3D) | Beginner to Intermediate | 15 stops · about 25 min | https://manish50.github.io/data_centers_cookbook/sand-to-signal/ |
+| 06 | **How the Internet Moves Data**: from your tap to the ocean floor (self-playing 3D tour) | Beginner to Intermediate | 14 · about 9 min | https://manish50.github.io/data_centers_cookbook/internet/ |
 
 The home page remembers the last chapter you reached in each magazine and offers **Continue reading**.
 That progress is stored only in your browser (`localStorage`), and every page still works when storage is blocked.
@@ -30,6 +31,7 @@ azure-databricks/index.html Issue 02, photos in azure-databricks/images/
 ai-model/index.html        Issue 03, photos in ai-model/images/
 netflix-streaming/         Issue 04: map tour (index.html, data.js, core.js, tour.js, tour.css, tests/)
 sand-to-signal/            Issue 05: 3D tour (data.js, logic.js, scene.js, tour.js, tests/)
+internet/                  Issue 06: self-playing 3D globe tour (data.js, net.js, land.js, timeline.js, world.js, player.js, tests/)
 vendor/three.min.js        three.js r186, tree-shaken, shared by the 3D pages (MIT, see vendor/LICENSE-three.txt)
 sitemap.xml                list of pages for search engines
 .nojekyll                  serve files as-is on GitHub Pages
@@ -483,3 +485,58 @@ node sand-to-signal/tests/e2e.mjs http://localhost:8765/
 ### Sources
 
 Facts come from ASML ([How microchips are made](https://www.asml.com/en/technology/all-about-microchips/how-microchips-are-made), [the main manufacturing steps](https://www.asml.com/en/news/stories/2021/semiconductor-manufacturing-process-steps), [Microchip basics](https://www.asml.com/en/technology/all-about-microchips/microchip-basics), [Light and lasers](https://www.asml.com/en/technology/lithography-principles/light-and-lasers)), the [USGS silicon summary](https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-silicon.pdf), and Wikipedia's articles on polysilicon, the Czochralski method, wafers, fabrication, multigate transistors, NAND logic, adders, the instruction cycle and frame buffers. The full list is in the page's Sources panel.
+
+## Issue 06: How the Internet Moves Data
+
+![How the Internet Moves Data: a packet crossing the globe from Mumbai to London](internet/images/screenshot.jpg)
+
+A self-playing 3D tour built on a globe with real coastlines. It runs about 9 minutes, plus whatever time you spend on the hands-on panels. It uses the same player as Issue 01: autoplay, scrubbing, chapters, speed, captions, drag to look around, and "Read as text".
+On some beats a **✋ Try it** button opens a panel where you can experiment:
+
+- **Send a packet:** pick any two cities and see the path, the cable distance, the straight-line distance and the minimum round trip at light speed.
+- **Cut a cable:** cut any undersea link and watch traffic reroute onto a longer, slower path. Then repair it.
+- **Look up example.com:** step through DNS: resolver → root → .com → authoritative → answer.
+- **Lose a packet:** drop any packet and see TCP resend it while UDP carries on without it.
+
+| # | Chapter | What plays in 3D |
+|---|---|---|
+| 01 | A network of networks | The globe, cities and links; people online (ITU) |
+| 02 | Packets | A photo split into packets with headers, travelling out of order, and reassembled |
+| 03 | Addresses | IPv4 (32 bits) vs IPv6 (128 bits); NAT at home |
+| 04 | DNS | Resolver → root → .com → authoritative, then caching; root servers worldwide |
+| 05 | The first mile | Phone → Wi-Fi or mast → your ISP |
+| 06 | Routers and hops | Hop-by-hop forwarding, time to live, traceroute |
+| 07 | BGP | Networks announcing routes, and a bad announcement being fixed |
+| 08 | Internet exchanges | Many networks swapping traffic over one shared switch |
+| 09 | Undersea cables | 600+ cables, what's inside one, landing stations, repair ships |
+| 10 | Speed and distance | Light in fibre, about 200,000 km/s, and the minimum round trip |
+| 11 | Delivery rules | TCP vs UDP; HTTPS and TLS encryption |
+| 12 | Bringing data closer | CDNs and caches (links to Issue 04) |
+| 13 | When things break | Cable cuts (the 2008 Mediterranean cuts) and rerouting |
+| 14 | Journey's end | One request, end to end |
+
+**Honest maps:** the coastlines are real (Natural Earth, public domain). The cable network drawn on the globe is an **illustration**, not real cable routes, and is labelled as such. The distance and light-speed maths is real.
+
+### Files
+
+| File | What it holds |
+|---|---|
+| `internet/data.js` | **All content**: 14 chapters of beats, cities, the illustrative links, sources, recaps |
+| `internet/net.js` | Pure network maths: great-circle distances, shortest paths, light-speed delay, DNS steps, TCP/UDP delivery |
+| `internet/land.js` | Coastlines from Natural Earth 1:110m (public domain), converted from the world-atlas package |
+| `internet/timeline.js` | Same timeline helpers as Issue 01 |
+| `internet/world.js` | The globe and the close-up studio sets |
+| `internet/player.js` | The film player plus the Try it panels |
+
+Edit captions in `data.js`, then run `node internet/prerender.mjs`.
+
+### Tests
+
+```bash
+node --test internet/tests/*.test.mjs
+node internet/tests/e2e.mjs http://localhost:8765/
+```
+
+### Sources
+
+The ITU (people online, 2026), TeleGeography's Submarine Cable FAQs (cable count, length, size, faults, design life, satellite share), RFCs 791, 8200, 1034, 4271, 9293, 768 and 8446, IANA and root-servers.org (root servers), RIPE NCC (IPv4 run-out), PeeringDB, and Wikipedia for traceroute and the 2008 cable cuts. The full list is in the tour's Sources panel.
