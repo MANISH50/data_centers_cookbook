@@ -212,3 +212,41 @@ export const RECAPS = {
   ch12: ['Location is chosen for power, fibre, water, safety, climate and closeness to users.', 'Everything is tested at full load, with fake servers, before going live.', 'A small team runs it 24/7 with walk-arounds, procedures and the control room.'],
   ch13: ['You have followed a data center from the outside fence to the inside of a server, and back out to the planet.']
 };
+
+/* REAL PHOTOS that stand in the 3D scene in place of the drawn models (shared/photoboard.js).
+   All from Wikimedia Commons under the free licences shown; resized for the web. `at` = chapter.beat where the photo appears. */
+export const PHOTOS = [
+  { id: "history", file: "photos/history.jpg", w: 1100, h: 754, at: "1.7", title: "A computer room in the 1970s–80s, University of St. Gallen", alt: "An older computer room: a technician at a terminal beside cabinets of computer equipment",
+    author: "University of St. Gallen", licence: "CC BY-SA 4.0", licUrl: "https://creativecommons.org/licenses/by-sa/4.0", url: "https://commons.wikimedia.org/wiki/File:Blick_in_einen_Raum_des_HSG-Rechenzentrums_HSGH_022-001118.jpg" },
+  { id: "hall", file: "photos/hall.jpg", w: 1100, h: 733, at: "2.0", title: "A real server hall (CERN, Geneva)", alt: "Rows of tall server cabinets in a brightly lit data center hall",
+    author: "Florian Hirzinger - www.fh-ap.com", licence: "CC BY-SA 3.0", licUrl: "https://creativecommons.org/licenses/by-sa/3.0", url: "https://commons.wikimedia.org/wiki/File:CERN_Server_03.jpg" },
+  { id: "racks", file: "photos/racks.jpg", w: 1100, h: 730, at: "2.2", title: "Racks full of servers", alt: "Tall racks of servers, lit blue, in a data center aisle",
+    author: "BalticServers.com", licence: "CC BY-SA 3.0", licUrl: "https://creativecommons.org/licenses/by-sa/3.0", url: "https://commons.wikimedia.org/wiki/File:BalticServers_data_center.jpg" },
+  { id: "blade", file: "photos/blade.jpg", w: 1100, h: 936, at: "3.1", title: "A blade chassis: thin servers sharing one box", alt: "A blade server chassis filled with vertical blade servers",
+    author: "Redline", licence: "CC BY-SA 3.0", licUrl: "https://creativecommons.org/licenses/by-sa/3.0", url: "https://commons.wikimedia.org/wiki/File:HP_c7000-1.jpg" },
+  { id: "inside", file: "photos/inside.jpg", w: 1100, h: 733, at: "3.2", title: "Inside a 1U server, lid off", alt: "A 1U web server with its lid off: fans, heatsinks, memory and drives",
+    author: "Rodzilla at English Wikipedia", licence: "CC BY 2.5", licUrl: "https://creativecommons.org/licenses/by/2.5", url: "https://commons.wikimedia.org/wiki/File:Inside_and_Rear_of_Webserver.jpg" },
+  { id: "gpu", file: "photos/gpu.jpg", w: 1084, h: 1100, at: "3.5", title: "An 8-GPU board from an AI server", alt: "An NVIDIA HGX board with eight large GPU heatsinks",
+    author: "Pokiiri", licence: "CC BY-SA 4.0", licUrl: "https://creativecommons.org/licenses/by-sa/4.0", url: "https://commons.wikimedia.org/wiki/File:Nvidia_DGX-B200-HGX.jpg" },
+  { id: "airack", file: "photos/airack.jpg", w: 383, h: 1100, at: "3.7", title: "A rack-scale AI system (GB200 NVL72)", alt: "A tall cabinet filled with stacked GPU compute trays",
+    author: "Pokiiri", licence: "CC BY-SA 4.0", licUrl: "https://creativecommons.org/licenses/by-sa/4.0", url: "https://commons.wikimedia.org/wiki/File:Nvidia_DGX_GB200.jpg" },
+  { id: "batteries", file: "photos/batteries.jpg", w: 1100, h: 1097, at: "5.3", title: "UPS batteries in a data center", alt: "Long rows of backup batteries in a data center",
+    author: "Jelson25", licence: "CC BY 3.0", licUrl: "https://creativecommons.org/licenses/by/3.0", url: "https://commons.wikimedia.org/wiki/File:Datacenter_Backup_Batteries.jpg" },
+  { id: "generator", file: "photos/generator.jpg", w: 1100, h: 825, at: "5.6", title: "A standby diesel generator", alt: "A large diesel generator that provides backup power to a data center",
+    author: "Mikael Häggström", licence: "CC0", licUrl: "http://creativecommons.org/publicdomain/zero/1.0/deed.en", url: "https://commons.wikimedia.org/wiki/File:Power_generator_of_a_hospital_data_center.jpg" },
+  { id: "aisle", file: "photos/aisle.jpg", w: 825, h: 1100, at: "6.1", title: "A cold aisle between two rows of racks", alt: "A cold aisle between two rows of server cabinets, with perforated floor tiles",
+    author: "Robert.Harker", licence: "CC BY-SA 3.0", licUrl: "https://creativecommons.org/licenses/by-sa/3.0", url: "https://commons.wikimedia.org/wiki/File:Cabinet_Asile.jpg" },
+  { id: "crah", file: "photos/crah.jpg", w: 1100, h: 825, at: "6.2", title: "Cooling units on a raised floor", alt: "A row of cooling cabinets standing on a raised floor with vent tiles",
+    author: "Robert.Harker", licence: "CC BY-SA 3.0", licUrl: "https://creativecommons.org/licenses/by-sa/3.0", url: "https://commons.wikimedia.org/wiki/File:CRAC_Cabinets_2.jpg" },
+  { id: "tower", file: "photos/tower.jpg", w: 1100, h: 825, at: "6.4", title: "Cooling towers on a data center (Mesa, Arizona)", alt: "Rows of cooling-tower fans on the roof of a data center",
+    author: "Rsparks3", licence: "CC0", licUrl: "http://creativecommons.org/publicdomain/zero/1.0/deed.en", url: "https://commons.wikimedia.org/wiki/File:Data_center_cooling_tower.jpg" },
+  { id: "cage", file: "photos/cage.jpg", w: 1100, h: 732, at: "7.2", title: "A locked customer cage", alt: "Server racks inside a locked mesh cage in a colocation data center",
+    author: "Virtuo Doc", licence: "CC BY-SA 4.0", licUrl: "https://creativecommons.org/licenses/by-sa/4.0", url: "https://commons.wikimedia.org/wiki/File:Cage_Quelle_EMC_HostCo_GmbH.jpg" },
+  { id: "fire", file: "photos/fire.jpg", w: 1100, h: 825, at: "7.4", title: "A gas fire-suppression discharge", alt: "A gas fire suppression system discharging in a server room, filling it with mist",
+    author: "Keith4048", licence: "Public domain", licUrl: "", url: "https://commons.wikimedia.org/wiki/File:COMPUTER_ROOM_DISCHARGE.JPG" },
+  { id: "loadbank", file: "photos/loadbank.jpg", w: 1100, h: 825, at: "12.3", title: "A load bank testing a generator", alt: "An air-cooled load bank used to test a large standby generator",
+    author: "Wtshymanski", licence: "CC BY-SA 4.0", licUrl: "https://creativecommons.org/licenses/by-sa/4.0", url: "https://commons.wikimedia.org/wiki/File:Air_cooled_load_bank.jpg" },
+  { id: "tech", file: "photos/tech.jpg", w: 1100, h: 717, at: "12.5", title: "A technician at work", alt: "A technician checking network equipment in a rack",
+    author: "Bill Branson (Photographer)", licence: "Public domain", licUrl: "", url: "https://commons.wikimedia.org/wiki/File:Network_server_and_technician.jpg" },
+];
+for (const ph of PHOTOS) { const [c, i] = ph.at.split('.').map(Number); const beat = CHAPTERS[c - 1].beats[i]; beat.photo = ph.id; if (ph.labels) beat.plabels = ph.labels; }
