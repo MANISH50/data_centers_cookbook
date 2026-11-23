@@ -15,6 +15,7 @@ Each magazine has real photos, diagrams you can tap, small simulations and a qui
 | 02 | **Inside the Lakehouse**: Azure Databricks, from First Notebook to Architect | Beginner to Advanced | 21 · about 2 h | https://manish50.github.io/data_centers_cookbook/azure-databricks/ |
 | 03 | **Inside the Mind of a Model**: How Claude Opus Is Built, Trained and Served | Beginner to Advanced | 25 · about 2½ h | https://manish50.github.io/data_centers_cookbook/ai-model/ |
 | 04 | **How Netflix Streams**: from Play to pixels, a flying tour | Beginner to Intermediate | 15 stops · about 20 min | https://manish50.github.io/data_centers_cookbook/netflix-streaming/ |
+| 05 | **From Sand to Signal**: how a chip is made, and how it lights a pixel (3D) | Beginner to Intermediate | 15 stops · about 25 min | https://manish50.github.io/data_centers_cookbook/sand-to-signal/ |
 
 The home page remembers the last chapter you reached in each magazine and offers **Continue reading**.
 That progress is stored only in your browser (`localStorage`), and every page still works when storage is blocked.
@@ -28,6 +29,7 @@ data-centers/index.html    Issue 01, photos in data-centers/images/
 azure-databricks/index.html Issue 02, photos in azure-databricks/images/
 ai-model/index.html        Issue 03, photos in ai-model/images/
 netflix-streaming/         Issue 04: map tour (index.html, data.js, core.js, tour.js, tour.css, tests/)
+sand-to-signal/            Issue 05: 3D tour (three.js in vendor/, data.js, logic.js, scene.js, tour.js, tests/)
 sitemap.xml                list of pages for search engines
 .nojekyll                  serve files as-is on GitHub Pages
 ```
@@ -443,3 +445,62 @@ node netflix-streaming/tests/e2e.mjs http://localhost:8765/
 
 Facts were checked against: the [Open Connect Overview PDF](https://openconnect.netflix.com/Open-Connect-Overview.pdf), [Open Connect appliance specs](https://openconnect.netflix.com/en/appliances/), Netflix's [Completing the Netflix Cloud Migration](https://about.netflix.com/en/news/completing-the-netflix-cloud-migration), the [APNIC Open Connect article](https://blog.apnic.net/2018/06/20/netflix-content-distribution-through-open-connect/), and Netflix Tech Blog posts on [fill](https://netflixtechblog.com/netflix-and-fill-c43a32b490c0), [active-active](https://netflixtechblog.com/active-active-for-multi-regional-resiliency-c47719f6685b), [Zuul 2](https://netflixtechblog.com/zuul-2-the-netflix-journey-to-asynchronous-non-blocking-systems-45947377fb5c), [Cosmos](https://netflixtechblog.com/the-netflix-cosmos-platform-35c14d9351ad), [AV1 on Android](https://netflixtechblog.com/netflix-now-streaming-av1-on-android-d5264a515202), [film grain synthesis](https://netflixtechblog.com/av1-scale-film-grain-synthesis-the-awakening-ee09cfdff40b), [Live, part 1](https://netflixtechblog.com/behind-the-streams-live-at-netflix-part-1-d23f917c2f40) and the [Live Origin](https://netflixtechblog.com/netflix-live-origin-41f1b0ad5371). The full list is in the page's Sources panel.
 The map, icons and cover are drawn in code for this page, with no photos.
+
+## Issue 05: From Sand to Signal
+
+![From Sand to Signal: a 3D transistor with its gate switched on](sand-to-signal/og.jpg)
+
+An interactive 3D tour, built with [three.js](https://threejs.org/), that follows silicon from sand to a lit pixel.
+Thirteen workstations sit along a glowing production line, and the camera flies between them.
+At each stop you can drag to look around the model and use one hands-on control:
+
+| # | Stop | Hands-on |
+|---|---|---|
+| 1 | From a grain of sand to a pixel | Start the journey |
+| 2 | Sand and quartz | Show the SiO₂ atoms |
+| 3 | Purifying silicon | Run the Siemens reactor |
+| 4 | Growing a crystal (Czochralski) | Pull the ingot from the melt |
+| 5 | Slicing wafers | Slice the ingot |
+| 6 | Cleanroom and lithography | Expose the wafer with EUV light |
+| 7 | Deposit, etch, implant | Step through the process loop |
+| 8 | The transistor | Switch the gate on and off |
+| 9 | Wiring it up | Pull the metal layers apart |
+| 10 | Dicing, testing, packaging | Explode the package, test the dies |
+| 11 | Building a logic gate | Toggle the NAND inputs |
+| 12 | Adding two numbers | Choose two 4-bit numbers and watch the carry ripple |
+| 13 | A tiny CPU | Step through fetch → decode → execute |
+| 14 | A pixel lights up | Mix a pixel colour; see its bytes |
+| 15 | The whole journey | Where each step happens |
+
+The gate, the adder and the CPU are real simulations. The adder is built only from NAND gates, and the CPU's answer is drawn on the 3D screen at stop 14.
+Every stop has a **Where it happens** block, an approximate scale badge and numbered sources.
+There is also a "Read as text" version, pre-rendered into the HTML. Browsers without WebGL get that version automatically.
+
+### Files
+
+| File | What it holds |
+|---|---|
+| `sand-to-signal/data.js` | **All content**: stops (text, camera `look` + `view`, scale badge, place, hands-on control), station positions, sources |
+| `sand-to-signal/logic.js` | Pure simulations: NAND, full adder, ripple-carry adder, toy CPU, pixel helpers |
+| `sand-to-signal/core.js` | Pure helpers: hash routing, throttle, camera maths, data validation |
+| `sand-to-signal/scene.js` | The 3D models, built from simple three.js shapes (no downloaded models) |
+| `sand-to-signal/tour.js` | Captions, input, camera flights, hands-on controls; loads three.js after the first caption shows |
+| `sand-to-signal/vendor/three.min.js` | three.js r186 (`three@0.186.1`), tree-shaken to the classes this page uses and minified. MIT licence in `vendor/LICENSE-three.txt`. To add a three.js class, rebuild it with esbuild from an entry file that exports the classes you need |
+| `sand-to-signal/prerender.mjs` | Writes the text version, first caption and Sources list into `index.html` |
+
+### Editing the tour
+
+- **Change text:** edit the stop in `data.js`, then run `node sand-to-signal/prerender.mjs`.
+- **Re-tune a camera:** each stop has `look: [x, y, z]`, the point to look at, and `view: { az, el, dist }`, the angle around in degrees, the height angle and the distance. Open `sand-to-signal/#stop-N`, drag to find a good angle, and copy the numbers back. On desktop and phones the camera moves back automatically so the model clears the caption.
+- **Move or add a model:** station positions are in `STATIONS` (`data.js`), and each model is one function in `scene.js`.
+
+### Tests
+
+```bash
+node --test sand-to-signal/tests/*.test.mjs
+node sand-to-signal/tests/e2e.mjs http://localhost:8765/
+```
+
+### Sources
+
+Facts come from ASML ([How microchips are made](https://www.asml.com/en/technology/all-about-microchips/how-microchips-are-made), [the main manufacturing steps](https://www.asml.com/en/news/stories/2021/semiconductor-manufacturing-process-steps), [Microchip basics](https://www.asml.com/en/technology/all-about-microchips/microchip-basics), [Light and lasers](https://www.asml.com/en/technology/lithography-principles/light-and-lasers)), the [USGS silicon summary](https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-silicon.pdf), and Wikipedia's articles on polysilicon, the Czochralski method, wafers, fabrication, multigate transistors, NAND logic, adders, the instruction cycle and frame buffers. The full list is in the page's Sources panel.

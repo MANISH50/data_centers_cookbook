@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>From Sand to Signal: how a chip is made, and how it lights a pixel</title>
+<meta name="description" content="An interactive 3D tour: from sand and quartz to pure silicon, crystal ingots, wafers, lithography, transistors, wiring and packaging, then logic gates, an adder, a tiny CPU and a pixel lighting up on a screen.">
+<link rel="canonical" href="https://manish50.github.io/data_centers_cookbook/sand-to-signal/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="From Sand to Signal: how a chip is made, and how it lights a pixel">
+<meta property="og:description" content="15 stops in 3D: sand → silicon → wafer → transistor → logic → CPU → pixel. Drag the models, press the buttons.">
+<meta property="og:url" content="https://manish50.github.io/data_centers_cookbook/sand-to-signal/">
+<meta property="og:image" content="https://manish50.github.io/data_centers_cookbook/sand-to-signal/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="From Sand to Signal">
+<meta name="twitter:description" content="An interactive 3D tour from sand to a lit pixel.">
+<meta name="twitter:image" content="https://manish50.github.io/data_centers_cookbook/sand-to-signal/og.jpg">
+<meta name="theme-color" content="#05070d">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22%3E%3Crect width=%2264%22 height=%2264%22 rx=%2214%22 fill=%22%2305070d%22/%3E%3Crect x=%2218%22 y=%2218%22 width=%2228%22 height=%2228%22 rx=%224%22 fill=%22%23ffd23f%22/%3E%3Cpath d=%22M24 10v8M32 10v8M40 10v8M24 46v8M32 46v8M40 46v8M10 24h8M10 32h8M10 40h8M46 24h8M46 32h8M46 40h8%22 stroke=%22%233fe0ff%22 stroke-width=%223%22/%3E%3C/svg%3E">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Article","headline":"From Sand to Signal: how a chip is made, and how it lights a pixel","description":"An interactive 3D tour from sand to silicon wafers, lithography, transistors and packaging, then logic gates, an adder, a tiny CPU and a pixel on a screen.","image":"https://manish50.github.io/data_centers_cookbook/sand-to-signal/og.jpg","mainEntityOfPage":"https://manish50.github.io/data_centers_cookbook/sand-to-signal/","isPartOf":{"@type":"CreativeWorkSeries","name":"Data Centers Cookbook"},"inLanguage":"en","about":["Semiconductor device fabrication","Silicon","Photolithography","Transistor","Logic gate","Central processing unit"]}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="tour.css">
+<link rel="modulepreload" href="tour.js">
+</head>
+<body>
+<a class="skip" href="#text">Skip to the text version</a>
+
+<header class="bar">
+  <a class="lib" href="../" aria-label="Back to the library"><span aria-hidden="true">←</span><span class="t">Library</span></a>
+  <div class="brand"><span class="k">Issue 05 · Interactive 3D · Independent explainer</span><h1>From <em>Sand</em> to Signal</h1></div>
+  <div class="tools">
+    <button class="tb" id="bAuto" aria-pressed="false" aria-label="Auto tour" title="Auto tour (12 s per stop)"><span class="i" aria-hidden="true">▶</span><span class="t">Auto tour</span></button>
+    <button class="tb" id="bText" aria-pressed="false" aria-label="Read as text" title="Read as text"><span class="i" aria-hidden="true">≡</span><span class="t">Read as text</span></button>
+    <button class="tb" id="bSrc" aria-label="Sources" title="Sources"><span class="i" aria-hidden="true">ⓘ</span><span class="t">Sources</span></button>
+  </div>
+</header>
+<p class="nogl-msg" id="noglMsg" hidden>3D isn’t available in this browser, so here is the whole tour as text.</p>
+
+<main class="stage" id="stage" aria-label="Interactive 3D tour">
+  <div id="view3d" aria-label="3D model. Drag to look around; double-click to reset the view." role="img"><p class="loading">Loading 3D…</p></div>
+  <div id="labels" aria-hidden="true"></div>
+  <div class="vignette" aria-hidden="true"></div>
+  <div class="tunnelfx" aria-hidden="true"></div>
+  <p class="scale" id="scale" aria-live="polite">The whole journey</p>
+  <section class="card" id="card" aria-labelledby="cardTitle" aria-live="polite">
+<!--CARD-->
+    <p class="eyebrow"><span class="n">01</span><span>/ 15</span> · Start here</p>
+    <h2 class="title" id="cardTitle">From a grain of sand to a pixel</h2>
+    <p class="ln">Every phone, laptop and data-center server runs on chips made from one of the most common materials on Earth.</p><p class="ln">Follow it all the way: from sand, to a crystal, to billions of switches, to a sum, to a pixel that lights up.</p><p class="ln">Drag to look around any 3D model. Use Next, the arrow keys or the scroll wheel to move on.</p>
+    <div class="lab" id="labUi"></div>
+    <section class="where" aria-label="Where it happens"><p class="wh"><span class="lab-t">Where it happens</span><span class="badge">📍 Quarry or mine</span></p><p class="t">The journey crosses quarries, chemical plants, crystal growers, chip fabs, packaging plants and, finally, your device.</p></section>
+    <p class="srcs">Sources: <a href="https://www.asml.com/en/technology/all-about-microchips/microchip-basics" target="_blank" rel="noopener" title="ASML: Microchip basics">[3]</a> · <button class="linkish" data-open-sources>all sources</button></p>
+    <p class="tm">Independent explainer. No company logos; 3D models are drawn in code for this page.</p>
+  <!--/CARD-->
+  </section>
+  <nav class="ctrl" aria-label="Tour navigation">
+    <button class="nb" id="bPrev" aria-label="Previous stop"><span aria-hidden="true">‹</span> <span class="t">Prev</span></button>
+    <ol id="rail" aria-label="Stops"></ol>
+    <div id="railBar" aria-hidden="true"></div>
+    <span id="count" aria-hidden="true">1 / 15</span>
+    <button class="nb" id="bNext" aria-label="Next stop">Next <span aria-hidden="true">›</span></button>
+  </nav>
+</main>
+
+<article class="text-version" id="text" tabindex="-1">
+<!--TEXT-->
+  <h2>From sand to signal: the whole tour as text</h2>
+  <p class="lede">How a chip is made from sand, and how its switches add two numbers and light a pixel. 15 stops.</p>
+  <p><button class="nb" data-back-to-map>← Back to the 3D tour</button></p>
+  <section aria-labelledby="t-stop-1">
+    <h3 id="t-stop-1"><span class="n">01</span>From a grain of sand to a pixel</h3>
+    <p>Every phone, laptop and data-center server runs on chips made from one of the most common materials on Earth.</p>
+    <p>Follow it all the way: from sand, to a crystal, to billions of switches, to a sum, to a pixel that lights up.</p>
+    <p>Drag to look around any 3D model. Use Next, the arrow keys or the scroll wheel to move on.</p>
+    <section class="where" aria-label="Where it happens"><p class="wh"><span class="lab-t">Where it happens</span><span class="badge">📍 Quarry or mine</span></p><p class="t">The journey crosses quarries, chemical plants, crystal growers, chip fabs, packaging plants and, finally, your device.</p></section>
+    <p class="srcs">Sources: <a href="https://www.asml.com/en/technology/all-about-microchips/microchip-basics" target="_blank" rel="noopener" title="ASML: Microchip basics">[3]</a></p>
+  </section>
+  <section aria-labelledby="t-stop-2">
+    <h3 id="t-stop-2"><span class="n">02</span>Sand and quartz</h3>
+    <p>Silicon is the second most abundant element on Earth, after oxygen.</p>
+    <p>It never appears on its own: in sand and quartz it is bonded to oxygen as silicon dioxide (SiO₂).</p>
+    <p>Chipmakers start from high-purity quartz or silica sand.</p>
+    <section class="where" aria-label="Where it happens"><p class="wh"><span class="lab-t">Where it happens</span><span class="badge">📍 Quarry or mine</span></p><p class="t">Quartz and quartzite are mined, then shipped to plants that turn them into silicon metal.</p></section>
+    <p class="srcs">Sources: <a href="https://www.asml.com/en/technology/all-about-microchips/microchip-basics" target="_blank" rel="noopener" title="ASML: Microchip basics">[3]</a> <a href="https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-silicon.pdf" target="_blank" rel="noopener" title="USGS Mineral Commodity Summaries 2025: Silicon (PDF)">[5]</a></p>
+  </section>
+  <section aria-labelledby="t-stop-3">
+    <h3 id="t-stop-3"><span class="n">03</span>Purifying silicon</h3>
+    <p>First, quartz is reduced to silicon metal in a furnace. That metal is pure enough for alloys, but nowhere near pure enough for chips.</p>
+    <p>Next, the Siemens process turns it into a gas (trichlorosilane), distils it, and grows ultra-pure silicon onto hot rods inside a reactor.</p>
+    <p>The rods are broken into chunks of polysilicon: the feedstock for chips.</p>
+    <section class="where" aria-label="Where it happens"><p class="wh"><span class="lab-t">Where it happens</span><span class="badge">📍 Chemical plant</span></p><p class="t">Silicon metal is made in furnace plants. Ultra-high-purity polysilicon comes from specialised chemical plants.</p></section>
+    <p class="srcs">Sources: <a href="https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-silicon.pdf" target="_blank" rel="noopener" title="USGS Mineral Commodity Summaries 2025: Silicon (PDF)">[5]</a> <a href="https://en.wikipedia.org/wiki/Polycrystalline_silicon" target="_blank" rel="noopener" title="Wikipedia: Polycrystalline silicon (Siemens process)">[6]</a></p>
+  </section>
+  <section aria-labelledby="t-stop-4">
+    <h3 id="t-stop-4"><span class="n">04</span>Growing a crystal</h3>
+    <p>The polysilicon is melted in a crucible. A tiny seed crystal is dipped in, then slowly pulled up while it turns.</p>
+    <p>Atoms line up behind the seed, so the whole “salami-shaped” ingot is one single crystal.</p>
+    <p>This is the Czochralski method, invented by Polish scientist Jan Czochralski over a hundred years ago.</p>
+    <section class="where" aria-label="Where it happens"><p class="wh"><span class="lab-t">Where it happens</span><span class="badge">📍 Crystal-growing plant</span></p><p class="t">Crystal pullers at wafer makers grow the ingots that become most chip wafers.</p></section>
+    <p class="srcs">Sources: <a href="https://en.wikipedia.org/wiki/Czochralski_method" target="_blank" rel="noopener" title="Wikipedia: Czochralski method">[7]</a> <a href="https://www.asml.com/en/news/stories/2021/semiconductor-manufacturing-process-steps" target="_blank" rel="noopener" title="ASML: Deposition, resist, lithography, etch, ionization, packaging (2023)">[2]</a> <a href="https://en.wikipedia.org/wiki/Wafer_(electronics)" target="_blank" rel="noopener" title="Wikipedia: Wafer (electronics)">[8]</a></p>
+  </section>
+  <section aria-labelledby="t-stop-5">
+    <h3 id="t-stop-5"><span class="n">05</span>Slicing wafers</h3>
+    <p>The ingot is sliced into thin discs called wafers, often with diamond wire saws.</p>
+    <p>Each wafer is etched and polished until its surface is almost atomically smooth.</p>
+    <p>Most advanced chips are made on 300 mm (12-inch) wafers.</p>
+    <section class="where" aria-label="Where it happens"><p class="wh"><span class="lab-t">Where it happens</span><span class="badge">📍 Wafer factory</span></p><p class="t">Wafer factories slice, polish and clean the wafers, then ship them to chip fabs in sealed boxes.</p></section>
+    <p class="srcs">Sources: <a href="https://www.asml.com/en/news/stories/2021/semiconductor-manufacturing-process-steps" target="_blank" rel="noopener" title="ASML: Deposition, resist, lithography, etch, ionization, packaging (2023)">[2]</a> <a href="https://en.wikipedia.org/wiki/Wafer_(electronics)" target="_blank" rel="noopener" title="Wikipedia: Wafer (electronics)">[8]</a></p>
+  </section>
+  <section aria-labelledby="t-stop-6">
+    <h3 id="t-stop-6"><span class="n">06</span>Cleanroom and lithography</h3>
+    <p>The wafer is coated with a light-sensitive resist. A lithography machine shines light through a mask (the “reticle”) to print a chip pattern onto it.</p>
+    <p>The finest layers use extreme ultraviolet (EUV) light with a 13.5 nm wavelength, bounced off mirrors. Less critical layers use deep ultraviolet (DUV) light through lenses.</p>
+    <p>It all happens in cleanrooms about 10,000 times cleaner than outside air.</p>
+    <section class="where" aria-label="Where it happens"><p class="wh"><span class="lab-t">Where it happens</span><span class="badge">📍 Chip fab cleanroom</span></p><p class="t">Fab cleanrooms filter and recirculate their air nonstop. Workers wear “bunny suits”.</p></section>
+    <p class="srcs">Sources: <a href="https://www.asml.com/en/news/stories/2021/semiconductor-manufacturing-process-steps" target="_blank" rel="noopener" title="ASML: Deposition, resist, lithography, etch, ionization, packaging (2023)">[2]</a> <a href="https://www.asml.com/en/technology/lithography-principles/light-and-lasers" target="_blank" rel="noopener" title="ASML: Light and lasers (DUV and EUV light sources)">[4]</a> <a href="https://www.asml.com/en/technology/all-about-microchips/how-microchips-are-made" target="_blank" rel="noopener" title="ASML: How microchips are made">[1]</a></p>
+  </section>
+  <section aria-labelledby="t-stop-7">
+    <h3 id="t-stop-7"><span class="n">07</span>Deposit, etch, implant</h3>
+    <p>Chips are built up layer by layer. Thin films are deposited; resist is coated and exposed; etching carves the pattern; ions are implanted to tune how the silicon conducts.</p>
+    <p>This loop repeats many times. Modern chips can have up to 100 layers, all aligned to nanometre precision.</p>
+    <p>Making a chip takes hundreds to thousands of steps and can take months.</p>
+    <section class="where" aria-label="Where it happens"><p class="wh"><span class="lab-t">Where it happens</span><span class="badge">📍 Chip fab cleanroom</span></p><p class="t">Robots carry wafers from machine to machine inside the fab, 24 hours a day.</p></section>
+    <p class="srcs">Sources: <a href="https://www.asml.com/en/news/stories/2021/semiconductor-manufacturing-process-steps" target="_blank" rel="noopener" title="ASML: Deposition, resist, lithography, etch, ionization, packaging (2023)">[2]</a> <a href="https://www.asml.com/en/technology/all-about-microchips/how-microchips-are-made" target="_blank" rel="noopener" title="ASML: How microchips are made">[1]</a></p>
+  </section>
+  <section aria-labelledby="t-stop-8">
+    <h3 id="t-stop-8"><span class="n">08</span>The transistor</h3>
+    <p>A transistor is a tiny electrical switch. A voltage on its gate lets current flow from source to drain, or stops it.</p>
+    <p>Modern transistors are 3D: the gate wraps around thin silicon fins (FinFET), and in the newest designs right around stacked sheets (gate-all-around).</p>
+    <p>A fingernail-sized chip can hold billions of them.</p>
+    <section class="where" aria-label="Where it happens"><p class="wh"><span class="lab-t">Where it happens</span><span class="badge">📍 Inside the chip</span></p><p class="t">These switches are formed in the bottom layers of the chip, in the silicon itself.</p></section>
+    <p class="srcs">3D model: illustration · Sources: <a href="https://www.asml.com/en/technology/all-about-microchips/microchip-basics" target="_blank" rel="noopener" title="ASML: Microchip basics">[3]</a> <a href="https://en.wikipedia.org/wiki/Multigate_device" target="_blank" rel="noopener" title="Wikipedia: Multigate device (FinFET, gate-all-around)">[10]</a></p>
+  </section>
+  <section aria-labelledby="t-stop-9">
+    <h3 id="t-stop-9"><span class="n">09</span>Wiring it up</h3>
+    <p>Billions of switches are useless until they are connected. Above the transistors, many layers of tiny metal wires are built.</p>
+    <p>Wires in one layer run one way, the next layer the other way, with little vertical “vias” joining them.</p>
+    <p>The lowest wires are the finest; the top ones are thicker, to carry power.</p>
+    <section class="where" aria-label="Where it happens"><p class="wh"><span class="lab-t">Where it happens</span><span class="badge">📍 Chip fab cleanroom</span></p><p class="t">The wiring layers are made in the same fab, after the transistors.</p></section>
+    <p class="srcs">3D model: illustration · Sources: <a href="https://en.wikipedia.org/wiki/Semiconductor_device_fabrication" target="_blank" rel="noopener" title="Wikipedia: Semiconductor device fabrication">[9]</a> <a href="https://www.asml.com/en/technology/all-about-microchips/how-microchips-are-made" target="_blank" rel="noopener" title="ASML: How microchips are made">[1]</a></p>
+  </section>
+  <section aria-labelledby="t-stop-10">
+    <h3 id="t-stop-10"><span class="n">10</span>Dicing, testing, packaging</h3>
+    <p>A diamond saw dices the finished wafer into individual chips, called dies. One 300 mm wafer can hold thousands of small dies or just a few dozen big ones.</p>
+    <p>Dies are tested. A good die is placed on a substrate that routes its signals out, and a heat spreader goes on top.</p>
+    <p>The finished package is about the size of your thumb.</p>
+    <section class="where" aria-label="Where it happens"><p class="wh"><span class="lab-t">Where it happens</span><span class="badge">📍 Packaging and test plant</span></p><p class="t">Packaging and test plants, often run by separate companies, turn bare dies into finished chips.</p></section>
+    <p class="srcs">Sources: <a href="https://www.asml.com/en/news/stories/2021/semiconductor-manufacturing-process-steps" target="_blank" rel="noopener" title="ASML: Deposition, resist, lithography, etch, ionization, packaging (2023)">[2]</a></p>
+  </section>
+  <section aria-labelledby="t-stop-11">
+    <h3 id="t-stop-11"><span class="n">11</span>Building a logic gate</h3>
+    <p>Connect four transistors the right way and you get a NAND gate: its output is 0 only when both inputs are 1.</p>
+    <p>NAND is “functionally complete”: with enough of them you can build every other logic circuit, from adders to whole processors.</p>
+    <p>Click the inputs and watch which switches conduct.</p>
+    <section class="where" aria-label="Where it happens"><p class="wh"><span class="lab-t">Where it happens</span><span class="badge">📍 Inside the chip</span></p><p class="t">Gates like this are made of transistors and wires in the chip’s lowest layers.</p></section>
+    <p class="srcs">3D model: illustration · Sources: <a href="https://en.wikipedia.org/wiki/NAND_logic" target="_blank" rel="noopener" title="Wikipedia: NAND logic">[11]</a></p>
+  </section>
+  <section aria-labelledby="t-stop-12">
+    <h3 id="t-stop-12"><span class="n">12</span>Adding two numbers</h3>
+    <p>Computers count in binary. A full adder adds two bits plus a carry; chain four of them and you can add two 4-bit numbers.</p>
+    <p>The carry “ripples” from one adder to the next, just like carrying a 1 when you add on paper.</p>
+    <p>Pick two numbers and watch the carry travel.</p>
+    <section class="where" aria-label="Where it happens"><p class="wh"><span class="lab-t">Where it happens</span><span class="badge">📍 Inside the chip</span></p><p class="t">Adders like this sit inside the processor’s arithmetic logic unit (ALU).</p></section>
+    <p class="srcs">3D model: illustration · Sources: <a href="https://en.wikipedia.org/wiki/Adder_(electronics)" target="_blank" rel="noopener" title="Wikipedia: Adder (electronics)">[12]</a></p>
+  </section>
+  <section aria-labelledby="t-stop-13">
+    <h3 id="t-stop-13"><span class="n">13</span>A tiny CPU</h3>
+    <p>A processor repeats one cycle again and again: fetch an instruction from memory, decode it, execute it.</p>
+    <p>This toy CPU runs a five-line program: load two numbers, add them with the adder from the last stop, and store the result to the screen.</p>
+    <p>Real CPUs overlap many instructions at once in a pipeline, billions of times per second.</p>
+    <section class="where" aria-label="Where it happens"><p class="wh"><span class="lab-t">Where it happens</span><span class="badge">📍 Inside the chip</span></p><p class="t">In a real chip, this happens in the processor core, with memory caches right next to it.</p></section>
+    <p class="srcs">3D model: illustration · Sources: <a href="https://en.wikipedia.org/wiki/Instruction_cycle" target="_blank" rel="noopener" title="Wikipedia: Instruction cycle (fetch–decode–execute)">[13]</a></p>
+  </section>
+  <section aria-labelledby="t-stop-14">
+    <h3 id="t-stop-14"><span class="n">14</span>A pixel lights up</h3>
+    <p>The result is written into a frame buffer: a block of memory holding a number for every pixel on the screen.</p>
+    <p>Each pixel is three numbers, for red, green and blue, from 0 to 255. Display hardware turns them into light.</p>
+    <p>The CPU’s answer appears as digits. Mix your own pixel colour below.</p>
+    <section class="where" aria-label="Where it happens"><p class="wh"><span class="lab-t">Where it happens</span><span class="badge">📍 Your device or a data center</span></p><p class="t">The frame buffer lives in the graphics memory of your phone or computer.</p></section>
+    <p class="srcs">3D model: illustration · Sources: <a href="https://en.wikipedia.org/wiki/Framebuffer" target="_blank" rel="noopener" title="Wikipedia: Framebuffer">[14]</a></p>
+  </section>
+  <section aria-labelledby="t-stop-15">
+    <h3 id="t-stop-15"><span class="n">15</span>The whole journey</h3>
+    <p>Sand became pure silicon, then a single crystal, then wafers printed with light, layer after layer.</p>
+    <p>Billions of switches became gates, gates became an adder, and the adder ran a program.</p>
+    <p>The program’s answer became numbers in memory, and the numbers became light. The same chips fill the servers in data centers.</p>
+    <section class="where" aria-label="Where it happens"><p class="wh"><span class="lab-t">Where it happens</span><span class="badge">📍 Your device or a data center</span></p><p class="t">Where each step happens:</p><table class="where-t"><caption class="sr-only">Where each step happens</caption><tbody><tr><th scope="row">Quarry</th><td>Quartz and silica sand</td></tr><tr><th scope="row">Chemical plant</th><td>Silicon metal, then ultra-pure polysilicon</td></tr><tr><th scope="row">Crystal grower and wafer factory</th><td>Ingots, then polished wafers</td></tr><tr><th scope="row">Chip fab cleanroom</th><td>Lithography, deposition, etch, implant, wiring</td></tr><tr><th scope="row">Packaging and test plant</th><td>Dicing, testing, packaging</td></tr><tr><th scope="row">Your device or a data center</th><td>Logic, programs, pixels</td></tr></tbody></table></section>
+    <p class="srcs">Sources: <a href="https://www.asml.com/en/technology/all-about-microchips/how-microchips-are-made" target="_blank" rel="noopener" title="ASML: How microchips are made">[1]</a> <a href="https://www.asml.com/en/technology/all-about-microchips/microchip-basics" target="_blank" rel="noopener" title="ASML: Microchip basics">[3]</a></p>
+  </section>
+  <h3 id="t-sources">Sources</h3>
+  <ol><li><a href="https://www.asml.com/en/technology/all-about-microchips/how-microchips-are-made" target="_blank" rel="noopener">ASML: How microchips are made</a></li><li><a href="https://www.asml.com/en/news/stories/2021/semiconductor-manufacturing-process-steps" target="_blank" rel="noopener">ASML: Deposition, resist, lithography, etch, ionization, packaging (2023)</a></li><li><a href="https://www.asml.com/en/technology/all-about-microchips/microchip-basics" target="_blank" rel="noopener">ASML: Microchip basics</a></li><li><a href="https://www.asml.com/en/technology/lithography-principles/light-and-lasers" target="_blank" rel="noopener">ASML: Light and lasers (DUV and EUV light sources)</a></li><li><a href="https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-silicon.pdf" target="_blank" rel="noopener">USGS Mineral Commodity Summaries 2025: Silicon (PDF)</a></li><li><a href="https://en.wikipedia.org/wiki/Polycrystalline_silicon" target="_blank" rel="noopener">Wikipedia: Polycrystalline silicon (Siemens process)</a></li><li><a href="https://en.wikipedia.org/wiki/Czochralski_method" target="_blank" rel="noopener">Wikipedia: Czochralski method</a></li><li><a href="https://en.wikipedia.org/wiki/Wafer_(electronics)" target="_blank" rel="noopener">Wikipedia: Wafer (electronics)</a></li><li><a href="https://en.wikipedia.org/wiki/Semiconductor_device_fabrication" target="_blank" rel="noopener">Wikipedia: Semiconductor device fabrication</a></li><li><a href="https://en.wikipedia.org/wiki/Multigate_device" target="_blank" rel="noopener">Wikipedia: Multigate device (FinFET, gate-all-around)</a></li><li><a href="https://en.wikipedia.org/wiki/NAND_logic" target="_blank" rel="noopener">Wikipedia: NAND logic</a></li><li><a href="https://en.wikipedia.org/wiki/Adder_(electronics)" target="_blank" rel="noopener">Wikipedia: Adder (electronics)</a></li><li><a href="https://en.wikipedia.org/wiki/Instruction_cycle" target="_blank" rel="noopener">Wikipedia: Instruction cycle (fetch–decode–execute)</a></li><li><a href="https://en.wikipedia.org/wiki/Framebuffer" target="_blank" rel="noopener">Wikipedia: Framebuffer</a></li></ol>
+  <footer><p>An independent explainer by the Data Centers Cookbook. Not affiliated with any company named here; no logos are used. The 3D models, the logic gate, the adder and the toy CPU are illustrations built in code for this page. 3D rendering uses three.js (MIT licence).</p><p><a href="../">← Back to the library</a></p></footer>
+<!--/TEXT-->
+</article>
+
+<dialog id="srcDlg" aria-labelledby="srcTitle">
+  <div class="dlg-in">
+<!--SOURCES-->
+    <button class="x" data-close aria-label="Close sources">✕ Close</button>
+    <h2 id="srcTitle">Sources</h2>
+    <p>Facts on this tour come from these public pages. Numbers in the caption cards, like [3], point to this list.</p>
+    <ol><li><a href="https://www.asml.com/en/technology/all-about-microchips/how-microchips-are-made" target="_blank" rel="noopener">ASML: How microchips are made</a></li><li><a href="https://www.asml.com/en/news/stories/2021/semiconductor-manufacturing-process-steps" target="_blank" rel="noopener">ASML: Deposition, resist, lithography, etch, ionization, packaging (2023)</a></li><li><a href="https://www.asml.com/en/technology/all-about-microchips/microchip-basics" target="_blank" rel="noopener">ASML: Microchip basics</a></li><li><a href="https://www.asml.com/en/technology/lithography-principles/light-and-lasers" target="_blank" rel="noopener">ASML: Light and lasers (DUV and EUV light sources)</a></li><li><a href="https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-silicon.pdf" target="_blank" rel="noopener">USGS Mineral Commodity Summaries 2025: Silicon (PDF)</a></li><li><a href="https://en.wikipedia.org/wiki/Polycrystalline_silicon" target="_blank" rel="noopener">Wikipedia: Polycrystalline silicon (Siemens process)</a></li><li><a href="https://en.wikipedia.org/wiki/Czochralski_method" target="_blank" rel="noopener">Wikipedia: Czochralski method</a></li><li><a href="https://en.wikipedia.org/wiki/Wafer_(electronics)" target="_blank" rel="noopener">Wikipedia: Wafer (electronics)</a></li><li><a href="https://en.wikipedia.org/wiki/Semiconductor_device_fabrication" target="_blank" rel="noopener">Wikipedia: Semiconductor device fabrication</a></li><li><a href="https://en.wikipedia.org/wiki/Multigate_device" target="_blank" rel="noopener">Wikipedia: Multigate device (FinFET, gate-all-around)</a></li><li><a href="https://en.wikipedia.org/wiki/NAND_logic" target="_blank" rel="noopener">Wikipedia: NAND logic</a></li><li><a href="https://en.wikipedia.org/wiki/Adder_(electronics)" target="_blank" rel="noopener">Wikipedia: Adder (electronics)</a></li><li><a href="https://en.wikipedia.org/wiki/Instruction_cycle" target="_blank" rel="noopener">Wikipedia: Instruction cycle (fetch–decode–execute)</a></li><li><a href="https://en.wikipedia.org/wiki/Framebuffer" target="_blank" rel="noopener">Wikipedia: Framebuffer</a></li></ol>
+    <p class="fine">3D models and simulations are illustrations, not to scale. 3D rendering: three.js (MIT licence).</p>
+  <!--/SOURCES-->
+  </div>
+</dialog>
+
+<script type="module" src="tour.js"></script>
+</body>
+</html>
