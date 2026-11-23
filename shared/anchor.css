@@ -1,0 +1,49 @@
+/* Your guide: the drawn presenter that sits in the caption box (see shared/anchor.js). */
+.caption.has-guide{display:grid;grid-template-columns:auto 1fr;column-gap:16px;align-items:start}
+.caption.has-guide>:not(.guide){grid-column:2}
+.guide{grid-column:1;grid-row:1/span 3;position:relative;width:84px;height:84px;margin-top:2px}
+.ga-svg{display:block;width:100%;height:100%;border-radius:50%;box-shadow:0 0 0 2px var(--line-2,#2a3a5c);transition:box-shadow .3s}
+.guide.talk .ga-svg{box-shadow:0 0 0 3px var(--ga-accent,#22d3ee),0 0 22px rgba(34,211,238,.35)}
+.guide.mute .ga-svg{opacity:.75}
+.ga-open{display:none}
+.guide.talk .ga-open{display:inline;transform-box:fill-box;transform-origin:50% 0;animation:gaTalk .26s ease-in-out infinite alternate}
+.guide.talk .ga-closed{display:none}
+.guide.word .ga-open{animation-duration:.14s}
+@keyframes gaTalk{from{transform:scaleY(.35)}to{transform:scaleY(1)}}
+.ga-eyes{transform-box:fill-box;transform-origin:50% 50%;animation:gaBlink 5.2s infinite}
+@keyframes gaBlink{0%,93%,100%{transform:scaleY(1)}95.5%{transform:scaleY(.1)}}
+.ga-head{transform-origin:60px 100px;transition:transform .6s ease}
+.guide.talk .ga-head{animation:gaNod 3.4s ease-in-out infinite}
+@keyframes gaNod{0%,100%{transform:rotate(0)}30%{transform:rotate(-2deg)}65%{transform:rotate(1.6deg) translateY(.6px)}}
+.ga-hand{transform-origin:88px 122px;transform:rotate(40deg) translateY(30px);opacity:0;transition:transform .6s cubic-bezier(.3,1.4,.5,1),opacity .3s}
+.guide.point .ga-hand{transform:rotate(0) translateY(0);opacity:1}
+.ga-min{position:absolute;right:-6px;top:-6px;width:24px;height:24px;padding:0;border-radius:50%;border:1px solid var(--line-2,#2a3a5c);background:#111a2e;color:var(--ink-2,#c9d4e8);font:700 .9rem/1 var(--sans,sans-serif);cursor:pointer;opacity:0;transition:opacity .2s}
+.guide:hover .ga-min,.ga-min:focus-visible{opacity:1}
+.ga-hint{position:absolute;left:0;top:calc(100% + 6px);white-space:nowrap;padding:3px 9px;border-radius:999px;background:#0b2a33;border:1px solid var(--ga-accent,#22d3ee);color:#cffafe;font:600 .72rem var(--sans,sans-serif);animation:gaPulse 1.6s ease-in-out infinite;pointer-events:none}
+@keyframes gaPulse{50%{opacity:.6}}
+/* minimised: a small round face you can tap to bring back */
+.caption.guide-min .guide{width:34px;height:34px}
+.caption.guide-min .ga-hand,.caption.guide-min .ga-hint{display:none}
+.caption.guide-min .ga-min{opacity:1;right:-10px;top:-8px}
+@media (max-width:640px){
+  .caption.has-guide{column-gap:10px}
+  .guide{width:52px;height:52px}
+  .ga-min{opacity:1;width:22px;height:22px;right:-8px;top:-8px}
+  .ga-hint{font-size:.66rem;top:auto;bottom:calc(100% + 8px)}
+}
+.rm .guide *,.rm .guide{animation:none!important;transition:none!important}
+.rm .guide.talk .ga-open{display:inline;transform:scaleY(.6)}
+@media (prefers-reduced-motion:reduce){.guide *{animation:none!important}.guide.talk .ga-open{transform:scaleY(.6)}}
+/* photo credit line under the caption on beats that show a real photo */
+.ph-credit{margin:6px 0 0;font-size:.72rem;color:var(--muted,#8b97ad)}
+.ph-credit a{color:inherit}
+@media (max-width:640px){.ph-credit{font-size:.66rem;margin-top:4px}}
+/* real photos in the text version, and their credits */
+.text-version figure.photo{margin:14px 0 18px}
+.text-version figure.photo img{display:block;width:100%;max-width:640px;height:auto;border-radius:12px;border:1px solid var(--line,#1f2b45)}
+.text-version figure.photo figcaption{margin-top:6px;font-size:.8rem;color:var(--muted,#8b97ad)}
+.text-version figure.photo a,.credits a{color:inherit}
+.credits{font-size:.85rem;line-height:1.5}
+.credits li{margin-bottom:6px}
+/* very narrow phones: drop the speed button so Voice and CC fit */
+@media (max-width:420px){.hide-xs{display:none}}

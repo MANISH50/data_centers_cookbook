@@ -1,7 +1,9 @@
 /* HOW THE INTERNET MOVES DATA: the film player (autoplay, scrubbing, chapters, captions, orbit, "Try it" panels).
    Content: data.js · timeline maths: timeline.js · network maths: net.js · 3D world: world.js (three.js loaded after the first paint). */
-import { POI, SOURCES, CHAPTERS, CITIES, LINKS } from './data.js';
+import { POI, SOURCES, CHAPTERS, PHOTOS, CITIES, LINKS } from './data.js';
 import { rttMs, DNS_STEPS } from './net.js';
+import { createAnchor, holdAt } from '../shared/anchor.js';
+import { createBoards } from '../shared/photoboard.js';
 import { buildTimeline, beatAt, cueProgress, cameraAt, camPos, typedChars, parseHash, fmtTime, resolve } from './timeline.js';
 
 const $ = s => document.querySelector(s);
@@ -16,6 +18,9 @@ const srcNum = id => SOURCES.findIndex(s => s.id === id) + 1;
 
 window.cookbookEvents = window.cookbookEvents || [];
 function track(name, data = {}) { const ev = { name, ...data }; window.cookbookEvents.push(ev); window.dispatchEvent(new CustomEvent('cookbook:analytics', { detail: ev })); }
+
+/* ================= YOUR GUIDE (voice) ================= */
+const guide = createAnchor({ mount: $('#caption'), button: $('#bVoice'), track });
 
 /* ================= STATE ================= */
 let t = 0, playing = false, speed = 1, captions = true, textMode = false, ended = false;
@@ -32,7 +37,7 @@ document.querySelectorAll('#chList button').forEach(b => b.onclick = () => { $('
 scrub.addEventListener('input', () => { seek(+scrub.value, { keepPlaying: true }); });
 
 function seek(nt, { keepPlaying = false } = {}) {
-  t = Math.max(0, Math.min(TL.total, nt)); ended = false; orbit = { az: 0, el: 0, zoom: 1 }; hideResume();
+  t = Math.max(0, Math.min(TL.total, nt)); ended = false; guide.reset(); orbit = { az: 0, el: 0, zoom: 1 }; hideResume();
   if (!keepPlaying && !reduced) setPlaying(true);
   draw(true);
 }
@@ -60,6 +65,8 @@ function renderBeat(i) {
   $('#ill').hidden = !b.ill;
   $('#tryBtn').hidden = !b.try; if (tryState) closeTry();
   const cs = $('#capSrc'); if (b.src) { cs.hidden = false; cs.textContent = `Source [${srcNum(b.src)}]`; cs.title = SOURCES[srcNum(b.src) - 1].t; } else cs.hidden = true;
+  const ph = b.photo && PHOTOS.find(x => x.id === b.photo), pc = $('#phCredit');
+  pc.hidden = !ph; if (ph) pc.innerHTML = `Real photo: ${esc(ph.title)} · ${esc(ph.author)} · <a href="${esc(ph.url)}" target="_blank" rel="noopener">Wikimedia Commons</a> · ${ph.licUrl ? `<a href="${esc(ph.licUrl)}" target="_blank" rel="noopener">${esc(ph.licence)}</a>` : esc(ph.licence)}`;
   const st = $('#stat');
   if (b.stat) { st.hidden = false; st.innerHTML = `<b>${esc(b.stat[0])}</b><span>${esc(b.stat[1])}</span>${b.stat[2] ? `<a href="#sources" data-src title="${esc(SOURCES[srcNum(b.stat[2]) - 1].t)}">Source [${srcNum(b.stat[2])}]</a>` : ''}`; st.querySelector('[data-src]')?.addEventListener('click', e => { e.preventDefault(); openSources(); }); }
   else st.hidden = true;
@@ -83,11 +90,12 @@ function drawCaption(b) {
 }
 
 /* ================= DRAW ================= */
+let boards, photo = null;
 let THREE, renderer, scene, camera, world, softGL = false, lastDraw = 0, needDraw = true, clock = 0;
 const v3 = { x: 0, y: 0, z: 0 };
 function setLabels(list) {
   const key = list.map(l => l[0] + l[1]).join('|'); if (key === labelKey) return; labelKey = key;
-  labelLayer.innerHTML = ''; labels = list.map(([text, p]) => { const el = document.createElement('span'); el.className = 'lbl3'; el.textContent = text; labelLayer.appendChild(el); return { el, pos: resolve(p, POI) }; });
+  labelLayer.innerHTML = ''; labels = list.map(([text, p, uv]) => { const el = document.createElement('span'); el.className = 'lbl3'; el.textContent = text; labelLayer.appendChild(el); return { el, pos: p && resolve(p, POI), uv }; });
 }
 function draw(force) {
   const i = beatAt(TL, t), b = TL.beats[i];
@@ -98,7 +106,7 @@ function draw(force) {
   world.apply(b, p, tryState ? clock : t, tryState);
   const st = world.status(); $('#status').hidden = !st; if (st) $('#status').textContent = st;
   if (tryState) updateTry();
-  setLabels((b.labels || []).concat(world.labels()));
+  setLabels(b.photo && !tryState ? (b.plabels || []).map(([text, uv]) => [text, null, uv]) : (b.labels || []).concat(world.labels()));
   // camera: timeline path + reader's orbit (which eases back after Resume)
   const cam = (tryState && world.camFor(tryState)) || cameraAt(TL, tryState ? b.start + 3 : t, !reduced);
   let o = orbit;
@@ -108,11 +116,13 @@ function draw(force) {
   const a = freeArea(), w = stage.clientWidth, h = stage.clientHeight;
   camera.setViewOffset(w, h, w / 2 - (a.x + a.w / 2), h / 2 - (a.y + a.h / 2), w, h); camera.updateProjectionMatrix();
   scene.fog.near = view.dist * 1.2; scene.fog.far = view.dist * 4 + 300;
+  photo = boards.update(TL, i, tryState ? -1e9 : t, { fit: fitFactor() * o.zoom, aspect: camera.aspect, fov: camera.fov }); // hidden while trying
   renderer.render(scene, camera);
   // labels
   const typedDone = tryState || t - b.start > 1.2;
   for (const L of labels) {
-    v3.x = L.pos[0]; v3.y = L.pos[1]; v3.z = L.pos[2];
+    const P = L.uv ? boards.at(L.uv) : L.pos; if (!P) { L.el.classList.remove('on'); continue; }
+    v3.x = P[0]; v3.y = P[1]; v3.z = P[2];
     const vec = new THREE.Vector3(v3.x, v3.y, v3.z).project(camera), x = (vec.x * .5 + .5) * w, y = (-vec.y * .5 + .5) * h;
     const ok = typedDone && vec.z < 1 && x > 8 && x < w - 8 && y > a.y && y < a.y + a.h;
     const half = (L.w ??= L.el.offsetWidth || 100) / 2 + 6, cx = Math.min(Math.max(x, half), w - half);
@@ -132,10 +142,12 @@ function frame(now) {
   raf = requestAnimationFrame(frame);
   const dt = Math.min(.1, (now - last) / 1000); last = now;
   if (playing && !textMode) {
-    t += dt * speed;
+    const bi = beatAt(TL, t), nt = t + dt * speed;
+    t = holdAt(nt, TL.beats[bi].end, guide.holding(bi), t);
     if (t >= TL.total) { t = TL.total; setPlaying(false); ended = true; if (!completed) { completed = true; track('tour_complete'); } $('#bPlay').setAttribute('aria-label', 'Replay'); $('#bPlay').innerHTML = '<span aria-hidden="true">↺</span>'; }
   }
   if (tryState) clock += dt;
+  { const bi = beatAt(TL, t); guide.sync({ i: bi, beat: TL.beats[bi], playing: playing && !textMode, speed }); }
   const moving = playing || orbitBack || needDraw || tryState;
   if (!moving) return;
   if (softGL && now - lastDraw < (playing || tryState ? 85 : 0)) return; // no GPU: about 12 fps
@@ -170,6 +182,7 @@ document.addEventListener('keydown', e => {
   else if (e.key === ']') jumpChapter(curChapter + 1);
   else if (e.key === '[') jumpChapter(curChapter - 1);
   else if (e.key === 'Home') { e.preventDefault(); seek(0); }
+  else if (e.key === 'v' || e.key === 'V') $('#bVoice').click();
 });
 addEventListener('hashchange', () => { const h = parseHash(location.hash, TL, IDS); if (h?.sources) openSources(); else if (h && h.ci !== curChapter) seek(h.t); });
 addEventListener('resize', redraw);
@@ -257,10 +270,11 @@ async function start3d() {
   view3d.appendChild(renderer.domElement); renderer.domElement.setAttribute('aria-hidden', 'true');
   scene = new THREE.Scene(); camera = new THREE.PerspectiveCamera(45, 1, .3, 4000);
   world = buildWorld(scene, renderer, { soft: softGL }); W = true;
+  boards = createBoards(THREE, scene, PHOTOS, { anisotropy: Math.min(8, renderer.capabilities.getMaxAnisotropy()), onLoad: () => redraw() });
   const resize = () => { const w = stage.clientWidth, h = stage.clientHeight; renderer.setSize(w, h, false); camera.aspect = w / h; redraw(); };
   resize(); addEventListener('resize', resize);
   root.classList.add('gl-ready'); curBeat = -1; draw(true);
-  window.__net = { renderer, scene, camera, world, get t() { return t; }, get playing() { return playing; }, get tryState() { return tryState; }, TL };
+  window.__net = { renderer, scene, camera, world, get t() { return t; }, get playing() { return playing; }, voice: guide.state, get boards() { return boards; }, get photo() { return photo; }, get tryState() { return tryState; }, TL };
   // No GPU (software rendering): every frame is slow, so wait for the reader to press Play.
   if (!reduced && !startPaused && !softGL) setTimeout(() => { if (!playing && !textMode && !userTook) setPlaying(true); }, t > .5 ? 700 : 1800);
 }

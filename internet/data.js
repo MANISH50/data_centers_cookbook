@@ -208,3 +208,21 @@ export const RECAPS = {
   ch13: ['Traffic reroutes around cable cuts; outages can also come from routing or DNS mistakes.'],
   ch14: ['One request crosses many networks, cables and buildings, usually in well under a second.']
 };
+
+/* REAL PHOTOS that stand in the 3D scene in place of the drawn models (shared/photoboard.js).
+   All from Wikimedia Commons under the free licences shown; resized for the web. `at` = chapter.beat where the photo appears. */
+export const PHOTOS = [
+  { id: "mast", file: "photos/mast.jpg", w: 1100, h: 825, at: "5.0", title: "A mobile phone mast", alt: "A tall mobile phone mast with antennas, behind a green fence with equipment cabinets",
+    author: "Diacius", licence: "CC BY-SA 4.0", licUrl: "https://creativecommons.org/licenses/by-sa/4.0", url: "https://commons.wikimedia.org/wiki/File:Mobile_phone_mast.jpg" },
+  { id: "fibre", file: "photos/fibre.jpg", w: 1100, h: 689, at: "5.1", title: "Optical fibre carrying light", alt: "A coil of optical fibre glowing red at both ends where light enters and leaves",
+    author: "Hustvedt", licence: "CC BY-SA 3.0", licUrl: "https://creativecommons.org/licenses/by-sa/3.0", url: "https://commons.wikimedia.org/wiki/File:Fiber_optic_illuminated.jpg" },
+  { id: "switches", file: "photos/switches.jpg", w: 1100, h: 731, at: "8.1", title: "Network switches and their cables", alt: "Bundles of network cables plugged into the front of network switches",
+    author: "ShakataGaNai", licence: "CC BY-SA 3.0", licUrl: "https://creativecommons.org/licenses/by-sa/3.0", url: "https://commons.wikimedia.org/wiki/File:Network_switches.jpg" },
+  { id: "meetme", file: "photos/meetme.jpg", w: 1100, h: 733, at: "8.2", title: "Network cabling inside a data center", alt: "Blue and green network cables plugged into rows of servers in a data center",
+    author: "Victor Grigas", licence: "CC BY-SA 3.0", licUrl: "https://creativecommons.org/licenses/by-sa/3.0", url: "https://commons.wikimedia.org/wiki/File:Wikimedia_Foundation_Servers-8055_24.jpg" },
+  { id: "cable", file: "photos/cable.jpg", w: 1100, h: 736, at: "9.2", title: "Real undersea cable samples, heavy armour to lightweight", alt: "Four cut sections of submarine telecom cable, from double-armoured to lightweight deep-sea cable, with labelled layers around the fibres",
+    author: "Lonnie Hagadorn", licence: "CC BY-SA 4.0", licUrl: "https://creativecommons.org/licenses/by-sa/4.0", url: "https://commons.wikimedia.org/wiki/File:Submarine_Optical_Cables.jpg" },
+  { id: "ship", file: "photos/ship.jpg", w: 1024, h: 683, at: "9.4", title: "A cable ship (Cable Enterprise) in port", alt: "A large cable-laying ship moored at a quay, with cable gear at its bow",
+    author: "David Martin", licence: "CC BY-SA 2.0", licUrl: "https://creativecommons.org/licenses/by-sa/2.0", url: "https://commons.wikimedia.org/wiki/File:Cable_laying_ship_%22Cable_Enterprise%22_seen_from_Mayflower_Park_-_geograph.org.uk_-_6350872.jpg" },
+];
+for (const ph of PHOTOS) { const [c, i] = ph.at.split('.').map(Number); const beat = CHAPTERS[c - 1].beats[i]; beat.photo = ph.id; if (ph.labels) beat.plabels = ph.labels; }

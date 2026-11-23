@@ -3,6 +3,9 @@
 import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url);
 const { chromium } = require('playwright');
+import { readFileSync } from 'node:fs';
+const FAKE_SPEECH = readFileSync(new URL('../../shared/tests/fake-speech.js', import.meta.url), 'utf8');
+const { PHOTOS } = await import('../data.js');
 
 const BASE = (process.argv[2] || 'http://localhost:8765/').replace(/\/?$/, '/') + 'internet/';
 const fails = [];
@@ -14,7 +17,11 @@ const shot = async p => (await p.locator('#view3d canvas').screenshot()).toStrin
 
 const browser = await chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] });
 async function page(opts = {}) {
-  const ctx = await browser.newContext(opts); const p = await ctx.newPage(); p.errors = [];
+  const { speech = true, ...o } = opts;
+  const ctx = await browser.newContext(o); const p = await ctx.newPage(); p.errors = [];
+  if (speech) await p.addInitScript({ content: FAKE_SPEECH });
+  p.on('requestfailed', r => p.errors.push('request failed: ' + r.url()));
+  p.on('response', r => r.status() >= 400 && p.errors.push(`HTTP ${r.status()}: ${r.url()}`));
   p.on('console', m => m.type() === 'error' && p.errors.push(m.text())); p.on('pageerror', e => p.errors.push(e.message));
   return p;
 }
@@ -33,9 +40,16 @@ console.log('Desktop 1280×760');
   const t1 = await T(p); await p.waitForTimeout(2500); const t2 = await T(p);
   check(t2 > t1 + 1, `timeline advances while playing (${t1.toFixed(1)} → ${t2.toFixed(1)} s)`);
   check((await p.textContent('#capText')).length > 20, 'caption typed in');
+  await p.waitForTimeout(400);
+  const spoken = await p.evaluate(() => window.__spoken);
+  check(spoken.length > 0 && spoken.at(-1).voice === 'Samantha', `guide speaks the caption (${spoken.length} line(s), voice ${spoken.at(-1)?.voice})`);
+  await p.evaluate(() => { window.__msPerWord = 400; }); await p.click('#bNextB'); await p.waitForTimeout(700);
+  check(await p.evaluate(() => window.__net.voice.speaking) && await p.locator('#guide.talk').count() === 1, 'a new beat starts a new line, and her mouth moves while she speaks');
+  await p.evaluate(() => { window.__msPerWord = 60; });
   // pause / resume
   await p.click('#bPlay'); const tp = await T(p); await p.waitForTimeout(1200);
   check(!(await p.evaluate(() => window.__net.playing)) && Math.abs(await T(p) - tp) < .05, 'pause stops the timeline');
+  check(!(await p.evaluate(() => window.__net.voice.speaking)) && await p.locator('#guide.talk').count() === 0, 'pause stops the voice');
   await p.keyboard.press('Space'); await p.waitForTimeout(600);
   check(await p.evaluate(() => window.__net.playing), 'Space resumes');
   // chapter ticks and next chapter
@@ -70,12 +84,22 @@ console.log('Desktop 1280×760');
   const statAt = await p.evaluate(() => window.__net.TL.beats.find(b => b.stat && b.stat[0] === '~200').start + 2);
   await p.locator('#scrub').fill(String(statAt)); await p.waitForTimeout(800);
   check(await p.locator('#stat').isVisible() && (await p.textContent('#stat')).includes('200'), 'stat card shows a sourced number (~200 faults)');
+  // real photos stand in the 3D scene
+  for (const id of ['mast', 'cable', 'ship']) {
+    const ph = PHOTOS.find(x => x.id === id), [c, i] = ph.at.split('.').map(Number);
+    const ts = await p.evaluate(([c, i]) => window.__net.TL.beats.find(b => b.ci === c - 1 && b.bi === i).start, [c, i]);
+    await p.locator('#scrub').fill(String(Math.ceil(ts + 2))); await p.waitForTimeout(1500); await p.locator('#scrub').fill(String(Math.ceil(ts + 3))); await p.waitForTimeout(800);
+    const st = await p.evaluate(() => window.__net.photo);
+    check(st && st.id === id && st.ready && st.opacity > .9, `real photo “${id}” loads and shows on its beat`);
+    check(await p.locator('#phCredit').isVisible() && /Wikimedia Commons/.test(await p.textContent('#phCredit')), `photo credit shown for “${id}”`);
+  }
   // Try it: route
   const tl = await p.evaluate(() => window.__net.TL.beats.map(b => [b.start, b.try || '']));
   const at = k => tl.find(x => x[1] === k)[0] + 1;
   await p.locator('#scrub').fill(String(at('route'))); await p.waitForTimeout(600);
   check(await p.locator('#tryBtn').isVisible(), 'Try it button appears on hands-on beats');
   await p.click('#tryBtn'); await p.waitForTimeout(500);
+  check(!(await p.evaluate(() => window.__net.voice.speaking)) && !(await p.evaluate(() => window.__net.photo)), 'Try it: the guide stops talking and photos step aside');
   check(await p.locator('#tryPanel').isVisible() && !(await p.evaluate(() => window.__net.playing)), 'Try it opens a panel and pauses');
   await p.selectOption('#tFrom', 'sydney'); await p.selectOption('#tTo', 'london'); await p.waitForTimeout(1500);
   const res = await p.textContent('#tRes');
@@ -107,8 +131,9 @@ console.log('Desktop 1280×760');
   await p.click('#bText');
   check(await p.locator('#text section h3').count() === 15, 'text version: 14 chapters + sources');
   check(await p.locator('#text #ch9').count() === 1, 'text version has chapter ids');
+  check(await p.locator('#text figure.photo').count() === PHOTOS.length, 'text version shows every real photo with its credit');
   await p.click('#text [data-back-to-tour]');
-  await p.click('#bSrc'); check(await p.locator('#srcDlg[open] li').count() === 16, 'sources panel lists 16 sources'); await p.click('#srcDlg [data-close]');
+  await p.click('#bSrc'); check(await p.locator('#srcDlg[open] li').count() === 16 + PHOTOS.length, `sources panel lists 16 sources and ${PHOTOS.length} photo credits`); await p.click('#srcDlg [data-close]');
   const names = await p.evaluate(() => [...new Set(window.cookbookEvents.map(e => e.name))]);
   for (const n of ['topic_start', 'chapter_view', 'play', 'pause', 'read_as_text', 'try_it']) check(names.includes(n), 'event ' + n);
   check(await p.evaluate(() => JSON.parse(localStorage.getItem('cookbook:internet')).id.startsWith('ch')), 'progress saved for the library (chN)');
@@ -155,6 +180,8 @@ console.log('Mobile 390×800');
   check(small === 0, 'header and control targets ≥ 40px');
   const cap = await p.locator('#caption').boundingBox(), ctrl = await p.locator('.ctrl').boundingBox();
   check(cap.y + cap.height <= ctrl.y + 1 && cap.x >= 0 && cap.x + cap.width <= 390, 'caption fits above the controls');
+  const gb = await p.locator('#guide').boundingBox();
+  check(gb && gb.x >= cap.x && gb.x + gb.width <= cap.x + cap.width && gb.y >= cap.y, 'guide sits inside the caption box');
   await p.click('#bPlay'); await p.waitForTimeout(1500);
   check(await p.evaluate(() => window.__net.playing), 'plays on mobile');
   check(p.errors.length === 0, 'no console errors');
