@@ -11,12 +11,12 @@ Each magazine has real photos, diagrams you can tap, small simulations and a qui
 
 | Issue | Magazine | Level | Chapters | Live link |
 |---|---|---|---|---|
-| 01 | **Inside the Cloud**: How a Data Center Really Works (self-playing 3D tour) | Beginner | 13 · about 13 min | https://manish50.github.io/data_centers_cookbook/data-centers/ |
+| 01 | **Inside the Cloud**: How a Data Center Really Works (self-playing photo walkthrough) | Beginner | 13 · about 13 min | https://manish50.github.io/data_centers_cookbook/data-centers/ |
 | 02 | **Inside the Lakehouse**: Azure Databricks, from First Notebook to Architect | Beginner to Advanced | 21 · about 2 h | https://manish50.github.io/data_centers_cookbook/azure-databricks/ |
 | 03 | **Inside the Mind of a Model**: How Claude Opus Is Built, Trained and Served | Beginner to Advanced | 25 · about 2½ h | https://manish50.github.io/data_centers_cookbook/ai-model/ |
 | 04 | **How Netflix Streams**: from Play to pixels, a flying tour | Beginner to Intermediate | 15 stops · about 20 min | https://manish50.github.io/data_centers_cookbook/netflix-streaming/ |
 | 05 | **From Sand to Signal**: how a chip is made, and how it lights a pixel (3D) | Beginner to Intermediate | 15 stops · about 25 min | https://manish50.github.io/data_centers_cookbook/sand-to-signal/ |
-| 06 | **How the Internet Moves Data**: from your tap to the ocean floor (self-playing 3D tour) | Beginner to Intermediate | 14 · about 9 min | https://manish50.github.io/data_centers_cookbook/internet/ |
+| 06 | **How the Internet Moves Data**: from your tap to the ocean floor (self-playing photo walkthrough) | Beginner to Intermediate | 14 · about 9 min | https://manish50.github.io/data_centers_cookbook/internet/ |
 
 The home page remembers the last chapter you reached in each magazine and offers **Continue reading**.
 That progress is stored only in your browser (`localStorage`), and every page still works when storage is blocked.
@@ -26,20 +26,22 @@ That progress is stored only in your browser (`localStorage`), and every page st
 ```
 index.html                 library home page (magazine stand)
 images/                    home-page images (README screenshot)
-data-centers/              Issue 01: self-playing 3D tour (data.js, timeline.js, campus.js, player.js, tests/)
+data-centers/              Issue 01: photo walkthrough (data.js, diagrams.js, main.js, photos/, tests/)
 azure-databricks/index.html Issue 02, photos in azure-databricks/images/
 ai-model/index.html        Issue 03, photos in ai-model/images/
 netflix-streaming/         Issue 04: map tour (index.html, data.js, core.js, tour.js, tour.css, tests/)
 sand-to-signal/            Issue 05: 3D tour (data.js, logic.js, scene.js, tour.js, tests/)
-internet/                  Issue 06: self-playing 3D globe tour (data.js, net.js, land.js, timeline.js, world.js, player.js, tests/)
-shared/                    the guide (anchor.js, anchor.css) and photo boards (photoboard.js) used by Issues 01 and 06, with tests
-vendor/three.min.js        three.js r186, tree-shaken, shared by the 3D pages (MIT, see vendor/LICENSE-three.txt)
+internet/                  Issue 06: photo walkthrough (data.js, diagrams.js, net.js, land.js, try.js, main.js, photos/, tests/)
+shared/                    the photo walkthrough player used by Issues 01 and 06: walkthrough.js/.css, timeline.js,
+                           photos.js (pan, zoom, layout), anchor.js/.css (the speaking guide), diagram-kit.js,
+                           prerender-kit.mjs, tests/
+vendor/three.min.js        three.js r186, tree-shaken, used by Issue 05 (MIT, see vendor/LICENSE-three.txt)
 sitemap.xml                list of pages for search engines
 .nojekyll                  serve files as-is on GitHub Pages
 ```
 
-Issues 02 and 03 are single self-contained `index.html` files (styles, scripts and diagrams inline) with their photos next to them. Issues 01, 04 and 05 keep their content in a `data.js` file and pre-render a text version into `index.html`.
-Every path is relative. The 2D magazines work when opened straight from disk; the 3D and map tours use JavaScript modules, so serve the folder (for example `python3 -m http.server`).
+Issues 02 and 03 are single self-contained `index.html` files (styles, scripts and diagrams inline) with their photos next to them. Issues 01, 04, 05 and 06 keep their content in a `data.js` file and pre-render a text version into `index.html`.
+Every path is relative. The 2D magazines work when opened straight from disk; the 3D, map and photo tours use JavaScript modules, so serve the folder (for example `python3 -m http.server`).
 
 ### Adding a magazine
 
@@ -56,51 +58,33 @@ Fonts (Fraunces and Inter) load from Google Fonts when online, and the pages fal
 
 ## Issue 01: Inside the Cloud
 
-![Inside the Cloud: the 3D data hall, with the power cut playing](data-centers/images/screenshot.jpg)
+![Inside the Cloud: a real server hall with the caption and the guide](data-centers/images/screenshot.jpg)
 
-A self-playing 3D tour of a data center, built with [three.js](https://threejs.org/). It plays like a film, about 13 minutes at 1×: the camera glides around one data-center campus while captions type in, numbers appear on stat cards and the scenes animate.
-You can pause at any time, drag to look around or scroll to zoom (which pauses the tour, with a Resume button), scrub the timeline, jump to a chapter, change the speed or turn captions off.
+A self-playing walkthrough of a data center **in real photos**, about 13 minutes at 1×, in 13 chapters: what a data center is, the guided tour, servers and GPUs, the journey of a request, power and a full power cut, cooling and water, security and fire, redundancy and tiers, virtualization and the cloud, real-life traces, energy and the planet, and how data centers are planned, built and run.
 
-| # | Chapter | What plays in 3D |
-|---|---|---|
-| 01 | What is a data center? | Campus fly-over; store, move and compute lighting up; sizes from a closet to a hyperscale campus |
-| 02 | The guided tour | The roof lifts and each room lights up; the 42U rack; storage tiers; copies rebuilding; spine-leaf network |
-| 03 | Meet the servers | Rack, blade and tower; inside a server; server roles across the hall; GPUs; a liquid-cooled AI rack |
-| 04 | The journey of a request | A packet from your phone through the mast, fibre, meet-me room, load balancer, web, app and database, and back; a chatbot streaming tokens |
-| 05 | Power | Grid → substation → switchgear → UPS → PDU → racks; paths A and B; a full power cut with batteries and generators |
-| 06 | Cooling | Cold and hot aisles, raised floor, CRAHs → chillers → cooling towers with steam; WUE; liquid cooling |
-| 07 | Security, fire and monitoring | Fence, gate, mantrap, cages; smoke detection and gas suppression; the NOC |
-| 08 | Redundancy, uptime and tiers | N, N+1, 2N with units failing; the nines; Tier I–IV; a second site |
-| 09 | Virtualization and the cloud | Idle servers → VMs → containers; regions and zones on a globe |
-| 10 | Real life, traced | Streaming, a UPI payment, AI and a Spark job, each lighting up the parts it uses |
-| 11 | Energy, water and the planet | PUE bars; wind and solar; district heating; the water footprint |
-| 12 | Planning, building and running | Site factors; a construction time-lapse; commissioning; go-live; a day in the life |
-| 13 | Journey's end | Fly-over recap |
+**How it plays.** Like a film, every beat is a **real photo** filling the screen with a slow pan and zoom, a typed caption, labels pinned to parts of the photo, and stat cards for sourced numbers. A drawn **guide** in the caption box reads each caption aloud with your browser's built-in speech (Web Speech API): she picks a woman's English voice when the device has one, and the film waits for her if a beat ends before she does. The 🔊 button or **V** turns her off (remembered); browsers only allow speech after your first tap or click. She is a drawn character, not a real person, and her voice sounds different on each device.
+Only ideas a camera can't see get **minimal animation**: a small flat diagram over the photo. **Photos** opens a gallery of every photo; tap one to jump to it (or link to `#photos`). Marks under the timeline show where each photo starts. Pause, scrub, jump to a chapter, change the speed or turn captions off at any time; reduced-motion settings stop autoplay and the pan and zoom.
+Some photos are analogies (a library index for DNS, a railway yard for routers…); their titles say so. Every photo is from Wikimedia Commons under a free licence, credited below and in the Sources panel.
 
-The whole tour is also pre-rendered as text ("Read as text", or automatically when WebGL isn't available). Its chapter sections keep the old ids, so links like `../data-centers/#ch5` from the other magazines still land on the right chapter.
-Reduced-motion settings turn off autoplay and camera glides.
-
-**Real photos and a guide (Issues 01 and 06).** Wherever the tour shows a physical thing (a GPU board, a rack-scale AI system, batteries, a generator, cooling towers, a phone mast, an undersea cable, a cable ship), a real photo stands in the 3D scene in place of the drawn model, with its credit under the caption. Abstract ideas (packets, DNS, BGP, power paths, airflow) stay as 3D animations. A drawn guide in the caption box reads every caption aloud with the browser's built-in speech (Web Speech API): she picks a woman's English voice when the device has one, the film waits for her at the end of a beat, and pausing, seeking or opening a Try-it panel stops her. Turn her voice off with the 🔊 button or the **V** key (remembered); minimise her with the – button. Browsers only allow speech after the first tap or click, so the first Play starts her. Her voice comes from your device, so it sounds different on a phone, a Mac or Windows. She is a drawn character, not a real person.
+The whole walkthrough is also pre-rendered as text ("Read as text"). Chapter sections keep the old ids, so links like `../data-centers/#ch5` from the other magazines still land on the right chapter.
 
 ### Files
 
 | File | What it holds |
 |---|---|
-| `data-centers/data.js` | **All content**: 13 chapters of "beats" (caption, length, camera, scene cue, labels, stat card), named points (`POI`), sources and recaps |
-| `data-centers/timeline.js` | Pure helpers: beats → timeline, time → beat and chapter, camera path, typed captions, deep links, validation |
-| `data-centers/campus.js` | The 3D campus and studio sets, built from simple three.js shapes. `apply(beat, progress, time)` sets every scene from the time alone, so any moment can be scrubbed to |
-| `data-centers/player.js` | Autoplay, scrubber, chapters, captions, stat cards, orbit and Resume, keyboard, text mode |
-| `data-centers/prerender.mjs` | Writes the text version and Sources list into `index.html` |
-| `data-centers/photos/` | The real photos, listed with their credits in `PHOTOS` in `data.js` (`at: 'chapter.beat'` picks the beat) |
-| `shared/anchor.js`, `shared/photoboard.js` | The speaking guide and the photo boards, shared with Issue 06 |
+| `data-centers/data.js` | **All content**: 13 chapters of beats (caption, length, `photo`, `focus`, `plabels`, `cue`, stat card), sources, recaps, and `PHOTOS` with every credit |
+| `data-centers/diagrams.js` | The small flat diagrams (power chain, power cut, N / N+1 / 2N, the nines, PUE…), one per `cue` |
+| `data-centers/photos/` | The photos (≤ 1400 px) and `photos/thumbs/` for the gallery |
+| `data-centers/main.js` | Starts the shared player with this issue's content |
+| `data-centers/prerender.mjs` | Writes the text version, Sources and photo credits into `index.html`, and versions every script and stylesheet (`?v=` content hash, plus an import map) so visitors always get fresh files |
+| `shared/walkthrough.js` | The player: autoplay, scrubber, chapters, captions, photo layers, labels, diagrams, gallery, keyboard, text mode |
 
-### Editing the tour
+### Editing the walkthrough
 
 - **Change a caption:** edit the beat's text in `data.js`, then run `node data-centers/prerender.mjs`.
-- **Re-time it:** each beat has `d`, its length in seconds (8.5 by default).
-- **Move the camera:** `cam: [point, az, el, dist]`. The point is a name from `POI` or `[x, y, z]` in metres, with the building centred on 0, 0, 0. `az` is the angle around, `el` the height angle, `dist` the distance. Open `data-centers/?paused#t=SECONDS` to look at one moment.
-- **Add a scene:** give the beat a `cue` and handle it in `apply()` in `campus.js`.
-- **Add a photo:** put a resized JPG in `data-centers/photos/` and add it to `PHOTOS` in `data.js` with its Wikimedia Commons page, author and licence, and `at: 'chapter.beat'`. The unit tests check every photo has a free licence and credit.
+- **Change a photo:** set the beat's `photo` to an id from `PHOTOS`. `focus: [u, v, zoom]` picks the part to centre (0–1 across and down) and how far to zoom; `plabels: [[text, [u, v]]]` pins labels to the photo.
+- **Add a photo:** put a JPG (≤ 1400 px) in `photos/` and a 240×160 thumbnail in `photos/thumbs/`, and add it to `PHOTOS` with its Wikimedia Commons page, author and licence. The unit tests check every beat has a photo and every photo has a free licence and credit.
+- **Re-time it:** each beat has `d`, its length in seconds (8.5 by default). Open `data-centers/?paused#t=SECONDS` to look at one moment.
 
 ### Tests
 
@@ -111,27 +95,63 @@ node data-centers/tests/e2e.mjs http://localhost:8765/
 
 ### Sources
 
-Every number on a stat card comes from the original magazine's checked sources: the IEA (*Energy and AI*, 2025), the Uptime Institute, Google, Microsoft, LBNL, NVIDIA and Supermicro specifications, NPCI, NRDC, ASHRAE, NFPA 2001 and the LTO Program. The full list is in the tour's Sources panel and at the end of the text version.
-Photos: Wikimedia Commons, under the free licences listed below. They were resized and compressed for the web.
+Every number on a stat card comes from the original magazine's checked sources: the IEA (*Energy and AI*, 2025), the Uptime Institute, Google, Microsoft, LBNL, NVIDIA and Supermicro specifications, NPCI, NRDC, ASHRAE, NFPA 2001 and the LTO Program. The full list is in the walkthrough's Sources panel and at the end of the text version.
 
 ### Photo credits: Inside the Cloud
 
-- **A computer room in the 1970s–80s, University of St. Gallen**: University of St. Gallen, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Blick_in_einen_Raum_des_HSG-Rechenzentrums_HSGH_022-001118.jpg), [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0)
-- **A real server hall (CERN, Geneva)**: Florian Hirzinger - www.fh-ap.com, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:CERN_Server_03.jpg), [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0)
+From Wikimedia Commons, resized for the web:
+
+- **Coins: every payment is a small piece of data**: Роман Рябенко, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:A_pile_of_Ukrainian_currency_coins.jpg), [CC0](https://creativecommons.org/publicdomain/zero/1.0/deed.en)
+- **A large data center campus (The Dalles, Oregon)**: Tony Webster from Minneapolis, Minnesota, United States, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Google_Datacenter_-_The_Dalles,_Oregon_(17832143871).jpg), [CC BY 2.0](https://creativecommons.org/licenses/by/2.0)
+- **A server hall at CERN, Geneva**: Florian Hirzinger - www.fh-ap.com, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:CERN_Server_03.jpg), [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0)
+- **CERN’s data centre building**: Unnerving duck, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:CERN_data_centre.jpg), [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0)
+- **Cooling towers on a data center (Mesa, Arizona)**: Rsparks3, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Data_center_cooling_tower.jpg), [CC0](https://creativecommons.org/publicdomain/zero/1.0/deed.en)
+- **A data center campus from the air (Mayes County, Oklahoma)**: Xpda, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Google_Mayes_County_P0004974a.jpg), [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0)
+- **Server racks at the Wikimedia Foundation**: Victor Grigas, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Wikimedia_Foundation_Servers-8055_35.jpg), [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0)
+- **ENIAC, one of the first big computers (1940s)**: U.S. Army (photographer unknown), [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Glen_Beck_and_Betty_Snyder_program_the_ENIAC_in_building_328_at_the_Ballistic_Research_Laboratory.jpg), Public domain
+- **A supercomputer hall (IBM Blue Gene/P, Argonne)**: Argonne National Laboratory, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:IBM_Blue_Gene_P_supercomputer.jpg), [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0)
+- **Cooling units on a raised floor**: Robert.Harker, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:CRAC_Cabinets_2.jpg), [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0)
 - **Racks full of servers**: BalticServers.com, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:BalticServers_data_center.jpg), [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0)
+- **The Library of Congress reading room**: Carol M. Highsmith, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:LOC_Main_Reading_Room_Highsmith.jpg), Public domain
+- **A magnetic tape library, decades ago (US Department of Agriculture)**: U.S. Department of Agriculture, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Magnetic_tape_library_at_USDA.jpg), [CC BY 2.0](https://creativecommons.org/licenses/by/2.0)
+- **Rack servers (Wikimedia Foundation)**: Victor Grigas, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Wikimedia_Foundation_Servers-8055_08.jpg), [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0)
+- **Network switches and their cables**: ShakataGaNai, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Network_switches.jpg), [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0)
+- **Network cabling in a data center**: Victor Grigas, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Wikimedia_Foundation_Servers-8055_24.jpg), [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0)
+- **Rows of servers (Wikimedia Foundation)**: Victor Grigas, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Wikimedia_Foundation_Servers-8055_13.jpg), [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0)
 - **A blade chassis: thin servers sharing one box**: Redline, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:HP_c7000-1.jpg), [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0)
 - **Inside a 1U server, lid off**: Rodzilla at English Wikipedia, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Inside_and_Rear_of_Webserver.jpg), [CC BY 2.5](https://creativecommons.org/licenses/by/2.5)
-- **An 8-GPU board from an AI server**: Pokiiri, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Nvidia_DGX-B200-HGX.jpg), [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0)
-- **A rack-scale AI system (GB200 NVL72)**: Pokiiri, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Nvidia_DGX_GB200.jpg), [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0)
+- **Web and application servers (Wikimedia Foundation)**: Victor Grigas, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Wikimedia_Foundation_Servers-8055_17.jpg), [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0)
+- **A mobile phone mast**: Diacius, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Mobile_phone_mast.jpg), [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0)
+- **Four GPUs inside a server node (TSUBAME 4.0)**: Fukumoto, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:TSUBAME4.0_P5160984.jpg), [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0)
+- **A supercomputer node (TSUBAME 4.0)**: Fukumoto, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:TSUBAME4.0_P5160989.jpg), [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0)
+- **A rack-scale AI system (NVIDIA GB200 NVL72)**: Pokiiri, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Nvidia_DGX_GB200.jpg), [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0)
+- **A library card catalogue: an index for finding things**: Michael Holley Swtpc6800, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Copyright_Card_Catalog_Drawer.jpg), Public domain
+- **Optical fibre carrying light**: Hustvedt, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Fiber_optic_illuminated.jpg), [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0)
+- **Air traffic control: directing traffic**: Senior Airman John Wright, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Lajes_Field_Air_Traffic_Control.jpg), Public domain
+- **Real undersea cable samples, heavy armour to lightweight**: Lonnie Hagadorn, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Submarine_Optical_Cables.jpg), [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0)
+- **A reservoir (Lemon Reservoir, Colorado)**: Radomianin, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Lemon_Reservoir,_Colorado.jpg), [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0)
+- **A substation transformer (Liverpool)**: Rept0n1x, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Electrical_substation_transformer,_Love_Lane,_Liverpool.JPG), [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0)
+- **Medium-voltage switchgear cabinets**: Zen 38, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Medium_voltage_panel.jpg), [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0)
+- **A row of UPS cabinets**: Robert.Harker, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:EPS_6000_Row_B.jpg), [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0)
 - **UPS batteries in a data center**: Jelson25, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Datacenter_Backup_Batteries.jpg), [CC BY 3.0](https://creativecommons.org/licenses/by/3.0)
-- **A standby diesel generator**: Mikael Häggström, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Power_generator_of_a_hospital_data_center.jpg), [CC0](http://creativecommons.org/publicdomain/zero/1.0/deed.en)
+- **Generators at a nearly finished data center**: Lapalmauz, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Una_batteria_di_grossi_generatori_alimentati_a_gasolio_in_un_Data_Center_in_via_di_ultimazione.jpg), [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0)
+- **Wind turbines and power lines, East Sussex**: Diliff, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Wind_Turbines_and_Power_Lines,_East_Sussex,_England_-_April_2009.jpg), [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0)
 - **A cold aisle between two rows of racks**: Robert.Harker, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Cabinet_Asile.jpg), [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0)
-- **Cooling units on a raised floor**: Robert.Harker, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:CRAC_Cabinets_2.jpg), [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0)
-- **Cooling towers on a data center (Mesa, Arizona)**: Rsparks3, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Data_center_cooling_tower.jpg), [CC0](http://creativecommons.org/publicdomain/zero/1.0/deed.en)
+- **A big plant room with pumps and pipes (NASA Glenn Research Center)**: NASA/GRC/Jef Janis, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:GRC-2023-C-11335.jpg), Public domain
+- **A liquid-cooled AI chip board (Google TPU v3)**: Zinskauf, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Tensor_Processing_Unit_3.0.jpg), [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0)
+- **Pipework in an industrial plant room**: Eric Jusino from Denver, CO, USA, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Gates_Rubber,_interior_pipelines.jpg), [CC BY 2.0](https://creativecommons.org/licenses/by/2.0)
 - **A locked customer cage**: Virtuo Doc, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Cage_Quelle_EMC_HostCo_GmbH.jpg), [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0)
 - **A gas fire-suppression discharge**: Keith4048, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:COMPUTER_ROOM_DISCHARGE.JPG), Public domain
+- **Code on a screen: software watching the machines**: Markus Spiske markusspiske, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Code_on_computer_monitor_(Unsplash).jpg), [CC0](https://creativecommons.org/publicdomain/zero/1.0/deed.en)
+- **A Formula One wheel gun: spares changed in seconds**: Rich Jones from United Kingdom, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Formula_One_Wheel_Gun.jpg), [CC BY 2.0](https://creativecommons.org/licenses/by/2.0)
+- **Container cranes: goods packed into standard boxes**: Calistemon, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Container_cranes_in_Fremantle_Harbour,_July_2023_01.jpg), [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0)
+- **Inside a computing rack (Ifremer’s Datarmor centre)**: Gregory Rocher / Ifremer, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Le_Centre_Datarmor,_les_coulisses_(Ifremer_00957-106840_-_54954).jpg), [CC BY 4.0](https://creativecommons.org/licenses/by/4.0)
+- **District heating pipes being laid (Jyväskylä, Finland)**: Antti Leppänen, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:District_heating_pipes_in_Jyv%C3%A4skyl%C3%A4.jpg), [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0)
+- **A silicon wafer full of chips**: Enrique Jiménez, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Silicon_Wafer_20190210.jpg), [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0)
+- **A blueprint: every building starts as a plan**: Alice Trythall Washburn, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Blueprint_of_elevation_by_Alice_Trythall_Washburn.jpg), Public domain
 - **A load bank testing a generator**: Wtshymanski, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Air_cooled_load_bank.jpg), [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0)
-- **A technician at work**: Bill Branson (Photographer), [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Network_server_and_technician.jpg), Public domain
+- **A technician at work on network equipment**: Bill Branson (Photographer), [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Network_server_and_technician.jpg), Public domain
+- **Pilots working through a checklist**: U.S. Air Force photo/Staff Sgt. Chris Willis, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:120316-F-LR266-986_C-130J_Hercules_Cockpit_Ramstein_Air_Base_2012.jpg), Public domain
 
 ---
 
@@ -513,19 +533,17 @@ Facts come from ASML ([How microchips are made](https://www.asml.com/en/technolo
 
 ## Issue 06: How the Internet Moves Data
 
-![How the Internet Moves Data: a packet crossing the globe from Mumbai to London](internet/images/screenshot.jpg)
+![How the Internet Moves Data: a real photo with the route map and the guide](internet/images/screenshot.jpg)
 
-A self-playing 3D tour built on a globe with real coastlines. It runs about 9 minutes, plus whatever time you spend on the hands-on panels. It uses the same player as Issue 01: autoplay, scrubbing, chapters, speed, captions, drag to look around, and "Read as text".
-On some beats a **✋ Try it** button opens a panel where you can experiment:
+A self-playing walkthrough **in real photos** of how a message crosses the internet, about 9 minutes at 1× (longer with the guide's voice), Beginner to Intermediate. Every chapter says where it happens.
 
-- **Send a packet:** pick any two cities and see the path, the cable distance, the straight-line distance and the minimum round trip at light speed.
-- **Cut a cable:** cut any undersea link and watch traffic reroute onto a longer, slower path. Then repair it.
-- **Look up example.com:** step through DNS: resolver → root → .com → authoritative → answer.
-- **Lose a packet:** drop any packet and see TCP resend it while UDP carries on without it.
+**How it plays.** Like a film, every beat is a **real photo** filling the screen with a slow pan and zoom, a typed caption, labels pinned to parts of the photo, and stat cards for sourced numbers. A drawn **guide** in the caption box reads each caption aloud with your browser's built-in speech (Web Speech API): she picks a woman's English voice when the device has one, and the film waits for her if a beat ends before she does. The 🔊 button or **V** turns her off (remembered); browsers only allow speech after your first tap or click. She is a drawn character, not a real person, and her voice sounds different on each device.
+Only ideas a camera can't see get **minimal animation**: a small flat diagram over the photo. **Photos** opens a gallery of every photo; tap one to jump to it (or link to `#photos`). Marks under the timeline show where each photo starts. Pause, scrub, jump to a chapter, change the speed or turn captions off at any time; reduced-motion settings stop autoplay and the pan and zoom.
+Some photos are analogies (a library index for DNS, a railway yard for routers…); their titles say so. Every photo is from Wikimedia Commons under a free licence, credited below and in the Sources panel.
 
-| # | Chapter | What plays in 3D |
+| # | Chapter | What you see |
 |---|---|---|
-| 01 | A network of networks | The globe, cities and links; people online (ITU) |
+| 01 | A network of networks | Cities and cables on a world map; people online (ITU) |
 | 02 | Packets | A photo split into packets with headers, travelling out of order, and reassembled |
 | 03 | Addresses | IPv4 (32 bits) vs IPv6 (128 bits); NAT at home |
 | 04 | DNS | Resolver → root → .com → authoritative, then caching; root servers worldwide |
@@ -540,21 +558,19 @@ On some beats a **✋ Try it** button opens a panel where you can experiment:
 | 13 | When things break | Cable cuts (the 2008 Mediterranean cuts) and rerouting |
 | 14 | Journey's end | One request, end to end |
 
-**Honest maps:** the coastlines are real (Natural Earth, public domain). The cable network drawn on the globe is an **illustration**, not real cable routes, and is labelled as such. The distance and light-speed maths is real.
-
-**Real photos and a guide:** the same as Issue 01. Six real photos (a phone mast, glowing fibre, network switches, data-center cabling, real undersea cable samples and a cable ship) stand in the scene on their beats, and the drawn guide reads every caption aloud. Opening a Try it panel pauses her and moves photos aside.
+**Try it.** Hands-on panels pause the walkthrough: send a packet between any two cities on a flat world map (path, distance and the light-speed minimum), cut a cable and watch the detour, step through a DNS lookup, and lose a packet to compare TCP and UDP.
+**Honest maps:** the coastlines are real (Natural Earth, public domain). The cable network on the map is an **illustration**, not real cable routes, and is labelled as such. The distance and light-speed maths is real.
 
 ### Files
 
 | File | What it holds |
 |---|---|
-| `internet/data.js` | **All content**: 14 chapters of beats, cities, the illustrative links, sources, recaps |
+| `internet/data.js` | **All content**: 14 chapters of beats, cities, the illustrative links, sources, recaps, `PHOTOS` with credits |
+| `internet/diagrams.js` | The small flat diagrams and the flat world map |
 | `internet/net.js` | Pure network maths: great-circle distances, shortest paths, light-speed delay, DNS steps, TCP/UDP delivery |
 | `internet/land.js` | Coastlines from Natural Earth 1:110m (public domain), converted from the world-atlas package |
-| `internet/timeline.js` | Same timeline helpers as Issue 01 |
-| `internet/world.js` | The globe and the close-up studio sets |
-| `internet/player.js` | The film player plus the Try it panels |
-| `internet/photos/` | The real photos, listed with credits in `PHOTOS` in `data.js` |
+| `internet/try.js` | The Try it panels |
+| `internet/photos/` | The photos and thumbnails |
 
 Edit captions in `data.js`, then run `node internet/prerender.mjs`.
 
@@ -573,9 +589,23 @@ The ITU (people online, 2026), TeleGeography's Submarine Cable FAQs (cable count
 
 From Wikimedia Commons, resized for the web:
 
-- **A mobile phone mast**: Diacius, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Mobile_phone_mast.jpg), [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0)
 - **Optical fibre carrying light**: Hustvedt, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Fiber_optic_illuminated.jpg), [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0)
-- **Network switches and their cables**: ShakataGaNai, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Network_switches.jpg), [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0)
-- **Network cabling inside a data center**: Victor Grigas, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Wikimedia_Foundation_Servers-8055_24.jpg), [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0)
+- **A telecom technician patching fibre**: U.S. Department of Agriculture
+
+Lance Cheung/Multimedia PhotoJournalist, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Telecommunications_technician.jpg), Public domain
+- **Code on a screen: software watching the machines**: Markus Spiske markusspiske, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Code_on_computer_monitor_(Unsplash).jpg), [CC0](https://creativecommons.org/publicdomain/zero/1.0/deed.en)
 - **Real undersea cable samples, heavy armour to lightweight**: Lonnie Hagadorn, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Submarine_Optical_Cables.jpg), [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0)
+- **Container cranes: goods packed into standard boxes**: Calistemon, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Container_cranes_in_Fremantle_Harbour,_July_2023_01.jpg), [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0)
+- **A railway switching yard: choosing the next track**: 4300streetcar, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:CSX_train_switching_at_Framingham_North_Yard_June_2026.jpg), [CC BY 4.0](https://creativecommons.org/licenses/by/4.0)
+- **Network cabling in a data center**: Victor Grigas, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Wikimedia_Foundation_Servers-8055_24.jpg), [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0)
+- **Network switches and their cables**: ShakataGaNai, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Network_switches.jpg), [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0)
+- **A library card catalogue: an index for finding things**: Michael Holley Swtpc6800, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Copyright_Card_Catalog_Drawer.jpg), Public domain
+- **A server hall at CERN, Geneva**: Florian Hirzinger - www.fh-ap.com, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:CERN_Server_03.jpg), [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0)
+- **A mobile phone mast**: Diacius, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Mobile_phone_mast.jpg), [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0)
+- **Air traffic control: directing traffic**: Senior Airman John Wright, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Lajes_Field_Air_Traffic_Control.jpg), Public domain
 - **A cable ship (Cable Enterprise) in port**: David Martin, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Cable_laying_ship_%22Cable_Enterprise%22_seen_from_Mayflower_Park_-_geograph.org.uk_-_6350872.jpg), [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0)
+- **A Formula One wheel gun: spares changed in seconds**: Rich Jones from United Kingdom, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Formula_One_Wheel_Gun.jpg), [CC BY 2.0](https://creativecommons.org/licenses/by/2.0)
+- **A locked customer cage**: Virtuo Doc, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Cage_Quelle_EMC_HostCo_GmbH.jpg), [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0)
+- **Inside a computing rack (Ifremer’s Datarmor centre)**: Gregory Rocher / Ifremer, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Le_Centre_Datarmor,_les_coulisses_(Ifremer_00957-106840_-_54954).jpg), [CC BY 4.0](https://creativecommons.org/licenses/by/4.0)
+- **Server racks at the Wikimedia Foundation**: Victor Grigas, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Wikimedia_Foundation_Servers-8055_35.jpg), [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0)
+- **Racks full of servers**: BalticServers.com, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:BalticServers_data_center.jpg), [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0)

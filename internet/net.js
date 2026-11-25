@@ -14,12 +14,6 @@ export function gcKm(a, b) {
 /* Round-trip time in ms for light in fibre over `km` one way. */
 export const rttMs = km => 2 * km / FIBRE_KM_S * 1000;
 
-/* [lat, lon] → [x, y, z] on a sphere of radius r (y up, lon 0 facing +z, so camPos(az = lon, el = lat) looks straight down at it). */
-export function llToXyz([lat, lon], r) {
-  const la = rad(lat), lo = rad(lon);
-  return [r * Math.cos(la) * Math.sin(lo), r * Math.sin(la), r * Math.cos(la) * Math.cos(lo)];
-}
-
 /* The [lat, lon] points a link follows: city → sea waypoints → city. */
 export const linkPoints = (link, cities) => [cities[link.a].ll, ...(link.sea || []), cities[link.b].ll];
 export function linkKm(link, cities) { const p = linkPoints(link, cities); let km = 0; for (let i = 1; i < p.length; i++) km += gcKm(p[i - 1], p[i]); return km; }
