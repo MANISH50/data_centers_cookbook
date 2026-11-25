@@ -35,3 +35,10 @@ export function versionPage(html, pageDir) {
   html = html.replace(/(<script type="module" src=")(main\.js)(?:\?v=\w+)?(")/, (m, a, src, c) => `${a}${src}?v=${hash(join(pageDir, src))}${c}`);
   return html;
 }
+
+/* The first photo is written into the page (and preloaded) so it can paint before any script runs. */
+export function firstPhoto(html, chapters, photos) {
+  const p = photos.find(x => x.id === chapters[0].beats[0].photo);
+  html = html.replace(/<!--PRELOAD-->[\s\S]*?<!--\/PRELOAD-->/, `<!--PRELOAD--><link rel="preload" as="image" href="${p.file}" fetchpriority="high"><!--/PRELOAD-->`);
+  return html.replace(/<div class="ph" id="phA"[^>]*>[\s\S]*?<\/div>/, `<div class="ph" id="phA" data-id="${p.id}" style="opacity:1"><img class="bg" alt="" src="${p.thumb}"><img class="fg" alt="" src="${p.file}" fetchpriority="high" style="width:100%;height:100%;object-fit:cover"></div>`);
+}

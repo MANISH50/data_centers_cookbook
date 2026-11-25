@@ -5,7 +5,7 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { SOURCES, CHAPTERS, RECAPS, PHOTOS } from './data.js';
-import { esc as esc0, beatsHTML, photoCredits as credits, versionPage } from '../shared/prerender-kit.mjs';
+import { esc as esc0, beatsHTML, photoCredits as credits, versionPage, firstPhoto } from '../shared/prerender-kit.mjs';
 const photoCredits = credits(PHOTOS);
 
 const file = fileURLToPath(new URL('./index.html', import.meta.url));
@@ -45,6 +45,7 @@ const sources = `
 let html = readFileSync(file, 'utf8');
 const put = (name, body) => { const re = new RegExp(`<!--${name}-->[\\s\\S]*?<!--/${name}-->`); if (!re.test(html)) throw new Error('marker missing: ' + name); html = html.replace(re, () => `<!--${name}-->${body}<!--/${name}-->`); };
 put('TEXT', text); put('SOURCES', sources);
+html = firstPhoto(html, CHAPTERS, PHOTOS);
 html = versionPage(html, fileURLToPath(new URL('.', import.meta.url)).replace(/\/$/, ''));
 writeFileSync(file, html);
 console.log(`prerendered ${CHAPTERS.length} chapters, ${CHAPTERS.reduce((a, c) => a + c.beats.length, 0)} beats, ${SOURCES.length} sources → ${file}`);

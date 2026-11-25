@@ -26,8 +26,9 @@
 <link rel="stylesheet" href="../shared/walkthrough.css?v=712747276f">
 <link rel="stylesheet" href="../shared/anchor.css?v=56e830e8fa">
 <style>:root{--sky:#22d3ee}</style>
+<!--PRELOAD--><link rel="preload" as="image" href="photos/fibre.jpg" fetchpriority="high"><!--/PRELOAD-->
 <!--IMPORTMAP-->
-<script type="importmap">{"imports":{"./data.js":"./data.js?v=a3da0dc30c","./diagrams.js":"./diagrams.js?v=552269e332","./land.js":"./land.js?v=48aae06f9a","./main.js":"./main.js?v=d719fcf8f6","./net.js":"./net.js?v=698778f1da","./try.js":"./try.js?v=93ac0aeafe","../shared/anchor.js":"../shared/anchor.js?v=d81f4cac36","../shared/diagram-kit.js":"../shared/diagram-kit.js?v=cb15012c8c","../shared/photos.js":"../shared/photos.js?v=49d2dedc70","../shared/timeline.js":"../shared/timeline.js?v=09244a9ad2","../shared/walkthrough.js":"../shared/walkthrough.js?v=d8db0ad761"}}</script>
+<script type="importmap">{"imports":{"./data.js":"./data.js?v=a3da0dc30c","./diagrams.js":"./diagrams.js?v=552269e332","./land.js":"./land.js?v=48aae06f9a","./main.js":"./main.js?v=d719fcf8f6","./net.js":"./net.js?v=698778f1da","./try.js":"./try.js?v=93ac0aeafe","../shared/anchor.js":"../shared/anchor.js?v=d81f4cac36","../shared/diagram-kit.js":"../shared/diagram-kit.js?v=cb15012c8c","../shared/photos.js":"../shared/photos.js?v=49d2dedc70","../shared/timeline.js":"../shared/timeline.js?v=09244a9ad2","../shared/walkthrough.js":"../shared/walkthrough.js?v=141d72d82b"}}</script>
 <!--/IMPORTMAP-->
 </head>
 <body>
@@ -44,7 +45,7 @@
 </header>
 
 <main class="stage" id="stage" aria-label="Self-playing walkthrough of how the internet moves data, in real photos">
-  <div class="photos" id="photos" role="img" aria-label="Photo"><div class="ph" id="phB"><img class="bg" alt=""><img class="fg" alt=""></div><div class="ph" id="phA"><img class="bg" alt=""><img class="fg" alt="" fetchpriority="high"></div></div>
+  <div class="photos" id="photos" role="img" aria-label="Photo"><div class="ph" id="phB"><img class="bg" alt=""><img class="fg" alt=""></div><div class="ph" id="phA" data-id="fibre" style="opacity:1"><img class="bg" alt="" src="photos/thumbs/fibre.jpg"><img class="fg" alt="" src="photos/fibre.jpg" fetchpriority="high" style="width:100%;height:100%;object-fit:cover"></div></div>
   <div id="labels" aria-hidden="true"></div>
   <div class="vignette" aria-hidden="true"></div>
   <figure class="diagram" id="diagram" hidden aria-hidden="true"></figure>

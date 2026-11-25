@@ -35,7 +35,7 @@ export function startWalkthrough({ slug, CHAPTERS, SOURCES, PHOTOS, DIAGRAMS = {
   const shown = PHOTOS.slice().sort((a, b) => firstAt[a.id] - firstAt[b.id]);
   $('#phGrid').innerHTML = shown.map(p => `<li><button data-id="${p.id}"><img src="${base}${p.thumb}" alt="" loading="lazy" decoding="async" width="240" height="160"><b>${esc(p.title)}</b><small>${esc(p.author)} · ${esc(p.licence)} · ${fmtTime(firstAt[p.id])}</small></button></li>`).join('');
   document.querySelectorAll('#phGrid button').forEach(b => b.onclick = () => { $('#phDlg').close(); seek(firstAt[b.dataset.id]); track('photo_jump', { id: b.dataset.id }); });
-  $('#phCount').textContent = PHOTOS.length;
+  $('#phCount').textContent = PHOTOS.length; $('#bPhotos').setAttribute('aria-label', `Photos (${PHOTOS.length})`);
   scrub.addEventListener('input', () => seek(+scrub.value, { keepPlaying: true }));
 
   function seek(nt, { keepPlaying = false } = {}) {
@@ -67,7 +67,7 @@ export function startWalkthrough({ slug, CHAPTERS, SOURCES, PHOTOS, DIAGRAMS = {
   preload.done = new Set();
   function place(layer, view, box, area) {
     const p = PH[layer.dataset.id], L = layout(view, p.w / p.h, box, area, p.fit || 'cover'), fg = layer.querySelector('.fg');
-    fg.style.width = p.w + 'px'; fg.style.height = p.h + 'px';
+    fg.style.width = p.w + 'px'; fg.style.height = p.h + 'px'; fg.style.objectFit = '';
     fg.style.transform = `translate(${L.left.toFixed(1)}px,${L.top.toFixed(1)}px) scale(${(L.w / p.w).toFixed(5)})`;
     return L;
   }
