@@ -1,75 +1,41 @@
-// Unit tests: node --test data-centers/tests/*.test.mjs
+// Unit tests: node --test data-centers/tests/*.test.mjs   (shared helpers: shared/tests/*.test.mjs)
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { POI, SOURCES, CHAPTERS, RECAPS } from '../data.js';
-import { buildTimeline, beatAt, chapterAt, cueProgress, cameraAt, camPos, typedChars, parseHash, fmtTime, validate, GLIDE } from '../timeline.js';
+import { SOURCES, CHAPTERS, RECAPS, PHOTOS } from '../data.js';
+import { DIAGRAMS } from '../diagrams.js';
+import { buildTimeline, cueProgress, fmtTime, validate } from '../../shared/timeline.js';
 
-const TL = buildTimeline(CHAPTERS, POI), IDS = CHAPTERS.map(c => c.id);
+const TL = buildTimeline(CHAPTERS), IDS = CHAPTERS.map(c => c.id);
 
-test('content integrity: 13 chapters, every beat has a caption, camera and valid references', () => {
-  assert.deepEqual(validate(CHAPTERS, POI, SOURCES), []);
-  assert.equal(CHAPTERS.length, 13);
+test('content: 13 chapters, valid beats, recaps, about 13 minutes', () => {
+  assert.deepEqual(validate(CHAPTERS, SOURCES, 13), []);
   for (const c of CHAPTERS) assert.ok(RECAPS[c.id]?.length, `${c.id} has a recap`);
   assert.ok(TL.total > 600 && TL.total < 960, `about 10–16 minutes (${fmtTime(TL.total)})`);
+  for (let i = 1; i <= 12; i++) assert.ok(IDS.includes('ch' + i), 'old magazine links #ch1…#ch12 still land');
 });
-
-test('every chapter of the old magazine is still covered (ids ch1…ch12 + the finale)', () => {
-  for (let i = 1; i <= 12; i++) assert.ok(IDS.includes('ch' + i));
+test('a real photo from the first second, and plenty of different ones', () => {
+  assert.ok(TL.beats[0].photo);
+  assert.ok(PHOTOS.length >= 40, `${PHOTOS.length} photos`);
+  const changes = TL.beats.filter((b, i) => i && b.photo !== TL.beats[i - 1].photo).length;
+  assert.ok(changes / TL.beats.length > .6, 'the photo changes on most beats');
 });
-
-test('beats are back to back and times increase', () => {
-  TL.beats.forEach((b, i) => { if (i) assert.equal(b.start, TL.beats[i - 1].end); assert.ok(b.end > b.start); });
-  assert.equal(TL.beats.at(-1).end, TL.total);
-  TL.chapterStart.forEach((s, i) => { if (i) assert.ok(s > TL.chapterStart[i - 1]); });
+test('no caption still talks about the old 3D scene', () => {
+  for (const b of TL.beats) assert.doesNotMatch(b.text, /\b(3D|drag|light(s)? up|on this globe)\b/i, b.text.slice(0, 40));
 });
-
-test('time → beat and chapter lookup', () => {
-  assert.equal(beatAt(TL, 0), 0);
-  assert.equal(beatAt(TL, TL.total + 5), TL.beats.length - 1);
-  TL.beats.forEach((b, i) => { assert.equal(beatAt(TL, b.start + .01), i); assert.equal(beatAt(TL, b.end - .01), i); });
-  TL.chapterStart.forEach((s, i) => assert.equal(chapterAt(TL, s + .1), i));
-});
-
-test('cue progress honours sub-ranges across beats (e.g. the power cut)', () => {
-  const cut = TL.beats.filter(b => b.cue === 'cut');
-  assert.equal(cut.length, 3);
-  assert.equal(cueProgress(cut[0], cut[0].start), 0);
-  assert.ok(Math.abs(cueProgress(cut[0], cut[0].end) - .4) < 1e-9);
-  assert.ok(Math.abs(cueProgress(cut[1], cut[1].start) - .4) < 1e-9);
-  assert.ok(Math.abs(cueProgress(cut[2], cut[2].end) - 1) < 1e-9);
-  const plain = TL.beats.find(b => !b.p0 && b.p0 !== 0);
-  assert.equal(cueProgress(plain, plain.start + plain.d / 2), .5);
-});
-
-test('camera is deterministic, continuous across beat boundaries and settles on the beat view', () => {
-  for (let t = 0; t < TL.total; t += 7.3) assert.deepEqual(cameraAt(TL, t), cameraAt(TL, t));
-  for (const b of TL.beats.slice(1)) {
-    const a = cameraAt(TL, b.start - 1e-4), c = cameraAt(TL, b.start + 1e-4);
-    const pa = camPos(a.look, a.view), pc = camPos(c.look, c.view);
-    assert.ok(Math.hypot(pa[0] - pc[0], pa[1] - pc[1], pa[2] - pc[2]) < 2, `no jump into ${b.text.slice(0, 30)}…`);
-    const settled = cameraAt(TL, b.start + GLIDE + .01);
-    assert.deepEqual(settled.look, b.look);
+test('every diagram draws at the start, middle and end of its beats', () => {
+  const cues = new Set(TL.beats.map(b => b.cue).filter(Boolean));
+  for (const b of TL.beats) if (b.cue && DIAGRAMS[b.cue]) for (const t of [b.start, b.start + b.d / 2, b.end]) {
+    const out = DIAGRAMS[b.cue](cueProgress(b, t), b);
+    assert.match(out.svg, /^<svg viewBox="0 0 \d+ \d+"/, b.cue); assert.ok(out.title, b.cue);
+    assert.doesNotMatch(out.svg, /NaN|undefined/, b.cue);
   }
-  const still = cameraAt(TL, TL.beats[5].start + 1, false); assert.deepEqual(still.look, TL.beats[5].look);
+  for (const c of ['smc', 'storage', 'req', 'power', 'cut', 'red', 'nines', 'tiers', 'virt', 'pue']) assert.ok(cues.has(c) && DIAGRAMS[c], c);
 });
-
-test('captions type in at a steady rate and finish within the beat', () => {
-  for (const b of TL.beats) { assert.equal(typedChars(b, b.start), 0); assert.ok(typedChars(b, b.end) === b.text.length, `caption fits: ${b.text.slice(0, 30)}`); }
+test('the power cut diagram tells the story in order', () => {
+  const s = p => DIAGRAMS.cut(p).status;
+  assert.equal(s(0), 'Grid: on'); assert.match(s(.3), /UPS batteries/); assert.match(s(.6), /generators/); assert.match(s(1), /back/);
 });
-
-test('deep links: old #chN links, #t=, #sources', () => {
-  assert.deepEqual(parseHash('#ch5', TL, IDS), { t: TL.chapterStart[4], ci: 4 });
-  assert.deepEqual(parseHash('#ch12', TL, IDS), { t: TL.chapterStart[11], ci: 11 });
-  assert.equal(parseHash('#ch99', TL, IDS), null);
-  assert.equal(parseHash('#t=125.5', TL, IDS).t, 125.5);
-  assert.equal(parseHash('#t=99999', TL, IDS).t, TL.total);
-  assert.deepEqual(parseHash('#sources', TL, IDS), { sources: true });
-  assert.equal(parseHash('#nothing', TL, IDS), null);
-  assert.equal(fmtTime(125.9), '2:05');
-});
-
-test('every stat card number has a source, and every source is cited or listed', () => {
-  const cited = new Set(TL.beats.filter(b => b.stat?.[2]).map(b => b.stat[2]));
-  for (const id of cited) assert.ok(SOURCES.find(s => s.id === id), id);
+test('every stat card number has a source with a safe link', () => {
+  for (const b of TL.beats) if (b.stat?.[2]) assert.ok(SOURCES.find(s => s.id === b.stat[2]), b.stat[2]);
   for (const s of SOURCES) if (s.u) assert.match(s.u, /^https:\/\//);
 });
