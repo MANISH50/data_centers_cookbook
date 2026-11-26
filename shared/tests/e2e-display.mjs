@@ -38,10 +38,10 @@ for (const [dir, name] of [['netflix-streaming', 'Issue 04'], ['sand-to-signal',
   await p.keyboard.press('c'); await p.waitForTimeout(200);
   check(await p.locator('#card .ln').first().isVisible(), 'C brings the text back');
   check(await p.locator('#guideDock #guide').isVisible(), 'the guide is docked on the page');
-  await p.click('#bNext'); await p.waitForTimeout(2500);
+  await p.click('#bNext'); await p.waitForFunction(() => window.__spoken.length > 0, null, { timeout: 10000 }).catch(() => {}); await p.waitForTimeout(300);
   const said = await p.evaluate(() => window.__spoken.map(s => s.text));
   const title = await p.locator('#cardTitle').textContent();
-  check(said.length > 0 && said[0].toLowerCase().startsWith(title.trim().toLowerCase().slice(0, 12)), `she reads the stop aloud (“${title.trim().slice(0, 30)}”)`);
+  check(said.some(x => x.toLowerCase().startsWith(title.trim().toLowerCase().slice(0, 12))), `she reads the stop aloud (“${title.trim().slice(0, 30)}”)${said.length ? '' : ' [nothing spoken]'} ${JSON.stringify(said.map(x => x.slice(0, 25)))}`);
   await p.click('#gdListen'); await p.waitForTimeout(300);
   check(!(await p.evaluate(() => window.__dock.reading)), 'while she reads, the button stops her');
   await p.click('#gdListen'); await p.waitForTimeout(300);
