@@ -43,19 +43,21 @@ for (const [dir, name] of [['netflix-streaming', 'Issue 04'], ['sand-to-signal',
   const title = await p.locator('#cardTitle').textContent();
   check(said.length > 0 && said[0].toLowerCase().startsWith(title.trim().toLowerCase().slice(0, 12)), `she reads the stop aloud (“${title.trim().slice(0, 30)}”)`);
   await p.click('#gdListen'); await p.waitForTimeout(300);
-  check(await p.evaluate(() => window.__spoken.length) > said.length, 'Listen reads it again');
+  check(!(await p.evaluate(() => window.__dock.reading)), 'while she reads, the button stops her');
+  await p.click('#gdListen'); await p.waitForTimeout(300);
+  check(await p.evaluate(() => window.__spoken.length) > said.length, 'Listen reads the stop again');
   await p.keyboard.press('g'); await p.waitForTimeout(200);
   check(await p.locator('#guideDock #guide').isHidden() && await p.locator('#gdListen').isVisible(), 'Guide off: the presenter goes, Listen stays while the voice is on');
   await p.keyboard.press('v'); await p.waitForTimeout(200);
   check(await p.locator('#guideDock').isHidden(), 'Guide and Voice off: nothing left in the corner');
-  await p.keyboard.press('g'); await p.keyboard.press('v');
+  await p.keyboard.press('g'); await p.keyboard.press('v'); await p.keyboard.press('c'); // back to: guide on, voice on, text off
   check(p.errors.length === 0, 'no errors' + (p.errors.length ? ': ' + p.errors.slice(0, 2).join(' | ') : ''));
 }
 
 for (const [dir, name] of [['azure-databricks', 'Issue 02'], ['ai-model', 'Issue 03']]) {
   console.log(`${name} (magazine): Listen reads from where you are`);
   const p = await newPage(ctx);
-  await p.goto(BASE + dir + '/#ch3'); await p.waitForTimeout(1200);
+  await p.goto(BASE + dir + '/#ch3'); await p.waitForFunction(() => Math.abs(document.getElementById('ch3').getBoundingClientRect().top) < 200, null, { timeout: 8000 }); await p.waitForTimeout(400);
   await p.click('#bDisplay');
   check(await p.locator('#dspMenu .dsp-row').count() === 2 && await p.locator('.dsp-row[data-k="text"]').count() === 0, 'Display menu: Guide and Voice (the magazine itself is the text)');
   await p.keyboard.press('Escape');

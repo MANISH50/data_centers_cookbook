@@ -51,3 +51,4 @@
 .dsp-top{display:inline-flex;align-items:center;justify-content:center;gap:4px;min-height:40px;min-width:40px;padding:0 12px;margin:0 6px;border-radius:999px;border:1px solid rgba(143,155,182,.45);background:transparent;color:inherit;font:600 .82rem/1 Inter,system-ui,sans-serif;cursor:pointer;flex:none}
 .dsp-top:focus-visible{outline:3px solid #ffd23f;outline-offset:2px}
 @media (max-width:700px){.dsp-top .t{display:none}.dsp-top{padding:0;width:40px}}
+@media (max-width:640px){.no-text .caption{width:calc(100% - 32px)!important}.tour-page .guide-dock{left:10px;right:auto}.tour-page .guide-dock .ga-hint{left:0;right:auto}}
