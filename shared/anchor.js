@@ -1,6 +1,8 @@
 /* YOUR GUIDE: an illustrated presenter who reads the captions aloud with the browser's own voice (Web Speech API).
-   Shared by the 3D tours (data-centers/, internet/). No network, no recordings: speech is made on the reader's device.
+   Shared by every issue of the library. No network, no recordings: speech is made on the reader's device.
    The pure helpers (pickVoice, speakable, holdAt) are unit-tested; createAnchor() is the DOM part. */
+
+import { getPrefs, setPref, onPrefs } from './display.js';
 
 /* ---------- pure helpers ---------- */
 const FEMALE = /samantha|karen|moira|tessa|serena|victoria|veena|fiona|allison|\bava\b|susan|zira|aria|jenny|sonia|libby|neerja|heera|catherine|hazel|natasha|clara|emma|michelle|joanna|kendra|kimberly|salli|ivy|amy|female|google us english|google uk english female/i;
@@ -57,50 +59,56 @@ const FACE = `<svg class="ga-svg" viewBox="0 0 120 120" aria-hidden="true" focus
     <circle cx="94.5" cy="89" r="5" fill="#c98c66"/><path d="M95 85l3-9" stroke="#c98c66" stroke-width="3.4" stroke-linecap="round"/></g>
 </svg>`;
 
-/* createAnchor: mounts the guide into `mount` (the caption box) and the Voice button. The player calls sync() every frame. */
-export function createAnchor({ mount, button, storageKey = 'cookbook:voice', track = () => {} }) {
+/* createAnchor: mounts the guide into `mount` (a caption box, a card, or a dock on the page). The Display setting
+   (shared/display.js) decides whether she is shown and whether she speaks. Two ways to drive her:
+   - sync() every frame, for the self-playing walkthroughs (Issues 01 and 06);
+   - say(key, text), for the tours and magazines: reads `text` once per new `key`. */
+export function createAnchor({ mount, track = () => {} }) {
   const synth = typeof window !== 'undefined' ? window.speechSynthesis : null;
   const Utter = typeof window !== 'undefined' ? window.SpeechSynthesisUtterance : null;
   const el = document.createElement('div');
   el.className = 'guide'; el.id = 'guide';
-  el.innerHTML = `${FACE}<button type="button" class="ga-min" aria-label="Hide the guide" title="Hide the guide"><span aria-hidden="true">–</span></button><span class="ga-hint" hidden>🔊 Tap to hear your guide</span>`;
+  el.innerHTML = `${FACE}<button type="button" class="ga-min" aria-label="Hide the guide" title="Hide the guide (G)"><span aria-hidden="true">–</span></button><span class="ga-hint" hidden>🔊 Tap to hear your guide</span>`;
   mount.prepend(el); mount.classList.add('has-guide');
-  if (!synth || !Utter) { el.classList.add('mute'); if (button) button.hidden = true; return { sync() {}, reset() {}, stop() {}, holding: () => false, state: { supported: false } }; }
+  el.querySelector('.ga-min').onclick = e => { e.stopPropagation(); setPref('guide', false); };
+  const none = { sync() {}, reset() {}, stop() {}, say: () => false, busy: () => false, holding: () => false, state: { supported: false, on: false, speaking: false, spoken: [] }, el };
+  if (!synth || !Utter) { el.classList.add('mute'); document.documentElement.classList.add('no-speech'); return none; }
 
-  let on = true; try { on = localStorage.getItem(storageKey) !== 'off'; } catch (e) { /* storage blocked */ }
+  let on = getPrefs().voice;
   let unlocked = !!(navigator.userActivation && navigator.userActivation.hasBeenActive);
-  let voice = null, utter = null, beatI = -1, done = false, text = '', lastChar = 0, resumeFrom = 0, rate = 1, startedAt = 0, gotStart = false, gen = 0, paused = false;
+  let voice = null, utter = null, beatI = -1, done = false, text = '', lastChar = 0, resumeFrom = 0, rate = 1, startedAt = 0, gotStart = false, gen = 0, paused = false, sayKey = null;
   const state = { supported: true, get on() { return on; }, get speaking() { return !!utter; }, get beat() { return beatI; }, spoken: [] };
   const choose = () => { voice = pickVoice(synth.getVoices()); };
   choose(); synth.addEventListener?.('voiceschanged', choose);
 
-  const minBtn = el.querySelector('.ga-min');
-  const setMin = m => { mount.classList.toggle('guide-min', m); minBtn.setAttribute('aria-label', m ? 'Show the guide' : 'Hide the guide'); minBtn.title = m ? 'Show the guide' : 'Hide the guide'; minBtn.firstElementChild.textContent = m ? '+' : '–'; try { localStorage.setItem(storageKey + ':min', m ? '1' : ''); } catch (e) { /* storage blocked */ } };
-  minBtn.onclick = e => { e.stopPropagation(); setMin(!mount.classList.contains('guide-min')); };
-  try { if (localStorage.getItem(storageKey + ':min')) setMin(true); } catch (e) { /* storage blocked */ }
   const hint = el.querySelector('.ga-hint');
   const showHint = v => { hint.hidden = !v; };
   const unlock = () => { if (unlocked) return; unlocked = true; showHint(false); };
   addEventListener('pointerdown', unlock, { capture: true }); addEventListener('keydown', unlock, { capture: true });
+  el.classList.toggle('mute', !on);
+  onPrefs((p, k) => {
+    if (k !== 'voice') return;
+    on = p.voice; el.classList.toggle('mute', !on);
+    if (!on) stop(); else { unlock(); done = false; beatI = -1; sayKey = null; }
+    track('voice', { on });
+  });
 
-  function setBtn() { if (!button) return; button.setAttribute('aria-pressed', on); button.setAttribute('aria-label', on ? 'Turn the guide’s voice off' : 'Turn the guide’s voice on'); button.title = on ? 'Voice on (V)' : 'Voice off (V)'; if (button.firstElementChild) button.firstElementChild.textContent = on ? '🔊' : '🔇'; el.classList.toggle('mute', !on); }
-  setBtn();
   function stop() { gen++; if (utter) { utter = null; synth.cancel(); } el.classList.remove('talk', 'word'); }
-  function speak(i, b, from) {
+  function speakText(full, from = 0, onEnd = null) {
     stop(); const g = gen;
-    beatI = i; done = false; text = speakable(b.text); lastChar = resumeFrom = Math.max(0, Math.min(text.length, from || 0));
-    const part = text.slice(resumeFrom).trim(); if (!part) { done = true; return; }
+    text = speakable(full); lastChar = resumeFrom = Math.max(0, Math.min(text.length, from || 0)); done = false;
+    const part = text.slice(resumeFrom).trim(); if (!part) { done = true; onEnd?.(); return; }
     const u = new Utter(part); u.lang = voice?.lang || 'en-GB'; if (voice) u.voice = voice; u.rate = rate; u.pitch = 1.05;
     u.onstart = () => { if (g !== gen) return; gotStart = true; el.classList.add('talk'); };
     u.onboundary = e => { if (g !== gen) return; lastChar = resumeFrom + (e.charIndex || 0); el.classList.add('word'); clearTimeout(u._w); u._w = setTimeout(() => el.classList.remove('word'), 140); };
-    u.onend = u.onerror = () => { if (g !== gen) return; utter = null; done = true; el.classList.remove('talk', 'word'); };
+    u.onend = u.onerror = ev => { if (g !== gen) return; utter = null; done = true; el.classList.remove('talk', 'word'); if (!ev || ev.error !== 'interrupted') onEnd?.(); };
     utter = u; gotStart = false; startedAt = performance.now(); state.spoken.push(part);
     synth.speak(u);
   }
-  button && (button.onclick = () => { on = !on; try { localStorage.setItem(storageKey, on ? 'on' : 'off'); } catch (e) { /* storage blocked */ } if (!on) stop(); else { unlock(); done = false; beatI = -1; } setBtn(); track('voice', { on }); });
+  const speak = (i, b, from) => { beatI = i; speakText(b.text, from); };
 
   return {
-    state,
+    state, el,
     /* every frame: { i (beat index), beat, playing, speed } */
     sync({ i, beat, playing, speed = 1 }) {
       el.classList.toggle('point', !!(beat && (beat.photo || (beat.labels && beat.labels.length))));
@@ -112,8 +120,17 @@ export function createAnchor({ mount, button, storageKey = 'cookbook:voice', tra
       if (paused && !utter && !done) { paused = false; rate = r; speak(i, beat, resumeFrom); return; }
       if (utter && r !== rate) { rate = r; speak(i, beat, lastChar); }
     },
+    /* tours and magazines: read `text` aloud once for each new key (force: read it again). Returns true if she started. */
+    say(key, txt, { force = false, onEnd = null, hintIfLocked = true } = {}) {
+      if (!on) return false;
+      if (!unlocked) { if (hintIfLocked) showHint(true); return false; }
+      if (key === sayKey && !force) return false;
+      sayKey = key; speakText(txt, 0, onEnd); return true;
+    },
+    busy: () => !!utter,
+    get unlocked() { return unlocked; },
     /* a seek or chapter jump: speak the new beat from its start */
-    reset() { stop(); beatI = -1; done = false; paused = false; },
+    reset() { stop(); beatI = -1; done = false; paused = false; sayKey = null; },
     stop() { stop(); },
     /* should the film wait for her at the end of beat i? (safety: never wait on a voice that never starts, or for over 25 s) */
     holding(i) {

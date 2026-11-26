@@ -634,6 +634,8 @@ table.cmp td:first-child{font-weight:700;color:#fff;white-space:nowrap}
 #end .hero h2{max-width:18ch}
 
 </style>
+<link rel="stylesheet" href="../shared/anchor.css">
+<link rel="stylesheet" href="../shared/display.css">
 </head>
 <body>
 <a class="sr-only" href="#ch1">Skip to the first chapter</a>
@@ -4215,5 +4217,6 @@ document.getElementById('jRecap').innerHTML = [...document.querySelectorAll('sec
 document.getElementById('glossList').innerHTML = Object.values(TERMS).sort((a, b) => a[0].localeCompare(b[0])).map(([t, d]) => `<div><dt>${t}</dt><dd>${d}</dd></div>`).join('');
 })();
 </script>
+<script type="module" src="../shared/listen.js"></script>
 </body>
 </html>

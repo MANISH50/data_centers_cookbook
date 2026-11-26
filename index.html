@@ -89,12 +89,14 @@ footer{border-top:1px solid var(--line);padding:32px 0 48px;color:var(--muted);f
 footer p{margin:0 0 8px;max-width:60rem}
 footer a{color:var(--ink-2)}
 </style>
+<link rel="stylesheet" href="shared/display.css">
 </head>
 <body>
 <header class="bar">
   <div class="wrap">
     <a class="brand" href="./">The Cloud <b>Cookbook</b></a>
     <nav aria-label="Library"><a href="#stand">Magazines</a><a class="hide-sm" href="#about">About</a></nav>
+    <button class="dsp-top" id="bDisplay" type="button" aria-label="Display: guide, text and voice" title="Display settings for every magazine: guide, text, voice"><svg class="dsp-ico" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 4h7M13 4h1M2 12h1M7 12h7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="11" cy="4" r="2" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="5" cy="12" r="2" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span class="t"> Display</span></button>
   </div>
 </header>
 
@@ -238,5 +240,6 @@ grid.innerHTML = MAGAZINES.map((m, i) => {
   </article>`;
 }).join('') + `<article class="mag soon" style="--c:#7d8a99;animation-delay:${MAGAZINES.length * .12}s"><div class="ic">🗞️</div><h3>More on the way</h3><p>New magazines are added to this stand as they're written.</p></article>`;
 </script>
+<script type="module">import { mountDisplayMenu, displayKeys } from './shared/display.js'; mountDisplayMenu(document.getElementById('bDisplay')); displayKeys();</script>
 </body>
 </html>

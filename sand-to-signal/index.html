@@ -26,6 +26,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap">
 <link rel="stylesheet" href="tour.css">
+<link rel="stylesheet" href="../shared/anchor.css">
+<link rel="stylesheet" href="../shared/display.css">
 <link rel="modulepreload" href="tour.js">
 </head>
 <body>
@@ -37,6 +39,7 @@
   <div class="tools">
     <button class="tb" id="bAuto" aria-pressed="false" aria-label="Auto tour" title="Auto tour (12 s per stop)"><span class="i" aria-hidden="true">▶</span><span class="t">Auto tour</span></button>
     <button class="tb" id="bText" aria-pressed="false" aria-label="Read as text" title="Read as text"><span class="i" aria-hidden="true">≡</span><span class="t">Read as text</span></button>
+    <button class="tb" id="bDisplay" aria-label="Display: guide, text and voice" title="Display: guide, text, voice"><span class="i"><svg class="dsp-ico" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 4h7M13 4h1M2 12h1M7 12h7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="11" cy="4" r="2" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="5" cy="12" r="2" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></span><span class="t">Display</span></button>
     <button class="tb" id="bSrc" aria-label="Sources" title="Sources"><span class="i" aria-hidden="true">ⓘ</span><span class="t">Sources</span></button>
   </div>
 </header>

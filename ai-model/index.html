@@ -440,6 +440,8 @@ table.cmp td:first-child{font-weight:700;white-space:nowrap}
 #arSvg .bx.on rect{stroke-width:3;fill:color-mix(in srgb,var(--accent) 28%,var(--panel))}
 
 </style>
+<link rel="stylesheet" href="../shared/anchor.css">
+<link rel="stylesheet" href="../shared/display.css">
 </head>
 <body>
 <a class="sr-only" href="#ch1">Skip to the first chapter</a>
@@ -4208,5 +4210,6 @@ const dl = document.getElementById('glossList');
 Object.values(TERMS).sort((a, b) => a[0].localeCompare(b[0])).forEach(([t, d]) => { const dt = document.createElement('dt'); dt.textContent = t; const dd = document.createElement('dd'); dd.textContent = d; dl.append(dt, dd); });
 })();
 </script>
+<script type="module" src="../shared/listen.js"></script>
 </body>
 </html>
