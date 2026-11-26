@@ -17,6 +17,7 @@ Each magazine has real photos, diagrams you can tap, small simulations and a qui
 | 04 | **How Netflix Streams**: from Play to pixels, a flying tour | Beginner to Intermediate | 15 stops · about 20 min | https://manish50.github.io/data_centers_cookbook/netflix-streaming/ |
 | 05 | **From Sand to Signal**: how a chip is made, and how it lights a pixel (3D) | Beginner to Intermediate | 15 stops · about 25 min | https://manish50.github.io/data_centers_cookbook/sand-to-signal/ |
 | 06 | **How the Internet Moves Data**: from your tap to the ocean floor (self-playing photo walkthrough) | Beginner to Intermediate | 14 · about 9 min | https://manish50.github.io/data_centers_cookbook/internet/ |
+| 07 | **How an AI Answers**: from your message to the chips and back (self-playing photo walkthrough) | Beginner to Advanced | 16 · about 15 min | https://manish50.github.io/data_centers_cookbook/llm/ |
 
 The home page remembers the last chapter you reached in each magazine and offers **Continue reading**.
 That progress is stored only in your browser (`localStorage`), and every page still works when storage is blocked.
@@ -49,6 +50,7 @@ ai-model/index.html        Issue 03, photos in ai-model/images/
 netflix-streaming/         Issue 04: map tour (index.html, data.js, core.js, tour.js, tour.css, tests/)
 sand-to-signal/            Issue 05: 3D tour (data.js, logic.js, scene.js, tour.js, tests/)
 internet/                  Issue 06: photo walkthrough (data.js, diagrams.js, net.js, land.js, try.js, main.js, photos/, tests/)
+llm/                       Issue 07: photo walkthrough (data.js, diagrams.js, lab.js, try.js, main.js, llm.css, photos/, tests/)
 shared/                    the photo walkthrough player used by Issues 01 and 06: walkthrough.js/.css, timeline.js,
                            photos.js (pan, zoom, layout), anchor.js/.css (the speaking guide), diagram-kit.js,
                            prerender-kit.mjs, tests/
@@ -626,3 +628,110 @@ Lance Cheung/Multimedia PhotoJournalist, [Wikimedia Commons](https://commons.wik
 - **Inside a computing rack (Ifremer’s Datarmor centre)**: Gregory Rocher / Ifremer, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Le_Centre_Datarmor,_les_coulisses_(Ifremer_00957-106840_-_54954).jpg), [CC BY 4.0](https://creativecommons.org/licenses/by/4.0)
 - **Server racks at the Wikimedia Foundation**: Victor Grigas, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Wikimedia_Foundation_Servers-8055_35.jpg), [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0)
 - **Racks full of servers**: BalticServers.com, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:BalticServers_data_center.jpg), [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0)
+
+---
+
+## Issue 07: How an AI Answers
+
+![How an AI Answers: a real photo of GPUs with a diagram and the guide](llm/images/screenshot.jpg)
+
+A self-playing walkthrough **in real photos** that follows one chat message from the moment you press Enter until the answer streams back, about 15 minutes at 1× (longer with the guide's voice), Beginner to Advanced. It plays like Issues 01 and 06: real photos with a slow pan and zoom, a guide who reads every caption, small flat diagrams only for ideas you can't photograph, a Photos gallery and a text version.
+
+| # | Chapter | What it explains |
+|---|---|---|
+| 01 | You press Enter | One message, start to finish (where: Your device) |
+| 02 | The trip to the data center | Your message on the move (where: The internet) |
+| 03 | Words become tokens | Cutting text into pieces (where: A server, on ordinary processors) |
+| 04 | Tokens become meaning | Embeddings: a list of numbers per token (where: The AI chips) |
+| 05 | A tall stack of layers | The Transformer (where: The AI chips) |
+| 06 | Attention | Every token looks back (where: The AI chips) |
+| 07 | It is all multiplication | Grids of numbers (where: The AI chips) |
+| 08 | Inside the chip | Thousands of tiny calculators (where: GPU or TPU, in a server) |
+| 09 | Memory is the bottleneck | HBM: stacks of memory beside the chip (where: Right next to the AI chip) |
+| 10 | Many chips, one model | Splitting the work (where: A rack of AI servers) |
+| 11 | Reading, then writing | Prefill and decode (where: The AI chips) |
+| 12 | Choosing the next word | Probabilities and sampling (where: The AI chips) |
+| 13 | Back to your screen | Streaming, token by token (where: The internet, and your device) |
+| 14 | Making it fast | The tricks that make it fast (where: The serving software) |
+| 15 | What it costs | Energy, water and limits (where: The data center) |
+| 16 | Journey’s end | One message, end to end (where: Everywhere) |
+
+**Try it.** Four hands-on panels pause the walkthrough:
+- **Tokenizer:** type anything and see it cut into tokens, with a count.
+- **Next word:** watch probabilities change with temperature and top-p, then pick a word.
+- **Attention:** tap a word to see which earlier words it looks at.
+- **Chip maths:** step through a tiny matrix multiplication, then pick a model size, number size and number of H100s to see the memory needed and the memory-speed limit on tokens per second.
+
+**Honest numbers.** Anthropic does not publish the size of its models, so sizes use GPT-3 (published in 2020: 175 billion parameters, 96 layers, 12,288 numbers per token, 96 heads, a 2,048-token context) as a public example. Token, context and streaming facts come from Anthropic's Claude docs; chip figures from NVIDIA's H100 specifications. The tokenizer, word scores and attention pattern in the diagrams and Try it panels are **illustrations**, and say so. Derived numbers (350 GB for 175 billion 16-bit parameters, about 4.7 MB of KV cache per token for a GPT-3-shaped model) are plain arithmetic on those published figures, and the unit tests check that they add up.
+
+### Files
+
+| File | What it holds |
+|---|---|
+| `llm/data.js` | **All content**: 16 chapters of beats, sources, recaps, `PHOTOS` with credits |
+| `llm/diagrams.js` | The small flat diagrams (tokens, embeddings, attention, matrix maths, HBM, parallelism, prefill and decode, KV cache, probabilities, streaming, batching) |
+| `llm/lab.js` | The maths behind the Try it panels: tokenizer, softmax, temperature, top-p, sampling, attention pattern, chip maths |
+| `llm/try.js` | The Try it panels |
+| `llm/photos/` | The photos and thumbnails |
+
+Edit captions in `data.js`, then run `node llm/prerender.mjs`.
+
+### Tests
+
+```bash
+node --test llm/tests/*.test.mjs shared/tests/*.test.mjs
+node llm/tests/e2e.mjs http://localhost:8765/
+```
+
+### Sources
+
+1. [Vaswani et al., "Attention Is All You Need" (2017): the Transformer, built on attention](https://arxiv.org/abs/1706.03762)
+2. [Brown et al., "Language Models are Few-Shot Learners" (2020): GPT-3, 175 billion parameters, 96 layers, 12,288 numbers per token, 96 attention heads, a 2,048-token context](https://arxiv.org/abs/2005.14165)
+3. [Sennrich et al., "Neural Machine Translation of Rare Words with Subword Units" (2016): splitting words into subword tokens (byte-pair encoding)](https://arxiv.org/abs/1508.07909)
+4. [Anthropic, Claude docs, Glossary: a token is about 3.5 English characters on earlier models; the newest tokenizer gives about 30% more tokens for the same text](https://docs.claude.com/en/docs/about-claude/glossary)
+5. [Anthropic, Claude docs, Models overview: context windows of up to 1 million tokens](https://docs.claude.com/en/docs/about-claude/models/overview)
+6. [Kaplan et al., "Scaling Laws for Neural Language Models" (2020): a forward pass costs about 2 operations per parameter for each token](https://arxiv.org/abs/2001.08361)
+7. [NVIDIA H100 Tensor Core GPU specifications (SXM): 80 GB of memory, 3.35 TB/s memory bandwidth, 1,979 teraFLOPS FP16 Tensor Core (with sparsity), NVLink 900 GB/s, up to 700 W](https://www.nvidia.com/en-us/data-center/h100/)
+8. [Wikipedia, High Bandwidth Memory: memory dies stacked on top of each other, joined by through-silicon vias, beside the processor](https://en.wikipedia.org/wiki/High_Bandwidth_Memory)
+9. [Wikipedia, Tensor Processing Unit: Google’s custom chip for neural networks (since 2015), built around a systolic array](https://en.wikipedia.org/wiki/Tensor_Processing_Unit)
+10. [Hugging Face Transformers docs, Caching: the key-value (KV) cache keeps earlier tokens’ attention keys and values so they are not recomputed](https://huggingface.co/docs/transformers/en/kv_cache)
+11. [Holtzman et al., "The Curious Case of Neural Text Degeneration" (2019): nucleus (top-p) sampling](https://arxiv.org/abs/1904.09751)
+12. [Dao et al., "FlashAttention" (2022): faster attention by reading and writing memory less](https://arxiv.org/abs/2205.14135)
+13. [Leviathan et al., "Fast Inference from Transformers via Speculative Decoding" (2022): several tokens at once, with no change to the output](https://arxiv.org/abs/2211.17192)
+14. [Anthropic, Claude docs, Streaming messages: answers arrive bit by bit as server-sent events](https://docs.claude.com/en/docs/build-with-claude/streaming)
+15. NVIDIA DGX B300 user guide and Supermicro GB300 NVL72 datasheet: 72 GPUs in one liquid-cooled rack, about 132–140 kW (as in Issue 01)
+16. Anthropic and partner announcements on Claude’s compute: AWS Trainium, Google TPUs and NVIDIA GPUs (as in Issue 01)
+17. Google, "Measuring the environmental impact of AI inference" (Aug 2025): 0.24 Wh and 0.26 ml of water for a median Gemini text prompt (as in Issue 01)
+
+### Photo credits: How an AI Answers
+
+From Wikimedia Commons, resized for the web (several are shared with Issues 01 and 06):
+
+- **Typing on a backlit keyboard**: Colin, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Backlit_keyboard.jpg), [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/)
+- **A server hall at CERN, Geneva**: Florian Hirzinger - www.fh-ap.com, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:CERN_Server_03.jpg), [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0)
+- **Code on a screen: software watching the machines**: Markus Spiske markusspiske, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Code_on_computer_monitor_(Unsplash).jpg), [CC0](https://creativecommons.org/publicdomain/zero/1.0/deed.en)
+- **Server racks at the Wikimedia Foundation**: Victor Grigas, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Wikimedia_Foundation_Servers-8055_35.jpg), [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0)
+- **Optical fibre carrying light**: Hustvedt, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Fiber_optic_illuminated.jpg), [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0)
+- **Network switches and their cables**: ShakataGaNai, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Network_switches.jpg), [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0)
+- **The Library of Congress reading room**: Carol M. Highsmith, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:LOC_Main_Reading_Room_Highsmith.jpg), Public domain
+- **A library card catalogue: an index for finding things**: Michael Holley Swtpc6800, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Copyright_Card_Catalog_Drawer.jpg), Public domain
+- **Four GPUs inside a server node (TSUBAME 4.0)**: Fukumoto, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:TSUBAME4.0_P5160984.jpg), [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0)
+- **A data center campus from the air (Mayes County, Oklahoma)**: Xpda, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Google_Mayes_County_P0004974a.jpg), [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0)
+- **A supercomputer hall (IBM Blue Gene/P, Argonne)**: Argonne National Laboratory, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:IBM_Blue_Gene_P_supercomputer.jpg), [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0)
+- **A rack-scale AI system (NVIDIA GB200 NVL72)**: Pokiiri, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Nvidia_DGX_GB200.jpg), [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0)
+- **Rack servers (Wikimedia Foundation)**: Victor Grigas, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Wikimedia_Foundation_Servers-8055_08.jpg), [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0)
+- **Air traffic control: directing traffic**: Senior Airman John Wright, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Lajes_Field_Air_Traffic_Control.jpg), Public domain
+- **A railway switching yard: choosing the next track**: 4300streetcar, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:CSX_train_switching_at_Framingham_North_Yard_June_2026.jpg), [CC BY 4.0](https://creativecommons.org/licenses/by/4.0)
+- **A supercomputer node (TSUBAME 4.0)**: Fukumoto, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:TSUBAME4.0_P5160989.jpg), [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0)
+- **A silicon wafer full of chips**: Enrique Jiménez, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Silicon_Wafer_20190210.jpg), [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0)
+- **A liquid-cooled AI chip board (Google TPU v3)**: Zinskauf, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Tensor_Processing_Unit_3.0.jpg), [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0)
+- **Container cranes: goods packed into standard boxes**: Calistemon, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Container_cranes_in_Fremantle_Harbour,_July_2023_01.jpg), [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0)
+- **Network cabling in a data center**: Victor Grigas, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Wikimedia_Foundation_Servers-8055_24.jpg), [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0)
+- **Racks full of servers**: BalticServers.com, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:BalticServers_data_center.jpg), [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0)
+- **ENIAC, one of the first big computers (1940s)**: U.S. Army (photographer unknown), [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Glen_Beck_and_Betty_Snyder_program_the_ENIAC_in_building_328_at_the_Ballistic_Research_Laboratory.jpg), Public domain
+- **Coins: every payment is a small piece of data**: Роман Рябенко, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:A_pile_of_Ukrainian_currency_coins.jpg), [CC0](https://creativecommons.org/publicdomain/zero/1.0/deed.en)
+- **A Formula One wheel gun: spares changed in seconds**: Rich Jones from United Kingdom, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Formula_One_Wheel_Gun.jpg), [CC BY 2.0](https://creativecommons.org/licenses/by/2.0)
+- **Pilots working through a checklist**: U.S. Air Force photo/Staff Sgt. Chris Willis, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:120316-F-LR266-986_C-130J_Hercules_Cockpit_Ramstein_Air_Base_2012.jpg), Public domain
+- **Inside a 1U server, lid off**: Rodzilla at English Wikipedia, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Inside_and_Rear_of_Webserver.jpg), [CC BY 2.5](https://creativecommons.org/licenses/by/2.5)
+- **Cooling towers on a data center (Mesa, Arizona)**: Rsparks3, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Data_center_cooling_tower.jpg), [CC0](https://creativecommons.org/publicdomain/zero/1.0/deed.en)
+- **A technician at work on network equipment**: Bill Branson (Photographer), [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Network_server_and_technician.jpg), Public domain

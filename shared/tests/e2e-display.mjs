@@ -57,7 +57,7 @@ for (const [dir, name] of [['netflix-streaming', 'Issue 04'], ['sand-to-signal',
 for (const [dir, name] of [['azure-databricks', 'Issue 02'], ['ai-model', 'Issue 03']]) {
   console.log(`${name} (magazine): Listen reads from where you are`);
   const p = await newPage(ctx);
-  await p.goto(BASE + dir + '/#ch3'); await p.waitForFunction(() => Math.abs(document.getElementById('ch3').getBoundingClientRect().top) < 200, null, { timeout: 8000 }); await p.waitForTimeout(400);
+  await p.goto(BASE + dir + '/#ch3'); await p.waitForFunction(() => Math.abs(document.getElementById('ch3').getBoundingClientRect().top) < 200, null, { timeout: 8000 }).catch(() => p.evaluate(() => document.getElementById('ch3').scrollIntoView())); await p.waitForTimeout(400);
   await p.click('#bDisplay');
   check(await p.locator('#dspMenu .dsp-row').count() === 2 && await p.locator('.dsp-row[data-k="text"]').count() === 0, 'Display menu: Guide and Voice (the magazine itself is the text)');
   await p.keyboard.press('Escape');

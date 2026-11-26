@@ -37,7 +37,7 @@ test('layout covers the stage and puts the focus point in the middle of the free
   assert.ok(C.h <= area.h && C.top >= area.y - 1, 'a tall photo fits inside the free area');
 });
 
-for (const dir of ['data-centers', 'internet']) {
+for (const dir of ['data-centers', 'internet', 'llm']) {
   test(`${dir}: every beat has a real photo; every photo is credited, freely licensed, on disk with a thumbnail, and shown`, async () => {
     const { CHAPTERS, PHOTOS } = await import(`../../${dir}/data.js`);
     assert.deepEqual(validatePhotos(CHAPTERS, PHOTOS), []);
