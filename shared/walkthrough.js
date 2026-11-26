@@ -133,6 +133,7 @@ export function startWalkthrough({ slug, CHAPTERS, SOURCES, PHOTOS, DIAGRAMS = {
     // minimal animation: a flat diagram, only on beats about ideas
     const D = b.cue && DIAGRAMS[b.cue], out = D ? D(reduced ? 1 : cueProgress(b, t), b) : null, dg = $('#diagram');
     dg.hidden = !out; dg.classList.toggle('wide', !!out?.wide);
+    if (out) dg.style.bottom = box.w > 640 ? Math.max(0, box.h - (area.y + area.h) + 12).toFixed(0) + 'px' : '';
     if (out) { const html = `<figcaption>${esc(out.title || '')}</figcaption>${out.svg}${out.status ? `<p class="dg-status" role="status">${esc(out.status)}</p>` : ''}`; if (html !== diagramHTML) { diagramHTML = html; dg.innerHTML = html; } }
     // phones: the stat card sits under the diagram card (both live at the top of the screen)
     const st = $('#stat');
