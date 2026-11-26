@@ -77,9 +77,9 @@ export async function run({ dir, chapters, sources, extra }) {
     await seekTo(p, Math.ceil(B.end - 2)); if (!(await W(p)).playing) await p.click('#bPlay');
     await p.waitForTimeout(4000); const th = (await W(p)).t;
     check(th < B.end && th > B.end - .2, `the film waits at the end of a beat while she talks (t=${th.toFixed(2)}, end=${B.end})`);
-    await p.click('#bVoice'); await p.waitForTimeout(1500);
-    check((await p.getAttribute('#bVoice', 'aria-pressed')) === 'false' && (await W(p)).t > B.end, 'Voice off: she stops and the film moves on');
-    await p.keyboard.press('v'); check((await p.getAttribute('#bVoice', 'aria-pressed')) === 'true', 'V turns her back on');
+    await p.click('#bDisplay'); await p.click('.dsp-row[data-k="voice"]'); await p.keyboard.press('Escape'); await p.waitForTimeout(1500);
+    check((await p.getAttribute('.dsp-row[data-k="voice"]', 'aria-checked')) === 'false' && (await W(p)).t > B.end, 'Display › Voice off: she stops and the film moves on');
+    await p.keyboard.press('v'); check((await p.getAttribute('.dsp-row[data-k="voice"]', 'aria-checked')) === 'true', 'V turns her voice back on');
     await p.evaluate(() => { window.__msPerWord = 60; });
     // chapters, speed, text version, sources
     await p.click('#ticks .tick[data-i="2"]'); await p.waitForTimeout(400); check(await chapter(p) === 3, 'chapter marker jumps');
@@ -94,8 +94,22 @@ export async function run({ dir, chapters, sources, extra }) {
     await p.click('#text [data-back-to-tour]');
     await p.click('#bSrc'); check(await p.locator('#srcDlg[open] li').count() === sources + PHOTOS.length, `Sources lists ${sources} sources and ${PHOTOS.length} photo credits`); await p.click('#srcDlg [data-close]');
     const names = await p.evaluate(() => [...new Set(window.cookbookEvents.map(e => e.name))]);
-    for (const n of ['topic_start', 'chapter_view', 'play', 'pause', 'read_as_text', 'voice', 'photos_open', 'photo_jump']) check(names.includes(n), 'event ' + n);
+    for (const n of ['topic_start', 'chapter_view', 'play', 'pause', 'read_as_text', 'voice', 'display', 'photos_open', 'photo_jump']) check(names.includes(n), 'event ' + n);
     check(await p.evaluate(dir => JSON.parse(localStorage.getItem('cookbook:' + dir)).id.startsWith('ch'), dir), 'progress saved for the library');
+    // Display: guide and text are separate switches; the photo credit always stays
+    if ((await W(p)).playing) await p.click('#bPlay');
+    await p.click('#bDisplay'); check(await p.locator('#dspMenu .dsp-row').count() === 3, 'Display menu has Guide, Text and Voice switches');
+    await p.click('.dsp-row[data-k="text"]'); await p.keyboard.press('Escape'); await p.waitForTimeout(300);
+    check(await p.locator('#capText').isHidden() && await p.locator('#guide').isVisible() && await p.locator('#phCredit').isVisible(), 'Text off: captions hidden, guide and photo credit stay');
+    await p.keyboard.press('g'); await p.waitForTimeout(300);
+    check(await p.locator('#guide').isHidden() && await p.locator('#phCredit').isVisible(), 'Guide off too: only the photo credit remains');
+    await p.reload(); await p.waitForTimeout(800);
+    check(await p.evaluate(() => document.documentElement.classList.contains('no-text') && document.documentElement.classList.contains('no-guide')), 'the choice is remembered after a reload');
+    const other = dir === 'internet' ? 'data-centers' : 'internet';
+    await p.goto(BASE.replace(dir + '/', other + '/') + '?paused'); await p.waitForTimeout(800);
+    check(await p.evaluate(() => document.documentElement.classList.contains('no-text') && document.documentElement.classList.contains('no-guide')), 'and it applies to the other issues too (site-wide)');
+    await p.keyboard.press('g'); await p.keyboard.press('c'); await p.goto(BASE + '?paused'); await p.waitForTimeout(800);
+    check(!(await p.evaluate(() => document.documentElement.classList.contains('no-text') || document.documentElement.classList.contains('no-guide'))), 'G and C turn them back on');
     check(p.errors.length === 0, 'no console errors or failed requests' + (p.errors.length ? ': ' + p.errors.slice(0, 3).join(' | ') : ''));
   }
 
@@ -125,7 +139,7 @@ export async function run({ dir, chapters, sources, extra }) {
     const p = await page({ viewport: { width: 1280, height: 760 }, speech: false });
     await p.addInitScript(() => { Object.defineProperty(window, 'speechSynthesis', { value: undefined }); });
     await p.goto(BASE + '?paused'); await p.waitForTimeout(500);
-    check(await p.locator('#bVoice').isHidden(), 'Voice button hidden without speech support');
+    await p.click('#bDisplay'); check(await p.locator('.dsp-row[data-k="voice"]').count() === 0, 'no Voice switch without speech support');
     await p.click('#bPlay'); await p.waitForTimeout(1200); check((await W(p)).playing && p.errors.length === 0, 'the walkthrough still plays, no errors');
   }
 

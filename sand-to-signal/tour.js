@@ -3,6 +3,7 @@
 import { STATIONS, PLACES, SOURCES, STOPS } from './data.js';
 import { parseHash, formatHash, makeThrottle, nextIndex, prevIndex, camPos, flyTo, flightMs, scaleJump } from './core.js';
 import { makeCpu, stepCpu, PROGRAM, nandTransistors, rippleAdd, hex2, bin8, rgbHex } from './logic.js';
+import { mountGuideDock } from '../shared/guide-dock.js';
 
 const $ = s => document.querySelector(s);
 const root = document.documentElement, stage = $('#stage'), card = $('#card'), view3d = $('#view3d'), labelLayer = $('#labels');
@@ -187,11 +188,19 @@ function go(i, { instant = false, keepCard = false } = {}) {
   }
   try { localStorage.setItem('cookbook:sand-to-signal', JSON.stringify({ id: 'stop-' + s.id, num: String(s.id).padStart(2, '0'), title: s.title })); } catch (e) { /* storage blocked */ }
 }
+/* ================= THE GUIDE (reads each stop aloud; Display menu: guide, text, voice) ================= */
+const stopText = s => `${s.title}. ${s.lines.join(' ')} Where it happens: ${s.where}`;
+const dock = mountGuideDock({ displayButton: $('#bDisplay'), track, onListen: () => dock.read('stop-' + cur + '-' + Date.now(), stopText(STOPS[cur])) });
+root.classList.add('tour-page');
+window.__dock = dock;
+const autoNext = () => { if (dock.guide.busy()) { autoTimer = setTimeout(autoNext, 1000); return; } cur === STOPS.length - 1 ? setAuto(false) : next(); };
+
 function arrive() {
   const s = STOPS[cur]; stage.classList.remove('flying');
+  dock.read('stop-' + s.id, stopText(s));
   track('stop_view', { n: s.id });
   if (s.id === STOPS.length && !completed) { completed = true; track('tour_complete'); }
-  clearTimeout(autoTimer); if (autoOn) autoTimer = setTimeout(() => cur === STOPS.length - 1 ? setAuto(false) : next(), 12000);
+  clearTimeout(autoTimer); if (autoOn) autoTimer = setTimeout(autoNext, 12000);
 }
 const next = () => go(nextIndex(cur, STOPS.length));
 const prev = () => go(prevIndex(cur));

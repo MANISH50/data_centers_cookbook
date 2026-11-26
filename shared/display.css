@@ -1,0 +1,54 @@
+/* Display menu (shared/display.js) and the site-wide show/hide rules for the guide and the text. */
+.dsp-menu{position:fixed;z-index:200;padding:12px;border-radius:16px;background:#0a1120;color:#eaf0fb;border:1px solid #2b3a5c;box-shadow:0 20px 60px rgba(0,0,0,.5);font:400 15px/1.4 Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.dsp-menu[hidden]{display:none}
+.dsp-h{margin:0 4px 8px;font:700 .72rem/1 "JetBrains Mono",ui-monospace,monospace;letter-spacing:.12em;text-transform:uppercase;color:#8f9bb6}
+.dsp-row{display:flex;align-items:center;gap:12px;width:100%;min-height:52px;margin:0 0 6px;padding:8px 10px;border-radius:12px;border:1px solid #2b3a5c;background:#111a2e;color:inherit;font:inherit;text-align:left;cursor:pointer}
+.dsp-row:hover{border-color:#8f9bb6}
+.dsp-row:focus-visible{outline:3px solid #ffd23f;outline-offset:2px}
+.dsp-t{flex:1;display:grid}
+.dsp-t b{font-size:.95rem}
+.dsp-t small{font-size:.76rem;color:#8f9bb6}
+.dsp-sw{position:relative;flex:none;width:44px;height:26px;border-radius:999px;background:#2b3a5c;transition:background .2s}
+.dsp-sw::after{content:"";position:absolute;left:3px;top:3px;width:20px;height:20px;border-radius:50%;background:#c4cee2;transition:transform .2s}
+.dsp-row[aria-checked="true"] .dsp-sw{background:var(--sky,#38bdf8)}
+.dsp-row[aria-checked="true"] .dsp-sw::after{transform:translateX(18px);background:#fff}
+.dsp-fine{margin:4px 4px 0;font-size:.72rem;color:#8f9bb6}
+
+/* Guide off: the presenter is hidden everywhere (her voice follows the Voice switch on its own). */
+.no-guide .guide{display:none!important}
+.no-guide.no-voice .guide-dock,.no-guide.no-speech .guide-dock{display:none!important}
+.no-guide .caption.has-guide{display:block}
+
+/* Text off: captions and card text are hidden; photo credits always stay (they are required by the licences). */
+.no-text .caption #capEyebrow,.no-text .caption .cap-src,.no-text .caption .cap-text,.no-text .chtitle{display:none!important}
+.no-text .caption.has-guide{align-items:center}
+.no-text.no-guide .caption{background:none;border:0;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none;padding:0;pointer-events:none}
+.no-text.no-guide .caption .cap-eyebrow:not(:has(.trybtn:not([hidden]))){display:none}
+.no-text.no-guide .caption .ph-credit,.no-text.no-guide .caption .trybtn{pointer-events:auto}
+.no-text.no-guide .caption .ph-credit{display:inline-block;margin:0;padding:3px 8px;border-radius:8px;background:rgba(6,10,18,.75)}
+/* tours (Issues 04, 05): the card keeps its title, interactive parts and sources; only the reading text goes */
+.no-text .card .ln,.no-text .card .dcb .t,.no-text .card .lede-t{display:none!important}
+
+/* Docked guide for the tours and magazines: a round presenter at the bottom corner, with a Listen button. */
+.guide-dock{position:fixed;z-index:60;right:16px;bottom:calc(16px + env(safe-area-inset-bottom));display:flex;align-items:center;gap:8px;padding:6px 8px 6px 6px;border-radius:999px;background:rgba(9,14,26,.92);border:1px solid #2b3a5c;box-shadow:0 12px 40px rgba(0,0,0,.45);color:#eaf0fb;font:600 .85rem/1.2 Inter,system-ui,sans-serif}
+.guide-dock .guide{width:56px;height:56px;margin:0}
+.guide-dock .ga-min{opacity:1;right:-4px;top:-4px;width:22px;height:22px}
+.guide-dock .ga-hint{left:auto;right:0;top:auto;bottom:calc(100% + 8px)}
+.gd-btn{min-height:44px;min-width:44px;padding:0 14px;border-radius:999px;border:1px solid #2b3a5c;background:#111a2e;color:inherit;font:inherit;cursor:pointer}
+.gd-btn[aria-pressed="true"]{background:var(--sky,#38bdf8);border-color:transparent;color:#04131f}
+.gd-btn:focus-visible{outline:3px solid #ffd23f;outline-offset:2px}
+.no-voice .gd-listen{display:none}
+.no-speech .gd-listen{display:none}
+.reading-now{outline:2px solid var(--sky,#38bdf8);outline-offset:6px;border-radius:6px;background:rgba(56,189,248,.07)}
+@media (max-width:640px){.guide-dock{right:10px;bottom:calc(10px + env(safe-area-inset-bottom))}.guide-dock .guide{width:46px;height:46px}}
+@media print{.guide-dock,.dsp-menu{display:none!important}}
+.tour-page .guide-dock{bottom:calc(var(--ctrl,0px) + 12px)}
+@media (max-width:640px){.tour-page .guide-dock{top:calc(var(--bar,56px) + 8px);bottom:auto}.tour-page .guide-dock .ga-hint{top:calc(100% + 8px);bottom:auto}}
+.no-text .card .where .t{display:none!important}
+.no-text .caption{width:auto!important;max-width:min(820px,calc(100% - 32px))}
+.dsp-ico{display:inline-block;vertical-align:-3px}
+/* Display button in the magazines' top bar */
+.dsp-top{display:inline-flex;align-items:center;justify-content:center;gap:4px;min-height:40px;min-width:40px;padding:0 12px;margin:0 6px;border-radius:999px;border:1px solid rgba(143,155,182,.45);background:transparent;color:inherit;font:600 .82rem/1 Inter,system-ui,sans-serif;cursor:pointer;flex:none}
+.dsp-top:focus-visible{outline:3px solid #ffd23f;outline-offset:2px}
+@media (max-width:700px){.dsp-top .t{display:none}.dsp-top{padding:0;width:40px}}
+@media (max-width:640px){.no-text .caption{width:calc(100% - 32px)!important}.tour-page .guide-dock{left:10px;right:auto}.tour-page .guide-dock .ga-hint{left:0;right:auto}}

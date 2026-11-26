@@ -21,6 +21,23 @@ Each magazine has real photos, diagrams you can tap, small simulations and a qui
 The home page remembers the last chapter you reached in each magazine and offers **Continue reading**.
 That progress is stored only in your browser (`localStorage`), and every page still works when storage is blocked.
 
+## Display settings and the guide
+
+Every page has a **Display** button (on the home page too) with three switches, remembered for the whole library in this browser (`localStorage['cookbook:display']`):
+
+| Switch | Off means | Key |
+|---|---|---|
+| **Guide** | the drawn presenter is hidden | G |
+| **Text** | captions (Issues 01, 06) and card text (Issues 04, 05) are hidden; titles, interactive parts, sources and photo credits stay | C |
+| **Voice** | nothing is read aloud | V |
+
+Any mix works: the guide speaking with no text on screen, text with no guide, or text alone. Everything starts on.
+- **Issues 01 and 06:** the guide sits in the caption box and reads every caption (the walkthrough waits for her).
+- **Issues 04 and 05:** she is docked in the corner and reads each stop as it opens; **Listen** reads it again, and the Auto tour waits for her.
+- **Issues 02 and 03:** **Listen** reads the magazine aloud from the paragraph you are on, highlighting each one (these pages have Guide and Voice switches; the magazine itself is the text).
+
+She is a drawn character, not a real person. Her voice is your browser's built-in speech (Web Speech API), so it sounds different on each device, and browsers only allow it after your first tap or click. Code: `shared/display.js` (the setting and menu), `shared/anchor.js` (the guide), `shared/guide-dock.js` (docked guide and Listen), `shared/listen.js` (magazines). Tests: `node --test shared/tests/*.test.mjs` and `node shared/tests/e2e-display.mjs http://localhost:8765/`.
+
 ## How the site is organised
 
 ```

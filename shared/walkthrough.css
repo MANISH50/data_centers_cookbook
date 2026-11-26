@@ -55,7 +55,6 @@ button{font:inherit;color:inherit;cursor:pointer}
 
 /* caption + stat + status */
 .caption{position:absolute;z-index:20;left:50%;bottom:calc(var(--ctrl) + 14px);transform:translateX(-50%);width:min(820px,calc(100% - 32px));padding:14px 20px 16px;border-radius:18px;background:var(--panel);border:1px solid var(--line);box-shadow:0 20px 60px rgba(0,0,0,.45);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
-.nocc .caption{display:none}
 .cap-eyebrow{margin:0 0 4px;font:600 .75rem var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--sky);display:flex;gap:10px;align-items:center}
 .ill{font:600 .7rem var(--sans);letter-spacing:0;text-transform:none;color:var(--violet);border:1px solid rgba(155,123,255,.5);border-radius:999px;padding:1px 8px}
 .cap-text{margin:0;font-size:clamp(1rem,1.25vw,1.15rem);line-height:1.5;min-height:3em}

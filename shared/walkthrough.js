@@ -1,11 +1,12 @@
 /* PHOTO WALKTHROUGH PLAYER, shared by Issue 01 (data-centers/) and Issue 06 (internet/).
    A self-playing film of real photos: each beat shows a photo with a slow pan and zoom (shared/photos.js),
    a typed caption read aloud by the guide (shared/anchor.js), labels pinned to parts of the photo, an optional
-   stat card, and, only for ideas a camera can't see, a small flat diagram. Scrub, pause, chapters, speed, captions,
+   stat card, and, only for ideas a camera can't see, a small flat diagram. Scrub, pause, chapters, speed, the Display menu (guide, text, voice),
    text version, Sources and a Photos gallery. Everything on screen is a function of the time t. */
 import { buildTimeline, beatAt, cueProgress, typedChars, parseHash, fmtTime } from './timeline.js';
 import { kenBurns, drift, fadeIn, layout, uvToPx } from './photos.js';
 import { createAnchor, holdAt } from './anchor.js';
+import { getPrefs, onPrefs, mountDisplayMenu, displayKeys } from './display.js';
 
 export function startWalkthrough({ slug, CHAPTERS, SOURCES, PHOTOS, DIAGRAMS = {}, base = '', extras = null }) {
   const $ = s => document.querySelector(s);
@@ -18,10 +19,12 @@ export function startWalkthrough({ slug, CHAPTERS, SOURCES, PHOTOS, DIAGRAMS = {
   const srcNum = id => SOURCES.findIndex(s => s.id === id) + 1;
   window.cookbookEvents = window.cookbookEvents || [];
   const track = (name, data = {}) => { const ev = { name, ...data }; window.cookbookEvents.push(ev); window.dispatchEvent(new CustomEvent('cookbook:analytics', { detail: ev })); };
-  const guide = createAnchor({ mount: $('#caption'), button: $('#bVoice'), track });
+  const guide = createAnchor({ mount: $('#caption'), track });
+  mountDisplayMenu($('#bDisplay')); displayKeys();
+  onPrefs(() => redraw());
 
   /* ---------- state ---------- */
-  let t = 0, playing = false, speed = 1, captions = true, textMode = false, ended = false, completed = false;
+  let t = 0, playing = false, speed = 1, textMode = false, ended = false, completed = false;
   let curBeat = -1, curChapter = -1, labels = [], needDraw = true, diagramHTML = '';
 
   /* ---------- scrubber, chapter ticks, photo marks, menus ---------- */
@@ -99,7 +102,7 @@ export function startWalkthrough({ slug, CHAPTERS, SOURCES, PHOTOS, DIAGRAMS = {
   }
   function freeArea() {
     const sr = stage.getBoundingClientRect(), br = $('.bar').getBoundingClientRect(), cap = $('#caption').getBoundingClientRect(), kr = $('.ctrl').getBoundingClientRect();
-    const top = br.height ? br.bottom : 0, bottom = Math.min(kr.height ? kr.top : sr.height, cap.height && captions ? cap.top : sr.height);
+    const top = br.height ? br.bottom : 0, bottom = Math.min(kr.height ? kr.top : sr.height, cap.height ? cap.top : sr.height);
     return { x: 0, y: top, w: sr.width, h: Math.max(160, bottom - top) };
   }
 
@@ -111,7 +114,7 @@ export function startWalkthrough({ slug, CHAPTERS, SOURCES, PHOTOS, DIAGRAMS = {
     // caption
     const n = reduced ? b.text.length : typedChars(b, t);
     $('#capText').innerHTML = `${esc(b.text.slice(0, n))}<span class="rest" aria-hidden="true">${esc(b.text.slice(n))}</span>`;
-    $('#chTitle').classList.toggle('show', t - TL.chapterStart[b.ci] < 3.2 && !reduced && captions && $('#startCard').classList.contains('gone'));
+    $('#chTitle').classList.toggle('show', t - TL.chapterStart[b.ci] < 3.2 && !reduced && getPrefs().text && $('#startCard').classList.contains('gone'));
     $('#tNow').textContent = fmtTime(t); scrub.value = t.toFixed(1); scrub.style.setProperty('--pct', (t / TL.total * 100).toFixed(2) + '%');
     // photos
     const box = { w: stage.clientWidth, h: stage.clientHeight }, area = freeArea();
@@ -168,7 +171,6 @@ export function startWalkthrough({ slug, CHAPTERS, SOURCES, PHOTOS, DIAGRAMS = {
     else if (e.key === ']') jumpChapter(curChapter + 1);
     else if (e.key === '[') jumpChapter(curChapter - 1);
     else if (e.key === 'Home') { e.preventDefault(); seek(0); }
-    else if (e.key === 'v' || e.key === 'V') $('#bVoice').click();
   });
   addEventListener('hashchange', () => { const h = parseHash(location.hash, TL, IDS); if (h?.sources) $('#srcDlg').showModal(); else if (h?.photos) $('#phDlg').showModal(); else if (h && h.ci !== curChapter) seek(h.t); });
 
@@ -178,7 +180,6 @@ export function startWalkthrough({ slug, CHAPTERS, SOURCES, PHOTOS, DIAGRAMS = {
   $('#bPrevB').onclick = () => jumpBeat(-1); $('#bNextB').onclick = () => jumpBeat(1);
   $('#bPrevC').onclick = () => jumpChapter(curChapter - (t - TL.chapterStart[curChapter] > 3 ? 0 : 1)); $('#bNextC').onclick = () => jumpChapter(curChapter + 1);
   $('#bSpeed').onclick = () => { speed = speed === 1 ? 1.5 : speed === 1.5 ? 2 : 1; $('#bSpeed').textContent = speed + '×'; track('speed', { speed }); };
-  $('#bCC').onclick = () => { captions = !captions; root.classList.toggle('nocc', !captions); $('#bCC').setAttribute('aria-pressed', captions); redraw(); };
   $('#bChapters').onclick = () => $('#chDlg').showModal();
   $('#bPhotos').onclick = () => { $('#phDlg').showModal(); track('photos_open'); };
   $('#bSrc').onclick = () => $('#srcDlg').showModal();

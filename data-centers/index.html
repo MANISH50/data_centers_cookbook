@@ -23,12 +23,13 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,800&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap">
-<link rel="stylesheet" href="../shared/walkthrough.css?v=712747276f">
-<link rel="stylesheet" href="../shared/anchor.css?v=56e830e8fa">
+<link rel="stylesheet" href="../shared/walkthrough.css?v=292263bf55">
+<link rel="stylesheet" href="../shared/display.css?v=64cbb37814">
+<link rel="stylesheet" href="../shared/anchor.css?v=c502736dbb">
 <style>:root{--sky:#38bdf8}</style>
 <!--PRELOAD--><link rel="preload" as="image" href="photos/coins.jpg" fetchpriority="high"><!--/PRELOAD-->
 <!--IMPORTMAP-->
-<script type="importmap">{"imports":{"./data.js":"./data.js?v=3c94fb78cf","./diagrams.js":"./diagrams.js?v=fc771f8342","./main.js":"./main.js?v=c8b4e619d7","../shared/anchor.js":"../shared/anchor.js?v=d81f4cac36","../shared/diagram-kit.js":"../shared/diagram-kit.js?v=cb15012c8c","../shared/photos.js":"../shared/photos.js?v=49d2dedc70","../shared/timeline.js":"../shared/timeline.js?v=09244a9ad2","../shared/walkthrough.js":"../shared/walkthrough.js?v=141d72d82b"}}</script>
+<script type="importmap">{"imports":{"./data.js":"./data.js?v=3c94fb78cf","./diagrams.js":"./diagrams.js?v=fc771f8342","./main.js":"./main.js?v=c8b4e619d7","../shared/anchor.js":"../shared/anchor.js?v=a675aa275d","../shared/diagram-kit.js":"../shared/diagram-kit.js?v=cb15012c8c","../shared/display.js":"../shared/display.js?v=a2d099052a","../shared/guide-dock.js":"../shared/guide-dock.js?v=0c19121ffe","../shared/listen.js":"../shared/listen.js?v=76d7f16017","../shared/photos.js":"../shared/photos.js?v=49d2dedc70","../shared/timeline.js":"../shared/timeline.js?v=09244a9ad2","../shared/walkthrough.js":"../shared/walkthrough.js?v=04bfbe0fdc"}}</script>
 <!--/IMPORTMAP-->
 </head>
 <body>
@@ -74,8 +75,7 @@
       <span class="time"><span id="tNow">0:00</span> / <span id="tTotal">0:00</span></span>
       <span class="spacer"></span>
       <button class="cb hide-xs" id="bSpeed" aria-label="Playback speed" title="Playback speed">1×</button>
-      <button class="cb" id="bVoice" aria-pressed="true" aria-label="Turn the guide’s voice off" title="Voice on (V)"><span aria-hidden="true">🔊</span></button>
-      <button class="cb" id="bCC" aria-pressed="true" aria-label="Captions" title="Captions">CC</button>
+      <button class="cb" id="bDisplay" aria-label="Display: guide, text and voice" title="Display: guide, text, voice"><svg class="dsp-ico" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 4h7M13 4h1M2 12h1M7 12h7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="11" cy="4" r="2" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="5" cy="12" r="2" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span class="t hide-sm"> Display</span></button>
     </div>
   </nav>
 </main>

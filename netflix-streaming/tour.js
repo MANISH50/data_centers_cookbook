@@ -2,6 +2,7 @@
    Content lives in data.js; pure helpers in core.js. */
 import { WORLD, WIRE_TYPES, BADGES, ZONES, WIRES, TIMELINE, SOURCES, STOPS } from './data.js';
 import { parseHash, formatHash, makeThrottle, nextIndex, prevIndex, flyCam, flightMs, viewBoxFor, captionOrder } from './core.js';
+import { mountGuideDock } from '../shared/guide-dock.js';
 
 const $ = s => document.querySelector(s);
 const NS = 'http://www.w3.org/2000/svg';
@@ -276,8 +277,15 @@ function go(i, { instant = false, source = 'nav', keepCard = false } = {}) {
   try { localStorage.setItem('cookbook:netflix-streaming', JSON.stringify({ id: 'stop-' + s.id, num: String(s.id).padStart(2, '0'), title: s.title })); } catch (e) { /* storage blocked: fine */ }
   void prev; void source;
 }
+/* ================= THE GUIDE (reads each stop aloud; Display menu: guide, text, voice) ================= */
+const stopText = s => `${s.title}. ${s.lines.join(' ')} Data-center role: ${s.dc.text}`;
+const dock = mountGuideDock({ displayButton: $('#bDisplay'), track, onListen: () => dock.read('stop-' + cur + '-' + Date.now(), stopText(STOPS[cur])) });
+root.classList.add('tour-page');
+window.__dock = dock;
+
 function arrive() {
   const s = STOPS[cur];
+  dock.read('stop-' + s.id, stopText(s));
   track('stop_view', { n: s.id });
   if (s.id === STOPS.length && !completed) { completed = true; track('tour_complete'); }
   runScene(s);
@@ -300,10 +308,12 @@ function updateControls() {
 function scheduleAuto() {
   clearTimeout(autoTimer);
   if (!autoOn) return;
-  autoTimer = setTimeout(() => {
+  const tick = () => {
+    if (dock.guide.busy()) { autoTimer = setTimeout(tick, 1000); return; } // wait for the guide to finish
     if (cur === STOPS.length - 1) { setAuto(false); return; }
     next();
-  }, 10000);
+  };
+  autoTimer = setTimeout(tick, 10000);
 }
 function setAuto(on) {
   autoOn = on; const b = $('#bAuto'); b.setAttribute('aria-pressed', on);
